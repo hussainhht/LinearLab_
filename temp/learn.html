@@ -5,8 +5,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Learn Linear Algebra - LinearLab</title>
-        <link rel="stylesheet" href="../style/main.css">
-        <link rel="stylesheet" href="../style/learn.css">
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/learn.css">
+    <!-- MathJax for LaTeX rendering and ES6 polyfill for compatibility -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
 
     <body>
@@ -201,9 +204,12 @@
                 <header class="learn-header">
                     <h1>📐 Linear Algebra Interactive Course</h1>
                     <div class="header-controls">
-                        <button class="btn-header"
-                            onclick="window.location.href='index.html'">🏠
-                            Home</button>
+                        <a href="index.html" style="text-decoration: none;">
+                            <button class="btn-header" style="padding: 10px 20px; font-size: 1rem; display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
+                                <span>🔧</span>
+                                <span>Practice Tools</span>
+                            </button>
+                        </a>
                     </div>
                 </header>
 
@@ -3410,9 +3416,85 @@
                         </div>
                     </div>
 
-                    <!-- Slide 21: Matrix Inverse -->
+                    <!-- Slide 21: Matrix Inverse - Introduction & Concept -->
                     <div class="slide">
-                        <h2>3.9 Matrix Inverse</h2>
+                        <h2>3.9 Matrix Inverse - What Does It Mean?</h2>
+
+                        <div style="padding: 30px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 3px solid var(--primary-color); border-radius: 15px; margin-bottom: 30px;">
+                            <h3 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.5rem;">🧩 The Big Idea</h3>
+                            <p style="font-size: 1.2rem; line-height: 1.8;">For a square matrix <strong>A</strong> (same number of rows and columns), the <span style="color: var(--danger-color); font-weight: 700;">inverse</span> of A — denoted <strong>A<sup>-1</sup></strong> — is another matrix such that:</p>
+                            
+                            <div class="formula" style="font-size: 1.5rem; margin: 25px 0; padding: 25px; background: white; border: 3px solid var(--primary-color); border-radius: 10px;">
+                                A × A<sup>-1</sup> = A<sup>-1</sup> × A = I
+                            </div>
+                            
+                            <p style="font-size: 1.15rem; margin-top: 20px;">where <strong>I</strong> is the <span style="color: var(--info-color); font-weight: 700;">identity matrix</span> (like the number 1 for matrices).</p>
+                        </div>
+
+                        <h3 style="color: var(--secondary-color); margin-top: 40px;">💡 Think of It Like Numbers</h3>
+                        <div class="example-box">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 20px 0;">
+                                <div style="padding: 25px; background: rgba(34, 197, 94, 0.1); border: 2px solid var(--success-color); border-radius: 12px;">
+                                    <h4 style="color: var(--success-color); margin-bottom: 15px;">For Numbers:</h4>
+                                    <p style="font-size: 1.15rem; margin: 10px 0;">For the number <strong>2</strong>, its inverse is <strong>½</strong></p>
+                                    <div class="formula" style="margin: 15px 0;">
+                                        2 × ½ = 1
+                                    </div>
+                                    <p style="margin-top: 15px; color: var(--text-muted);">The inverse "undoes" the multiplication</p>
+                                </div>
+                                
+                                <div style="padding: 25px; background: rgba(99, 102, 241, 0.1); border: 2px solid var(--primary-color); border-radius: 12px;">
+                                    <h4 style="color: var(--primary-color); margin-bottom: 15px;">For Matrices:</h4>
+                                    <p style="font-size: 1.15rem; margin: 10px 0;">For matrix <strong>A</strong>, its inverse is <strong>A<sup>-1</sup></strong></p>
+                                    <div class="formula" style="margin: 15px 0;">
+                                        A × A<sup>-1</sup> = I
+                                    </div>
+                                    <p style="margin-top: 15px; color: var(--text-muted);">Same logic, but with matrices!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--danger-color); margin-top: 40px;">⚠️ Not Every Matrix Has an Inverse!</h3>
+                        <div class="note-box">
+                            <p style="font-size: 1.15rem; margin-bottom: 15px;">A matrix has an inverse <strong>only if:</strong></p>
+                            <ul style="font-size: 1.1rem; line-height: 2;">
+                                <li>✓ It's <span style="color: var(--success-color); font-weight: 700;">square</span> (n × n)</li>
+                                <li>✓ Its <span style="color: var(--success-color); font-weight: 700;">determinant ≠ 0</span></li>
+                            </ul>
+                            
+                            <div style="margin-top: 25px; padding: 20px; background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--danger-color); border-radius: 8px;">
+                                <p style="font-size: 1.1rem; margin: 0;"><strong>If det(A) = 0:</strong> Matrix is <span style="color: var(--danger-color); font-weight: 700;">singular</span> → NO inverse exists</p>
+                            </div>
+                            
+                            <div style="margin-top: 15px; padding: 20px; background: rgba(34, 197, 94, 0.1); border-left: 4px solid var(--success-color); border-radius: 8px;">
+                                <p style="font-size: 1.1rem; margin: 0;"><strong>If det(A) ≠ 0:</strong> Matrix is <span style="color: var(--success-color); font-weight: 700;">non-singular</span> → Inverse exists!</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--info-color); margin-top: 40px;">🔥 Conceptual Meaning</h3>
+                        <div style="padding: 25px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1)); border: 2px solid var(--info-color); border-radius: 12px;">
+                            <p style="font-size: 1.15rem; line-height: 1.8;">The inverse matrix <strong>"undoes"</strong> what A does.</p>
+                            <p style="font-size: 1.15rem; margin-top: 15px;">If <strong>Ax = b</strong>, then:</p>
+                            <div class="formula" style="font-size: 1.4rem; margin: 20px 0; padding: 20px; background: white; border-radius: 8px;">
+                                x = A<sup>-1</sup>b
+                            </div>
+                            <p style="font-size: 1.1rem; margin-top: 15px; color: var(--text-muted);">So it's used to <strong>solve linear systems</strong> and <strong>transform coordinates back</strong> to their original form.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">◀ Previous</button>
+                            <div class="slide-progress">Slide <span
+                                    class="currentSlide">21</span> of
+                                <span>47</span></div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ▶</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 22: Matrix Inverse - Definition -->
+                    <div class="slide">
+                        <h2>3.9 Matrix Inverse - Formal Definition</h2>
 
                         <div class="definition-box">
                             <h4>📖 Definition: Inverse of a Matrix</h4>
@@ -3484,30 +3566,82 @@
                             </p>
                         </div>
 
-                        <h3
-                            style="color: var(--info-color); margin-top: 40px;">Two
-                            Key Questions</h3>
-                        <div
-                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
-                            <div
-                                style="padding: 25px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1)); border: 2px solid var(--success-color); border-radius: 12px;">
-                                <h4
-                                    style="color: var(--success-color); margin-bottom: 15px;">Q1:
-                                    When is A invertible?</h4>
-                                <p>Under which conditions (s) is A
-                                    invertible?</p>
-                            </div>
-                            <div
-                                style="padding: 25px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1)); border: 2px solid var(--info-color); border-radius: 12px;">
-                                <h4
-                                    style="color: var(--info-color); margin-bottom: 15px;">Q2:
-                                    How to find A<sup>-1</sup>?</h4>
-                                <p>If A is invertible, how can we determine
-                                    A<sup>-1</sup>?</p>
-                            </div>
+                        <h3 style="color: var(--info-color); margin-top: 40px;">🔍 How to Verify</h3>
+                        <div style="padding: 25px; background: rgba(59, 130, 246, 0.1); border: 2px solid var(--info-color); border-radius: 12px;">
+                            <p style="font-size: 1.15rem;">Multiply <strong>A × A<sup>-1</sup></strong></p>
+                            <p style="font-size: 1.15rem; margin-top: 10px;">If you get the <span style="color: var(--info-color); font-weight: 700;">identity matrix</span>, it's correct! ✓</p>
                         </div>
 
                         <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">◀ Previous</button>
+                            <div class="slide-progress">Slide <span
+                                    class="currentSlide">22</span> of
+                                <span>47</span></div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ▶</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 23: Matrix Inverse - 2×2 Formula -->
+                    <div class="slide">
+                        <h2>3.9 Matrix Inverse - Formula for 2×2 Matrices</h2>
+
+                        <div style="padding: 25px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 3px solid var(--primary-color); border-radius: 15px; margin-bottom: 30px;">
+                            <h3 style="color: var(--primary-color); margin-bottom: 20px;">🧮 The 2×2 Formula</h3>
+                            <p style="font-size: 1.15rem; margin-bottom: 15px;">If</p>
+                            <div class="formula" style="font-size: 1.3rem; margin: 15px 0;">
+                                A = <span class="matrix-display-learn">[a b; c d]</span>
+                            </div>
+                            <p style="font-size: 1.15rem; margin: 15px 0;">then</p>
+                            <div class="formula" style="font-size: 1.4rem; margin: 20px 0; padding: 25px; background: white; border: 2px solid var(--danger-color); border-radius: 10px;">
+                                A<sup>-1</sup> = <span style="font-size: 1.2rem;">1/(ad - bc)</span> <span class="matrix-display-learn">[d -b; -c a]</span>
+                            </div>
+                            <p style="font-size: 1.15rem; color: var(--danger-color); font-weight: 700; text-align: center;">provided ad - bc ≠ 0</p>
+                        </div>
+
+                        <h3 style="color: var(--secondary-color);">📝 Complete Example</h3>
+                        <div class="example-box">
+                            <p style="font-size: 1.2rem; margin-bottom: 15px;">Find the inverse of:</p>
+                            <div class="formula" style="font-size: 1.3rem; margin: 15px 0;">
+                                A = <span class="matrix-display-learn">[4 7; 2 6]</span>
+                            </div>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem;"><strong>Step 1:</strong> Calculate the determinant</p>
+                            <div class="formula" style="margin: 15px 0;">
+                                det(A) = 4(6) - 7(2) = 24 - 14 = <span style="color: var(--success-color); font-weight: 700;">10</span>
+                            </div>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem;"><strong>Step 2:</strong> Since det(A) = 10 ≠ 0, the inverse exists!</p>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem;"><strong>Step 3:</strong> Apply the formula</p>
+                            <div style="padding: 20px; background: rgba(99, 102, 241, 0.05); border-radius: 8px; margin: 15px 0;">
+                                <div class="formula" style="font-size: 1.2rem;">
+                                    A<sup>-1</sup> = <span style="font-size: 1.1rem;">1/10</span> <span class="matrix-display-learn">[6 -7; -2 4]</span>
+                                </div>
+                                <p style="text-align: center; margin: 15px 0; font-size: 1.2rem;">=</p>
+                                <div class="formula" style="font-size: 1.2rem;">
+                                    <span class="matrix-display-learn">[0.6 -0.7; -0.2 0.4]</span>
+                                </div>
+                            </div>
+                            
+                            <p style="margin-top: 25px; padding: 15px; background: rgba(34, 197, 94, 0.1); border-left: 4px solid var(--success-color); border-radius: 5px;">
+                                <strong>✓ Result:</strong> A<sup>-1</sup> = <span class="matrix-display-learn">[0.6 -0.7; -0.2 0.4]</span>
+                            </p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">◀ Previous</button>
+                            <div class="slide-progress">Slide <span
+                                    class="currentSlide">23</span> of
+                                <span>47</span></div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ▶</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 24: Finding Matrix Inverse for 2×2 Matrices (More Examples) -->
                             <button class="nav-btn btn-prev"
                                 onclick="prevSlide()">◀ Previous</button>
                             <div class="slide-progress">Slide <span
@@ -3822,62 +3956,134 @@
                         </div>
                     </div>
 
-                    <!-- Slide 24: Finding Inverse Using Gauss-Jordan -->
+                    <!-- Slide 25: Finding Inverse Using Gauss-Jordan Method -->
                     <div class="slide">
                         <h2>3.9 Matrix Inverse - Gauss-Jordan Method</h2>
 
-                        <div
-                            style="padding: 25px; background: rgba(239, 68, 68, 0.1); border: 2px solid var(--danger-color); border-radius: 12px; margin-bottom: 30px;">
-                            <h4
-                                style="color: var(--danger-color); margin-bottom: 15px;">Method
-                                2: Finding Inverse of n×n Matrix</h4>
-                            <p
-                                style="font-size: 1.15rem; margin-bottom: 15px;">To
-                                find the inverse of a matrix <strong>A</strong>
-                                of size <em>m × n</em>, we consider the matrix
-                                of size <em>m × 2n</em>:</p>
+                        <div style="padding: 25px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 3px solid var(--primary-color); border-radius: 15px; margin-bottom: 30px;">
+                            <h3 style="color: var(--primary-color); margin-bottom: 20px;">🔧 The Method</h3>
+                            <p style="font-size: 1.15rem; margin-bottom: 15px;">To find the inverse of a matrix <strong>A</strong> of size <em>n × n</em>:</p>
 
-                            <div
-                                style="display: flex; justify-content: center; gap: 20px; margin: 30px 0;">
-                                <div
-                                    style="padding: 30px 40px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.15)); border: 3px solid var(--success-color); border-radius: 12px; font-size: 1.3rem; font-weight: 700;">
-                                    [ A | I<sub>n</sub> ]
+                            <div style="margin: 25px 0;">
+                                <p style="font-size: 1.15rem; margin-bottom: 10px;"><strong>Step 1:</strong> Form the augmented matrix</p>
+                                <div style="display: flex; justify-content: center; margin: 20px 0;">
+                                    <div style="padding: 25px 35px; background: var(--highlight-color); border: 3px solid var(--success-color); border-radius: 12px; font-size: 1.4rem; font-weight: 700; color: var(--text-color);">
+                                        [ A | I<sub>n</sub> ]
+                                    </div>
                                 </div>
+                                <p style="text-align: center; color: var(--text-muted); font-style: italic;">Put matrix A on the left, identity matrix on the right</p>
                             </div>
 
-                            <p
-                                style="font-size: 1.15rem; margin-top: 20px;">Then
-                                try to do <strong>Gauss-Jordan
-                                    elimination</strong> to get a reduced matrix
-                                of the form:</p>
-
-                            <div
-                                style="display: flex; justify-content: center; gap: 20px; margin: 30px 0;">
-                                <div
-                                    style="padding: 30px 40px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.15)); border: 3px solid var(--info-color); border-radius: 12px; font-size: 1.3rem; font-weight: 700;">
-                                    [ I<sub>n</sub> | A<sup>-1</sup> ]
+                            <div style="margin: 25px 0;">
+                                <p style="font-size: 1.15rem; margin-bottom: 10px;"><strong>Step 2:</strong> Apply row operations (Gauss-Jordan elimination) to transform it into:</p>
+                                <div style="display: flex; justify-content: center; margin: 20px 0;">
+                                    <div style="padding: 25px 35px; background: var(--highlight-color); border: 3px solid var(--info-color); border-radius: 12px; font-size: 1.4rem; font-weight: 700; color: var(--text-color);">
+                                        [ I<sub>n</sub> | A<sup>-1</sup> ]
+                                    </div>
                                 </div>
+                                <p style="text-align: center; color: var(--text-muted); font-style: italic;">Identity matrix on the left, inverse A⁻¹ on the right</p>
                             </div>
+
+                            <p style="font-size: 1.1rem; margin-top: 20px; color: var(--success-color); font-weight: 600;">✨ The right side becomes the inverse!</p>
                         </div>
 
-                        <h3 style="color: var(--secondary-color);">Example: Find
-                            A<sup>-1</sup> if it exists</h3>
+                        <h3 style="color: var(--secondary-color); margin-top: 30px;">📝 Complete Example (2×2 Matrix)</h3>
                         <div class="example-box">
-                            <p style="font-size: 1.2rem; margin-bottom: 20px;">A
-                                = <span class="matrix-display-learn">[1 0 1; 0 1
-                                    1; 1 1 0]</span></p>
-
-                            <p
-                                style="margin: 15px 0; font-weight: 600;">Solution:</p>
-                            <div
-                                style="padding: 20px; background: rgba(99, 102, 241, 0.05); border-radius: 8px; font-family: 'Courier New', monospace;">
-                                <p>Set up augmented matrix [ A | I ]</p>
-                                <p
-                                    style="margin: 10px 0; font-size: 1.1rem;">Apply
-                                    row operations...</p>
-                                <p
-                                    style="margin-top: 15px; color: var(--success-color); font-weight: 700;">Result:
-                                    Reduced to [ I | A<sup>-1</sup> ]</p>
+                            <p style="font-size: 1.2rem; margin-bottom: 15px;"><strong>Find the inverse of:</strong></p>
+                            <div style="padding: 20px; background: rgba(99, 102, 241, 0.05); border-radius: 8px; margin: 15px 0; text-align: center; font-size: 1.3rem;">
+                                A = <span style="display: inline-block; margin-left: 10px;">
+                                    <table style="display: inline-table; border-collapse: collapse;">
+                                        <tr><td style="border: 1px solid var(--text-color); padding: 8px; text-align: center;">1</td><td style="border: 1px solid var(--text-color); padding: 8px; text-align: center;">2</td></tr>
+                                        <tr><td style="border: 1px solid var(--text-color); padding: 8px; text-align: center;">3</td><td style="border: 1px solid var(--text-color); padding: 8px; text-align: center;">4</td></tr>
+                                    </table>
+                                </span>
+                            </div>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem; font-weight: 600;">📍 Step 1: Set up augmented matrix [A | I]</p>
+                            <div style="padding: 20px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 8px; margin: 15px 0; text-align: center;">
+                                <div style="font-size: 1.15rem;">
+                                    <table style="display: inline-table; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(99, 102, 241, 0.1);">1</td>
+                                            <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(99, 102, 241, 0.1);">2</td>
+                                            <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">1</td>
+                                            <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(99, 102, 241, 0.1);">3</td>
+                                            <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(99, 102, 241, 0.1);">4</td>
+                                            <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">0</td>
+                                            <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">1</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem; font-weight: 600;">📍 Step 2: Row Operation R₂ ← R₂ - 3R₁</p>
+                            <div style="padding: 20px; background: rgba(239, 68, 68, 0.05); border-left: 5px solid var(--danger-color); border-radius: 8px; margin: 15px 0; text-align: center;">
+                                <table style="display: inline-table; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">1</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">2</td>
+                                        <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">1</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(239, 68, 68, 0.2);">0</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(239, 68, 68, 0.2);">-2</td>
+                                        <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">-3</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">1</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem; font-weight: 600;">📍 Step 3: Row Operation R₂ ← R₂ ÷ (-2)</p>
+                            <div style="padding: 20px; background: rgba(34, 197, 94, 0.05); border-left: 5px solid var(--success-color); border-radius: 8px; margin: 15px 0; text-align: center;">
+                                <table style="display: inline-table; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">1</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">2</td>
+                                        <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">1</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(34, 197, 94, 0.2);">0</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(34, 197, 94, 0.2);">1</td>
+                                        <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">3/2</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">-1/2</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <p style="margin-top: 25px; font-size: 1.15rem; font-weight: 600;">📍 Step 4: Row Operation R₁ ← R₁ - 2R₂</p>
+                            <div style="padding: 20px; background: rgba(59, 130, 246, 0.05); border-left: 5px solid var(--info-color); border-radius: 8px; margin: 15px 0; text-align: center;">
+                                <table style="display: inline-table; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(59, 130, 246, 0.2);">1</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center; background: rgba(59, 130, 246, 0.2);">0</td>
+                                        <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">-2</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">1</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">0</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">1</td>
+                                        <td style="border-left: 4px solid var(--primary-color); padding: 10px; text-align: center;">3/2</td>
+                                        <td style="border: 2px solid var(--text-color); padding: 10px; text-align: center;">-1/2</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.15)); border: 3px solid var(--success-color); border-radius: 10px;">
+                                <p style="font-size: 1.2rem; color: var(--success-color); font-weight: 700; margin-bottom: 15px;">✅ Final Result: We now have [I | A⁻¹]</p>
+                                <p style="font-size: 1.1rem; margin-bottom: 10px;">Therefore:</p>
+                                <div style="text-align: center; font-size: 1.3rem; font-weight: 700;">
+                                    A<sup>-1</sup> = <span style="display: inline-block;">
+                                        <table style="display: inline-table; border-collapse: collapse;">
+                                            <tr><td style="border: 2px solid var(--text-color); padding: 8px; text-align: center;">-2</td><td style="border: 2px solid var(--text-color); padding: 8px; text-align: center;">1</td></tr>
+                                            <tr><td style="border: 2px solid var(--text-color); padding: 8px; text-align: center;">3/2</td><td style="border: 2px solid var(--text-color); padding: 8px; text-align: center;">-1/2</td></tr>
+                                        </table>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -3885,8 +4091,8 @@
                             <button class="nav-btn btn-prev"
                                 onclick="prevSlide()">◀ Previous</button>
                             <div class="slide-progress">Slide <span
-                                    class="currentSlide">24</span> of
-                                <span>44</span></div>
+                                    class="currentSlide">25</span> of
+                                <span>47</span></div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ▶</button>
                         </div>
@@ -4078,13 +4284,182 @@
                                 onclick="prevSlide()">◀ Previous</button>
                             <div class="slide-progress">Slide <span
                                     class="currentSlide">26</span> of
-                                <span>46</span></div>
+                                <span>48</span></div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ▶</button>
                         </div>
                     </div>
 
-                    <!-- Slide 27: Row Operations (Chapter 3 Begins) -->
+                    <!-- Slide 27: Matrix Inverse - Special Cases and Summary -->
+                    <div class="slide">
+                        <h2>3.9 Matrix Inverse - Special Cases & Summary</h2>
+
+                        <h3 style="color: var(--primary-color); margin-bottom: 25px;">🌟 Special Cases</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 35px;">
+                            <div style="padding: 25px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1)); border: 3px solid var(--success-color); border-radius: 12px;">
+                                <h4 style="color: var(--success-color); margin-bottom: 15px; font-size: 1.3rem;">Identity Matrix</h4>
+                                <div class="formula" style="font-size: 1.3rem; margin: 15px 0;">
+                                    I<sup>-1</sup> = I
+                                </div>
+                                <p style="font-size: 1.05rem; color: var(--text-muted); margin-top: 10px;">The identity is its own inverse!</p>
+                            </div>
+                            
+                            <div style="padding: 25px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 3px solid var(--primary-color); border-radius: 12px;">
+                                <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;">Diagonal Matrix</h4>
+                                <div style="font-size: 1.1rem; margin: 15px 0;">
+                                    If <span class="formula">D = diag(d₁, d₂, ..., d<sub>n</sub>)</span>
+                                </div>
+                                <div class="formula" style="font-size: 1.2rem; margin: 15px 0;">
+                                    D<sup>-1</sup> = diag(1/d₁, 1/d₂, ..., 1/d<sub>n</sub>)
+                                </div>
+                                <p style="font-size: 1.05rem; color: var(--text-muted); margin-top: 10px;">Just flip each diagonal element!</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--secondary-color); margin-top: 40px; margin-bottom: 25px;">📋 Quick Reference Cheat Sheet</h3>
+                        
+                        <div style="overflow-x: auto; margin: 25px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: white;
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                                        <th style="padding: 18px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   width: 30%;">
+                                            Concept
+                                        </th>
+                                        <th style="padding: 18px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   width: 40%;">
+                                            Formula / Rule
+                                        </th>
+                                        <th style="padding: 18px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   width: 30%;">
+                                            Condition
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            Definition
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.15rem;">
+                                            AA<sup>-1</sup> = A<sup>-1</sup>A = I
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem;">
+                                            A is square
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03); border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            Existence
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.15rem;">
+                                            A<sup>-1</sup> exists
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem; color: var(--danger-color); font-weight: 600;">
+                                            det(A) ≠ 0
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            2×2 Formula
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.1rem;">
+                                            A<sup>-1</sup> = <span style="font-size: 0.95rem;">1/(ad-bc)</span> [[d,-b],[-c,a]]
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem;">
+                                            ad - bc ≠ 0
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03); border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            Finding A<sup>-1</sup>
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.1rem;">
+                                            [A | I] → [I | A<sup>-1</sup>]
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem;">
+                                            Use Gauss-Jordan
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            Solving Systems
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.15rem;">
+                                            If AX = B, then X = A<sup>-1</sup>B
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem;">
+                                            A is invertible
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03); border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            Product Rule
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.15rem;">
+                                            (AB)<sup>-1</sup> = B<sup>-1</sup>A<sup>-1</sup>
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem;">
+                                            Both invertible
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 2px solid rgba(99, 102, 241, 0.1);">
+                                        <td style="padding: 18px 25px; font-size: 1.1rem; font-weight: 600;">
+                                            Transpose Rule
+                                        </td>
+                                        <td style="padding: 18px 25px; font-family: 'Courier New', monospace; font-size: 1.15rem;">
+                                            (A<sup>T</sup>)<sup>-1</sup> = (A<sup>-1</sup>)<sup>T</sup>
+                                        </td>
+                                        <td style="padding: 18px 25px; font-size: 1.05rem;">
+                                            A is invertible
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="margin-top: 35px; padding: 25px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 3px solid var(--primary-color); border-radius: 12px;">
+                            <h4 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem;">💡 Key Takeaway</h4>
+                            <p style="font-size: 1.15rem; line-height: 1.8;">
+                                Matrix inverse is like <strong>"dividing by a matrix"</strong>. It allows us to:
+                            </p>
+                            <ul style="font-size: 1.1rem; line-height: 1.9; margin-top: 15px;">
+                                <li>✓ Solve linear systems efficiently: <strong>X = A<sup>-1</sup>B</strong></li>
+                                <li>✓ Understand if a matrix is <strong>singular</strong> (det = 0) or <strong>non-singular</strong> (det ≠ 0)</li>
+                                <li>✓ Reverse transformations in computer graphics, cryptography, and physics</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">◀ Previous</button>
+                            <div class="slide-progress">Slide <span
+                                    class="currentSlide">27</span> of
+                                <span>48</span></div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ▶</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 28: Row Operations (Chapter 3 Begins) -->
                     <div class="slide">
                         <h2>3.1 Elementary Row Operations</h2>
 
@@ -4709,105 +5084,337 @@
                         </div>
                     </div>
 
+                <!-- New Slides: Determinants and Cramer's Rule -->
+                <div class="slide" id="slide-determinants">
+                    <h2>🔥 Determinants - Complete Guide</h2>
+
+                    <!-- What is a Determinant -->
+                    <section class="content-section">
+                        <h2>🧠 What Is a Determinant?</h2>
+                        <div class="concept-box">
+                            <p>A <strong>determinant</strong> is a <strong>single numeric value</strong> calculated from a <strong>square matrix</strong> (same number of rows and columns).</p>
+                            <p>It tells us a lot about the matrix, for example:</p>
+                            <ul>
+                                <li>Whether the matrix is <strong>invertible</strong> (has an inverse)
+                                    <ul>
+                                        <li>→ if \(\det(A) = 0\), then <strong>A is NOT invertible</strong></li>
+                                        <li>→ if \(\det(A) \neq 0\), then <strong>A IS invertible</strong></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <p>We usually write:</p>
+                            <div class="formula-box">\[\det(A) \quad \text{or} \quad |A|\]</div>
+                        </div>
+                    </section>
+
+                    <!-- 2x2 Determinant -->
+                    <section class="content-section">
+                        <h2>🧩 Determinant of a 2×2 Matrix</h2>
+                        <div class="formula-container">
+                            <p>If</p>
+                            <div class="formula-box">\[A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}\]</div>
+                            <p>then</p>
+                            <div class="formula-box highlight">\[\det(A) = ad - bc\]</div>
+                        </div>
+                        <div class="example-box">
+                            <h3>📝 Example</h3>
+                            <div class="formula-box">
+                                \[A = \begin{bmatrix} 2 & 3 \\ 4 & 5 \end{bmatrix}\]
+                                \[\det(A) = (2)(5) - (3)(4) = 10 - 12 = -2\]
+                            </div>
+                        </div>
+                        <div class="interactive-section">
+                            <h3>🎯 Try It Yourself - 2×2 Determinant Calculator</h3>
+                            <div class="calculator-grid">
+                                <div class="matrix-input-2x2">
+                                    <input type="number" id="a11_2x2" placeholder="a" value="2">
+                                    <input type="number" id="a12_2x2" placeholder="b" value="3">
+                                    <input type="number" id="a21_2x2" placeholder="c" value="4">
+                                    <input type="number" id="a22_2x2" placeholder="d" value="5">
+                                </div>
+                                <button onclick="calculate2x2Det()" class="calc-btn">Calculate Determinant</button>
+                                <div id="result2x2" class="result-box"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 3x3 Determinant -->
+                    <section class="content-section">
+                        <h2>🧮 Determinant of a 3×3 Matrix</h2>
+                        <div class="formula-container">
+                            <p>If</p>
+                            <div class="formula-box">\[A = \begin{bmatrix} a & b & c \\ d & e & f \\ g & h & i \end{bmatrix}\]</div>
+                            <p>then</p>
+                            <div class="formula-box highlight">\[\det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)\]</div>
+                        </div>
+                        <div class="method-box">
+                            <h3>🔄 Shortcut — Diagonal Method:</h3>
+                            <p>Multiply the diagonals (forward minus backward):</p>
+                            <div class="formula-box">\[\det(A) = (aei + bfg + cdh) - (ceg + bdi + afh)\]</div>
+                        </div>
+                        <div class="example-box">
+                            <h3>📝 Example</h3>
+                            <div class="formula-box">
+                                \[A = \begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 5 \\ 1 & 0 & 6 \end{bmatrix}\]
+                                \[\det(A) = 1(4 \times 6 - 5 \times 0) - 2(0 \times 6 - 5 \times 1) + 3(0 \times 0 - 4 \times 1)\]
+                                \[= 1(24) - 2(-5) + 3(-4)\]
+                                \[= 24 + 10 - 12 = 22\]
+                            </div>
+                            <p class="success">✅ <strong>Therefore:</strong> \(|A| = 22\)</p>
+                        </div>
+                        <div class="interactive-section">
+                            <h3>🎯 Try It Yourself - 3×3 Determinant Calculator</h3>
+                            <div class="calculator-grid">
+                                <div class="matrix-input-3x3">
+                                    <input type="number" id="b11" placeholder="a" value="1">
+                                    <input type="number" id="b12" placeholder="b" value="2">
+                                    <input type="number" id="b13" placeholder="c" value="3">
+                                    <input type="number" id="b21" placeholder="d" value="0">
+                                    <input type="number" id="b22" placeholder="e" value="4">
+                                    <input type="number" id="b23" placeholder="f" value="5">
+                                    <input type="number" id="b31" placeholder="g" value="1">
+                                    <input type="number" id="b32" placeholder="h" value="0">
+                                    <input type="number" id="b33" placeholder="i" value="6">
+                                </div>
+                                <button onclick="calculate3x3Det()" class="calc-btn">Calculate Determinant</button>
+                                <div id="result3x3" class="result-box"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Properties & Using Determinants -->
+                    <section class="content-section">
+                        <h2>⚙️ Properties of Determinants</h2>
+                        <div class="properties-table">
+                            <table>
+                                <thead>
+                                    <tr><th>Rule</th><th>Description</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>1. Swapping two rows</strong></td><td>Changes the <strong>sign</strong> of the determinant</td></tr>
+                                    <tr><td><strong>2. Two identical or zero rows</strong></td><td>Determinant = <strong>0</strong></td></tr>
+                                    <tr><td><strong>3. Multiplying a row by <em>k</em></strong></td><td>Multiplies the determinant by <em>k</em></td></tr>
+                                    <tr><td><strong>4. Adding a multiple of one row to another</strong></td><td><strong>No change</strong> to determinant</td></tr>
+                                    <tr><td><strong>5. det(AB) = det(A) × det(B)</strong></td><td>Product rule</td></tr>
+                                    <tr><td><strong>6. det(A<sup>T</sup>) = det(A)</strong></td><td>Transpose has the same determinant</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="usage-card">
+                            <h3>1️⃣ Checking Invertibility</h3>
+                            <div class="formula-box">\[A^{-1} \text{ exists if and only if } \det(A) \neq 0\]</div>
+                        </div>
+                        <div class="usage-card">
+                            <h3>2️⃣ Solving Systems of Equations (Cramer's Rule)</h3>
+                            <div class="formula-box">\[AX = B\]</div>
+                            <div class="formula-box">\[x_i = \frac{\det(A_i)}{\det(A)}\]</div>
+                            <p>where \(A_i\) is matrix <strong>A</strong> with its <em>i-th</em> column replaced by <strong>B</strong>.</p>
+                        </div>
+                    </section>
+
+                    <!-- Cofactors and Expansion -->
+                    <section class="content-section">
+                        <h2>🧩 Cofactors and Minors</h2>
+                        <div class="concept-box">
+                            <p>For any element \(a_{ij}\) in a matrix:</p>
+                            <div class="definition-card">
+                                <h4>Minor \(M_{ij}\):</h4>
+                                <p>The determinant of the submatrix after deleting row <em>i</em> and column <em>j</em>.</p>
+                            </div>
+                            <div class="definition-card">
+                                <h4>Cofactor \(C_{ij}\):</h4>
+                                <div class="formula-box">\[C_{ij} = (-1)^{i+j} M_{ij}\]</div>
+                            </div>
+                        </div>
+                        <h2>🧠 Cofactor Expansion (Laplace)</h2>
+                        <div class="concept-box">
+                            <p>You can compute the determinant by expanding along any <strong>row</strong> or <strong>column</strong>:</p>
+                            <div class="formula-box">\[\det(A) = a_{i1}C_{i1} + a_{i2}C_{i2} + \dots + a_{in}C_{in}\]</div>
+                            <p class="tip">💡 Expand along a row or column with the most zeros.</p>
+                        </div>
+                    </section>
+
+                    <!-- Geometric Meaning & Recap -->
+                    <section class="content-section">
+                        <h2>🔍 Geometric Meaning (bonus)</h2>
+                        <div class="concept-box geometric-box">
+                            <p>For a <strong>2×2 matrix</strong>, \(\det(A)\) gives the <strong>area scaling factor</strong>.</p>
+                            <p>For <strong>3×3</strong>, it represents <strong>volume scaling</strong> and orientation.</p>
+                        </div>
+                        <h2>🚀 Quick Recap</h2>
+                        <div class="recap-table">
+                            <table>
+                                <thead><tr><th>Property</th><th>Effect</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Swap rows</td><td>Changes sign</td></tr>
+                                    <tr><td>Identical/zero row</td><td>det = 0</td></tr>
+                                    <tr><td>Multiply row by <em>k</em></td><td>det × k</td></tr>
+                                    <tr><td>Add row multiple</td><td>No change</td></tr>
+                                    <tr><td>det(AB)</td><td>det(A) × det(B)</td></tr>
+                                    <tr><td>det(A<sup>T</sup>)</td><td>Same as det(A)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev" onclick="prevSlide()">◀ Previous</button>
+                            <div class="slide-progress">Slide <span class="currentSlide"></span> of <span class="totalSlides"></span></div>
+                            <button class="nav-btn btn-next" onclick="nextSlide()">Next ▶</button>
+                        </div>
+                    </section>
                 </div>
+
+                <div class="slide" id="slide-cramers">
+                    <h2>🎯 Cramer's Rule</h2>
+
+                    <!-- What is Cramer's Rule -->
+                    <section class="content-section">
+                        <h2>🧠 What Is Cramer's Rule?</h2>
+                        <div class="concept-box">
+                            <p><strong>Cramer's Rule</strong> solves square systems using <strong>determinants</strong>.</p>
+                            <ul>
+                                <li>Square system (same number of equations and unknowns)</li>
+                                <li>Coefficient matrix must be <strong>invertible</strong> (\(\det(A) \neq 0\))</li>
+                            </ul>
+                            <div class="warning-box">
+                                <p>⚠️ If \(\det(A) = 0\), Cramer's Rule does <strong>not</strong> apply.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- The Formula -->
+                    <section class="content-section">
+                        <h2>📐 The Formula</h2>
+                        <div class="formula-container">
+                            <p>Given \(AX = B\):</p>
+                            <div class="formula-box">\[x_i = \frac{\det(A_i)}{\det(A)}\]</div>
+                            <p>where \(A_i\) is formed by replacing the i-th column of A with B.</p>
+                        </div>
+                    </section>
+
+                    <!-- 2x2 System -->
+                    <section class="content-section">
+                        <h2>🎲 2×2 System</h2>
+                        <div class="formula-container">
+                            <div class="formula-box">\[\begin{cases}
+a_1x + b_1y = c_1 \\
+a_2x + b_2y = c_2
+\end{cases}\]</div>
+                            <div class="formula-box">\[\det(A) = a_1b_2 - a_2b_1\]</div>
+                            <div class="formula-box">\[x = \frac{c_1b_2 - c_2b_1}{\det(A)},\quad y = \frac{a_1c_2 - a_2c_1}{\det(A)}\]</div>
+                        </div>
+                        <div class="example-box">
+                            <h3>📝 Example</h3>
+                            <div class="formula-box">\[\begin{cases}
+2x + 3y = 8 \\
+4x - y = 2
+\end{cases}\]</div>
+                            <div class="solution-steps">
+                                <div class="formula-box">\[\det(A) = (2)(-1) - (4)(3) = -14\]</div>
+                                <div class="formula-box">\[x = \frac{-8 - 6}{-14} = 1,\quad y = \frac{4 - 32}{-14} = 2\]</div>
+                                <p class="success">✅ Solution: \(x = 1, y = 2\)</p>
+                            </div>
+                        </div>
+                        <div class="interactive-section">
+                            <h3>🎯 Try It Yourself - 2×2 Cramer's Rule Calculator</h3>
+                            <div class="calculator-grid">
+                                <div class="system-input">
+                                    <p>Equation 1: <input type="number" id="a1" value="2" style="width:60px">x +
+                                    <input type="number" id="b1" value="3" style="width:60px">y =
+                                    <input type="number" id="c1" value="8" style="width:60px"></p>
+                                    <p>Equation 2: <input type="number" id="a2" value="4" style="width:60px">x +
+                                    <input type="number" id="b2" value="-1" style="width:60px">y =
+                                    <input type="number" id="c2" value="2" style="width:60px"></p>
+                                </div>
+                                <button onclick="solveCramers2x2()" class="calc-btn">Solve System</button>
+                                <div id="result2x2Cramers" class="result-box"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 3x3 System -->
+                    <section class="content-section">
+                        <h2>🎲 3×3 System</h2>
+                        <div class="example-box">
+                            <div class="formula-box">\[\begin{cases}
+x + 2y + z = 9 \\
+2x - y + 2z = 6 \\
+3x + y - z = 2
+\end{cases}\]</div>
+                            <div class="solution-steps">
+                                <div class="formula-box">\[\det(A) = \begin{vmatrix} 1 & 2 & 1 \\
+2 & -1 & 2 \\
+3 & 1 & -1 \end{vmatrix} = 20\]</div>
+                                <p class="success">✅ Solution: \(x = 1, y = 3, z = 2\)</p>
+                            </div>
+                        </div>
+                        <div class="interactive-section">
+                            <h3>🎯 Try It Yourself - 3×3 Cramer's Rule Calculator</h3>
+                            <div class="calculator-grid">
+                                <div class="system-input-3x3">
+                                    <p>Eq 1: <input type="number" id="a11_3x3" value="1" style="width:50px">x +
+                                    <input type="number" id="a12_3x3" value="2" style="width:50px">y +
+                                    <input type="number" id="a13_3x3" value="1" style="width:50px">z =
+                                    <input type="number" id="d1_3x3" value="9" style="width:50px"></p>
+                                    <p>Eq 2: <input type="number" id="a21_3x3" value="2" style="width:50px">x +
+                                    <input type="number" id="a22_3x3" value="-1" style="width:50px">y +
+                                    <input type="number" id="a23_3x3" value="2" style="width:50px">z =
+                                    <input type="number" id="d2_3x3" value="6" style="width:50px"></p>
+                                    <p>Eq 3: <input type="number" id="a31_3x3" value="3" style="width:50px">x +
+                                    <input type="number" id="a32_3x3" value="1" style="width:50px">y +
+                                    <input type="number" id="a33_3x3" value="-1" style="width:50px">z =
+                                    <input type="number" id="d3_3x3" value="2" style="width:50px"></p>
+                                </div>
+                                <button onclick="solveCramers3x3()" class="calc-btn">Solve System</button>
+                                <div id="result3x3Cramers" class="result-box"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- When to Use & Summary -->
+                    <section class="content-section">
+                        <h2>💡 When to Use Cramer's Rule</h2>
+                        <div class="pros-cons">
+                            <div class="pros-box">
+                                <h3>✅ Advantages</h3>
+                                <ul>
+                                    <li>Direct formula — conceptually simple</li>
+                                    <li>Great for 2×2 and 3×3 systems</li>
+                                    <li>Useful for solving one variable</li>
+                                </ul>
+                            </div>
+                            <div class="cons-box">
+                                <h3>⚠️ Limitations</h3>
+                                <ul>
+                                    <li>Requires \(\det(A) \neq 0\)</li>
+                                    <li>Computationally expensive for large n</li>
+                                    <li>Multiple determinants to compute</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h2>🚀 Quick Summary</h2>
+                        <div class="summary-box">
+                            <ol>
+                                <li>Check \(\det(A) \neq 0\)</li>
+                                <li>Compute \(\det(A)\)</li>
+                                <li>For each variable \(x_i\): replace column i with B, compute \(\det(A_i)\), then \(x_i = \det(A_i)/\det(A)\)</li>
+                                <li>Verify by substitution</li>
+                            </ol>
+                        </div>
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev" onclick="prevSlide()">◀ Previous</button>
+                            <div class="slide-progress">Slide <span class="currentSlide"></span> of <span class="totalSlides"></span></div>
+                            <button class="nav-btn btn-next" onclick="nextSlide()">Next ▶</button>
+                        </div>
+                    </section>
+                </div>
+
+                </div>
+
             </main>
         </div>
 
-        <script>
-        let currentSlide = 0;
-        const totalSlides = 40;
-
-        // Update slide progress displays
-        function updateProgress() {
-            document.querySelectorAll('.currentSlide').forEach(el => {
-                el.textContent = currentSlide + 1;
-            });
-            document.getElementById('currentSlide').textContent = currentSlide + 1;
-            document.getElementById('totalSlides').textContent = totalSlides;
-        }
-
-        // Show specific slide
-        function showSlide(index) {
-            // Hide all slides
-            const slides = document.querySelectorAll('.slide');
-            slides.forEach(slide => slide.classList.remove('active'));
-
-            // Show selected slide
-            currentSlide = index;
-            slides[currentSlide].classList.add('active');
-
-            // Update active lesson in sidebar
-            document.querySelectorAll('.lesson-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelectorAll('.lesson-item')[currentSlide].classList.add('active');
-
-            // Update navigation buttons
-            const prevBtn = document.querySelectorAll('.btn-prev');
-            const nextBtn = document.querySelectorAll('.btn-next');
-
-            prevBtn.forEach(btn => {
-                btn.disabled = currentSlide === 0;
-            });
-
-            nextBtn.forEach(btn => {
-                btn.disabled = currentSlide === totalSlides - 1;
-            });
-
-            // Update progress
-            updateProgress();
-
-            // Scroll to top
-            document.querySelector('.slide-container').scrollTop = 0;
-        }
-
-        // Next slide
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                showSlide(currentSlide + 1);
-            }
-        }
-
-        // Previous slide
-        function prevSlide() {
-            if (currentSlide > 0) {
-                showSlide(currentSlide - 1);
-            }
-        }
-
-        // Toggle chapter expansion
-        function toggleChapter(chapterIndex) {
-            const chapters = document.querySelectorAll('.chapter');
-            const chapter = chapters[chapterIndex];
-            const lessons = chapter.querySelector('.lessons');
-            const icon = chapter.querySelector('.chapter-icon');
-            const title = chapter.querySelector('.chapter-title');
-
-            // Toggle active state
-            const wasActive = lessons.classList.contains('active');
-            
-            // Close all chapters
-            document.querySelectorAll('.lessons').forEach(l => l.classList.remove('active'));
-            document.querySelectorAll('.chapter-icon').forEach(i => i.textContent = '▶');
-            document.querySelectorAll('.chapter-title').forEach(t => t.classList.remove('active'));
-
-            // Open clicked chapter if it wasn't active
-            if (!wasActive) {
-                lessons.classList.add('active');
-                icon.textContent = '▼';
-                title.classList.add('active');
-            }
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-        });
-
-        // Initialize
-        updateProgress();
-    </script>
+        <!-- External JavaScript -->
+        <script src="../js/learn.js"></script>
     </body>
 
 </html>
