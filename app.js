@@ -431,58 +431,104 @@ class MatrixOperations {
 
         // Clear previous highlights
         document.querySelectorAll('.anim-cell').forEach(cell => {
-            cell.classList.remove('highlight-row', 'highlight-col', 'highlight-computing', 'highlight-result');
+            cell.classList.remove('highlight-row', 'highlight-col', 'highlight-computing', 'highlight-result', 'highlight-current');
         });
 
         // Highlight current row in A
         for (let k = 0; k < state.A[0].length; k++) {
-            document.getElementById(`A_${i}_${k}`).classList.add('highlight-row');
+            const cell = document.getElementById(`A_${i}_${k}`);
+            if (cell) cell.classList.add('highlight-row');
         }
 
         // Highlight current column in B
         for (let k = 0; k < state.B.length; k++) {
-            document.getElementById(`B_${k}_${j}`).classList.add('highlight-col');
+            const cell = document.getElementById(`B_${k}_${j}`);
+            if (cell) cell.classList.add('highlight-col');
         }
 
-        // Show calculation
+        // Show calculation with step-by-step animation
         let calcHtml = `
             <div class="current-calculation">
-                <h4>Computing C<sub>${i + 1},${j + 1}</sub>:</h4>
-                <div class="calculation-formula">
+                <h4>🎯 Computing C<sub>${i + 1},${j + 1}</sub> = Row ${i + 1} of A × Column ${j + 1} of B</h4>
+                <div class="calculation-breakdown">
         `;
 
+        // Create initial calculation display
+        document.getElementById('calculationSteps').innerHTML = calcHtml + '</div></div>';
+
+        // Animate each multiplication step
         step.calculations.forEach((calc, idx) => {
-            const sign = idx > 0 ? ' + ' : '';
-            calcHtml += `
-                <span class="calc-term">
-                    ${sign}<span class="highlight-a">${this.formatNumber(calc.aValue)}</span> × 
-                    <span class="highlight-b">${this.formatNumber(calc.bValue)}</span> = 
-                    <span class="calc-product">${this.formatNumber(calc.product)}</span>
-                </span>
-            `;
+            setTimeout(() => {
+                // Highlight the specific cells being multiplied
+                const aCell = document.getElementById(`A_${calc.aPos[0]}_${calc.aPos[1]}`);
+                const bCell = document.getElementById(`B_${calc.bPos[0]}_${calc.bPos[1]}`);
+
+                if (!aCell || !bCell) {
+                    console.error('Animation cells not found:', `A_${calc.aPos[0]}_${calc.aPos[1]}`, `B_${calc.bPos[0]}_${calc.bPos[1]}`);
+                    return;
+                }
+
+                // Remove previous current highlights
+                document.querySelectorAll('.highlight-current').forEach(cell => {
+                    cell.classList.remove('highlight-current');
+                });
+
+                aCell.classList.add('highlight-current');
+                bCell.classList.add('highlight-current');
+
+                // Add calculation step
+                let stepHtml = `
+                    <div class="calc-step">
+                        <span class="step-number">Step ${idx + 1}:</span>
+                        <span class="calc-term">
+                            <span class="highlight-a">A[${calc.aPos[0] + 1},${calc.aPos[1] + 1}] = ${this.formatNumber(calc.aValue)}</span>
+                            <span class="multiply-sign">×</span>
+                            <span class="highlight-b">B[${calc.bPos[0] + 1},${calc.bPos[1] + 1}] = ${this.formatNumber(calc.bValue)}</span>
+                            <span class="equals-sign">=</span>
+                            <span class="calc-product">${this.formatNumber(calc.product)}</span>
+                        </span>
+                    </div>
+                `;
+
+                const breakdownDiv = document.querySelector('.calculation-breakdown');
+                if (breakdownDiv) {
+                    breakdownDiv.innerHTML += stepHtml;
+                }
+
+            }, idx * 700);
         });
 
-        calcHtml += `
-                </div>
-                <div class="calculation-sum">
-                    <strong>Sum:</strong> ${step.calculations.map(c => this.formatNumber(c.product)).join(' + ')} = 
-                    <span class="final-sum">${this.formatNumber(step.sum)}</span>
-                </div>
-            </div>
-        `;
-
-        document.getElementById('calculationSteps').innerHTML = calcHtml;
-
-        // Update result cell
-        const resultCell = document.getElementById(`C_${i}_${j}`);
-        resultCell.textContent = this.formatNumber(step.sum);
-        resultCell.classList.add('highlight-result');
-
-        // Animate the cell appearance
+        // Show sum after all steps
         setTimeout(() => {
-            resultCell.classList.remove('highlight-result');
-            resultCell.classList.add('completed');
-        }, 1000);
+            const calcDiv = document.querySelector('.current-calculation');
+            if (calcDiv) {
+                calcDiv.innerHTML += `
+                    <div class="calculation-sum">
+                        <div class="sum-label">💡 Final Sum:</div>
+                        <div class="sum-formula">${step.calculations.map(c => this.formatNumber(c.product)).join(' + ')} = <span class="final-sum">${this.formatNumber(step.sum)}</span></div>
+                    </div>
+                `;
+            }
+
+            // Clear current highlights
+            document.querySelectorAll('.highlight-current').forEach(cell => {
+                cell.classList.remove('highlight-current');
+            });
+
+            // Update result cell
+            const resultCell = document.getElementById(`C_${i}_${j}`);
+            if (resultCell) {
+                resultCell.textContent = this.formatNumber(step.sum);
+                resultCell.classList.add('highlight-result');
+
+                // Animate the cell appearance
+                setTimeout(() => {
+                    resultCell.classList.remove('highlight-result');
+                    resultCell.classList.add('completed');
+                }, 600);
+            }
+
+        }, step.calculations.length * 700 + 200);
 
         state.currentStep++;
 
@@ -491,7 +537,7 @@ class MatrixOperations {
             setTimeout(() => {
                 this.showNotification('✨ All elements computed! Matrix multiplication complete.', 'success');
                 document.getElementById('stepAnimation').disabled = true;
-            }, 1000);
+            }, step.calculations.length * 700 + 1000);
         }
     }
 
