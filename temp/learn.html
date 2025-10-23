@@ -374,59 +374,132 @@
 
                         <div class="definition-box">
                             <h4>📖 System Classification</h4>
-                            <p>A system that has <strong>at least one
-                                    solution</strong> is called <span
-                                    class="success-text">consistent</span>.
-                                Otherwise, it is called <span
-                                    class="highlight-text">inconsistent</span>.</p>
+                            <p>A system that has <strong>at least one solution</strong> is called 
+                                <span style="color: var(--success-color); font-weight: 700;">consistent</span>.
+                                Otherwise, it is called <span style="color: var(--danger-color); font-weight: 700;">inconsistent</span>.</p>
                         </div>
 
-                        <h3>Key Terminology</h3>
-                        <ul>
-                            <li><strong class="success-text">Consistent
-                                    System:</strong> Has at least one solution
-                                <ul>
-                                    <li>Can have a unique solution</li>
-                                    <li>Can have infinitely many solutions</li>
+                        <h3>Types of Systems</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 30px 0;">
+                            <!-- Consistent System -->
+                            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1)); 
+                                        border-left: 5px solid var(--success-color); 
+                                        padding: 25px; 
+                                        border-radius: 12px;
+                                        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);">
+                                <h4 style="color: var(--success-color); font-size: 1.5rem; margin-bottom: 15px;">
+                                    ✅ Consistent System
+                                </h4>
+                                <p style="font-size: 1.15rem; margin-bottom: 15px;">
+                                    <strong>Has at least one solution</strong>
+                                </p>
+                                <ul style="list-style: none; padding-left: 0; margin: 15px 0;">
+                                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                        <span style="position: absolute; left: 0; color: var(--success-color); font-size: 1.2rem;">•</span>
+                                        <strong>Unique Solution:</strong> Exactly one solution
+                                    </li>
+                                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                        <span style="position: absolute; left: 0; color: var(--success-color); font-size: 1.2rem;">•</span>
+                                        <strong>Infinite Solutions:</strong> Dependent equations
+                                    </li>
                                 </ul>
-                            </li>
-                            <li><strong class="highlight-text">Inconsistent
-                                    System:</strong> Has no solution
-                                <ul>
-                                    <li>Contains contradictory equations</li>
+                            </div>
+
+                            <!-- Inconsistent System -->
+                            <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1)); 
+                                        border-left: 5px solid var(--danger-color); 
+                                        padding: 25px; 
+                                        border-radius: 12px;
+                                        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15);">
+                                <h4 style="color: var(--danger-color); font-size: 1.5rem; margin-bottom: 15px;">
+                                    ❌ Inconsistent System
+                                </h4>
+                                <p style="font-size: 1.15rem; margin-bottom: 15px;">
+                                    <strong>Has no solution</strong>
+                                </p>
+                                <ul style="list-style: none; padding-left: 0; margin: 15px 0;">
+                                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                        <span style="position: absolute; left: 0; color: var(--danger-color); font-size: 1.2rem;">•</span>
+                                        Contains contradictory equations
+                                    </li>
+                                    <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                                        <span style="position: absolute; left: 0; color: var(--danger-color); font-size: 1.2rem;">•</span>
+                                        Parallel lines (never intersect)
+                                    </li>
                                 </ul>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
 
                         <h3>Examples of Non-Linear Systems</h3>
-                        <div class="note-box">
-                            <h4>⚠️ These are NOT linear systems:</h4>
-                            <div class="example-box">
-                                <h4>(d) Why not linear?</h4>
-                                <div class="equation-system">
-                                    <div class="equation">x₁ - 2x₂² + x₃ = 0
-                                        <span class="highlight-text">(because of
-                                            x₂²)</span></div>
-                                    <div class="equation">x₁ + x₂ + x₃ = 1</div>
+                        <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1)); 
+                                    border: 2px solid var(--pivot-color); 
+                                    padding: 30px; 
+                                    border-radius: 12px;
+                                    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.15);">
+                            <h4 style="color: var(--pivot-color); font-size: 1.5rem; margin-bottom: 20px;">
+                                ⚠️ These are NOT linear systems:
+                            </h4>
+                            
+                            <div style="display: grid; gap: 20px;">
+                                <!-- Example (d) -->
+                                <div style="background: rgba(0, 0, 0, 0.2); 
+                                            border-left: 4px solid var(--info-color); 
+                                            padding: 20px; 
+                                            border-radius: 8px;">
+                                    <h4 style="color: var(--info-color); margin-bottom: 15px;">
+                                        (d) Why not linear?
+                                    </h4>
+                                    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 1.25rem;">
+                                        <div style="padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 6px;">
+                                            x₁ - 2x₂<span style="color: var(--danger-color); font-weight: 700;">²</span> + x₃ = 0
+                                            <span style="color: var(--pivot-color); font-weight: 700; margin-left: 15px;">
+                                                (because of x₂²)
+                                            </span>
+                                        </div>
+                                        <div style="padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 6px;">
+                                            x₁ + x₂ + x₃ = 1
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="example-box">
-                                <h4>(b') Why not linear?</h4>
-                                <div class="equation-system">
-                                    <div class="equation">x - cos(y) + 3z = 0
-                                        <span class="highlight-text">(because of
-                                            cos(y))</span></div>
-                                    <div class="equation">2x + y - z = -1</div>
+                                <!-- Example (b') -->
+                                <div style="background: rgba(0, 0, 0, 0.2); 
+                                            border-left: 4px solid var(--info-color); 
+                                            padding: 20px; 
+                                            border-radius: 8px;">
+                                    <h4 style="color: var(--info-color); margin-bottom: 15px;">
+                                        (b') Why not linear?
+                                    </h4>
+                                    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 1.25rem;">
+                                        <div style="padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 6px;">
+                                            x - <span style="color: var(--danger-color); font-weight: 700;">cos(y)</span> + 3z = 0
+                                            <span style="color: var(--pivot-color); font-weight: 700; margin-left: 15px;">
+                                                (because of cos(y))
+                                            </span>
+                                        </div>
+                                        <div style="padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 6px;">
+                                            2x + y - z = -1
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="example-box">
-                                <h4>(c') Why not linear?</h4>
-                                <div class="equation-system">
-                                    <div class="equation">x₁ + x₂ + 3x₁x₂ = 0
-                                        <span class="highlight-text">(because of
-                                            x₁x₂)</span></div>
+                                <!-- Example (c') -->
+                                <div style="background: rgba(0, 0, 0, 0.2); 
+                                            border-left: 4px solid var(--info-color); 
+                                            padding: 20px; 
+                                            border-radius: 8px;">
+                                    <h4 style="color: var(--info-color); margin-bottom: 15px;">
+                                        (c') Why not linear?
+                                    </h4>
+                                    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 1.25rem;">
+                                        <div style="padding: 10px; background: rgba(99, 102, 241, 0.1); border-radius: 6px;">
+                                            x₁ + x₂ + 3<span style="color: var(--danger-color); font-weight: 700;">x₁x₂</span> = 0
+                                            <span style="color: var(--pivot-color); font-weight: 700; margin-left: 15px;">
+                                                (because of x₁x₂)
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1457,13 +1530,96 @@
                         </div>
 
                         <h3>Properties of Addition</h3>
-                        <table style="width:100%; margin-top:20px; background: var(--bg-color); border-radius:8px; padding:15px;">
-                            <tr><th>Property</th><th>Meaning</th></tr>
-                            <tr><td><strong>Commutative</strong></td><td>A + B = B + A</td></tr>
-                            <tr><td><strong>Associative</strong></td><td>(A + B) + C = A + (B + C)</td></tr>
-                            <tr><td><strong>Additive Identity</strong></td><td>A + 0 = A</td></tr>
-                            <tr><td><strong>Additive Inverse</strong></td><td>A + (−A) = 0</td></tr>
-                        </table>
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);">
+                                            Property
+                                        </th>
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;">
+                                            Meaning
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Commutative
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            A + B = B + A
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Associative
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (A + B) + C = A + (B + C)
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Additive Identity
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            A + 0 = A
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Additive Inverse
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            A + (−A) = 0
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="slide-navigation">
                             <button class="nav-btn btn-prev"
@@ -1537,15 +1693,126 @@
                         </div>
 
                         <h3>Properties of Scalar Multiplication</h3>
-                        <table style="width:100%; margin-top:20px; background: var(--bg-color); border-radius:8px; padding:15px;">
-                            <tr><th>Property</th><th>Formula</th></tr>
-                            <tr><td><strong>Identity</strong></td><td>1A = A</td></tr>
-                            <tr><td><strong>Zero</strong></td><td>0A = 0</td></tr>
-                            <tr><td><strong>Negation</strong></td><td>(−1)A = −A</td></tr>
-                            <tr><td><strong>Distributive (Addition)</strong></td><td>k(A + B) = kA + kB</td></tr>
-                            <tr><td><strong>Distributive (Scalars)</strong></td><td>(k + m)A = kA + mA</td></tr>
-                            <tr><td><strong>Associative</strong></td><td>k(mA) = (km)A</td></tr>
-                        </table>
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);">
+                                            Property
+                                        </th>
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;">
+                                            Formula
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Identity
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            1A = A
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Zero
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            0A = 0
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Negation
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (−1)A = −A
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Distributive (Addition)
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            k(A + B) = kA + kB
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Distributive (Scalars)
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (k + m)A = kA + mA
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Associative
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            k(mA) = (km)A
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="slide-navigation">
                             <button class="nav-btn btn-prev"
@@ -1828,19 +2095,142 @@
                     <div class="slide">
                         <h2>2.8 Properties of Matrix Multiplication</h2>
 
-                        <table style="width:100%; background: var(--bg-color); border-radius:8px; padding:20px; font-size:1.1rem;">
-                            <tr style="background: var(--primary-color); color: white;">
-                                <th style="padding:12px;">Property</th>
-                                <th style="padding:12px;">Meaning</th>
-                            </tr>
-                            <tr><td><strong>Associative</strong></td><td>(AB)C = A(BC)</td></tr>
-                            <tr><td><strong>Left Distributive</strong></td><td>A(B + C) = AB + AC</td></tr>
-                            <tr><td><strong>Right Distributive</strong></td><td>(A + B)C = AC + BC</td></tr>
-                            <tr><td><strong>Scalar</strong></td><td>(kA)B = k(AB) = A(kB)</td></tr>
-                            <tr><td><strong class="highlight-text">NON-Commutative</strong></td><td><span class="highlight-text">AB ≠ BA in general</span></td></tr>
-                            <tr><td><strong>Identity</strong></td><td>AI = IA = A</td></tr>
-                            <tr><td><strong>Zero Matrix</strong></td><td>A0 = 0A = 0</td></tr>
-                        </table>
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);">
+                                            Property
+                                        </th>
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;">
+                                            Meaning
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Associative
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (AB)C = A(BC)
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Left Distributive
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            A(B + C) = AB + AC
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Right Distributive
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (A + B)C = AC + BC
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Scalar
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (kA)B = k(AB) = A(kB)
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--danger-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            NON-Commutative
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--danger-color);
+                                                   font-weight: 700;">
+                                            AB ≠ BA in general
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Identity
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            AI = IA = A
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Zero Matrix
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            A0 = 0A = 0
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="note-box" style="margin-top: 30px;">
                             <h4>💡 Multiplication with Special Matrices</h4>
@@ -1932,13 +2322,97 @@
                         </div>
 
                         <h3>Properties of Transpose</h3>
-                        <table style="width:100%; margin-top:20px; background: var(--bg-color); border-radius:8px; padding:15px;">
-                            <tr><th>Property</th><th>Formula</th></tr>
-                            <tr><td><strong>Double Transpose</strong></td><td>(Aᵀ)ᵀ = A</td></tr>
-                            <tr><td><strong>Addition</strong></td><td>(A + B)ᵀ = Aᵀ + Bᵀ</td></tr>
-                            <tr><td><strong>Scalar</strong></td><td>(kA)ᵀ = kAᵀ</td></tr>
-                            <tr><td><strong>Multiplication</strong></td><td><span class="highlight-text">(AB)ᵀ = BᵀAᵀ</span></td></tr>
-                        </table>
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);">
+                                            Property
+                                        </th>
+                                        <th style="padding: 20px 30px; 
+                                                   text-align: left; 
+                                                   font-size: 1.3rem; 
+                                                   font-weight: 700; 
+                                                   color: white;">
+                                            Formula
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Double Transpose
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (Aᵀ)ᵀ = A
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Addition
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (A + B)ᵀ = Aᵀ + Bᵀ
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Scalar
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);">
+                                            (kA)ᵀ = kAᵀ
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Multiplication
+                                        </td>
+                                        <td style="padding: 18px 30px; 
+                                                   font-size: 1.15rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--pivot-color);
+                                                   font-weight: 700;">
+                                            (AB)ᵀ = BᵀAᵀ
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="note-box" style="margin-top: 20px;">
                             <h4>💡 Key Formula for Products</h4>
@@ -1964,53 +2438,223 @@
                     <div class="slide">
                         <h2>2.10 Special Types of Matrices</h2>
 
-                        <table style="width:100%; background: var(--bg-color); border-radius:8px; padding:15px; font-size:1rem;">
-                            <tr style="background: var(--primary-color); color: white;">
-                                <th style="padding:10px;">Type</th>
-                                <th style="padding:10px;">Definition</th>
-                                <th style="padding:10px;">Example</th>
-                            </tr>
-                            <tr>
-                                <td><strong>Zero Matrix</strong></td>
-                                <td>All entries 0</td>
-                                <td>[[0 0],[0 0]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Identity Matrix Iₙ</strong></td>
-                                <td>Diagonal 1s, others 0</td>
-                                <td>[[1 0],[0 1]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Diagonal Matrix</strong></td>
-                                <td>Non-zero only on main diagonal</td>
-                                <td>[[2 0],[0 5]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Scalar Matrix</strong></td>
-                                <td>Diagonal with equal values</td>
-                                <td>3I = [[3 0],[0 3]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Symmetric Matrix</strong></td>
-                                <td>Aᵀ = A</td>
-                                <td>[[1 2],[2 3]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Skew-Symmetric</strong></td>
-                                <td>Aᵀ = −A, diagonal = 0</td>
-                                <td>[[0 2],[−2 0]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Upper Triangular</strong></td>
-                                <td>All below diagonal = 0</td>
-                                <td>[[1 2],[0 3]]</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Lower Triangular</strong></td>
-                                <td>All above diagonal = 0</td>
-                                <td>[[4 0],[2 1]]</td>
-                            </tr>
-                        </table>
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));">
+                                        <th style="padding: 20px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);
+                                                   width: 25%;">
+                                            Type
+                                        </th>
+                                        <th style="padding: 20px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);
+                                                   width: 40%;">
+                                            Definition
+                                        </th>
+                                        <th style="padding: 20px 25px; 
+                                                   text-align: center; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   width: 35%;">
+                                            Example
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Zero Matrix
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            All entries 0
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[0 0],[0 0]]
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Identity Matrix Iₙ
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Diagonal 1s, others 0
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[1 0],[0 1]]
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Diagonal Matrix
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Non-zero only on main diagonal
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[2 0],[0 5]]
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Scalar Matrix
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Diagonal with equal values
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            3I = [[3 0],[0 3]]
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Symmetric Matrix
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Aᵀ = A
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[1 2],[2 3]]
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2); background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Skew-Symmetric
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Aᵀ = −A, diagonal = 0
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[0 2],[−2 0]]
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Upper Triangular
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            All below diagonal = 0
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[1 2],[0 3]]
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(99, 102, 241, 0.03);">
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            Lower Triangular
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(99, 102, 241, 0.15);">
+                                            All above diagonal = 0
+                                        </td>
+                                        <td style="padding: 16px 25px; 
+                                                   font-size: 1.05rem;
+                                                   font-family: 'Courier New', monospace;
+                                                   color: var(--text-color);
+                                                   text-align: center;">
+                                            [[4 0],[2 1]]
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="slide-navigation">
                             <button class="nav-btn btn-prev"
@@ -2122,41 +2766,170 @@
                     <div class="slide">
                         <h2>2.12 Common Mistakes to Avoid</h2>
 
-                        <table style="width:100%; background: var(--bg-color); border-radius:8px; padding:15px;">
-                            <tr style="background: var(--danger-color); color: white;">
-                                <th style="padding:12px;">Mistake</th>
-                                <th style="padding:12px;">Why It's Wrong</th>
-                                <th style="padding:12px;">Correct Thinking</th>
-                            </tr>
-                            <tr>
-                                <td>Adding matrices of different sizes</td>
-                                <td>Operation undefined</td>
-                                <td>Check dimensions first</td>
-                            </tr>
-                            <tr>
-                                <td>Thinking AB = BA</td>
-                                <td>Not true for most matrices</td>
-                                <td><span class="highlight-text">Order matters!</span></td>
-                            </tr>
-                            <tr>
-                                <td>Canceling A from AB = AC</td>
-                                <td>Not valid unless A is invertible</td>
-                                <td>Multiply by A⁻¹ only if it exists</td>
-                            </tr>
-                            <tr>
-                                <td>Assuming AB = 0 → A = 0 or B = 0</td>
-                                <td>False</td>
-                                <td>Counterexamples exist</td>
-                            </tr>
-                        </table>
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table style="width: 100%; 
+                                          border-collapse: collapse; 
+                                          background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05));
+                                          border-radius: 12px;
+                                          overflow: hidden;
+                                          box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                                        <th style="padding: 20px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);
+                                                   width: 30%;">
+                                            Mistake
+                                        </th>
+                                        <th style="padding: 20px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   border-right: 1px solid rgba(255, 255, 255, 0.2);
+                                                   width: 35%;">
+                                            Why It's Wrong
+                                        </th>
+                                        <th style="padding: 20px 25px; 
+                                                   text-align: left; 
+                                                   font-size: 1.2rem; 
+                                                   font-weight: 700; 
+                                                   color: white;
+                                                   width: 35%;">
+                                            Correct Thinking
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Adding matrices of different sizes
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Operation undefined
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);">
+                                            Check dimensions first
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.03);">
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Thinking AB = BA
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Not true for most matrices
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--pivot-color);
+                                                   font-weight: 700;">
+                                            Order matters!
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Canceling A from AB = AC
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Not valid unless A is invertible
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);">
+                                            Multiply by A⁻¹ only if it exists
+                                        </td>
+                                    </tr>
+                                    <tr style="background: rgba(239, 68, 68, 0.03);">
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.1rem; 
+                                                   font-weight: 600;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            Assuming AB = 0 → A = 0 or B = 0
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);
+                                                   border-right: 1px solid rgba(239, 68, 68, 0.15);">
+                                            False
+                                        </td>
+                                        <td style="padding: 18px 25px; 
+                                                   font-size: 1.05rem;
+                                                   color: var(--text-color);">
+                                            Counterexamples exist
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                        <h3 style="margin-top: 30px;">Mini Quiz (Concept Check)</h3>
-                        <div class="note-box">
-                            <p>1️⃣ Can you add a 2×3 matrix with a 3×2 matrix? → <span class="highlight-text">❌ No</span></p>
-                            <p>2️⃣ If A is 3×2 and B is 2×4, what's size of AB? → <span class="success-text">✅ 3×4</span></p>
-                            <p>3️⃣ If Aᵀ = A, what type is it? → <span class="success-text">✅ Symmetric</span></p>
-                            <p>4️⃣ If Aᵀ = −A? → <span class="success-text">✅ Skew-symmetric</span></p>
-                            <p>5️⃣ What's (AB)ᵀ? → <span class="success-text">✅ BᵀAᵀ</span></p>
+                        <h3 style="margin-top: 40px; color: var(--secondary-color);">Mini Quiz (Concept Check)</h3>
+                        <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(99, 102, 241, 0.1));
+                                    border: 2px solid var(--secondary-color);
+                                    border-radius: 12px;
+                                    padding: 30px;
+                                    margin-top: 20px;
+                                    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; 
+                                        background: rgba(0, 0, 0, 0.2); border-radius: 8px; border-left: 4px solid var(--info-color);">
+                                <span style="font-size: 1.8rem;">1️⃣</span>
+                                <span style="font-size: 1.15rem; flex: 1;">Can you add a 2×3 matrix with a 3×2 matrix?</span>
+                                <span style="font-size: 1.3rem; font-weight: 700; color: var(--danger-color);">❌ No</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; 
+                                        background: rgba(0, 0, 0, 0.2); border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <span style="font-size: 1.8rem;">2️⃣</span>
+                                <span style="font-size: 1.15rem; flex: 1;">If A is 3×2 and B is 2×4, what's size of AB?</span>
+                                <span style="font-size: 1.3rem; font-weight: 700; color: var(--success-color);">✅ 3×4</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; 
+                                        background: rgba(0, 0, 0, 0.2); border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <span style="font-size: 1.8rem;">3️⃣</span>
+                                <span style="font-size: 1.15rem; flex: 1;">If Aᵀ = A, what type is it?</span>
+                                <span style="font-size: 1.3rem; font-weight: 700; color: var(--success-color);">✅ Symmetric</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding: 15px; 
+                                        background: rgba(0, 0, 0, 0.2); border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <span style="font-size: 1.8rem;">4️⃣</span>
+                                <span style="font-size: 1.15rem; flex: 1;">If Aᵀ = −A?</span>
+                                <span style="font-size: 1.3rem; font-weight: 700; color: var(--success-color);">✅ Skew-symmetric</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 15px; padding: 15px; 
+                                        background: rgba(0, 0, 0, 0.2); border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <span style="font-size: 1.8rem;">5️⃣</span>
+                                <span style="font-size: 1.15rem; flex: 1;">What's (AB)ᵀ?</span>
+                                <span style="font-size: 1.3rem; font-weight: 700; color: var(--success-color);">✅ BᵀAᵀ</span>
+                            </div>
                         </div>
 
                         <div class="slide-navigation">
