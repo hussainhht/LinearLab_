@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RREF Studio 🎓 - Gauss-Jordan Elimination Visualizer</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>🎓 RREF Studio</h1>
+                <p class="subtitle">Interactive Gauss-Jordan Elimination
+                    Visualizer</p>
+            </header>
+
+            <div class="main-content">
+                <!-- Control Panel -->
+                <div class="control-panel">
+                    <h2>📊 Matrix Setup</h2>
+
+                    <div class="size-controls">
+                        <label>
+                            Rows: <input type="number" id="rows" value="3"
+                                min="2" max="6">
+                        </label>
+                        <label>
+                            Columns: <input type="number" id="cols" value="3"
+                                min="2" max="6">
+                        </label>
+                        <button id="createMatrix" class="btn btn-primary">Create
+                            Matrix</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="loadExample" class="btn btn-secondary">📖
+                            Load Example</button>
+                        <button id="randomMatrix" class="btn btn-secondary">🎲
+                            Random Matrix</button>
+                        <button id="clearMatrix" class="btn btn-secondary">🗑️
+                            Clear</button>
+                    </div>
+
+                    <div class="solve-controls">
+                        <button id="startSolve" class="btn btn-success">▶️ Start
+                            Solution</button>
+                        <button id="nextStep" class="btn btn-primary"
+                            disabled>⏭️ Next Step</button>
+                        <button id="autoPlay" class="btn btn-info" disabled>⏩
+                            Auto Play</button>
+                        <button id="reset" class="btn btn-warning">🔄
+                            Reset</button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label>
+                            Animation Speed:
+                            <input type="range" id="speed" min="500" max="3000"
+                                value="1500" step="250">
+                            <span id="speedLabel">1.5s</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Matrix Display -->
+                <div class="matrix-section">
+                    <h2>Matrix [A|b]</h2>
+                    <div id="matrixContainer" class="matrix-container">
+                        <!-- Matrix will be generated here -->
+                    </div>
+                    <div class="step-counter">
+                        <span id="stepNumber">Step 0</span> of <span
+                            id="totalSteps">0</span>
+                    </div>
+                </div>
+
+                <!-- Explanation Panel -->
+                <div class="explanation-panel">
+                    <h2>📝 Explanation</h2>
+                    <div id="explanationContent" class="explanation-content">
+                        <p class="instruction">👉 Enter your matrix values and
+                            click "Start Solution" to begin.</p>
+                    </div>
+
+                    <div id="solutionPanel" class="solution-panel"
+                        style="display: none;">
+                        <h3>✨ Solution</h3>
+                        <div id="solutionContent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step History -->
+            <div class="history-section">
+                <h2>📚 Step History</h2>
+                <div id="historyList" class="history-list">
+                    <p class="empty-state">No steps yet. Start solving to see
+                        the history.</p>
+                </div>
+            </div>
+
+            <footer>
+                <p>Built with ❤️ by student Hussain Ali | University of Bahrain</p>
+                <p class="footer-note">Making math visual & fun ✨</p>
+            </footer>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
