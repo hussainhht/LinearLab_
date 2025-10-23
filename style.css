@@ -57,6 +57,74 @@ header h1 {
 .subtitle {
     color: var(--text-muted);
     font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.2);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.tab-icon {
+    font-size: 1.5rem;
+}
+
+.tab-text {
+    font-weight: 700;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Main Content Grid */
@@ -364,6 +432,805 @@ input[type="number"] {
     font-weight: 600;
 }
 
+/* Matrix Operations in RREF Section */
+.matrix-operations-rref {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-color);
+}
+
+.matrix-operations-rref h3 {
+    color: var(--info-color);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.matrix-operations-rref .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Operation Result Display */
+.operation-result {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 15px;
+    border-left: 4px solid var(--info-color);
+}
+
+.operation-result h4 {
+    color: var(--info-color);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.operation-result .result-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--success-color);
+    text-align: center;
+    padding: 20px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.operation-result .result-matrix {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.operation-result .result-matrix table {
+    background: rgba(99, 102, 241, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.operation-result .result-matrix td {
+    padding: 8px 12px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-color);
+    min-width: 60px;
+}
+
+.operation-result .explanation {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(148, 163, 184, 0.1);
+    border-radius: 8px;
+}
+
+.operation-result .space-result h5 {
+    color: var(--secondary-color);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.operation-result .space-result table {
+    background: rgba(139, 92, 246, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.operation-result .space-result td {
+    padding: 6px 10px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+/* Operations Section */
+/* Matrix Input at Top */
+.matrix-input-top {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.matrix-selector-top {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    min-width: 400px;
+}
+
+.matrix-selector-top h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+/* Operations Layout - Sidebar Style */
+.operations-layout {
+    display: flex;
+    gap: 20px;
+    min-height: 60vh;
+}
+
+.operations-sidebar {
+    width: 350px;
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    max-height: 85vh;
+    position: sticky;
+    top: 20px;
+}
+
+.operations-sidebar h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.operations-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 25px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.5) 100%);
+    border-radius: 12px;
+}
+
+.operation-result {
+    background: var(--bg-color);
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid var(--primary-color);
+    width: 100%;
+    max-width: 900px;
+}
+
+.operation-result h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.sidebar-section {
+    margin-bottom: 20px;
+}
+
+.operations-section {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+.operations-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.matrix-input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.matrix-selector {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.matrix-selector h3 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.matrix-size-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.matrix-size-controls label {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.matrix-size-controls input {
+    width: 50px;
+    padding: 5px;
+}
+
+.btn-small {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-small:active {
+    transform: translateY(0);
+}
+
+.btn-small.btn-primary {
+    background: var(--primary-color);
+}
+
+.btn-small.btn-secondary {
+    background: var(--secondary-color);
+}
+
+.btn-small.btn-info {
+    background: var(--info-color);
+}
+
+.btn-tiny {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.btn-tiny:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.quick-examples {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.quick-examples label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.mini-matrix-container {
+    background: var(--surface-color);
+    padding: 10px;
+    border-radius: 6px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.mini-matrix-container:hover {
+    border-color: var(--primary-color);
+}
+
+.mini-matrix-table {
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+.mini-matrix-table td {
+    min-width: 45px;
+    text-align: center;
+}
+
+.mini-matrix-cell {
+    width: 45px;
+    padding: 8px 4px;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.mini-matrix-cell:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    transform: scale(1.05);
+}
+
+.mini-matrix-cell:hover {
+    border-color: var(--info-color);
+}
+
+.operations-group {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.operations-group h3 {
+    color: var(--info-color);
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+
+.operations-group h4 {
+    color: var(--text-muted);
+    margin: 12px 0 8px 0;
+    font-size: 0.95rem;
+}
+
+.op-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.btn-op {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-op:hover:not(:disabled) {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-op:active {
+    transform: translateY(0);
+}
+
+.btn-op:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.scalar-controls {
+    margin: 12px 0;
+}
+
+.scalar-controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scalar-controls input {
+    width: 100%;
+    padding: 8px;
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.scalar-controls input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.special-matrices {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.special-matrices label {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+.special-matrices input {
+    width: 100%;
+    margin-top: 5px;
+    padding: 6px;
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+}
+
+.result-content {
+    background: var(--surface-color);
+    padding: 20px;
+    border-radius: 6px;
+    min-height: 150px;
+    max-height: 70vh;
+    overflow-y: auto;
+    line-height: 1.6;
+}
+
+.result-content h4 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.result-content p {
+    margin: 10px 0;
+}
+
+.result-content .empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.result-matrix-display {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.result-matrix-table {
+    border-collapse: separate;
+    border-spacing: 6px;
+}
+
+.result-matrix-table td {
+    padding: 12px 16px;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 60px;
+}
+
+.result-explanation {
+    background: rgba(99, 102, 241, 0.1);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.result-explanation h4 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.result-explanation p {
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid var(--danger-color);
+    padding: 15px;
+    border-radius: 6px;
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+.success-message {
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 4px solid var(--success-color);
+    padding: 15px;
+    border-radius: 6px;
+    color: var(--success-color);
+}
+
+.info-box {
+    background: rgba(6, 182, 212, 0.1);
+    border-left: 4px solid var(--info-color);
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 10px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.info-box strong {
+    color: var(--info-color);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Multiplication Animation Styles */
+.animation-controls {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-animate {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    background: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-animate:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-animate:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.multiplication-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.matrix-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.matrix-label {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.anim-matrix {
+    background: var(--bg-color);
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+.anim-matrix-table {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+.anim-cell {
+    min-width: 50px;
+    min-height: 50px;
+    padding: 10px;
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s ease;
+}
+
+.anim-cell.highlight-row {
+    background: rgba(251, 191, 36, 0.3);
+    border-color: var(--pivot-color);
+    animation: pulse-row 1s ease-in-out;
+}
+
+.anim-cell.highlight-col {
+    background: rgba(52, 211, 153, 0.3);
+    border-color: var(--highlight-color);
+    animation: pulse-col 1s ease-in-out;
+}
+
+.anim-cell.highlight-computing {
+    background: rgba(99, 102, 241, 0.4);
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.anim-cell.highlight-result {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    animation: popIn 0.5s ease-out;
+}
+
+.anim-cell.completed {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: var(--success-color);
+}
+
+.multiply-symbol,
+.equals-symbol {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.calculation-steps {
+    margin: 30px 0;
+    padding: 20px;
+    background: var(--bg-color);
+    border-radius: 8px;
+    border: 2px solid var(--primary-color);
+    min-height: 100px;
+}
+
+.current-calculation h4 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.calculation-formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 15px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.calc-term {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 1.1rem;
+}
+
+.highlight-a {
+    color: var(--pivot-color);
+    font-weight: 700;
+}
+
+.highlight-b {
+    color: var(--highlight-color);
+    font-weight: 700;
+}
+
+.calc-product {
+    color: var(--info-color);
+    font-weight: 700;
+}
+
+.calculation-sum {
+    padding: 15px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.final-sum {
+    color: var(--success-color);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.formula {
+    font-family: 'Courier New', monospace;
+    background: var(--surface-color);
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+
+@keyframes pulse-row {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes pulse-col {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+.property-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.property-list li {
+    padding: 8px;
+    margin: 5px 0;
+    background: var(--bg-color);
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
 /* History Section */
 .history-section {
     margin-bottom: 30px;
@@ -451,6 +1318,30 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 1400px) {
+    .matrix-input-section {
+        grid-template-columns: 1fr;
+    }
+
+    .operations-layout {
+        flex-direction: column;
+    }
+
+    .operations-sidebar {
+        width: 100%;
+        max-height: none;
+        position: relative;
+    }
+
+    .operations-main {
+        padding: 15px;
+    }
+
+    .operation-result {
+        max-width: 100%;
+    }
+}
+
 @media (max-width: 1200px) {
     .main-content {
         grid-template-columns: 1fr;
@@ -458,6 +1349,16 @@ footer {
 
     header h1 {
         font-size: 2rem;
+    }
+
+    .tab-navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tab-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -476,6 +1377,62 @@ footer {
     .btn {
         font-size: 0.9rem;
         padding: 10px 15px;
+    }
+
+    .op-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .tab-icon {
+        font-size: 1.2rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .multiplication-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .multiply-symbol,
+    .equals-symbol {
+        font-size: 1.5rem;
+        transform: rotate(90deg);
+    }
+
+    .equals-symbol {
+        margin: 10px 0;
+    }
+
+    .anim-cell {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 8px;
+        font-size: 1rem;
+    }
+
+    .animation-controls {
+        flex-direction: column;
+    }
+
+    .btn-animate {
+        width: 100%;
+    }
+
+    .calculation-formula {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 

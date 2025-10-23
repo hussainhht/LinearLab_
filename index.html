@@ -9,86 +9,288 @@
     <body>
         <div class="container">
             <header>
-                <h1>🎓 RREF Studio</h1>
-                <p class="subtitle">Interactive Gauss-Jordan Elimination
-                    Visualizer</p>
+                <h1>🎓 Linear Algebra Studio</h1>
+                <p class="subtitle">Interactive Matrix Operations & RREF
+                    Solver</p>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-btn active" data-tab="rref">
+                        <span class="tab-icon">🔢</span>
+                        <span class="tab-text">RREF Solver</span>
+                    </button>
+                    <button class="tab-btn" data-tab="operations">
+                        <span class="tab-icon">🧮</span>
+                        <span class="tab-text">Matrix Operations</span>
+                    </button>
+                </div>
             </header>
 
-            <div class="main-content">
-                <!-- Control Panel -->
-                <div class="control-panel">
-                    <h2>📊 Matrix Setup</h2>
+            <!-- RREF Solver Section -->
+            <div id="rrefSection" class="tab-content active">
+                <div class="main-content">
+                    <!-- Control Panel -->
+                    <div class="control-panel">
+                        <h2>📊 Matrix Setup</h2>
 
-                    <div class="size-controls">
-                        <label>
-                            Rows: <input type="number" id="rows" value="3"
-                                min="2" max="6">
-                        </label>
-                        <label>
-                            Columns: <input type="number" id="cols" value="3"
-                                min="2" max="6">
-                        </label>
-                        <button id="createMatrix" class="btn btn-primary">Create
-                            Matrix</button>
+                        <div class="size-controls">
+                            <label>
+                                Rows: <input type="number" id="rows" value="3"
+                                    min="2" max="6">
+                            </label>
+                            <label>
+                                Columns: <input type="number" id="cols"
+                                    value="3"
+                                    min="2" max="6">
+                            </label>
+                            <button id="createMatrix"
+                                class="btn btn-primary">Create
+                                Matrix</button>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="loadExample"
+                                class="btn btn-secondary">📖
+                                Load Example</button>
+                            <button id="randomMatrix"
+                                class="btn btn-secondary">🎲
+                                Random Matrix</button>
+                            <button id="clearMatrix"
+                                class="btn btn-secondary">🗑️
+                                Clear</button>
+                        </div>
+
+                        <div class="solve-controls">
+                            <button id="startSolve" class="btn btn-success">▶️
+                                Start
+                                Solution</button>
+                            <button id="nextStep" class="btn btn-primary"
+                                disabled>⏭️ Next Step</button>
+                            <button id="autoPlay" class="btn btn-info"
+                                disabled>⏩
+                                Auto Play</button>
+                            <button id="reset" class="btn btn-warning">🔄
+                                Reset</button>
+                        </div>
+
+                        <div class="speed-control">
+                            <label>
+                                Animation Speed:
+                                <input type="range" id="speed" min="500"
+                                    max="3000"
+                                    value="1500" step="250">
+                                <span id="speedLabel">1.5s</span>
+                            </label>
+                        </div>
+
+                        <!-- Single Matrix Operations -->
+                        <div class="matrix-operations-rref">
+                            <h3>🔧 Matrix Operations</h3>
+                            <button id="rrefTranspose"
+                                class="btn btn-secondary">Transpose</button>
+                            <button id="rrefDeterminant"
+                                class="btn btn-warning">Determinant</button>
+                            <button id="rrefInverse"
+                                class="btn btn-danger">Inverse</button>
+                            <button id="rrefRank"
+                                class="btn btn-info">Rank</button>
+                        </div>
                     </div>
 
-                    <div class="action-buttons">
-                        <button id="loadExample" class="btn btn-secondary">📖
-                            Load Example</button>
-                        <button id="randomMatrix" class="btn btn-secondary">🎲
-                            Random Matrix</button>
-                        <button id="clearMatrix" class="btn btn-secondary">🗑️
-                            Clear</button>
+                    <!-- Matrix Display -->
+                    <div class="matrix-section">
+                        <h2>Matrix [A|b]</h2>
+                        <div id="matrixContainer" class="matrix-container">
+                            <!-- Matrix will be generated here -->
+                        </div>
+                        <div class="step-counter">
+                            <span id="stepNumber">Step 0</span> of <span
+                                id="totalSteps">0</span>
+                        </div>
                     </div>
 
-                    <div class="solve-controls">
-                        <button id="startSolve" class="btn btn-success">▶️ Start
-                            Solution</button>
-                        <button id="nextStep" class="btn btn-primary"
-                            disabled>⏭️ Next Step</button>
-                        <button id="autoPlay" class="btn btn-info" disabled>⏩
-                            Auto Play</button>
-                        <button id="reset" class="btn btn-warning">🔄
-                            Reset</button>
-                    </div>
+                    <!-- Explanation Panel -->
+                    <div class="explanation-panel">
+                        <h2>📝 Explanation</h2>
+                        <div id="explanationContent"
+                            class="explanation-content">
+                            <p class="instruction">👉 Enter your matrix values
+                                and
+                                click "Start Solution" to begin.</p>
+                        </div>
 
-                    <div class="speed-control">
-                        <label>
-                            Animation Speed:
-                            <input type="range" id="speed" min="500" max="3000"
-                                value="1500" step="250">
-                            <span id="speedLabel">1.5s</span>
-                        </label>
+                        <div id="solutionPanel" class="solution-panel"
+                            style="display: none;">
+                            <h3>✨ Solution</h3>
+                            <div id="solutionContent"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Matrix Display -->
-                <div class="matrix-section">
-                    <h2>Matrix [A|b]</h2>
-                    <div id="matrixContainer" class="matrix-container">
-                        <!-- Matrix will be generated here -->
-                    </div>
-                    <div class="step-counter">
-                        <span id="stepNumber">Step 0</span> of <span
-                            id="totalSteps">0</span>
-                    </div>
-                </div>
-
-                <!-- Explanation Panel -->
-                <div class="explanation-panel">
-                    <h2>📝 Explanation</h2>
-                    <div id="explanationContent" class="explanation-content">
-                        <p class="instruction">👉 Enter your matrix values and
-                            click "Start Solution" to begin.</p>
-                    </div>
-
-                    <div id="solutionPanel" class="solution-panel"
-                        style="display: none;">
-                        <h3>✨ Solution</h3>
-                        <div id="solutionContent"></div>
+                <!-- Step History for RREF -->
+                <div class="history-section">
+                    <h2>📚 Step History</h2>
+                    <div id="historyList" class="history-list">
+                        <p class="empty-state">No steps yet. Start solving to
+                            see
+                            the history.</p>
                     </div>
                 </div>
             </div>
+            <!-- End RREF Section -->
+
+            <!-- Matrix Operations Section -->
+            <div id="operationsSection" class="tab-content">
+                <!-- Matrix Input at Top -->
+                <div class="matrix-input-top">
+                    <div class="matrix-selector-top">
+                        <h3>Matrix A</h3>
+                        <div class="matrix-size-controls">
+                            <label>Rows: <input type="number"
+                                    id="matrixARows"
+                                    value="2" min="1" max="5"></label>
+                            <label>Cols: <input type="number"
+                                    id="matrixACols"
+                                    value="2" min="1" max="5"></label>
+                            <button id="createMatrixA"
+                                class="btn-small btn-primary">Create
+                                A</button>
+                            <button id="randomMatrixA"
+                                class="btn-small btn-info">🎲
+                                Random</button>
+                            <button id="clearMatrixA"
+                                class="btn-small btn-secondary">🗑️
+                                Clear</button>
+                        </div>
+                        <div id="matrixAContainer"
+                            class="mini-matrix-container"></div>
+                        <div class="quick-examples">
+                            <label>Quick Examples:</label>
+                            <button id="exampleA1"
+                                class="btn-tiny">2×2</button>
+                            <button id="exampleA2"
+                                class="btn-tiny">3×3</button>
+                        </div>
+                    </div>
+
+                    <div class="matrix-selector-top">
+                        <h3>Matrix B</h3>
+                        <div class="matrix-size-controls">
+                            <label>Rows: <input type="number"
+                                    id="matrixBRows"
+                                    value="2" min="1" max="5"></label>
+                            <label>Cols: <input type="number"
+                                    id="matrixBCols"
+                                    value="2" min="1" max="5"></label>
+                            <button id="createMatrixB"
+                                class="btn-small btn-primary">Create
+                                B</button>
+                            <button id="randomMatrixB"
+                                class="btn-small btn-info">🎲
+                                Random</button>
+                            <button id="clearMatrixB"
+                                class="btn-small btn-secondary">🗑️
+                                Clear</button>
+                        </div>
+                        <div id="matrixBContainer"
+                            class="mini-matrix-container"></div>
+                        <div class="quick-examples">
+                            <label>Quick Examples:</label>
+                            <button id="exampleB1"
+                                class="btn-tiny">2×2</button>
+                            <button id="exampleB2"
+                                class="btn-tiny">3×3</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operations and Results -->
+                <div class="operations-layout">
+                    <!-- Sidebar -->
+                    <div class="operations-sidebar">
+                        <h2>🧮 Controls</h2>
+
+                        <!-- Level 1 Operations -->
+                        <div class="operations-group">
+                            <h3>📊 Level 1: Basic Operations</h3>
+
+                            <div class="op-buttons">
+                                <button id="opAdd" class="btn-op btn-success">A
+                                    +
+                                    B</button>
+                                <button id="opSubtract"
+                                    class="btn-op btn-success">A
+                                    -
+                                    B</button>
+                                <button id="opMultiply"
+                                    class="btn-op btn-info">A ×
+                                    B</button>
+                                <button id="opTranspose"
+                                    class="btn-op btn-secondary">Transpose
+                                    A</button>
+                            </div>
+
+                            <div class="scalar-controls">
+                                <label>
+                                    Scalar k:
+                                    <input type="number" id="scalarValue"
+                                        value="2"
+                                        step="0.1">
+                                    <button id="opScalar"
+                                        class="btn-op btn-warning">k ·
+                                        A</button>
+                                </label>
+                            </div>
+
+                            <div class="special-matrices">
+                                <h4>Special Matrices</h4>
+                                <div class="op-buttons">
+                                    <button id="createIdentity"
+                                        class="btn-op btn-secondary">Identity</button>
+                                    <button id="createZero"
+                                        class="btn-op btn-secondary">Zero</button>
+                                    <button id="createRandom"
+                                        class="btn-op btn-info">Random</button>
+                                </div>
+                                <label>Size: <input type="number"
+                                        id="specialSize"
+                                        value="3" min="1" max="6"></label>
+                            </div>
+                        </div>
+
+                        <!-- Level 2 Operations -->
+                        <div class="operations-group">
+                            <h3>🎓 Level 2: Advanced Operations</h3>
+
+                            <div class="op-buttons">
+                                <button id="opDeterminant"
+                                    class="btn-op btn-warning">Determinant</button>
+                                <button id="opInverse"
+                                    class="btn-op btn-danger">Inverse</button>
+                                <button id="opRank"
+                                    class="btn-op btn-info">Rank</button>
+                                <button id="opSpaces"
+                                    class="btn-op btn-secondary">Column/Null
+                                    Space</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Area -->
+                    <div class="operations-main">
+                        <!-- Result Display -->
+                        <div id="operationResult" class="operation-result">
+                            <h3>Result</h3>
+                            <div id="resultContent" class="result-content">
+                                <p class="empty-state">Perform an operation to
+                                    see
+                                    results</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Operations Section -->
 
             <!-- Step History -->
             <div class="history-section">
@@ -100,7 +302,8 @@
             </div>
 
             <footer>
-                <p>Built with ❤️ by student Hussain Ali | University of Bahrain</p>
+                <p>Built with ❤️ by student Hussain Ali | University of
+                    Bahrain</p>
                 <p class="footer-note">Making math visual & fun ✨</p>
             </footer>
         </div>
