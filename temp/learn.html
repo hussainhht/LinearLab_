@@ -175,45 +175,47 @@
                             More Examples</div>
                         <div class="lesson-item" onclick="showSlide(55)">4.6
                             What is NOT a Vector Space</div>
-                        <div class="lesson-item" onclick="showSlide(56)">4.7
+                        <div class="lesson-item" onclick="showSlide(56)">4.6.5
+                            Vector Space Checker</div>
+                        <div class="lesson-item" onclick="showSlide(57)">4.7
                             Subspaces</div>
-                        <div class="lesson-item" onclick="showSlide(57)">4.8
+                        <div class="lesson-item" onclick="showSlide(58)">4.8
                             Testing Subspaces</div>
-                        <div class="lesson-item" onclick="showSlide(58)">4.9
+                        <div class="lesson-item" onclick="showSlide(59)">4.9
                             Examples of Subspaces</div>
-                        <div class="lesson-item" onclick="showSlide(59)">4.10
+                        <div class="lesson-item" onclick="showSlide(60)">4.10
                             Important Subspaces</div>
-                        <div class="lesson-item" onclick="showSlide(60)">4.11
+                        <div class="lesson-item" onclick="showSlide(61)">4.11
                             Geometric View</div>
-                        <div class="lesson-item" onclick="showSlide(61)">4.12
+                        <div class="lesson-item" onclick="showSlide(62)">4.12
                             Zero and Whole Subspaces</div>
-                        <div class="lesson-item" onclick="showSlide(62)">4.13
+                        <div class="lesson-item" onclick="showSlide(63)">4.13
                             Span of Vectors</div>
-                        <div class="lesson-item" onclick="showSlide(63)">4.14
+                        <div class="lesson-item" onclick="showSlide(64)">4.14
                             Span and Subspace Relation</div>
-                        <div class="lesson-item" onclick="showSlide(64)">4.15
+                        <div class="lesson-item" onclick="showSlide(65)">4.15
                             Bases and Dimensions - Intro</div>
-                        <div class="lesson-item" onclick="showSlide(65)">4.16
+                        <div class="lesson-item" onclick="showSlide(66)">4.16
                             The Idea Behind a Basis</div>
-                        <div class="lesson-item" onclick="showSlide(66)">4.17
+                        <div class="lesson-item" onclick="showSlide(67)">4.17
                             Examples of Bases</div>
-                        <div class="lesson-item" onclick="showSlide(67)">4.18
+                        <div class="lesson-item" onclick="showSlide(68)">4.18
                             Different Bases, Same Space</div>
-                        <div class="lesson-item" onclick="showSlide(68)">4.19
+                        <div class="lesson-item" onclick="showSlide(69)">4.19
                             Dimension</div>
-                        <div class="lesson-item" onclick="showSlide(69)">4.20
+                        <div class="lesson-item" onclick="showSlide(70)">4.20
                             Finding a Basis from Vectors</div>
-                        <div class="lesson-item" onclick="showSlide(70)">4.21
+                        <div class="lesson-item" onclick="showSlide(71)">4.21
                             Rank and Basis Relationship</div>
-                        <div class="lesson-item" onclick="showSlide(71)">4.22
+                        <div class="lesson-item" onclick="showSlide(72)">4.22
                             Basis for Null Space</div>
-                        <div class="lesson-item" onclick="showSlide(72)">4.23
+                        <div class="lesson-item" onclick="showSlide(73)">4.23
                             Basis Theorem</div>
-                        <div class="lesson-item" onclick="showSlide(73)">4.24
+                        <div class="lesson-item" onclick="showSlide(74)">4.24
                             Basis for a Subspace</div>
-                        <div class="lesson-item" onclick="showSlide(74)">4.25
+                        <div class="lesson-item" onclick="showSlide(75)">4.25
                             Rank-Nullity Theorem</div>
-                        <div class="lesson-item" onclick="showSlide(75)">4.26
+                        <div class="lesson-item" onclick="showSlide(76)">4.26
                             Summary</div>
                     </div>
                 </div>
@@ -5657,6 +5659,100 @@
                             <div class="slide-progress">
                                 Slide <span class="currentSlide">56</span> of
                                 <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 56.5: Interactive Vector Space Checker -->
+                    <div class="slide" id="slide-vector-space-checker">
+                        <h2>🔍 Interactive Vector Space Checker</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 Test If a Set is a Vector Space</h3>
+                            <p>Use this tool to check if a given set satisfies
+                                all 8 vector space axioms!</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>📝 Select a Set to Test</h4>
+                            <p>Choose from common examples or describe your
+                                own:</p>
+
+                            <div style="margin: 20px 0;">
+                                <label
+                                    style="display: block; margin-bottom: 10px; font-weight: 600;">Choose
+                                    a set:</label>
+                                <select id="vectorSpaceSelect"
+                                    onchange="updateVectorSpaceDescription()"
+                                    style="width: 100%; padding: 12px; background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 1rem;">
+                                    <option value="r2">ℝ² (All 2D
+                                        vectors)</option>
+                                    <option value="r3">ℝ³ (All 3D
+                                        vectors)</option>
+                                    <option value="line_origin">Line through
+                                        origin: y = 2x</option>
+                                    <option value="line_not_origin">Line NOT
+                                        through origin: y = x + 1</option>
+                                    <option value="xy_plane">The xy-plane in ℝ³
+                                        (z = 0)</option>
+                                    <option value="first_quadrant">First
+                                        quadrant only (x ≥ 0, y ≥ 0)</option>
+                                    <option value="positive_reals">Positive real
+                                        numbers only (x > 0)</option>
+                                    <option value="matrices_2x2">All 2×2
+                                        matrices</option>
+                                    <option value="polynomials">Polynomials of
+                                        degree ≤ 2</option>
+                                    <option value="integers">Integer vectors
+                                        only</option>
+                                </select>
+                            </div>
+
+                            <div id="setDescription"
+                                style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid var(--secondary-color);">
+                                <h4 style="margin-top: 0;">Set Description:</h4>
+                                <p id="descriptionText">All ordered pairs (x, y)
+                                    where x, y ∈ ℝ</p>
+                                <div id="descriptionFormula"
+                                    style="margin-top: 10px; text-align: center;">
+                                    $$V = \mathbb{R}^2 = \{(x, y) : x, y \in
+                                    \mathbb{R}\}$$
+                                </div>
+                            </div>
+
+                            <button onclick="checkVectorSpace()"
+                                style="width: 100%; padding: 15px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); transition: all 0.3s;">
+                                🔍 Check All 8 Axioms
+                            </button>
+
+                            <div id="vectorSpaceResult"
+                                style="margin-top: 25px; display: none;"></div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 How This Works</h4>
+                            <p>The checker will test all 8 axioms:</p>
+                            <ol style="line-height: 1.8; margin-top: 10px;">
+                                <li>Closure under addition</li>
+                                <li>Commutativity of addition</li>
+                                <li>Associativity of addition</li>
+                                <li>Existence of zero vector</li>
+                                <li>Existence of additive inverse</li>
+                                <li>Closure under scalar multiplication</li>
+                                <li>Distributive properties</li>
+                                <li>Scalar multiplication identity</li>
+                            </ol>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">56.5</span> of
+                                <span class="totalSlides">77</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ➡</button>

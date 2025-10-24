@@ -1040,3 +1040,261 @@ function formatNumber(num) {
     if (Number.isInteger(num)) return num.toString();
     return num.toFixed(3);
 }
+
+// ============================================
+// Vector Space Checker Functions
+// ============================================
+
+// Update description based on selected set
+function updateVectorSpaceDescription() {
+    const selectElement = document.getElementById('vectorSpaceSelect');
+    const selectedValue = selectElement.value;
+    const descriptionText = document.getElementById('descriptionText');
+    const descriptionFormula = document.getElementById('descriptionFormula');
+
+    const descriptions = {
+        'r2': {
+            text: 'All ordered pairs (x, y) where x, y ∈ ℝ',
+            formula: '$$V = \\mathbb{R}^2 = \\{(x, y) : x, y \\in \\mathbb{R}\\}$$'
+        },
+        'r3': {
+            text: 'All ordered triples (x, y, z) where x, y, z ∈ ℝ',
+            formula: '$$V = \\mathbb{R}^3 = \\{(x, y, z) : x, y, z \\in \\mathbb{R}\\}$$'
+        },
+        'line_origin': {
+            text: 'All points (x, y) that lie on the line y = 2x passing through the origin',
+            formula: '$$V = \\{(x, y) : y = 2x\\}$$'
+        },
+        'line_not_origin': {
+            text: 'All points (x, y) that lie on the line y = x + 1 (does NOT pass through origin)',
+            formula: '$$V = \\{(x, y) : y = x + 1\\}$$'
+        },
+        'xy_plane': {
+            text: 'All points in ℝ³ where the z-coordinate is 0 (the xy-plane)',
+            formula: '$$V = \\{(x, y, z) \\in \\mathbb{R}^3 : z = 0\\}$$'
+        },
+        'first_quadrant': {
+            text: 'All points in the first quadrant only (both coordinates non-negative)',
+            formula: '$$V = \\{(x, y) : x \\geq 0, y \\geq 0\\}$$'
+        },
+        'positive_reals': {
+            text: 'Only positive real numbers',
+            formula: '$$V = \\{x \\in \\mathbb{R} : x > 0\\}$$'
+        },
+        'matrices_2x2': {
+            text: 'All 2×2 matrices with real entries',
+            formula: '$$V = \\left\\{\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix} : a, b, c, d \\in \\mathbb{R}\\right\\}$$'
+        },
+        'polynomials': {
+            text: 'All polynomials of degree at most 2',
+            formula: '$$V = \\{a_0 + a_1x + a_2x^2 : a_0, a_1, a_2 \\in \\mathbb{R}\\}$$'
+        },
+        'integers': {
+            text: 'All ordered pairs (x, y) where x, y are integers only',
+            formula: '$$V = \\{(x, y) : x, y \\in \\mathbb{Z}\\}$$'
+        }
+    };
+
+    descriptionText.textContent = descriptions[selectedValue].text;
+    descriptionFormula.innerHTML = descriptions[selectedValue].formula;
+
+    // Re-render MathJax
+    if (window.MathJax) {
+        MathJax.typesetPromise([descriptionFormula]);
+    }
+}
+
+// Check if selected set is a vector space
+function checkVectorSpace() {
+    const selectElement = document.getElementById('vectorSpaceSelect');
+    const selectedValue = selectElement.value;
+    const resultDiv = document.getElementById('vectorSpaceResult');
+
+    // Define test results for each set
+    const testResults = {
+        'r2': {
+            isVectorSpace: true,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Adding two vectors (x₁, y₁) + (x₂, y₂) = (x₁+x₂, y₁+y₂) always gives another vector in ℝ²' },
+                { name: 'Commutativity', passed: true, explanation: 'u + v = v + u for all vectors in ℝ²' },
+                { name: 'Associativity', passed: true, explanation: '(u + v) + w = u + (v + w) for all vectors' },
+                { name: 'Zero vector exists', passed: true, explanation: 'The zero vector (0, 0) is in ℝ²' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'For every (x, y), there exists (-x, -y) in ℝ²' },
+                { name: 'Closure under scalar multiplication', passed: true, explanation: 'Multiplying c(x, y) = (cx, cy) gives another vector in ℝ²' },
+                { name: 'Distributive properties', passed: true, explanation: 'Both c(u + v) = cu + cv and (c + d)u = cu + du hold' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: '1·v = v for all vectors' }
+            ]
+        },
+        'r3': {
+            isVectorSpace: true,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Adding two vectors always gives another vector in ℝ³' },
+                { name: 'Commutativity', passed: true, explanation: 'u + v = v + u for all vectors' },
+                { name: 'Associativity', passed: true, explanation: '(u + v) + w = u + (v + w)' },
+                { name: 'Zero vector exists', passed: true, explanation: '(0, 0, 0) ∈ ℝ³' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'For every vector v, -v exists in ℝ³' },
+                { name: 'Closure under scalar multiplication', passed: true, explanation: 'cv is in ℝ³ for any scalar c' },
+                { name: 'Distributive properties', passed: true, explanation: 'All distributive laws hold' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: '1·v = v' }
+            ]
+        },
+        'line_origin': {
+            isVectorSpace: true,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'If y₁ = 2x₁ and y₂ = 2x₂, then y₁+y₂ = 2(x₁+x₂) ✓' },
+                { name: 'Commutativity', passed: true, explanation: 'Inherited from ℝ²' },
+                { name: 'Associativity', passed: true, explanation: 'Inherited from ℝ²' },
+                { name: 'Zero vector exists', passed: true, explanation: '(0, 0) satisfies y = 2x since 0 = 2(0) ✓' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'If (x, 2x) is in V, so is (-x, -2x)' },
+                { name: 'Closure under scalar multiplication', passed: true, explanation: 'c(x, 2x) = (cx, 2cx), and 2cx = 2(cx) ✓' },
+                { name: 'Distributive properties', passed: true, explanation: 'Inherited from ℝ²' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: 'Inherited from ℝ²' }
+            ]
+        },
+        'line_not_origin': {
+            isVectorSpace: false,
+            axioms: [
+                { name: 'Closure under addition', passed: false, explanation: '(0, 1) and (1, 2) are in V, but (0, 1) + (1, 2) = (1, 3), and 3 ≠ 1 + 1 = 2 ✗' },
+                { name: 'Commutativity', passed: true, explanation: 'Inherited from ℝ² but irrelevant since closure fails' },
+                { name: 'Associativity', passed: true, explanation: 'Inherited from ℝ²' },
+                { name: 'Zero vector exists', passed: false, explanation: 'Zero vector (0, 0) does NOT satisfy y = x + 1 since 0 ≠ 0 + 1 ✗' },
+                { name: 'Additive inverse exists', passed: false, explanation: 'Cannot exist if zero vector doesn\'t exist' },
+                { name: 'Closure under scalar multiplication', passed: false, explanation: '(0, 1) is in V, but 2(0, 1) = (0, 2), and 2 ≠ 0 + 1 ✗' },
+                { name: 'Distributive properties', passed: true, explanation: 'Inherited but irrelevant' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: 'Inherited but irrelevant' }
+            ],
+            failReason: 'This line does NOT pass through the origin. The zero vector (0,0) is not in this set, which immediately disqualifies it from being a vector space.'
+        },
+        'xy_plane': {
+            isVectorSpace: true,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'If z₁ = 0 and z₂ = 0, then z₁ + z₂ = 0 ✓' },
+                { name: 'Commutativity', passed: true, explanation: 'Inherited from ℝ³' },
+                { name: 'Associativity', passed: true, explanation: 'Inherited from ℝ³' },
+                { name: 'Zero vector exists', passed: true, explanation: '(0, 0, 0) has z = 0 ✓' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'If (x, y, 0) ∈ V, then (-x, -y, 0) ∈ V' },
+                { name: 'Closure under scalar multiplication', passed: true, explanation: 'c(x, y, 0) = (cx, cy, 0), z is still 0 ✓' },
+                { name: 'Distributive properties', passed: true, explanation: 'Inherited from ℝ³' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: 'Inherited from ℝ³' }
+            ]
+        },
+        'first_quadrant': {
+            isVectorSpace: false,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Adding non-negative numbers gives non-negative result' },
+                { name: 'Commutativity', passed: true, explanation: 'Inherited from ℝ²' },
+                { name: 'Associativity', passed: true, explanation: 'Inherited from ℝ²' },
+                { name: 'Zero vector exists', passed: true, explanation: '(0, 0) has x ≥ 0 and y ≥ 0 ✓' },
+                { name: 'Additive inverse exists', passed: false, explanation: 'For (1, 1), the inverse would be (-1, -1), but -1 < 0 ✗' },
+                { name: 'Closure under scalar multiplication', passed: false, explanation: '(1, 1) is in V, but -1·(1, 1) = (-1, -1) is NOT in V ✗' },
+                { name: 'Distributive properties', passed: true, explanation: 'Inherited but irrelevant' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: 'Inherited but irrelevant' }
+            ],
+            failReason: 'The first quadrant fails because negative scalars take vectors outside the set. Specifically, there are no additive inverses, and scalar multiplication by negative numbers produces vectors with negative components.'
+        },
+        'positive_reals': {
+            isVectorSpace: false,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Sum of positive numbers is positive' },
+                { name: 'Commutativity', passed: true, explanation: 'a + b = b + a' },
+                { name: 'Associativity', passed: true, explanation: '(a + b) + c = a + (b + c)' },
+                { name: 'Zero vector exists', passed: false, explanation: '0 is NOT a positive real number ✗' },
+                { name: 'Additive inverse exists', passed: false, explanation: 'For x > 0, -x < 0 is not in the set ✗' },
+                { name: 'Closure under scalar multiplication', passed: false, explanation: 'If c < 0 and x > 0, then cx < 0 is not in the set ✗' },
+                { name: 'Distributive properties', passed: true, explanation: 'Holds for real numbers' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: '1·x = x' }
+            ],
+            failReason: 'Positive real numbers exclude zero and have no additive inverses. The zero element is essential for any vector space.'
+        },
+        'matrices_2x2': {
+            isVectorSpace: true,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Sum of two 2×2 matrices is a 2×2 matrix' },
+                { name: 'Commutativity', passed: true, explanation: 'A + B = B + A for matrices' },
+                { name: 'Associativity', passed: true, explanation: '(A + B) + C = A + (B + C)' },
+                { name: 'Zero vector exists', passed: true, explanation: 'The zero matrix [[0,0],[0,0]] exists' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'For any matrix A, -A exists' },
+                { name: 'Closure under scalar multiplication', passed: true, explanation: 'cA is a 2×2 matrix' },
+                { name: 'Distributive properties', passed: true, explanation: 'c(A+B) = cA + cB and (c+d)A = cA + dA' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: '1·A = A' }
+            ]
+        },
+        'polynomials': {
+            isVectorSpace: true,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Sum of two degree ≤2 polynomials has degree ≤2' },
+                { name: 'Commutativity', passed: true, explanation: 'p(x) + q(x) = q(x) + p(x)' },
+                { name: 'Associativity', passed: true, explanation: 'Polynomial addition is associative' },
+                { name: 'Zero vector exists', passed: true, explanation: 'The zero polynomial 0 exists' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'For p(x), -p(x) exists' },
+                { name: 'Closure under scalar multiplication', passed: true, explanation: 'c·p(x) has degree ≤2 if p(x) does' },
+                { name: 'Distributive properties', passed: true, explanation: 'All distributive laws hold' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: '1·p(x) = p(x)' }
+            ]
+        },
+        'integers': {
+            isVectorSpace: false,
+            axioms: [
+                { name: 'Closure under addition', passed: true, explanation: 'Sum of integers is an integer' },
+                { name: 'Commutativity', passed: true, explanation: 'Integer addition is commutative' },
+                { name: 'Associativity', passed: true, explanation: 'Integer addition is associative' },
+                { name: 'Zero vector exists', passed: true, explanation: '(0, 0) where 0 ∈ ℤ' },
+                { name: 'Additive inverse exists', passed: true, explanation: 'For (a, b), (-a, -b) exists in ℤ²' },
+                { name: 'Closure under scalar multiplication', passed: false, explanation: 'For (1, 1) and scalar 0.5, we get (0.5, 0.5) which is NOT in ℤ² ✗' },
+                { name: 'Distributive properties', passed: true, explanation: 'Holds but irrelevant' },
+                { name: 'Scalar multiplication identity', passed: true, explanation: '1·(a, b) = (a, b)' }
+            ],
+            failReason: 'Integer vectors fail closure under scalar multiplication. For example, multiplying by 1/2 or any non-integer scalar produces non-integer coordinates.'
+        }
+    };
+
+    const result = testResults[selectedValue];
+
+    // Build result HTML
+    let html = '<div style="padding: 20px; border-radius: 10px; ';
+    if (result.isVectorSpace) {
+        html += 'background: rgba(52, 211, 153, 0.2); border: 2px solid var(--success-color);">';
+        html += '<h3 style="color: var(--success-color); margin-top: 0;">✅ THIS IS A VECTOR SPACE!</h3>';
+    } else {
+        html += 'background: rgba(239, 68, 68, 0.2); border: 2px solid var(--error-color);">';
+        html += '<h3 style="color: var(--error-color); margin-top: 0;">❌ NOT A VECTOR SPACE</h3>';
+        if (result.failReason) {
+            html += `<p style="font-size: 1.1rem; margin-bottom: 20px; padding: 15px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;"><strong>Why it fails:</strong> ${result.failReason}</p>`;
+        }
+    }
+
+    html += '<h4 style="margin-top: 20px; margin-bottom: 15px;">📋 Detailed Axiom Check:</h4>';
+
+    result.axioms.forEach((axiom, index) => {
+        const statusIcon = axiom.passed ? '✅' : '❌';
+        const statusColor = axiom.passed ? 'var(--success-color)' : 'var(--error-color)';
+        const bgColor = axiom.passed ? 'rgba(52, 211, 153, 0.1)' : 'rgba(239, 68, 68, 0.1)';
+
+        html += `
+            <div style="padding: 12px; margin: 10px 0; background: ${bgColor}; border-left: 4px solid ${statusColor}; border-radius: 5px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <strong style="font-size: 1.05rem;">${index + 1}. ${axiom.name}</strong>
+                    <span style="font-size: 1.2rem;">${statusIcon}</span>
+                </div>
+                <p style="margin: 5px 0 0 0; font-size: 0.95rem; color: var(--text-secondary);">${axiom.explanation}</p>
+            </div>
+        `;
+    });
+
+    html += '</div>';
+
+    // Show result with animation
+    resultDiv.innerHTML = html;
+    resultDiv.style.display = 'block';
+    resultDiv.style.animation = 'fadeIn 0.5s ease-in';
+
+    // Scroll to result
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Initialize on page load
+window.addEventListener('load', () => {
+    if (document.getElementById('vectorSpaceSelect')) {
+        updateVectorSpaceDescription();
+    }
+});
