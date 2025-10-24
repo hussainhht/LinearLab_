@@ -622,6 +622,58 @@ function toggleChapter(chapterIndex) {
     }
 }
 
+// Toggle sidebar visibility (useful for mobile/tablet)
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('sidebar-open');
+
+        // If sidebar has the 'sidebar-open' class, it's visible
+        // This is especially useful on mobile devices
+        const isOpen = sidebar.classList.contains('sidebar-open');
+
+        // Optional: You can also toggle the first chapter open when opening sidebar
+        if (isOpen) {
+            // Open the first chapter by default when menu is opened
+            const firstChapter = document.querySelector('.chapter');
+            if (firstChapter) {
+                const lessons = firstChapter.querySelector('.lessons');
+                const icon = firstChapter.querySelector('.chapter-icon');
+                const title = firstChapter.querySelector('.chapter-title');
+
+                if (lessons && !lessons.classList.contains('active')) {
+                    lessons.classList.add('active');
+                    if (icon) icon.textContent = '▼';
+                    if (title) title.classList.add('active');
+                }
+            }
+
+            // Add click listener to close sidebar when clicking outside on mobile
+            setTimeout(() => {
+                document.addEventListener('click', closeSidebarOnClickOutside);
+            }, 100);
+        } else {
+            // Remove click listener when sidebar closes
+            document.removeEventListener('click', closeSidebarOnClickOutside);
+        }
+    }
+}
+
+// Close sidebar when clicking outside (mobile only)
+function closeSidebarOnClickOutside(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const menuButton = event.target.closest('.btn-header');
+
+    // Don't close if clicking inside sidebar or on menu button
+    if (sidebar &&
+        !sidebar.contains(event.target) &&
+        !menuButton) {
+
+        sidebar.classList.remove('sidebar-open');
+        document.removeEventListener('click', closeSidebarOnClickOutside);
+    }
+}
+
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') nextSlide();
@@ -643,3 +695,348 @@ function initializeSlides() {
 
 // Initialize when DOM is ready
 initializeSlides();
+
+// RREF Solver with 3D Visualization
+function solveRREF() {
+    // Get input values
+    const a1 = parseFloat(document.getElementById('rref-a1').value);
+    const b1 = parseFloat(document.getElementById('rref-b1').value);
+    const c1 = parseFloat(document.getElementById('rref-c1').value);
+    const d1 = parseFloat(document.getElementById('rref-d1').value);
+
+    const a2 = parseFloat(document.getElementById('rref-a2').value);
+    const b2 = parseFloat(document.getElementById('rref-b2').value);
+    const c2 = parseFloat(document.getElementById('rref-c2').value);
+    const d2 = parseFloat(document.getElementById('rref-d2').value);
+
+    const a3 = parseFloat(document.getElementById('rref-a3').value);
+    const b3 = parseFloat(document.getElementById('rref-b3').value);
+    const c3 = parseFloat(document.getElementById('rref-c3').value);
+    const d3 = parseFloat(document.getElementById('rref-d3').value);
+
+    // Check for invalid inputs
+    if (isNaN(a1) || isNaN(b1) || isNaN(c1) || isNaN(d1) ||
+        isNaN(a2) || isNaN(b2) || isNaN(c2) || isNaN(d2) ||
+        isNaN(a3) || isNaN(b3) || isNaN(c3) || isNaN(d3)) {
+        document.getElementById('rref-result').innerHTML = `
+            <div style="padding: 20px; background: rgba(239, 68, 68, 0.2); border-left: 4px solid #ef4444; border-radius: 8px;">
+                <strong style="color: #ef4444;">⚠️ Error:</strong> Please fill in all coefficients with valid numbers.
+            </div>
+        `;
+        return;
+    }
+
+    // Create augmented matrix
+    let matrix = [
+        [a1, b1, c1, d1],
+        [a2, b2, c2, d2],
+        [a3, b3, c3, d3]
+    ];
+
+    // Perform RREF
+    const result = performRREF(matrix);
+
+    // Display result
+    displayRREFResult(result, matrix);
+
+    // Generate 3D graph
+    generate3DGraph(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, result);
+}
+
+// Perform RREF on augmented matrix
+function performRREF(matrix) {
+    const m = matrix.map(row => [...row]); // Deep copy
+    const rows = m.length;
+    const cols = m[0].length;
+    let lead = 0;
+    const epsilon = 1e-10;
+
+    for (let r = 0; r < rows; r++) {
+        if (lead >= cols - 1) break;
+
+        // Find pivot
+        let i = r;
+        while (Math.abs(m[i][lead]) < epsilon) {
+            i++;
+            if (i === rows) {
+                i = r;
+                lead++;
+                if (lead === cols - 1) break;
+            }
+        }
+        if (lead === cols - 1) break;
+
+        // Swap rows
+        [m[i], m[r]] = [m[r], m[i]];
+
+        // Scale pivot to 1
+        const pivot = m[r][lead];
+        if (Math.abs(pivot) > epsilon) {
+            for (let j = 0; j < cols; j++) {
+                m[r][j] /= pivot;
+            }
+        }
+
+        // Eliminate column
+        for (let i = 0; i < rows; i++) {
+            if (i !== r) {
+                const factor = m[i][lead];
+                for (let j = 0; j < cols; j++) {
+                    m[i][j] -= factor * m[r][j];
+                }
+            }
+        }
+
+        lead++;
+    }
+
+    // Clean up near-zero values
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (Math.abs(m[i][j]) < epsilon) {
+                m[i][j] = 0;
+            }
+        }
+    }
+
+    return m;
+}
+
+// Display RREF result
+function displayRREFResult(rref, original) {
+    const epsilon = 1e-10;
+    let solutionType = 'unique';
+    let solution = { x: 0, y: 0, z: 0 };
+
+    // Check for inconsistency (0 = non-zero)
+    for (let i = 0; i < rref.length; i++) {
+        const allZerosLeft = rref[i].slice(0, 3).every(val => Math.abs(val) < epsilon);
+        const nonZeroRight = Math.abs(rref[i][3]) > epsilon;
+
+        if (allZerosLeft && nonZeroRight) {
+            solutionType = 'none';
+            break;
+        }
+    }
+
+    // Check for infinite solutions
+    if (solutionType !== 'none') {
+        const hasFreevariable = rref.some(row => {
+            const leadingOnes = row.slice(0, 3).filter(val => Math.abs(val - 1) < epsilon).length;
+            const zeros = row.slice(0, 3).filter(val => Math.abs(val) < epsilon).length;
+            return zeros === 2 && leadingOnes === 0;
+        });
+
+        if (hasFreevariable) {
+            solutionType = 'infinite';
+        } else {
+            // Extract unique solution
+            solution.x = rref[0][3];
+            solution.y = rref[1][3];
+            solution.z = rref[2][3];
+        }
+    }
+
+    // Format output
+    let html = `
+        <div style="padding: 20px; background: rgba(99, 102, 241, 0.1); border-left: 4px solid var(--primary-color); border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: var(--primary-color);">📋 Original Augmented Matrix:</h3>
+            <div style="font-family: 'Courier New', monospace; font-size: 1.1rem; text-align: center;">
+                \\[
+                \\left[\\begin{array}{ccc|c}
+                ${formatNumber(original[0][0])} & ${formatNumber(original[0][1])} & ${formatNumber(original[0][2])} & ${formatNumber(original[0][3])} \\\\
+                ${formatNumber(original[1][0])} & ${formatNumber(original[1][1])} & ${formatNumber(original[1][2])} & ${formatNumber(original[1][3])} \\\\
+                ${formatNumber(original[2][0])} & ${formatNumber(original[2][1])} & ${formatNumber(original[2][2])} & ${formatNumber(original[2][3])}
+                \\end{array}\\right]
+                \\]
+            </div>
+        </div>
+
+        <div style="padding: 20px; background: rgba(52, 211, 153, 0.1); border-left: 4px solid #34d399; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #34d399;">✅ RREF Matrix:</h3>
+            <div style="font-family: 'Courier New', monospace; font-size: 1.1rem; text-align: center;">
+                \\[
+                \\left[\\begin{array}{ccc|c}
+                ${formatNumber(rref[0][0])} & ${formatNumber(rref[0][1])} & ${formatNumber(rref[0][2])} & ${formatNumber(rref[0][3])} \\\\
+                ${formatNumber(rref[1][0])} & ${formatNumber(rref[1][1])} & ${formatNumber(rref[1][2])} & ${formatNumber(rref[1][3])} \\\\
+                ${formatNumber(rref[2][0])} & ${formatNumber(rref[2][1])} & ${formatNumber(rref[2][2])} & ${formatNumber(rref[2][3])}
+                \\end{array}\\right]
+                \\]
+            </div>
+        </div>
+    `;
+
+    if (solutionType === 'unique') {
+        html += `
+            <div style="padding: 20px; background: rgba(52, 211, 153, 0.2); border-left: 4px solid #10b981; border-radius: 8px;">
+                <h3 style="margin-top: 0; color: #10b981;">🎯 Unique Solution:</h3>
+                <div style="font-size: 1.2rem; text-align: center; margin: 15px 0;">
+                    \\[
+                    \\begin{align*}
+                    x &= ${formatNumber(solution.x)} \\\\
+                    y &= ${formatNumber(solution.y)} \\\\
+                    z &= ${formatNumber(solution.z)}
+                    \\end{align*}
+                    \\]
+                </div>
+                <p style="margin-bottom: 0; color: var(--text-secondary);">The three planes intersect at a single point (${formatNumber(solution.x)}, ${formatNumber(solution.y)}, ${formatNumber(solution.z)}).</p>
+            </div>
+        `;
+    } else if (solutionType === 'infinite') {
+        html += `
+            <div style="padding: 20px; background: rgba(251, 191, 36, 0.2); border-left: 4px solid #f59e0b; border-radius: 8px;">
+                <h3 style="margin-top: 0; color: #f59e0b;">∞ Infinite Solutions:</h3>
+                <p style="margin-bottom: 0;">The system has infinitely many solutions. The planes intersect along a line or coincide.</p>
+            </div>
+        `;
+    } else {
+        html += `
+            <div style="padding: 20px; background: rgba(239, 68, 68, 0.2); border-left: 4px solid #ef4444; border-radius: 8px;">
+                <h3 style="margin-top: 0; color: #ef4444;">❌ No Solution:</h3>
+                <p style="margin-bottom: 0;">The system is inconsistent. The planes do not have a common intersection point.</p>
+            </div>
+        `;
+    }
+
+    document.getElementById('rref-result').innerHTML = html;
+
+    // Re-render MathJax
+    if (window.MathJax) {
+        MathJax.typesetPromise([document.getElementById('rref-result')]);
+    }
+}
+
+// Generate 3D graph
+function generate3DGraph(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, rref) {
+    const epsilon = 1e-10;
+
+    // Determine solution type
+    let solutionType = 'unique';
+    let solution = { x: 0, y: 0, z: 0 };
+
+    for (let i = 0; i < rref.length; i++) {
+        const allZerosLeft = rref[i].slice(0, 3).every(val => Math.abs(val) < epsilon);
+        const nonZeroRight = Math.abs(rref[i][3]) > epsilon;
+
+        if (allZerosLeft && nonZeroRight) {
+            solutionType = 'none';
+            break;
+        }
+    }
+
+    if (solutionType !== 'none') {
+        solution.x = rref[0][3];
+        solution.y = rref[1][3];
+        solution.z = rref[2][3];
+    }
+
+    // Create mesh grid for planes
+    const range = 10;
+    const step = 1;
+    const x = [];
+    const y = [];
+
+    for (let i = -range; i <= range; i += step) {
+        x.push(i);
+        y.push(i);
+    }
+
+    // Calculate z values for each plane
+    const z1 = [], z2 = [], z3 = [];
+    for (let i = 0; i < x.length; i++) {
+        const row1 = [], row2 = [], row3 = [];
+        for (let j = 0; j < y.length; j++) {
+            // Plane 1: a1*x + b1*y + c1*z = d1 => z = (d1 - a1*x - b1*y) / c1
+            row1.push(Math.abs(c1) > epsilon ? (d1 - a1 * x[i] - b1 * y[j]) / c1 : 0);
+            // Plane 2
+            row2.push(Math.abs(c2) > epsilon ? (d2 - a2 * x[i] - b2 * y[j]) / c2 : 0);
+            // Plane 3
+            row3.push(Math.abs(c3) > epsilon ? (d3 - a3 * x[i] - b3 * y[j]) / c3 : 0);
+        }
+        z1.push(row1);
+        z2.push(row2);
+        z3.push(row3);
+    }
+
+    // Create traces
+    const traces = [
+        {
+            type: 'surface',
+            x: x,
+            y: y,
+            z: z1,
+            name: 'Plane 1',
+            colorscale: [[0, 'rgba(99, 102, 241, 0.5)'], [1, 'rgba(99, 102, 241, 0.8)']],
+            showscale: false,
+            opacity: 0.6
+        },
+        {
+            type: 'surface',
+            x: x,
+            y: y,
+            z: z2,
+            name: 'Plane 2',
+            colorscale: [[0, 'rgba(139, 92, 246, 0.5)'], [1, 'rgba(139, 92, 246, 0.8)']],
+            showscale: false,
+            opacity: 0.6
+        },
+        {
+            type: 'surface',
+            x: x,
+            y: y,
+            z: z3,
+            name: 'Plane 3',
+            colorscale: [[0, 'rgba(236, 72, 153, 0.5)'], [1, 'rgba(236, 72, 153, 0.8)']],
+            showscale: false,
+            opacity: 0.6
+        }
+    ];
+
+    // Add solution point if unique
+    if (solutionType === 'unique') {
+        traces.push({
+            type: 'scatter3d',
+            x: [solution.x],
+            y: [solution.y],
+            z: [solution.z],
+            mode: 'markers',
+            marker: {
+                size: 10,
+                color: '#10b981',
+                symbol: 'circle'
+            },
+            name: `Solution (${formatNumber(solution.x)}, ${formatNumber(solution.y)}, ${formatNumber(solution.z)})`
+        });
+    }
+
+    const layout = {
+        title: {
+            text: '3D Visualization of the System',
+            font: { color: '#e5e7eb', size: 20 }
+        },
+        scene: {
+            xaxis: { title: 'x', color: '#9ca3af' },
+            yaxis: { title: 'y', color: '#9ca3af' },
+            zaxis: { title: 'z', color: '#9ca3af' },
+            bgcolor: '#1f2937'
+        },
+        paper_bgcolor: '#111827',
+        plot_bgcolor: '#1f2937',
+        font: { color: '#e5e7eb' },
+        showlegend: true,
+        legend: {
+            x: 0,
+            y: 1,
+            bgcolor: 'rgba(31, 41, 55, 0.8)'
+        }
+    };
+
+    Plotly.newPlot('rref-graph', traces, layout, { responsive: true });
+}
+
+// Helper function to format numbers
+function formatNumber(num) {
+    if (Math.abs(num) < 1e-10) return '0';
+    if (Number.isInteger(num)) return num.toString();
+    return num.toFixed(3);
+}

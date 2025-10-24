@@ -1036,6 +1036,9 @@ class RREFSolver {
         // Speed control
         this.speedSlider = document.getElementById('speed');
         this.speedLabel = document.getElementById('speedLabel');
+
+        // Graph view preference
+        this.graphView = '3d'; // default to 3D for 3-variable systems
     }
 
     attachEventListeners() {
@@ -1058,6 +1061,28 @@ class RREFSolver {
         document.getElementById('rrefDeterminant').addEventListener('click', () => this.performDeterminant());
         document.getElementById('rrefInverse').addEventListener('click', () => this.performInverse());
         document.getElementById('rrefRank').addEventListener('click', () => this.performRank());
+
+        // Graph view toggle buttons
+        const show2DBtn = document.getElementById('show2D');
+        const show3DBtn = document.getElementById('show3D');
+        if (show2DBtn && show3DBtn) {
+            show2DBtn.addEventListener('click', () => {
+                this.graphView = '2d';
+                show2DBtn.classList.remove('btn-info');
+                show2DBtn.classList.add('btn-primary');
+                show3DBtn.classList.remove('btn-primary');
+                show3DBtn.classList.add('btn-info');
+                this.generateGraphVisualization();
+            });
+            show3DBtn.addEventListener('click', () => {
+                this.graphView = '3d';
+                show3DBtn.classList.remove('btn-info');
+                show3DBtn.classList.add('btn-primary');
+                show2DBtn.classList.remove('btn-primary');
+                show2DBtn.classList.add('btn-info');
+                this.generateGraphVisualization();
+            });
+        }
     }
 
     createMatrixInput() {
@@ -1355,8 +1380,15 @@ class RREFSolver {
         // Show solution panel at the end
         if (stepIndex === this.steps.length - 1) {
             this.solutionPanel.style.display = 'block';
+            // Generate graph visualization
+            this.generateGraphVisualization();
         } else {
             this.solutionPanel.style.display = 'none';
+            // Hide graph panel
+            const graphPanel = document.getElementById('graphPanel');
+            if (graphPanel) {
+                graphPanel.style.display = 'none';
+            }
         }
 
         // Update history highlighting
@@ -1488,6 +1520,12 @@ class RREFSolver {
         this.stepNumber.textContent = 'Step 0';
         this.totalSteps.textContent = '0';
         this.solutionPanel.style.display = 'none';
+
+        // Hide graph panel
+        const graphPanel = document.getElementById('graphPanel');
+        if (graphPanel) {
+            graphPanel.style.display = 'none';
+        }
 
         this.historyList.innerHTML = '<p class="empty-state">No steps yet. Start solving to see the history.</p>';
 
@@ -1780,9 +1818,470 @@ class RREFSolver {
         return rank;
     }
 
+    generateGraphVisualization() {
+        const graphPanel = document.getElementById('graphPanel');
+        const graphContainer = document.getElementById('graphContainer');
+        const graphToggle = document.getElementById('graphToggle');
+
+        if (!graphPanel || !graphContainer || typeof Plotly === 'undefined') {
+            return;
+        }
+
+        // Get the original matrix (first step) and final matrix (last step)
+        const originalMatrix = this.steps[0].matrix;
+        const finalMatrix = this.steps[this.steps.length - 1].matrix;
+
+        const m = originalMatrix.length;
+        const n = originalMatrix[0].length - 1;
+
+        // Only generate graphs for 2 or 3 variables
+        if (n === 2) {
+            this.generate2DGraph(originalMatrix, finalMatrix);
+            graphPanel.style.display = 'block';
+            if (graphToggle) graphToggle.style.display = 'none';
+        } else if (n === 3) {
+            // Show toggle buttons for 3D systems
+            if (graphToggle) graphToggle.style.display = 'flex';
+
+            if (this.graphView === '2d') {
+                this.generate2DProjections(originalMatrix, finalMatrix);
+            } else {
+                this.generate3DGraph(originalMatrix, finalMatrix);
+            }
+            graphPanel.style.display = 'block';
+        } else {
+            graphPanel.style.display = 'none';
+            if (graphToggle) graphToggle.style.display = 'none';
+        }
+    }
+
+    generate2DGraph(originalMatrix, finalMatrix) {
+        const graphContainer = document.getElementById('graphContainer');
+        const epsilon = 1e-10;
+
+        // Extract equations from original matrix
+        const traces = [];
+        const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
+
+        // Generate x values for plotting
+        const xValues = [];
+        for (let x = -10; x <= 10; x += 0.1) {
+            xValues.push(x);
+        }
+
+        // Plot each equation as a line
+        originalMatrix.forEach((row, index) => {
+            const [a, b, c] = row;
+
+            if (Math.abs(b) > epsilon) {
+                // Solve for y: b*y = c - a*x => y = (c - a*x) / b
+                const yValues = xValues.map(x => (c - a * x) / b);
+
+                traces.push({
+                    x: xValues,
+                    y: yValues,
+                    mode: 'lines',
+                    name: `Equation ${index + 1}: ${formatCoeff(a)}x + ${formatCoeff(b)}y = ${c.toFixed(2)}`,
+                    line: {
+                        color: colors[index % colors.length],
+                        width: 3
+                    }
+                });
+            } else if (Math.abs(a) > epsilon) {
+                // Vertical line: x = c/a
+                const xVal = c / a;
+                traces.push({
+                    x: [xVal, xVal],
+                    y: [-10, 10],
+                    mode: 'lines',
+                    name: `Equation ${index + 1}: x = ${xVal.toFixed(2)}`,
+                    line: {
+                        color: colors[index % colors.length],
+                        width: 3
+                    }
+                });
+            }
+        });
+
+        // Check for solution and add intersection point
+        const solutionExists = finalMatrix.every(row => {
+            const allZerosLeft = row.slice(0, -1).every(val => Math.abs(val) < epsilon);
+            const nonZeroRight = Math.abs(row[row.length - 1]) > epsilon;
+            return !(allZerosLeft && nonZeroRight);
+        });
+
+        if (solutionExists && finalMatrix.length >= 2) {
+            const x = finalMatrix[0][finalMatrix[0].length - 1];
+            const y = finalMatrix[1][finalMatrix[1].length - 1];
+
+            if (!isNaN(x) && !isNaN(y) && isFinite(x) && isFinite(y)) {
+                traces.push({
+                    x: [x],
+                    y: [y],
+                    mode: 'markers',
+                    name: `Solution (${x.toFixed(2)}, ${y.toFixed(2)})`,
+                    marker: {
+                        color: '#10b981',
+                        size: 12,
+                        symbol: 'circle'
+                    }
+                });
+            }
+        }
+
+        const layout = {
+            title: {
+                text: '2D System Visualization',
+                font: { color: '#e5e7eb', size: 20 }
+            },
+            xaxis: {
+                title: 'x',
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af'
+            },
+            yaxis: {
+                title: 'y',
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af'
+            },
+            paper_bgcolor: '#111827',
+            plot_bgcolor: '#1f2937',
+            font: { color: '#e5e7eb' },
+            showlegend: true,
+            legend: {
+                x: 0,
+                y: 1,
+                bgcolor: 'rgba(31, 41, 55, 0.8)'
+            }
+        };
+
+        Plotly.newPlot(graphContainer, traces, layout, { responsive: true });
+    }
+
+    generate2DProjections(originalMatrix, finalMatrix) {
+        const graphContainer = document.getElementById('graphContainer');
+        const epsilon = 1e-10;
+
+        // Extract equations from original matrix
+        const colors = ['#6366f1', '#8b5cf6', '#ec4899'];
+
+        // Get solution if it exists
+        let solution = null;
+        const solutionExists = finalMatrix.every(row => {
+            const allZerosLeft = row.slice(0, -1).every(val => Math.abs(val) < epsilon);
+            const nonZeroRight = Math.abs(row[row.length - 1]) > epsilon;
+            return !(allZerosLeft && nonZeroRight);
+        });
+
+        if (solutionExists && finalMatrix.length >= 3) {
+            const x = finalMatrix[0][finalMatrix[0].length - 1];
+            const y = finalMatrix[1][finalMatrix[1].length - 1];
+            const z = finalMatrix[2][finalMatrix[2].length - 1];
+
+            if (!isNaN(x) && !isNaN(y) && !isNaN(z) && isFinite(x) && isFinite(y) && isFinite(z)) {
+                solution = { x, y, z };
+            }
+        }
+
+        // Create three 2D projections: XY, XZ, and YZ
+        const projections = [
+            { name: 'XY Projection (z = 0 plane)', xAxis: 'x', yAxis: 'y', xIdx: 0, yIdx: 1, zIdx: 2 },
+            { name: 'XZ Projection (y = 0 plane)', xAxis: 'x', yAxis: 'z', xIdx: 0, yIdx: 2, zIdx: 1 },
+            { name: 'YZ Projection (x = 0 plane)', xAxis: 'y', yAxis: 'z', xIdx: 1, yIdx: 2, zIdx: 0 }
+        ];
+
+        // Generate values for plotting
+        const values = [];
+        for (let i = -10; i <= 10; i += 0.1) {
+            values.push(i);
+        }
+
+        // Create subplots
+        const traces = [];
+
+        projections.forEach((proj, projIdx) => {
+            originalMatrix.forEach((row, eqIdx) => {
+                const [a, b, c, d] = row;
+                const coeffs = [a, b, c];
+
+                const xCoeff = coeffs[proj.xIdx];
+                const yCoeff = coeffs[proj.yIdx];
+                const zCoeff = coeffs[proj.zIdx];
+
+                if (Math.abs(yCoeff) > epsilon) {
+                    // Solve for y-axis variable
+                    const yValues = values.map(xVal => (d - xCoeff * xVal) / yCoeff);
+
+                    traces.push({
+                        x: values,
+                        y: yValues,
+                        mode: 'lines',
+                        name: `Eq ${eqIdx + 1}`,
+                        line: {
+                            color: colors[eqIdx % colors.length],
+                            width: 2
+                        },
+                        xaxis: `x${projIdx + 1}`,
+                        yaxis: `y${projIdx + 1}`,
+                        showlegend: projIdx === 0
+                    });
+                } else if (Math.abs(xCoeff) > epsilon) {
+                    // Vertical line
+                    const xVal = d / xCoeff;
+                    traces.push({
+                        x: [xVal, xVal],
+                        y: [-10, 10],
+                        mode: 'lines',
+                        name: `Eq ${eqIdx + 1}`,
+                        line: {
+                            color: colors[eqIdx % colors.length],
+                            width: 2
+                        },
+                        xaxis: `x${projIdx + 1}`,
+                        yaxis: `y${projIdx + 1}`,
+                        showlegend: projIdx === 0
+                    });
+                }
+            });
+
+            // Add solution point for each projection
+            if (solution) {
+                const solValues = [solution.x, solution.y, solution.z];
+                traces.push({
+                    x: [solValues[proj.xIdx]],
+                    y: [solValues[proj.yIdx]],
+                    mode: 'markers',
+                    name: 'Solution',
+                    marker: {
+                        color: '#10b981',
+                        size: 10,
+                        symbol: 'circle'
+                    },
+                    xaxis: `x${projIdx + 1}`,
+                    yaxis: `y${projIdx + 1}`,
+                    showlegend: projIdx === 0
+                });
+            }
+        });
+
+        const layout = {
+            title: {
+                text: '2D Projections of 3D System',
+                font: { color: '#e5e7eb', size: 18 }
+            },
+            grid: {
+                rows: 1,
+                columns: 3,
+                pattern: 'independent'
+            },
+            xaxis: {
+                title: 'x',
+                domain: [0, 0.3],
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af'
+            },
+            yaxis: {
+                title: 'y',
+                domain: [0, 1],
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af'
+            },
+            xaxis2: {
+                title: 'x',
+                domain: [0.35, 0.65],
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af'
+            },
+            yaxis2: {
+                title: 'z',
+                domain: [0, 1],
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af',
+                anchor: 'x2'
+            },
+            xaxis3: {
+                title: 'y',
+                domain: [0.7, 1],
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af'
+            },
+            yaxis3: {
+                title: 'z',
+                domain: [0, 1],
+                gridcolor: '#374151',
+                zerolinecolor: '#6b7280',
+                color: '#9ca3af',
+                anchor: 'x3'
+            },
+            paper_bgcolor: '#111827',
+            plot_bgcolor: '#1f2937',
+            font: { color: '#e5e7eb' },
+            showlegend: true,
+            legend: {
+                x: 0,
+                y: 1.1,
+                orientation: 'h',
+                bgcolor: 'rgba(31, 41, 55, 0.8)'
+            },
+            annotations: [
+                {
+                    text: 'XY Plane',
+                    xref: 'x domain',
+                    yref: 'y domain',
+                    x: 0.5,
+                    y: 1.05,
+                    xanchor: 'center',
+                    showarrow: false,
+                    font: { color: '#9ca3af', size: 12 }
+                },
+                {
+                    text: 'XZ Plane',
+                    xref: 'x2 domain',
+                    yref: 'y2 domain',
+                    x: 0.5,
+                    y: 1.05,
+                    xanchor: 'center',
+                    showarrow: false,
+                    font: { color: '#9ca3af', size: 12 }
+                },
+                {
+                    text: 'YZ Plane',
+                    xref: 'x3 domain',
+                    yref: 'y3 domain',
+                    x: 0.5,
+                    y: 1.05,
+                    xanchor: 'center',
+                    showarrow: false,
+                    font: { color: '#9ca3af', size: 12 }
+                }
+            ]
+        };
+
+        Plotly.newPlot(graphContainer, traces, layout, { responsive: true });
+    }
+
+    generate3DGraph(originalMatrix, finalMatrix) {
+        const graphContainer = document.getElementById('graphContainer');
+        const epsilon = 1e-10;
+
+        // Create mesh grid for planes
+        const range = 10;
+        const step = 1;
+        const x = [], y = [];
+
+        for (let i = -range; i <= range; i += step) {
+            x.push(i);
+            y.push(i);
+        }
+
+        const traces = [];
+        const colors = [
+            [[0, 'rgba(99, 102, 241, 0.5)'], [1, 'rgba(99, 102, 241, 0.8)']],
+            [[0, 'rgba(139, 92, 246, 0.5)'], [1, 'rgba(139, 92, 246, 0.8)']],
+            [[0, 'rgba(236, 72, 153, 0.5)'], [1, 'rgba(236, 72, 153, 0.8)']]
+        ];
+
+        // Plot each plane
+        originalMatrix.forEach((row, index) => {
+            const [a, b, c, d] = row;
+
+            if (Math.abs(c) > epsilon) {
+                // Solve for z: c*z = d - a*x - b*y => z = (d - a*x - b*y) / c
+                const z = [];
+                for (let i = 0; i < x.length; i++) {
+                    const rowZ = [];
+                    for (let j = 0; j < y.length; j++) {
+                        rowZ.push((d - a * x[i] - b * y[j]) / c);
+                    }
+                    z.push(rowZ);
+                }
+
+                traces.push({
+                    type: 'surface',
+                    x: x,
+                    y: y,
+                    z: z,
+                    name: `Plane ${index + 1}`,
+                    colorscale: colors[index % colors.length],
+                    showscale: false,
+                    opacity: 0.7
+                });
+            }
+        });
+
+        // Check for solution and add intersection point
+        const solutionExists = finalMatrix.every(row => {
+            const allZerosLeft = row.slice(0, -1).every(val => Math.abs(val) < epsilon);
+            const nonZeroRight = Math.abs(row[row.length - 1]) > epsilon;
+            return !(allZerosLeft && nonZeroRight);
+        });
+
+        if (solutionExists && finalMatrix.length >= 3) {
+            const xSol = finalMatrix[0][finalMatrix[0].length - 1];
+            const ySol = finalMatrix[1][finalMatrix[1].length - 1];
+            const zSol = finalMatrix[2][finalMatrix[2].length - 1];
+
+            if (!isNaN(xSol) && !isNaN(ySol) && !isNaN(zSol) &&
+                isFinite(xSol) && isFinite(ySol) && isFinite(zSol)) {
+                traces.push({
+                    type: 'scatter3d',
+                    x: [xSol],
+                    y: [ySol],
+                    z: [zSol],
+                    mode: 'markers',
+                    name: `Solution (${xSol.toFixed(2)}, ${ySol.toFixed(2)}, ${zSol.toFixed(2)})`,
+                    marker: {
+                        size: 10,
+                        color: '#10b981',
+                        symbol: 'circle'
+                    }
+                });
+            }
+        }
+
+        const layout = {
+            title: {
+                text: '3D System Visualization',
+                font: { color: '#e5e7eb', size: 20 }
+            },
+            scene: {
+                xaxis: { title: 'x', color: '#9ca3af', gridcolor: '#374151' },
+                yaxis: { title: 'y', color: '#9ca3af', gridcolor: '#374151' },
+                zaxis: { title: 'z', color: '#9ca3af', gridcolor: '#374151' },
+                bgcolor: '#1f2937'
+            },
+            paper_bgcolor: '#111827',
+            plot_bgcolor: '#1f2937',
+            font: { color: '#e5e7eb' },
+            showlegend: true,
+            legend: {
+                x: 0,
+                y: 1,
+                bgcolor: 'rgba(31, 41, 55, 0.8)'
+            }
+        };
+
+        Plotly.newPlot(graphContainer, traces, layout, { responsive: true });
+    }
+
     showMessage(message) {
         this.explanationContent.innerHTML = `<p class="instruction">${message}</p>`;
     }
+}
+
+// Helper function to format coefficients for display
+function formatCoeff(val) {
+    if (Math.abs(val) < 1e-10) return '0';
+    if (Math.abs(val - 1) < 1e-10) return '';
+    if (Math.abs(val + 1) < 1e-10) return '-';
+    return val.toFixed(2);
 }
 
 // Initialize the application

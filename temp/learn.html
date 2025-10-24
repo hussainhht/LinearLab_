@@ -58,20 +58,20 @@
                         <div class="lesson-item" onclick="showSlide(14)">1.15
                             Gauss-Jordan: Complete Example</div>
                         <div class="lesson-item" onclick="showSlide(15)">1.16
-                            Gaussian vs Gauss-Jordan</div>
+                            Interactive RREF Solver</div>
                         <div class="lesson-item" onclick="showSlide(16)">1.17
-                            Real-World Applications</div>
+                            Gaussian vs Gauss-Jordan</div>
                         <div class="lesson-item" onclick="showSlide(17)">1.18
-                            Interactive Visualizations</div>
+                            Possible Results</div>
                         <div class="lesson-item" onclick="showSlide(18)">1.19
-                            Summary</div>
-                        <div class="lesson-item" onclick="showSlide(18)">1.19
-                            Summary</div>
+                            Real-World Applications</div>
                         <div class="lesson-item" onclick="showSlide(19)">1.20
-                            Matrix Definition</div>
+                            Summary</div>
                         <div class="lesson-item" onclick="showSlide(20)">1.21
-                            Matrix Equality</div>
+                            Matrix Definition</div>
                         <div class="lesson-item" onclick="showSlide(21)">1.22
+                            Matrix Equality</div>
+                        <div class="lesson-item" onclick="showSlide(22)">1.23
                             Matrix Addition & Subtraction</div>
                         <div class="lesson-item" onclick="showSlide(22)">1.23
                             Scalar Multiplication</div>
@@ -273,9 +273,9 @@
                     <h1>🎓 Linear Algebra Interactive Learning</h1>
                     <div class="header-controls">
                         <button class="btn-header"
-                            onclick="window.location.href='../index.html'">🏠
+                            onclick="window.location.href='index.html'">🏠
                             Home</button>
-                        <button class="btn-header" onclick="toggleChapter(0)">📖
+                        <button class="btn-header" onclick="toggleSidebar()">📖
                             Menu</button>
                     </div>
                 </header>
@@ -1507,7 +1507,141 @@
                         </div>
                     </div>
 
-                    <!-- Slide 15: Gaussian vs Gauss-Jordan -->
+                    <!-- Slide 15: Interactive RREF Solver -->
+                    <div class="slide" id="slide-rref-solver">
+                        <h2>🧮 Interactive RREF Solver with Visualization</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 Solve and Visualize Your System</h3>
+                            <p>Enter the coefficients of your 3x3 system of
+                                equations and see the solution both
+                                algebraically and geometrically!</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h3>📝 Enter Your System</h3>
+                            <p>For the system:</p>
+                            <div style="text-align: center; margin: 20px 0;">
+                                \[
+                                \begin{align*}
+                                a_1x + b_1y + c_1z &= d_1 \\
+                                a_2x + b_2y + c_2z &= d_2 \\
+                                a_3x + b_3y + c_3z &= d_3
+                                \end{align*}
+                                \]
+                            </div>
+
+                            <div
+                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Equation
+                                        1:</label>
+                                    <div
+                                        style="display: flex; gap: 5px; align-items: center;">
+                                        <input type="number" id="rref-a1"
+                                            placeholder="a₁" step="any"
+                                            value="1"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>x +</span>
+                                        <input type="number" id="rref-b1"
+                                            placeholder="b₁" step="any"
+                                            value="1"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>y +</span>
+                                        <input type="number" id="rref-c1"
+                                            placeholder="c₁" step="any"
+                                            value="1"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>z =</span>
+                                        <input type="number" id="rref-d1"
+                                            placeholder="d₁" step="any"
+                                            value="6"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Equation
+                                        2:</label>
+                                    <div
+                                        style="display: flex; gap: 5px; align-items: center;">
+                                        <input type="number" id="rref-a2"
+                                            placeholder="a₂" step="any"
+                                            value="2"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>x +</span>
+                                        <input type="number" id="rref-b2"
+                                            placeholder="b₂" step="any"
+                                            value="3"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>y +</span>
+                                        <input type="number" id="rref-c2"
+                                            placeholder="c₂" step="any"
+                                            value="1"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>z =</span>
+                                        <input type="number" id="rref-d2"
+                                            placeholder="d₂" step="any"
+                                            value="10"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; color: var(--text-secondary);">Equation
+                                        3:</label>
+                                    <div
+                                        style="display: flex; gap: 5px; align-items: center;">
+                                        <input type="number" id="rref-a3"
+                                            placeholder="a₃" step="any"
+                                            value="1"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>x +</span>
+                                        <input type="number" id="rref-b3"
+                                            placeholder="b₃" step="any"
+                                            value="-1"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>y +</span>
+                                        <input type="number" id="rref-c3"
+                                            placeholder="c₃" step="any"
+                                            value="2"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                        <span>z =</span>
+                                        <input type="number" id="rref-d3"
+                                            placeholder="d₃" step="any"
+                                            value="7"
+                                            style="width: 60px; padding: 8px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onclick="solveRREF()"
+                                style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); color: white; padding: 12px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); transition: all 0.3s;">
+                                🔍 Solve System & Show Graph
+                            </button>
+
+                            <div id="rref-result"
+                                style="margin-top: 25px;"></div>
+                            <div id="rref-graph"
+                                style="margin-top: 25px; min-height: 500px;"></div>
+                        </div>
+
+                        <div class="navigation-buttons">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">15</span> of
+                                <span class="totalSlides">19</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 16: Gaussian vs Gauss-Jordan -->
                     <div class="slide" id="slide-comparison">
                         <h2>⚖️ Gaussian vs Gauss-Jordan Elimination</h2>
 
@@ -1657,15 +1791,15 @@
                             <button class="nav-btn btn-prev"
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
-                                Slide <span class="currentSlide">15</span> of
-                                <span class="totalSlides">18</span>
+                                Slide <span class="currentSlide">16</span> of
+                                <span class="totalSlides">19</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ➡</button>
                         </div>
                     </div>
 
-                    <!-- Slide 16: Possible Results -->
+                    <!-- Slide 17: Possible Results -->
                     <div class="slide" id="slide-results">
                         <h2>⚖️ Possible Results of Gauss-Jordan</h2>
 
@@ -1752,15 +1886,15 @@
                             <button class="nav-btn btn-prev"
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
-                                Slide <span class="currentSlide">16</span> of
-                                <span class="totalSlides">18</span>
+                                Slide <span class="currentSlide">17</span> of
+                                <span class="totalSlides">19</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ➡</button>
                         </div>
                     </div>
 
-                    <!-- Slide 17: Applications -->
+                    <!-- Slide 18: Applications -->
                     <div class="slide" id="slide-gauss-applications">
                         <h2>🧮 Applications of Gauss-Jordan</h2>
 
@@ -1855,15 +1989,15 @@
                             <button class="nav-btn btn-prev"
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
-                                Slide <span class="currentSlide">17</span> of
-                                <span class="totalSlides">18</span>
+                                Slide <span class="currentSlide">18</span> of
+                                <span class="totalSlides">19</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ➡</button>
                         </div>
                     </div>
 
-                    <!-- Slide 18: Summary -->
+                    <!-- Slide 19: Summary -->
                     <div class="slide" id="slide-gauss-summary">
                         <h2>🏁 Gauss-Jordan Elimination: Summary</h2>
 
@@ -2011,15 +2145,15 @@
                             <button class="nav-btn btn-prev"
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
-                                Slide <span class="currentSlide">18</span> of
-                                <span class="totalSlides">26</span>
+                                Slide <span class="currentSlide">19</span> of
+                                <span class="totalSlides">27</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ➡</button>
                         </div>
                     </div>
 
-                    <!-- Slide 19: Matrix Definition -->
+                    <!-- Slide 20: Matrix Definition -->
                     <div class="slide" id="slide-matrix-definition">
                         <h2>🧩 Matrix Operations: Definition of a Matrix</h2>
 

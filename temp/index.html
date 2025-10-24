@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RREF Studio 🎓 - Gauss-Jordan Elimination Visualizer</title>
         <link rel="stylesheet" href="../style/main.css">
+        <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     </head>
     <body>
         <div class="container">
@@ -144,6 +145,19 @@
                                 style="display: none;">
                                 <h3>✨ Solution</h3>
                                 <div id="solutionContent"></div>
+                            </div>
+
+                            <!-- Graph Visualization -->
+                            <div id="graphPanel" class="graph-panel"
+                                style="display: none; margin-top: 25px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <h3>📊 Visual Representation</h3>
+                                    <div id="graphToggle" style="display: none; gap: 10px;">
+                                        <button id="show2D" class="btn-small btn-info" style="padding: 8px 15px;">2D View</button>
+                                        <button id="show3D" class="btn-small btn-primary" style="padding: 8px 15px;">3D View</button>
+                                    </div>
+                                </div>
+                                <div id="graphContainer" style="min-height: 500px; background: rgba(31, 41, 55, 0.5); border-radius: 8px; padding: 15px;"></div>
                             </div>
                         </div>
 
