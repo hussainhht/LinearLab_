@@ -100,15 +100,41 @@
                     </div>
                 </div>
 
-                <!-- Chapter 2 - Placeholder -->
+                <!-- Chapter 2 -->
                 <div class="chapter">
                     <div class="chapter-title" onclick="toggleChapter(1)">
-                        <span>Chapter 2: Coming Soon</span>
+                        <span>Chapter 2: Determinants</span>
                         <span class="chapter-icon">▶</span>
                     </div>
                     <div class="lessons">
-                        <div class="lesson-item">Content will be added
-                            later</div>
+                        <div class="lesson-item" onclick="showSlide(36)">2.1
+                            Introduction to Determinants</div>
+                        <div class="lesson-item" onclick="showSlide(37)">2.2
+                            2×2 Determinant</div>
+                        <div class="lesson-item" onclick="showSlide(38)">2.3
+                            3×3 Determinant</div>
+                        <div class="lesson-item" onclick="showSlide(39)">2.4
+                            Sarrus' Rule</div>
+                        <div class="lesson-item" onclick="showSlide(40)">2.5
+                            Cofactor Expansion</div>
+                        <div class="lesson-item" onclick="showSlide(41)">2.6
+                            Minors and Cofactors</div>
+                        <div class="lesson-item" onclick="showSlide(42)">2.7
+                            Properties of Determinants</div>
+                        <div class="lesson-item" onclick="showSlide(43)">2.8
+                            Row Operations Effect</div>
+                        <div class="lesson-item" onclick="showSlide(44)">2.9
+                            Triangular Matrix</div>
+                        <div class="lesson-item" onclick="showSlide(45)">2.10
+                            Testing Invertibility</div>
+                        <div class="lesson-item" onclick="showSlide(46)">2.11
+                            Geometric Interpretation</div>
+                        <div class="lesson-item" onclick="showSlide(47)">2.12
+                            Example Problems</div>
+                        <div class="lesson-item" onclick="showSlide(48)">2.13
+                            Cramer's Rule</div>
+                        <div class="lesson-item" onclick="showSlide(49)">2.14
+                            Determinants Summary</div>
                     </div>
                 </div>
 
@@ -124,15 +150,65 @@
                     </div>
                 </div>
 
-                <!-- Chapter 4 - Placeholder -->
+                <!-- Chapter 4 -->
                 <div class="chapter">
                     <div class="chapter-title" onclick="toggleChapter(3)">
-                        <span>Chapter 4: Coming Soon</span>
+                        <span>Chapter 4: Vector Spaces & Subspaces</span>
                         <span class="chapter-icon">▶</span>
                     </div>
                     <div class="lessons">
-                        <div class="lesson-item">Content will be added
-                            later</div>
+                        <div class="lesson-item" onclick="showSlide(50)">4.1
+                            Introduction</div>
+                        <div class="lesson-item" onclick="showSlide(51)">4.2
+                            What is a Vector Space?</div>
+                        <div class="lesson-item" onclick="showSlide(52)">4.3
+                            The 8 Vector Space Axioms</div>
+                        <div class="lesson-item" onclick="showSlide(53)">4.4
+                            Examples of Vector Spaces</div>
+                        <div class="lesson-item" onclick="showSlide(54)">4.5
+                            More Examples</div>
+                        <div class="lesson-item" onclick="showSlide(55)">4.6
+                            What is NOT a Vector Space</div>
+                        <div class="lesson-item" onclick="showSlide(56)">4.7
+                            Subspaces</div>
+                        <div class="lesson-item" onclick="showSlide(57)">4.8
+                            Testing Subspaces</div>
+                        <div class="lesson-item" onclick="showSlide(58)">4.9
+                            Examples of Subspaces</div>
+                        <div class="lesson-item" onclick="showSlide(59)">4.10
+                            Important Subspaces</div>
+                        <div class="lesson-item" onclick="showSlide(60)">4.11
+                            Geometric View</div>
+                        <div class="lesson-item" onclick="showSlide(61)">4.12
+                            Zero and Whole Subspaces</div>
+                        <div class="lesson-item" onclick="showSlide(62)">4.13
+                            Span of Vectors</div>
+                        <div class="lesson-item" onclick="showSlide(63)">4.14
+                            Span and Subspace Relation</div>
+                        <div class="lesson-item" onclick="showSlide(64)">4.15
+                            Bases and Dimensions - Intro</div>
+                        <div class="lesson-item" onclick="showSlide(65)">4.16
+                            The Idea Behind a Basis</div>
+                        <div class="lesson-item" onclick="showSlide(66)">4.17
+                            Examples of Bases</div>
+                        <div class="lesson-item" onclick="showSlide(67)">4.18
+                            Different Bases, Same Space</div>
+                        <div class="lesson-item" onclick="showSlide(68)">4.19
+                            Dimension</div>
+                        <div class="lesson-item" onclick="showSlide(69)">4.20
+                            Finding a Basis from Vectors</div>
+                        <div class="lesson-item" onclick="showSlide(70)">4.21
+                            Rank and Basis Relationship</div>
+                        <div class="lesson-item" onclick="showSlide(71)">4.22
+                            Basis for Null Space</div>
+                        <div class="lesson-item" onclick="showSlide(72)">4.23
+                            Basis Theorem</div>
+                        <div class="lesson-item" onclick="showSlide(73)">4.24
+                            Basis for a Subspace</div>
+                        <div class="lesson-item" onclick="showSlide(74)">4.25
+                            Rank-Nullity Theorem</div>
+                        <div class="lesson-item" onclick="showSlide(75)">4.26
+                            Summary</div>
                     </div>
                 </div>
 
@@ -3647,7 +3723,3167 @@
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
                                 Slide <span class="currentSlide">36</span> of
-                                <span class="totalSlides">36</span>
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- CHAPTER 2: DETERMINANTS -->
+                    <!-- ============================================================ -->
+
+                    <!-- Slide 37: Introduction to Determinants -->
+                    <div class="slide" id="slide-det-intro">
+                        <h2>🧮 Chapter 2. – Determinants</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 What is a Determinant?</h3>
+                            <p>The <strong>determinant</strong> is one of the
+                                most important concepts in linear algebra.</p>
+                            <p style="margin-top: 15px;">It gives us a
+                                <strong>single number</strong> that tells us
+                                <strong>a lot</strong> about a matrix — whether
+                                it's invertible, how it transforms space, and
+                                how large the scaling effect of that
+                                transformation is.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🔍 Definition of a Determinant</h4>
+                            <p>The determinant is a <strong>scalar
+                                    value</strong> (a single number) that can be
+                                calculated from a <strong>square matrix</strong>
+                                (same number of rows and columns).</p>
+                            <p style="margin-top: 15px;">We denote it as:</p>
+                            <div class="formula">
+                                $$\text{det}(A) \text{ or } |A|$$
+                            </div>
+                            <p style="margin-top: 15px;">So if \( A =
+                                \begin{bmatrix} a & b \\ c & d \end{bmatrix}
+                                \),<br>
+                                then \( \text{det}(A) = |A| = ad - bc \)</p>
+                            <p style="margin-top: 10px;">That's the simplest
+                                form — the determinant of a 2×2 matrix.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Key Insight</h4>
+                            <p>The determinant is like a "DNA code" of a matrix
+                                — it tells you whether it can be inverted, how
+                                it changes space, and how strong that
+                                transformation is.</p>
+                            <ul style="margin-top: 15px;">
+                                <li>If the determinant is <strong>zero</strong>,
+                                    the matrix kills one dimension — it
+                                    collapses space.</li>
+                                <li>If it's <strong>positive</strong>, it
+                                    preserves orientation.</li>
+                                <li>If it's <strong>negative</strong>, it flips
+                                    it.</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">37</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 38: 2×2 Determinant -->
+                    <div class="slide" id="slide-det-2x2">
+                        <h2>🔢 Determinant of a 2×2 Matrix</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 The Formula</h3>
+                            <p>Let:</p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                a_{11} & a_{12} \\
+                                a_{21} & a_{22}
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;">Then:</p>
+                            <div class="formula">
+                                $$|A| = a_{11}a_{22} - a_{12}a_{21}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>✅ Example:</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                3 & 5 \\
+                                7 & 2
+                                \end{bmatrix}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Calculation:</strong></p>
+                            <div class="formula">
+                                $$|A| = (3×2) - (5×7) = 6 - 35 = -29$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                The determinant is <strong>-29</strong></p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🎯 Visual Pattern</h4>
+                            <p>Think of it as:</p>
+                            <div class="formula">
+                                $$\begin{bmatrix}
+                                \color{#10b981}{a} & \color{#ef4444}{b} \\
+                                \color{#ef4444}{c} & \color{#10b981}{d}
+                                \end{bmatrix} \rightarrow \color{#10b981}{ad} -
+                                \color{#ef4444}{bc}$$
+                            </div>
+                            <p style="margin-top: 15px;">Multiply the main
+                                diagonal (top-left to bottom-right) and subtract
+                                the product of the other diagonal.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">38</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 39: 3×3 Determinant -->
+                    <div class="slide" id="slide-det-3x3">
+                        <h2>🎯 Determinant of a 3×3 Matrix</h2>
+
+                        <div class="definition-box">
+                            <h3>📚 Now It Gets More Interesting</h3>
+                            <p>Let:</p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                a_{11} & a_{12} & a_{13} \\
+                                a_{21} & a_{22} & a_{23} \\
+                                a_{31} & a_{32} & a_{33}
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;">Then the determinant
+                                is:</p>
+                            <div class="formula">
+                                $$|A| = a_{11}(a_{22}a_{33} - a_{23}a_{32}) -
+                                a_{12}(a_{21}a_{33} - a_{23}a_{31}) +
+                                a_{13}(a_{21}a_{32} - a_{22}a_{31})$$
+                            </div>
+                            <p style="margin-top: 15px;">That's the
+                                <strong>cofactor expansion along the first
+                                    row</strong>.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔍 Breaking It Down</h4>
+                            <p>The formula looks complex, but it's actually
+                                systematic:</p>
+                            <ul>
+                                <li>Take each element from the first row</li>
+                                <li>Multiply by the determinant of the 2×2
+                                    matrix that remains when you remove that
+                                    element's row and column</li>
+                                <li>Alternate the signs: + − +</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>📊 Simpler Notation:</h4>
+                            <div class="formula">
+                                $$|A| = a_{11}\begin{vmatrix} a_{22} & a_{23} \\
+                                a_{32} & a_{33} \end{vmatrix}
+                                - a_{12}\begin{vmatrix} a_{21} & a_{23} \\
+                                a_{31} & a_{33} \end{vmatrix}
+                                + a_{13}\begin{vmatrix} a_{21} & a_{22} \\
+                                a_{31} & a_{32} \end{vmatrix}$$
+                            </div>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">39</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 40: Sarrus' Rule -->
+                    <div class="slide" id="slide-sarrus">
+                        <h2>⚡ Sarrus' Rule (Shortcut for 3×3 Matrices)</h2>
+
+                        <div class="definition-box">
+                            <h3>🚀 A Quick Method</h3>
+                            <p>This is a <strong>quick method</strong> used
+                                <strong>only for 3×3</strong> matrices.</p>
+                            <p style="margin-top: 15px;">Example:</p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                a & b & c \\
+                                d & e & f \\
+                                g & h & i
+                                \end{bmatrix}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📋 The Process</h4>
+                            <p><strong>Step 1:</strong> Write the first two
+                                columns again to the right:</p>
+                            <div class="formula">
+                                $$\begin{array}{ccc|cc}
+                                a & b & c & a & b \\
+                                d & e & f & d & e \\
+                                g & h & i & g & h
+                                \end{array}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Step
+                                    2:</strong> Multiply diagonals going
+                                <strong>down-right</strong> and
+                                <strong>up-right</strong>:</p>
+                            <div class="formula">
+                                $$|A| = (aei + bfg + cdh) - (ceg + bdi + afh)$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Complete Example:</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                1 & 2 & 3 \\
+                                4 & 5 & 6 \\
+                                7 & 8 & 9
+                                \end{bmatrix}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Calculation:</strong></p>
+                            <div class="formula">
+                                $$|A| = (1×5×9 + 2×6×7 + 3×4×8) - (3×5×7 + 2×4×9
+                                + 1×6×8)$$
+                                $$|A| = (45 + 84 + 96) - (105 + 72 + 48) = 225 -
+                                225 = 0$$
+                            </div>
+                            <p style="margin-top: 15px;">Since the determinant =
+                                0 → this matrix is <strong>singular</strong> (no
+                                inverse).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">40</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 41: Cofactor Expansion for 4×4 or Larger -->
+                    <div class="slide" id="slide-cofactor-expansion">
+                        <h2>🔄 Determinant of 4×4 or Larger (Cofactor
+                            Expansion)</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 For Bigger Matrices</h3>
+                            <p>For bigger matrices, we use <strong>cofactor
+                                    expansion</strong>.</p>
+                            <p style="margin-top: 15px;">Let's say:</p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                a_{11} & a_{12} & a_{13} & a_{14} \\
+                                a_{21} & a_{22} & a_{23} & a_{24} \\
+                                a_{31} & a_{32} & a_{33} & a_{34} \\
+                                a_{41} & a_{42} & a_{43} & a_{44}
+                                \end{bmatrix}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🎯 The Process</h4>
+                            <p>We expand along the <strong>first row (or any
+                                    row/column)</strong>:</p>
+                            <div class="formula">
+                                $$|A| = a_{11}C_{11} - a_{12}C_{12} +
+                                a_{13}C_{13} - a_{14}C_{14}$$
+                            </div>
+                            <p style="margin-top: 20px;">where:</p>
+                            <div class="formula">
+                                $$C_{ij} = (-1)^{i+j} M_{ij}$$
+                            </div>
+                            <p style="margin-top: 15px;">and \( M_{ij} \) is the
+                                <strong>minor</strong>, which is the determinant
+                                of the smaller matrix obtained by deleting row
+                                <em>i</em> and column <em>j</em>.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Key Concept</h4>
+                            <p>The cofactor expansion method:</p>
+                            <ul>
+                                <li>Works for matrices of any size</li>
+                                <li>Can be done along any row or column</li>
+                                <li>Choose the row/column with most zeros to
+                                    simplify calculation</li>
+                                <li>The signs alternate in a checkerboard
+                                    pattern</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">41</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 42: Minors and Cofactors -->
+                    <div class="slide" id="slide-minors-cofactors">
+                        <h2>🧩 Minors and Cofactors</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 Understanding the Building Blocks</h3>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🔍 Minor (Mᵢⱼ):</h4>
+                            <p>It's the determinant of the smaller matrix you
+                                get after deleting the <em>i-th row</em> and
+                                <em>j-th column</em>.</p>
+                            <p
+                                style="margin-top: 20px;"><strong>Example:</strong></p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                1 & 2 & 3 \\
+                                0 & 4 & 5 \\
+                                7 & 8 & 9
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">To find \( M_{11}
+                                \):<br>
+                                Remove row 1, column 1:</p>
+                            <div class="formula">
+                                $$M_{11} = \begin{vmatrix} 4 & 5 \\ 8 & 9
+                                \end{vmatrix} = (4×9 - 5×8) = 36 - 40 = -4$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>⚡ Cofactor (Cᵢⱼ):</h4>
+                            <div class="formula">
+                                $$C_{ij} = (-1)^{i+j} M_{ij}$$
+                            </div>
+                            <p style="margin-top: 15px;">So:</p>
+                            <div class="formula">
+                                $$C_{11} = (+1) × (-4) = -4$$
+                                $$C_{12} = (-1)^{1+2} × M_{12} = -M_{12}$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>✅ The Checkerboard Sign Pattern</h4>
+                            <p>This is the pattern for cofactors:</p>
+                            <div class="formula">
+                                $$\begin{bmatrix}
+                                + & - & + \\
+                                - & + & - \\
+                                + & - & +
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">The signs alternate
+                                starting with + in the top-left corner.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">42</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 43: Properties of Determinants -->
+                    <div class="slide" id="slide-det-properties">
+                        <h2>⚡ Properties of Determinants</h2>
+
+                        <div class="definition-box">
+                            <h3>🔑 Super Important — Memorize These!</h3>
+                            <p>These properties are essential for solving
+                                problems quickly:</p>
+                        </div>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: center; border: 1px solid var(--border-color);">#</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Property</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>1</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Identity
+                                            Matrix</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">det(I)
+                                            = 1</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>2</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Equal
+                                            Rows/Columns</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">If
+                                            two rows (or columns) are equal →
+                                            det = 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>3</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Scalar
+                                            Multiplication</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">If
+                                            a row is multiplied by k, det is
+                                            multiplied by k</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>4</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Row
+                                            Swap</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">If
+                                            two rows are swapped, sign
+                                            changes</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>5</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Row
+                                            Multiple</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">If
+                                            one row is a multiple of another,
+                                            det = 0</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>6</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Transpose</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">det(Aᵀ)
+                                            = det(A)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>7</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Product</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">det(AB)
+                                            = det(A) × det(B)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>8</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Scalar
+                                            Matrix</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">det(kA)
+                                            = kⁿ × det(A), where n = matrix
+                                            size</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>9</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Invertibility</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">If
+                                            det(A) ≠ 0 → A is invertible</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>10</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Singular</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">If
+                                            det(A) = 0 → A is singular (no
+                                            inverse)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">43</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 44: Row Operations Effect -->
+                    <div class="slide" id="slide-row-ops-det">
+                        <h2>🔧 Determinants and Row Operations</h2>
+
+                        <div class="definition-box">
+                            <h3>⚙️ How Row Operations Affect the
+                                Determinant</h3>
+                            <p>When performing <strong>elementary row
+                                    operations</strong>, note how they affect
+                                the determinant:</p>
+                        </div>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Row
+                                            Operation</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Effect
+                                            on det(A)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Swap
+                                                two rows</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Multiplies
+                                            det(A) by <strong>−1</strong></td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Multiply
+                                                a row by constant
+                                                k</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Multiplies
+                                            det(A) by <strong>k</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Add
+                                                multiple of one row to
+                                                another</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>No
+                                                change</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example:</h4>
+                            <p>If you swap two rows, the determinant sign
+                                flips.</p>
+                            <p style="margin-top: 10px;">If you multiply one row
+                                by 2, the determinant doubles.</p>
+                            <p style="margin-top: 10px;">If you add a multiple
+                                of one row to another, the determinant stays the
+                                same.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Why This Matters</h4>
+                            <p>Understanding these effects helps when:</p>
+                            <ul>
+                                <li>Computing determinants using row
+                                    reduction</li>
+                                <li>Verifying calculations</li>
+                                <li>Understanding geometric transformations</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">44</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 45: Triangular Matrix Determinant -->
+                    <div class="slide" id="slide-triangular-det">
+                        <h2>📐 Determinant of a Triangular Matrix</h2>
+
+                        <div class="definition-box">
+                            <h3>🚀 The Easiest Determinant to Calculate!</h3>
+                            <p>For any <strong>upper or lower triangular
+                                    matrix</strong>,<br>
+                                the determinant = <strong>product of the
+                                    diagonal elements</strong>.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>✅ Example:</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                2 & 5 & 7 \\
+                                0 & 3 & 8 \\
+                                0 & 0 & 4
+                                \end{bmatrix}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Determinant:</strong></p>
+                            <div class="formula">
+                                $$|A| = 2 × 3 × 4 = 24$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Just multiply the diagonal!</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>📊 Another Example (Lower Triangular):</h4>
+                            <div class="formula">
+                                $$B = \begin{bmatrix}
+                                5 & 0 & 0 \\
+                                3 & 2 & 0 \\
+                                1 & 4 & 6
+                                \end{bmatrix}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Determinant:</strong></p>
+                            <div class="formula">
+                                $$|B| = 5 × 2 × 6 = 60$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Why Is This Useful?</h4>
+                            <p>This property makes computing determinants much
+                                faster:</p>
+                            <ul>
+                                <li>Use row operations to convert matrix to
+                                    triangular form</li>
+                                <li>Multiply the diagonal elements</li>
+                                <li>Adjust for any row swaps (change sign)</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">45</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 46: Testing Invertibility -->
+                    <div class="slide" id="slide-invertibility-test">
+                        <h2>✅ Using Determinants to Test Invertibility</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 The Key Test</h3>
+                            <p>The determinant tells us whether a matrix is
+                                <strong>invertible</strong>.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ If det(A) ≠ 0</h4>
+                            <p>→ A⁻¹ exists → A is <strong>nonsingular</strong>
+                                (invertible)</p>
+                            <div class="formula">
+                                $$\text{det}(A) \neq 0 \implies A \text{ is
+                                invertible}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>❌ If det(A) = 0</h4>
+                            <p>→ A⁻¹ doesn't exist → A is
+                                <strong>singular</strong> (not invertible)</p>
+                            <div class="formula">
+                                $$\text{det}(A) = 0 \implies A \text{ is
+                                singular}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example 1: Invertible Matrix</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix} 2 & 1 \\ 5 & 3
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">det(A) = (2)(3) -
+                                (1)(5) = 6 - 5 = 1 ≠ 0</p>
+                            <p style="margin-top: 10px;" class="success-text">✅
+                                Invertible!</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>📊 Example 2: Singular Matrix</h4>
+                            <div class="formula">
+                                $$B = \begin{bmatrix} 2 & 4 \\ 1 & 2
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">det(B) = (2)(2) -
+                                (4)(1) = 4 - 4 = 0</p>
+                            <p style="margin-top: 10px;" class="error-text">❌
+                                Singular (no inverse)!</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Key Point</h4>
+                            <p>This is a key condition used in:</p>
+                            <ul>
+                                <li>Matrix inverses</li>
+                                <li>Systems of equations</li>
+                                <li>Linear transformations</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">46</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 47: Geometric Interpretation -->
+                    <div class="slide" id="slide-det-geometric">
+                        <h2>🎨 Determinant and Area/Volume Interpretation</h2>
+
+                        <div class="definition-box">
+                            <h3>🌐 Geometric Meaning</h3>
+                            <p>The determinant has a beautiful geometric
+                                interpretation:</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📐 For a 2×2 Matrix</h4>
+                            <p>The determinant represents the <strong>area
+                                    scaling factor</strong>.</p>
+                            <p style="margin-top: 15px;">If you apply the linear
+                                transformation represented by matrix A to a unit
+                                square, the determinant tells you how much the
+                                area changes.</p>
+                            <div class="formula">
+                                $$\text{New Area} = |\text{det}(A)| ×
+                                \text{Original Area}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🧊 For a 3×3 Matrix</h4>
+                            <p>The determinant represents the <strong>volume
+                                    scaling factor</strong>.</p>
+                            <p style="margin-top: 15px;">It tells you how the
+                                volume of a unit cube changes under the
+                                transformation.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Special Cases</h4>
+                            <ul>
+                                <li><strong>If det(A) = 0:</strong> The
+                                    transformation <strong>flattens
+                                        space</strong> — area or volume becomes
+                                    zero (the system is linearly dependent)</li>
+                                <li><strong>If det(A) > 0:</strong>
+                                    Transformation preserves orientation</li>
+                                <li><strong>If det(A) < 0:</strong>
+                                    Transformation flips orientation
+                                    (reflection)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>🔍 Example:</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix} 2 & 0 \\ 0 & 3
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">det(A) = 6</p>
+                            <p style="margin-top: 10px;">This transformation
+                                stretches by factor 2 in x-direction and factor
+                                3 in y-direction.</p>
+                            <p style="margin-top: 10px;">Total area scaling = 2
+                                × 3 = 6</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">47</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 48: Example Problems -->
+                    <div class="slide" id="slide-det-examples">
+                        <h2>📝 Example Problems</h2>
+
+                        <div class="example-box">
+                            <h4>📊 Example 1: 2×2 Matrix</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                4 & 3 \\
+                                6 & 3
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Calculate
+                                    det(A):</strong></p>
+                            <div class="formula">
+                                $$|A| = (4×3) - (3×6) = 12 - 18 = -6$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                det(A) = -6 ≠ 0 → invertible</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>📊 Example 2: 3×3 Matrix (Cofactor
+                                Expansion)</h4>
+                            <div class="formula">
+                                $$B = \begin{bmatrix}
+                                1 & 2 & 3 \\
+                                0 & 4 & 5 \\
+                                1 & 0 & 6
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Use expansion
+                                    along the first row:</strong></p>
+                            <div class="formula">
+                                $$|B| = 1 \begin{vmatrix} 4 & 5 \\ 0 & 6
+                                \end{vmatrix}
+                                - 2 \begin{vmatrix} 0 & 5 \\ 1 & 6 \end{vmatrix}
+                                + 3 \begin{vmatrix} 0 & 4 \\ 1 & 0
+                                \end{vmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Calculate each
+                                    2×2 determinant:</strong></p>
+                            <div class="formula">
+                                $$= 1(24 - 0) - 2(0 - 5) + 3(0 - 4)$$
+                                $$= 24 - 2(-5) + 3(-4)$$
+                                $$= 24 + 10 - 12 = 22$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                det(B) = 22 → invertible</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">48</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 49: Cramer's Rule -->
+                    <div class="slide" id="slide-cramers-rule">
+                        <h2>🔢 Determinants in Solving Systems (Cramer's
+                            Rule)</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 Cramer's Rule</h3>
+                            <p>Cramer's Rule uses determinants to solve linear
+                                systems:</p>
+                            <div class="formula">
+                                $$AX = B$$
+                            </div>
+                            <p style="margin-top: 15px;">If det(A) ≠ 0, then
+                                each variable is:</p>
+                            <div class="formula">
+                                $$x_i = \frac{\text{det}(A_i)}{\text{det}(A)}$$
+                            </div>
+                            <p style="margin-top: 15px;">where \( A_i \) is
+                                obtained by replacing the <em>i-th column</em>
+                                of A with the column vector B.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example: Solving 2×2 System</h4>
+                            <p>Solve:</p>
+                            <div class="equation-system">
+                                <div class="equation">2x + y = 5</div>
+                                <div class="equation">x + 3y = 7</div>
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Step 1: Find
+                                    det(A)</strong></p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix} 2 & 1 \\ 1 & 3
+                                \end{bmatrix}, \quad \text{det}(A) = (2)(3) -
+                                (1)(1) = 5$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Step 2: Find
+                                    det(A₁) - replace column 1 with
+                                    B</strong></p>
+                            <div class="formula">
+                                $$A_1 = \begin{bmatrix} 5 & 1 \\ 7 & 3
+                                \end{bmatrix}, \quad \text{det}(A_1) = (5)(3) -
+                                (1)(7) = 8$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Step 3: Find
+                                    det(A₂) - replace column 2 with
+                                    B</strong></p>
+                            <div class="formula">
+                                $$A_2 = \begin{bmatrix} 2 & 5 \\ 1 & 7
+                                \end{bmatrix}, \quad \text{det}(A_2) = (2)(7) -
+                                (5)(1) = 9$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Step 4: Apply
+                                    Cramer's Rule</strong></p>
+                            <div class="formula">
+                                $$x = \frac{\text{det}(A_1)}{\text{det}(A)} =
+                                \frac{8}{5}$$
+                                $$y = \frac{\text{det}(A_2)}{\text{det}(A)} =
+                                \frac{9}{5}$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Solution: x = 8/5, y = 9/5</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 When to Use Cramer's Rule</h4>
+                            <p>This method only works for:</p>
+                            <ul>
+                                <li>Square matrices</li>
+                                <li>Systems where det(A) ≠ 0</li>
+                                <li>Small systems (becomes inefficient for large
+                                    systems)</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">49</span> of
+                                <span class="totalSlides">50</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 50: Determinants Summary -->
+                    <div class="slide" id="slide-det-summary">
+                        <h2>🏁 Determinants: Complete Summary</h2>
+
+                        <div class="definition-box">
+                            <h3>📚 Quick Reference</h3>
+                            <table
+                                style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Topic</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Key
+                                            Idea</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Definition</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Scalar
+                                            from a square matrix</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>2×2
+                                                Formula</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            ad - bc \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>3×3
+                                                Formula</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Cofactor
+                                            expansion or Sarrus' rule</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Triangular
+                                                Matrix</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Product
+                                            of diagonal elements</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>det(Aᵀ)</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Same
+                                            as det(A)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>det(AB)</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">=
+                                            det(A) × det(B)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>det(A)
+                                                = 0</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Singular
+                                            (no inverse)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>det(A)
+                                                ≠ 0</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Invertible</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Geometric
+                                                Meaning</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Area/volume
+                                            scaling</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Use</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Inverses,
+                                            Cramer's Rule, geometry</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="note-box" style="margin-top: 30px;">
+                            <h4>💡 In Summary:</h4>
+                            <p>The determinant is like a "DNA code" of a matrix
+                                —<br>
+                                it tells you whether it can be inverted, how it
+                                changes space, and how strong that
+                                transformation is.</p>
+                            <ul style="margin-top: 15px;">
+                                <li>If the determinant is <strong>zero</strong>,
+                                    the matrix kills one dimension — it
+                                    collapses space.</li>
+                                <li>If it's <strong>positive</strong>, it
+                                    preserves orientation.</li>
+                                <li>If it's <strong>negative</strong>, it flips
+                                    it.</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="margin-top: 30px; background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>🔑 What You've Mastered</h4>
+                            <ul>
+                                <li>✅ Definition and notation of
+                                    determinants</li>
+                                <li>✅ 2×2 and 3×3 determinant formulas</li>
+                                <li>✅ Sarrus' rule for 3×3 matrices</li>
+                                <li>✅ Cofactor expansion for larger
+                                    matrices</li>
+                                <li>✅ Minors and cofactors</li>
+                                <li>✅ Properties of determinants</li>
+                                <li>✅ Effect of row operations</li>
+                                <li>✅ Triangular matrix shortcuts</li>
+                                <li>✅ Testing invertibility</li>
+                                <li>✅ Geometric interpretation</li>
+                                <li>✅ Cramer's Rule</li>
+                            </ul>
+                        </div>
+
+                        <div class="definition-box"
+                            style="margin-top: 30px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));">
+                            <h4
+                                style="text-align: center; font-size: 1.5rem; color: var(--primary-color);">🎉
+                                Chapter 2 Complete!</h4>
+                            <p
+                                style="text-align: center; font-size: 1.1rem; margin-top: 15px;">
+                                You now understand determinants — one of the
+                                most powerful tools in linear algebra!
+                            </p>
+                            <p style="text-align: center; margin-top: 15px;">
+                                Determinants connect to everything: inverses,
+                                solving systems, transformations, eigenvalues,
+                                and more.
+                            </p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">50</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- CHAPTER 4: VECTOR SPACES AND SUBSPACES -->
+                    <!-- ============================================================ -->
+
+                    <!-- Slide 51: Introduction -->
+                    <div class="slide" id="slide-vectorspace-intro">
+                        <h2>🧭 Chapter 4. – Vector Spaces and Subspaces</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 Introduction</h3>
+                            <p>This chapter introduces one of the most
+                                fundamental ideas in Linear Algebra — the
+                                <strong>vector space</strong>.</p>
+                            <p style="margin-top: 15px;">A vector space is
+                                basically a <em>collection of vectors</em> that
+                                follow certain rules for
+                                <strong>addition</strong> and <strong>scalar
+                                    multiplication</strong>.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Key Insight</h4>
+                            <p>Every concept you've learned so far — like
+                                matrices, solutions of systems, and
+                                transformations — happens <em>inside</em> some
+                                vector space.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🎯 What You'll Learn</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li>What defines a vector space</li>
+                                <li>The 8 fundamental axioms</li>
+                                <li>Common examples of vector spaces</li>
+                                <li>What a subspace is</li>
+                                <li>How to test for subspaces</li>
+                                <li>The concept of span</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">51</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 52: What is a Vector Space? -->
+                    <div class="slide" id="slide-vectorspace-def">
+                        <h2>📐 What is a Vector Space?</h2>
+
+                        <div class="definition-box">
+                            <h3>🔍 Definition</h3>
+                            <p>A <strong>vector space</strong> (also called a
+                                <strong>linear space</strong>) is a set of
+                                objects (called <strong>vectors</strong>) that
+                                satisfy <strong>two main
+                                    operations</strong>:</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>1️⃣ Vector Addition</h4>
+                            <p>You can add two vectors and still get another
+                                vector in the same set.</p>
+                            <div class="formula">
+                                $$\vec{u} + \vec{v} \in V$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>2️⃣ Scalar Multiplication</h4>
+                            <p>You can multiply a vector by a real number
+                                (scalar) and stay in the same set.</p>
+                            <div class="formula">
+                                $$c\vec{u} \in V \text{ for any scalar } c$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📚 Formal Definition</h4>
+                            <p>A <strong>vector space</strong> is a set
+                                <strong>V</strong> together with these two
+                                operations such that <strong>eight specific
+                                    rules</strong> (called <em>axioms</em>) hold
+                                true.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">52</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 53: The 8 Vector Space Axioms -->
+                    <div class="slide" id="slide-axioms">
+                        <h2>📋 The 8 Vector Space Axioms</h2>
+
+                        <div class="definition-box">
+                            <h3>🔑 The Rules That Must Hold</h3>
+                            <p>Let \( V \) be a set of vectors, and let \(
+                                \vec{u}, \vec{v}, \vec{w} \in V \), and \( c, d
+                                \) be scalars (numbers).</p>
+                            <p style="margin-top: 15px;">Then \( V \) is a
+                                vector space if all the following hold:</p>
+                        </div>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: center; border: 1px solid var(--border-color);">#</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Property</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Rule
+                                            Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>1</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Closure
+                                            under Addition</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \vec{u} + \vec{v} \in V \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>2</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Commutativity</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \vec{u} + \vec{v} = \vec{v} +
+                                            \vec{u} \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>3</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Associativity
+                                            of Addition</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            (\vec{u} + \vec{v}) + \vec{w} =
+                                            \vec{u} + (\vec{v} + \vec{w})
+                                            \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>4</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Existence
+                                            of Zero Vector</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \vec{u} + \vec{0} = \vec{u} \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>5</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Existence
+                                            of Additive Inverse</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \vec{u} + (-\vec{u}) = \vec{0}
+                                            \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>6</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Closure
+                                            under Scalar Multiplication</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            c\vec{u} \in V \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>7</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Distributivity
+                                            (Scalar over Vector)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            c(\vec{u} + \vec{v}) = c\vec{u} +
+                                            c\vec{v} \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>8</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Distributivity
+                                            (Scalars)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            (c + d)\vec{u} = c\vec{u} + d\vec{u}
+                                            \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>9</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Compatibility
+                                            of Scalar Multiplication</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            c(d\vec{u}) = (cd)\vec{u} \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>10</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Identity
+                                            of Scalar Multiplication</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            1\vec{u} = \vec{u} \)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>✅ The Test</h4>
+                            <p>If all of these are true → \( V \) is a
+                                <strong>vector space</strong>.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">53</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 54: Examples of Vector Spaces -->
+                    <div class="slide" id="slide-vectorspace-examples">
+                        <h2>📊 Examples of Vector Spaces</h2>
+
+                        <div class="definition-box">
+                            <h3>🔍 Let's Make This Concrete</h3>
+                            <p>Let's look at common examples to make this
+                                concept real.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Example 1: The space \( \mathbb{R}^2 \)</h4>
+                            <p>All ordered pairs \((x, y)\) of real numbers.</p>
+                            <p
+                                style="margin-top: 15px;"><strong>Addition:</strong></p>
+                            <div class="formula">
+                                $$(x_1, y_1) + (x_2, y_2) = (x_1 + x_2, y_1 +
+                                y_2)$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>Scalar
+                                    Multiplication:</strong></p>
+                            <div class="formula">
+                                $$c(x, y) = (cx, cy)$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                This satisfies all 8 properties → so \(
+                                \mathbb{R}^2 \) is a vector space.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>Example 2: The space \( \mathbb{R}^3 \)</h4>
+                            <p>All triples of real numbers \((x, y, z)\).</p>
+                            <p
+                                style="margin-top: 15px;"><strong>Addition:</strong></p>
+                            <div class="formula">
+                                $$(x_1, y_1, z_1) + (x_2, y_2, z_2) = (x_1 +
+                                x_2, y_1 + y_2, z_1 + z_2)$$
+                            </div>
+                            <p
+                                style="margin-top: 15px;"><strong>Scalar:</strong></p>
+                            <div class="formula">
+                                $$c(x, y, z) = (cx, cy, cz)$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                \( \mathbb{R}^3 \) is a vector space.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>Example 3: The Zero Space</h4>
+                            <div class="formula">
+                                $$V = \{ \vec{0} \}$$
+                            </div>
+                            <p style="margin-top: 10px;">(the set that only
+                                contains the zero vector)</p>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                It satisfies all rules → yes, even though it's
+                                small, it's still a valid vector space.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">54</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 55: More Examples -->
+                    <div class="slide" id="slide-more-examples">
+                        <h2>📚 More Examples of Vector Spaces</h2>
+
+                        <div class="example-box">
+                            <h4>Example 4: The Space of All 2×2 Matrices</h4>
+                            <div class="formula">
+                                $$V = \left\{ A = \begin{bmatrix} a & b \\ c & d
+                                \end{bmatrix} : a,b,c,d \in \mathbb{R}
+                                \right\}$$
+                            </div>
+                            <p style="margin-top: 15px;">You can add matrices
+                                and multiply by scalars, and the result stays a
+                                2×2 matrix.</p>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                So, the set of all 2×2 real matrices is a vector
+                                space.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>Example 5: The Space of Polynomials</h4>
+                            <div class="formula">
+                                $$P_2 = \{ a_0 + a_1x + a_2x^2 : a_i \in
+                                \mathbb{R} \}$$
+                            </div>
+                            <p style="margin-top: 15px;">You can add polynomials
+                                and multiply them by scalars → still get a
+                                polynomial of degree ≤ 2.</p>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Vector space.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Key Observation</h4>
+                            <p>Notice that "vectors" don't have to be arrows or
+                                tuples of numbers!</p>
+                            <p style="margin-top: 10px;">They can be:</p>
+                            <ul>
+                                <li>Matrices</li>
+                                <li>Polynomials</li>
+                                <li>Functions</li>
+                                <li>Any objects that follow the axioms</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">55</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 56: What is NOT a Vector Space -->
+                    <div class="slide" id="slide-not-vectorspace">
+                        <h2>❌ What is NOT a Vector Space</h2>
+
+                        <div class="definition-box">
+                            <h3>⚠️ Not All Sets Are Vector Spaces!</h3>
+                            <p>To test if something is a vector space, check all
+                                8 properties.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>❌ Example: The Line y = 1</h4>
+                            <div class="formula">
+                                $$V = \{ (x, y) : y = 1 \}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Test:</strong>
+                                Add two elements:</p>
+                            <div class="formula">
+                                $$(2, 1) + (3, 1) = (5, 2)$$
+                            </div>
+                            <p style="margin-top: 15px;">But \((5, 2)\) does not
+                                satisfy \( y = 1 \). ❌</p>
+                            <p style="margin-top: 15px;" class="error-text">So
+                                it fails closure under addition → <strong>not a
+                                    vector space</strong>.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔍 Common Mistakes</h4>
+                            <p>Sets that are <strong>NOT</strong> vector spaces
+                                often:</p>
+                            <ul>
+                                <li>Don't contain the zero vector</li>
+                                <li>Aren't closed under addition or scalar
+                                    multiplication</li>
+                                <li>Don't pass through the origin (in geometric
+                                    terms)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>⚠️ Another Non-Example</h4>
+                            <div class="formula">
+                                $$V = \{ (x, y) : x \geq 0, y \geq 0 \}$$
+                            </div>
+                            <p style="margin-top: 15px;">(first quadrant
+                                only)</p>
+                            <p style="margin-top: 15px;">This fails because
+                                scalar multiplication by negative numbers takes
+                                you out of the set.</p>
+                            <p style="margin-top: 10px;">Example: \( -1 \times
+                                (1, 1) = (-1, -1) \notin V \) ❌</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">56</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 57: Subspaces -->
+                    <div class="slide" id="slide-subspaces">
+                        <h2>🔷 Subspaces</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 What is a Subspace?</h3>
+                            <p>A <strong>subspace</strong> is a smaller vector
+                                space inside a larger one.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📋 Formal Definition</h4>
+                            <p>A subset \( W \subseteq V \) is a
+                                <strong>subspace</strong> of \( V \) if it
+                                satisfies:</p>
+                            <ol
+                                style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                                <li>The <strong>zero vector</strong> of \( V \)
+                                    is in \( W \).</li>
+                                <li><strong>Closed under addition</strong>: If
+                                    \( \vec{u}, \vec{v} \in W \), then \(
+                                    \vec{u} + \vec{v} \in W \).</li>
+                                <li><strong>Closed under scalar
+                                        multiplication</strong>: If \( \vec{u}
+                                    \in W \) and \( c \) is any scalar, then \(
+                                    c\vec{u} \in W \).</li>
+                            </ol>
+                            <p style="margin-top: 20px;" class="success-text">✅
+                                If these 3 are true → W is a subspace.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Why Only 3 Conditions?</h4>
+                            <p>If W is a subset of a vector space V, and W
+                                satisfies these 3 conditions, then W
+                                automatically inherits all the other vector
+                                space properties from V!</p>
+                            <p style="margin-top: 10px;">This makes checking for
+                                subspaces much easier than checking all 8
+                                axioms.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">57</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 58: Testing Subspaces -->
+                    <div class="slide" id="slide-test-subspaces">
+                        <h2>🔬 Testing Subspaces (The Shortcut)</h2>
+
+                        <div class="definition-box">
+                            <h3>⚡ The Subspace Test</h3>
+                            <p>To quickly check if a subset \( W \) is a
+                                subspace of \( V \):</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>✅ The 3-Step Test</h4>
+                            <ol
+                                style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                                <li><strong>Zero Test:</strong> Does \( W \)
+                                    contain the zero vector?</li>
+                                <li><strong>Addition Test:</strong> If \(
+                                    \vec{u}, \vec{v} \in W \), is \( \vec{u} +
+                                    \vec{v} \in W \)?</li>
+                                <li><strong>Scalar Test:</strong> If \( \vec{u}
+                                    \in W \) and \( c \) is any scalar, is \(
+                                    c\vec{u} \in W \)?</li>
+                            </ol>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🎯 Strategy</h4>
+                            <ul>
+                                <li>Check these 3 conditions in order</li>
+                                <li>If <strong>any</strong> fail → not a
+                                    subspace</li>
+                                <li>If <strong>all pass</strong> → it's a
+                                    subspace!</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>💡 Quick Tip</h4>
+                            <p>The zero vector test often eliminates many
+                                candidates immediately!</p>
+                            <p style="margin-top: 10px;">If a set doesn't
+                                contain \( \vec{0} \), it can't be a subspace —
+                                no need to check further.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">58</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 59: Examples of Subspaces -->
+                    <div class="slide" id="slide-subspace-examples">
+                        <h2>📊 Examples of Subspaces</h2>
+
+                        <div class="example-box">
+                            <h4>✅ Example 1: The xy-plane in \( \mathbb{R}^3
+                                \)</h4>
+                            <div class="formula">
+                                $$W = \{ (x, y, z) \in \mathbb{R}^3 : z = 0 \}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Check:</strong></p>
+                            <ul style="margin-top: 10px;">
+                                <li>Zero vector \((0,0,0)\) has \(z=0\) ✅</li>
+                                <li>If two points have \(z=0\) → sum has \(z=0\)
+                                    ✅</li>
+                                <li>If you multiply by scalar → \(z\) stays 0
+                                    ✅</li>
+                            </ul>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Subspace!</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Example 2: A plane through the origin</h4>
+                            <div class="formula">
+                                $$W = \{ (x, y, z) : x + y + z = 0 \}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Check closure
+                                    and scalar multiplication:</strong></p>
+                            <ul style="margin-top: 10px;">
+                                <li>\((0,0,0)\) satisfies it ✅</li>
+                                <li>If \( x_1 + y_1 + z_1 = 0 \) and \( x_2 +
+                                    y_2 + z_2 = 0 \), then sum also = 0 ✅</li>
+                                <li>Scalar times still satisfies = 0 ✅</li>
+                            </ul>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Subspace!</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>❌ Example 3: NOT a subspace</h4>
+                            <div class="formula">
+                                $$W = \{ (x, y, z) : x + y + z = 1 \}$$
+                            </div>
+                            <p style="margin-top: 15px;">The zero vector
+                                \((0,0,0)\) gives \( 0+0+0=0 \neq 1 \). ❌</p>
+                            <p style="margin-top: 15px;" class="error-text">So
+                                fails condition 1 → <strong>not a
+                                    subspace</strong>.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">59</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 60: Important Subspaces -->
+                    <div class="slide" id="slide-important-subspaces">
+                        <h2>⭐ Important Subspaces</h2>
+
+                        <div class="definition-box">
+                            <h3>🔑 Standard Subspaces Related to Matrices</h3>
+                            <p>Inside \( \mathbb{R}^n \), there are some
+                                standard subspaces tied to matrices:</p>
+                        </div>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Subspace</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Definition</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Notation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Column
+                                                Space</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">All
+                                            linear combinations of the columns
+                                            of A</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \text{Col}(A) \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Row
+                                                Space</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">All
+                                            linear combinations of the rows of
+                                            A</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \text{Row}(A) \)</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Null
+                                                Space</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">All
+                                            vectors \( x \) such that \( Ax = 0
+                                            \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \text{Nul}(A) \)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>✅ Key Fact</h4>
+                            <p>All of these are subspaces!</p>
+                            <p style="margin-top: 10px;">Each one satisfies the
+                                3 subspace conditions automatically.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Why They Matter</h4>
+                            <ul>
+                                <li><strong>Column Space:</strong> Tells us
+                                    which vectors can be reached by the
+                                    transformation</li>
+                                <li><strong>Row Space:</strong> Related to the
+                                    independent equations in a system</li>
+                                <li><strong>Null Space:</strong> Solutions to
+                                    the homogeneous system \( Ax = 0 \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">60</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 61: Geometric View -->
+                    <div class="slide" id="slide-geometric-view">
+                        <h2>🎨 Geometric View of Subspaces</h2>
+
+                        <div class="definition-box">
+                            <h3>🌐 Visualizing Subspaces</h3>
+                            <p>In \( \mathbb{R}^2 \) or \( \mathbb{R}^3 \),
+                                subspaces have nice geometric
+                                interpretations:</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📐 In \( \mathbb{R}^2 \):</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li>A <strong>line through the origin</strong>
+                                    is a 1D subspace</li>
+                                <li>The whole space \( \mathbb{R}^2 \) itself is
+                                    a subspace</li>
+                                <li>The <strong>origin alone</strong> \( \{
+                                    \vec{0} \} \) is a subspace</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🧊 In \( \mathbb{R}^3 \):</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li>A <strong>line through the origin</strong>
+                                    is a 1D subspace</li>
+                                <li>A <strong>plane through the origin</strong>
+                                    is a 2D subspace</li>
+                                <li>The whole space \( \mathbb{R}^3 \) itself is
+                                    a subspace</li>
+                                <li>The <strong>origin alone</strong> \( \{
+                                    \vec{0} \} \) is a subspace</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>⚠️ Critical Rule</h4>
+                            <p>Anything <strong>not through the origin</strong>
+                                is <strong>NOT</strong> a subspace!</p>
+                            <p style="margin-top: 10px;">Examples of
+                                NON-subspaces:</p>
+                            <ul>
+                                <li>A line that doesn't pass through origin</li>
+                                <li>A plane that doesn't pass through
+                                    origin</li>
+                                <li>A shifted copy of any subspace</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">61</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 62: Zero and Whole Subspaces -->
+                    <div class="slide" id="slide-trivial-subspaces">
+                        <h2>🔷 Zero and Whole Subspaces</h2>
+
+                        <div class="definition-box">
+                            <h3>⚡ The "Trivial" Subspaces</h3>
+                            <p>Two "extreme" subspaces always exist in any
+                                vector space:</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>1️⃣ The Zero Subspace</h4>
+                            <div class="formula">
+                                $$\{ \vec{0} \}$$
+                            </div>
+                            <p style="margin-top: 15px;">The set containing only
+                                the zero vector.</p>
+                            <p
+                                style="margin-top: 10px;"><strong>Check:</strong></p>
+                            <ul>
+                                <li>Contains zero vector ✅</li>
+                                <li>\( \vec{0} + \vec{0} = \vec{0} \) (closed
+                                    under addition) ✅</li>
+                                <li>\( c\vec{0} = \vec{0} \) (closed under
+                                    scalar multiplication) ✅</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>2️⃣ The Entire Space</h4>
+                            <div class="formula">
+                                $$V \text{ itself}$$
+                            </div>
+                            <p style="margin-top: 15px;">The whole vector space
+                                is a subspace of itself.</p>
+                            <p style="margin-top: 10px;">Obviously satisfies all
+                                3 subspace conditions since it's already a
+                                vector space!</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Terminology</h4>
+                            <p>These are called <strong>trivial
+                                    subspaces</strong> because they always
+                                exist.</p>
+                            <p style="margin-top: 10px;">All other subspaces
+                                (the interesting ones!) are called
+                                <strong>proper subspaces</strong> or
+                                <strong>non-trivial subspaces</strong>.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">62</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 63: Span of Vectors -->
+                    <div class="slide" id="slide-span">
+                        <h2>🎯 Span of Vectors</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 What is Span?</h3>
+                            <p>The <strong>span</strong> of a set of vectors is
+                                the set of <em>all possible linear
+                                    combinations</em> of them.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📋 Formal Definition</h4>
+                            <p>If you have vectors \( v_1, v_2, ..., v_k \),
+                                then:</p>
+                            <div class="formula">
+                                $$\text{Span}\{v_1, v_2, ..., v_k\} = \{ c_1v_1
+                                + c_2v_2 + ... + c_kv_k : c_i \in \mathbb{R}
+                                \}$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                The span is <strong>always a
+                                    subspace</strong>.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>📊 Example:</h4>
+                            <div class="formula">
+                                $$v_1 = (1, 0, 0), \quad v_2 = (0, 1, 0)$$
+                            </div>
+                            <p style="margin-top: 20px;">Then:</p>
+                            <div class="formula">
+                                $$\text{Span}\{v_1, v_2\} = \{ (a, b, 0) : a,b
+                                \in \mathbb{R} \}$$
+                            </div>
+                            <p style="margin-top: 15px;">That's the
+                                <strong>xy-plane</strong> — a subspace of \(
+                                \mathbb{R}^3 \).</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Why Span is Important</h4>
+                            <ul>
+                                <li>It's the <strong>smallest subspace</strong>
+                                    containing the given vectors</li>
+                                <li>It represents all vectors you can "reach"
+                                    using the given vectors</li>
+                                <li>Column space of a matrix = Span of its
+                                    columns</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">63</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 64: Span and Subspace Relation -->
+                    <div class="slide" id="slide-span-subspace">
+                        <h2>🔗 The Relation Between Span and Subspace</h2>
+
+                        <div class="definition-box">
+                            <h3>� Connection Between Span and Subspace</h3>
+                            <p>If \( W = \text{Span}\{v_1, v_2, ..., v_k\}
+                                \),<br>
+                                then \( W \) is the <strong>smallest
+                                    subspace</strong> that contains all those
+                                vectors.</p>
+                        </div>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Concept</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Definition</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Key
+                                            Idea</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Vector
+                                                Space</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">A
+                                            set with addition & scalar
+                                            rules</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Must
+                                            satisfy 8 axioms</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Subspace</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">A
+                                            smaller vector space inside
+                                            another</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Must
+                                            contain 0, closed under + and ×</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Span</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">All
+                                            combinations of given vectors</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Always
+                                            forms a subspace</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Examples</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Lines,
+                                            planes through origin</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Must
+                                            include 0 vector</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Not
+                                                Subspaces</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Not
+                                            passing through origin</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Like
+                                            \( x+y+z=1 \)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="note-box" style="margin-top: 30px;">
+                            <h4>💡 Intuitive Meaning</h4>
+                            <p>Think of a vector space as a "world" where you
+                                can move in different directions freely —<br>
+                                a subspace is like a <em>flat surface</em> or
+                                <em>line</em> inside that world where movement
+                                is limited but still obeys the same rules.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">64</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- CHAPTER 4.4 & 4.5: BASES AND DIMENSIONS -->
+                    <!-- ============================================================ -->
+
+                    <!-- Slide 65: Introduction to Bases and Dimensions -->
+                    <div class="slide" id="slide-bases-intro">
+                        <h2>🧠 Chapter 4.4 & 4.5 – Bases and Dimensions</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 Introduction</h3>
+                            <p>We've learned about <strong>vector
+                                    spaces</strong> and
+                                <strong>subspaces</strong> before.</p>
+                            <p style="margin-top: 15px;">Now, we want a way to
+                                <em>describe</em> or <em>measure</em> them — not
+                                just say "it's a plane" or "a line", but to
+                                <strong>quantify</strong> it:</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>❓ Key Questions</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li>➡ How many directions does it have?</li>
+                                <li>➡ Which vectors "generate" that space?</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🎯 The Answer</h4>
+                            <p>That's where <strong>basis</strong> and
+                                <strong>dimension</strong> come in.</p>
+                            <p style="margin-top: 10px;">These concepts help us
+                                understand the structure and "size" of vector
+                                spaces.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">65</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 66: The Idea Behind a Basis -->
+                    <div class="slide" id="slide-basis-idea">
+                        <h2>⚙️ The Idea Behind a Basis</h2>
+
+                        <div class="definition-box">
+                            <h3>🔍 What is a Basis?</h3>
+                            <p>A <strong>basis</strong> of a vector space is a
+                                set of vectors that:</p>
+                            <ol
+                                style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                                <li><strong>Span</strong> the space → they can
+                                    make any vector in the space through linear
+                                    combinations.</li>
+                                <li>Are <strong>linearly independent</strong> →
+                                    none of them can be written as a combination
+                                    of the others.</li>
+                            </ol>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 In Short</h4>
+                            <p>A basis is the <strong>smallest set of
+                                    "directions"</strong> that can generate the
+                                entire space.</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h3>📋 Formal Definition</h3>
+                            <p>Let \( V \) be a vector space.</p>
+                            <p style="margin-top: 15px;">A set of vectors \( \{
+                                v_1, v_2, ..., v_n \} \) in \( V \) is called a
+                                <strong>basis</strong> for \( V \) if:</p>
+                            <ol style="margin-top: 15px; line-height: 1.8;">
+                                <li>\( \{ v_1, v_2, ..., v_n \} \)
+                                    <strong>spans</strong> \( V \).<br>
+                                    <small>(Every vector in V can be written as
+                                        a linear combination of
+                                        them.)</small></li>
+                                <li>\( \{ v_1, v_2, ..., v_n \} \) is
+                                    <strong>linearly independent</strong>.<br>
+                                    <small>(No vector is
+                                        redundant.)</small></li>
+                            </ol>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">66</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 67: Examples of Bases -->
+                    <div class="slide" id="slide-basis-examples">
+                        <h2>📊 Examples of Bases</h2>
+
+                        <div class="example-box">
+                            <h4>Example 1: Standard Basis for \( \mathbb{R}^2
+                                \)</h4>
+                            <div class="formula">
+                                $$v_1 = (1, 0), \quad v_2 = (0, 1)$$
+                            </div>
+                            <p style="margin-top: 20px;">✅ They are
+                                independent.<br>
+                                ✅ They span all of \( \mathbb{R}^2 \) (you can
+                                create any (x, y)).</p>
+                            <p
+                                style="margin-top: 15px;"><strong>Therefore:</strong></p>
+                            <div class="formula">
+                                $$\text{Basis of } \mathbb{R}^2 = \{ (1, 0), (0,
+                                1) \}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>Example 2: Standard Basis for \( \mathbb{R}^3
+                                \)</h4>
+                            <div class="formula">
+                                $$v_1 = (1, 0, 0), \quad v_2 = (0, 1, 0), \quad
+                                v_3 = (0, 0, 1)$$
+                            </div>
+                            <p style="margin-top: 20px;">✅ Independent.<br>
+                                ✅ Span \( \mathbb{R}^3 \).</p>
+                            <p
+                                style="margin-top: 15px;"><strong>So:</strong></p>
+                            <div class="formula">
+                                $$\text{Basis of } \mathbb{R}^3 = \{ e_1, e_2,
+                                e_3 \}$$
+                            </div>
+                            <p style="margin-top: 10px;">where \( e_i \) means
+                                the "standard unit vector".</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>Example 3: A Basis for a Plane in \(
+                                \mathbb{R}^3 \)</h4>
+                            <p>Let:</p>
+                            <div class="formula">
+                                $$W = \{ (x, y, z) : z = 0 \}$$
+                            </div>
+                            <p style="margin-top: 15px;">That's the
+                                <strong>xy-plane</strong>.</p>
+                            <p style="margin-top: 15px;">A possible basis
+                                is:</p>
+                            <div class="formula">
+                                $$\{ (1, 0, 0), (0, 1, 0) \}$$
+                            </div>
+                            <p style="margin-top: 15px;">✅ They are
+                                independent.<br>
+                                ✅ They span all points on the plane (any (x, y,
+                                0)).</p>
+                            <p style="margin-top: 10px;" class="success-text">So
+                                this is a valid basis.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">67</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 68: Different Bases, Same Space -->
+                    <div class="slide" id="slide-different-bases">
+                        <h2>🧩 Different Bases, Same Space</h2>
+
+                        <div class="definition-box">
+                            <h3>⚠️ Important Fact</h3>
+                            <p>A vector space can have <strong>many different
+                                    bases</strong>, but they all have the
+                                <strong>same number of vectors</strong>.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Example in \( \mathbb{R}^2 \)</h4>
+                            <p>Both of these are bases:</p>
+                            <div class="formula">
+                                $$\{ (1, 0), (0, 1) \}, \quad \{ (1, 1), (1, -1)
+                                \}$$
+                            </div>
+                            <p style="margin-top: 20px;">They look different,
+                                but they generate the same space.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔍 Why This Matters</h4>
+                            <ul>
+                                <li>Different bases give different perspectives
+                                    on the same space</li>
+                                <li>Some bases make certain calculations
+                                    easier</li>
+                                <li>The <strong>number</strong> of vectors in a
+                                    basis is always the same (this is the
+                                    dimension!)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>✅ Verification</h4>
+                            <p>For \( \{ (1, 1), (1, -1) \} \):</p>
+                            <ul style="margin-top: 10px; line-height: 1.8;">
+                                <li><strong>Independent?</strong> Neither is a
+                                    multiple of the other ✓</li>
+                                <li><strong>Span \( \mathbb{R}^2 \)?</strong>
+                                    Any (x, y) can be written as a combination
+                                    ✓</li>
+                            </ul>
+                            <p style="margin-top: 15px;">Example: \( (3, 1) =
+                                2(1,1) + 1(1,-1) \)</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">68</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 69: Dimension -->
+                    <div class="slide" id="slide-dimension">
+                        <h2>📏 Dimension</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 What is Dimension?</h3>
+                            <p>The <strong>dimension</strong> of a vector space
+                                \( V \) is:</p>
+                            <div class="formula" style="margin-top: 15px;">
+                                $$\text{The number of vectors in any basis of }
+                                V$$
+                            </div>
+                            <p style="margin-top: 15px;">All bases of the same
+                                vector space contain the <strong>same number of
+                                    vectors</strong>.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📝 Notation</h4>
+                            <p>We write:</p>
+                            <div class="formula">
+                                $$\dim(V) = n$$
+                            </div>
+                        </div>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Vector
+                                            Space</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Example
+                                            of Basis</th>
+                                        <th
+                                            style="padding: 15px; text-align: center; border: 1px solid var(--border-color);">Dimension</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \mathbb{R}^2 \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \{(1,0),(0,1)\} \)</td>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>2</strong></td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \mathbb{R}^3 \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \{(1,0,0),(0,1,0),(0,0,1)\} \)</td>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>3</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Line
+                                            through origin in \( \mathbb{R}^2
+                                            \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \{(1,2)\} \)</td>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>1</strong></td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Plane
+                                            \( z=0 \) in \( \mathbb{R}^3 \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \{(1,0,0),(0,1,0)\} \)</td>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>2</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Zero
+                                            subspace \( \{0\} \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">No
+                                            vectors</td>
+                                        <td
+                                            style="padding: 12px; text-align: center; border: 1px solid var(--border-color);"><strong>0</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">69</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 70: Finding a Basis from Vectors -->
+                    <div class="slide" id="slide-finding-basis">
+                        <h2>🧠 Finding a Basis from a Set of Vectors</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 The Process</h3>
+                            <p>Suppose we're given a set of vectors.</p>
+                            <p style="margin-top: 10px;">We can find a
+                                <strong>basis</strong> for their
+                                <strong>span</strong> by removing any dependent
+                                vectors.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Example 1: Simple Case</h4>
+                            <div class="formula">
+                                $$S = \{ (1, 2), (2, 4) \}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Notice:</strong></p>
+                            <div class="formula">
+                                $$(2, 4) = 2(1, 2)$$
+                            </div>
+                            <p style="margin-top: 15px;">So they're
+                                <strong>dependent</strong>.</p>
+                            <p style="margin-top: 15px;">A smaller independent
+                                set that still spans the same space is just:</p>
+                            <div class="formula">
+                                $$\{ (1, 2) \}$$
+                            </div>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Basis for the line they generate.</p>
+                            <p style="margin-top: 10px;"><strong>Dimension =
+                                    1</strong></p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>Example 2: Testing Independence</h4>
+                            <div class="formula">
+                                $$S = \{ (1, 0, 0), (1, 1, 0), (1, 1, 1) \}$$
+                            </div>
+                            <p style="margin-top: 20px;">We'll check linear
+                                independence:</p>
+                            <p style="margin-top: 15px;">Form a matrix:</p>
+                            <div class="formula">
+                                $$\begin{bmatrix}
+                                1 & 1 & 1 \\
+                                0 & 1 & 1 \\
+                                0 & 0 & 1
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">It's in upper
+                                triangular form with nonzero diagonal → linearly
+                                independent.</p>
+                            <p style="margin-top: 15px;" class="success-text">✅
+                                Basis for \( \mathbb{R}^3 \).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">70</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 71: Rank and Basis Relationship -->
+                    <div class="slide" id="slide-rank-basis">
+                        <h2>⚖️ The Rank and Basis Relationship</h2>
+
+                        <div class="definition-box">
+                            <h3>🔑 Key Connection</h3>
+                            <p>The <strong>rank</strong> of a matrix (number of
+                                pivots in RREF form) = the <strong>dimension of
+                                    its column space</strong>.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📋 To Find a Basis for Column Space</h4>
+                            <p>Take the <strong>pivot columns</strong> from the
+                                original matrix.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                1 & 2 & 3 \\
+                                0 & 1 & 4 \\
+                                0 & 0 & 0
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Pivot
+                                    columns</strong> = 1 and 2 →</p>
+                            <p style="margin-top: 15px;">Basis for
+                                <strong>Col(A)</strong> = the first two columns
+                                of A:</p>
+                            <div class="formula">
+                                $$\left\{
+                                \begin{bmatrix}1\\0\\0\end{bmatrix},
+                                \begin{bmatrix}2\\1\\0\end{bmatrix}
+                                \right\}$$
+                            </div>
+                            <p style="margin-top: 20px;" class="success-text">✅
+                                Dimension of Col(A) = 2.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>⚠️ Important Note</h4>
+                            <p>Always use the columns from the <strong>original
+                                    matrix</strong>, not the RREF!</p>
+                            <p style="margin-top: 10px;">The RREF tells you
+                                <em>which</em> columns are pivot columns, but
+                                the basis vectors come from the original
+                                matrix.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">71</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 72: Basis for Null Space -->
+                    <div class="slide" id="slide-null-space-basis">
+                        <h2>🧮 Basis for the Null Space</h2>
+
+                        <div class="definition-box">
+                            <h3>📋 The Process</h3>
+                            <p>To find a <strong>basis for the Null Space (Nul
+                                    A)</strong>:</p>
+                            <ol
+                                style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                                <li>Solve \( Ax = 0 \).</li>
+                                <li>Express the solution in vector form.</li>
+                                <li>The coefficient vectors of the free
+                                    variables are the
+                                    <strong>basis</strong>.</li>
+                            </ol>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                1 & 2 & 1 \\
+                                2 & 4 & 2
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;"><strong>Row
+                                    reduce:</strong></p>
+                            <div class="formula">
+                                $$\begin{bmatrix}
+                                1 & 2 & 1 \\
+                                0 & 0 & 0
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;">Let \( x_2 = s, x_3 = t
+                                \):</p>
+                            <div class="formula">
+                                $$x_1 = -2s - t$$
+                            </div>
+                            <p style="margin-top: 15px;">So the general solution
+                                is:</p>
+                            <div class="formula">
+                                $$x = s\begin{bmatrix}-2\\1\\0\end{bmatrix} +
+                                t\begin{bmatrix}-1\\0\\1\end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 20px;" class="success-text">✅
+                                Basis for Nul(A):</p>
+                            <div class="formula">
+                                $$\left\{
+                                \begin{bmatrix}-2\\1\\0\end{bmatrix},
+                                \begin{bmatrix}-1\\0\\1\end{bmatrix}
+                                \right\}$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>✅ Dimension of
+                                    Nul(A) = 2.</strong></p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">72</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 73: Basis Theorem -->
+                    <div class="slide" id="slide-basis-theorem">
+                        <h2>🧠 Theorem – Basis and Linear Independence</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 Important Theorem</h3>
+                            <p>If you have \( n \) linearly independent vectors
+                                in \( \mathbb{R}^n \), they form a basis of \(
+                                \mathbb{R}^n \).</p>
+                            <p style="margin-top: 15px;">Conversely, if you have
+                                \( n \) vectors that span \( \mathbb{R}^n \),
+                                they are automatically linearly independent.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 In \( \mathbb{R}^3 \):</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li><strong>3 independent vectors</strong> →
+                                    span the whole space.</li>
+                                <li><strong>3 vectors that span</strong> →
+                                    automatically independent.</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔍 Why This Works</h4>
+                            <p>In \( \mathbb{R}^n \):</p>
+                            <ul style="margin-top: 10px; line-height: 1.8;">
+                                <li>You need <strong>exactly n</strong> vectors
+                                    to form a basis</li>
+                                <li>More than n → must be dependent</li>
+                                <li>Fewer than n → can't span the whole
+                                    space</li>
+                                <li>Exactly n independent → automatically
+                                    spans</li>
+                                <li>Exactly n spanning → automatically
+                                    independent</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Practical Application</h4>
+                            <p>This theorem gives us shortcuts:</p>
+                            <ul style="margin-top: 10px;">
+                                <li>If you have 3 independent vectors in \(
+                                    \mathbb{R}^3 \) → you don't need to check
+                                    spanning!</li>
+                                <li>If you have 3 vectors that span \(
+                                    \mathbb{R}^3 \) → you don't need to check
+                                    independence!</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">73</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 74: Basis for a Subspace -->
+                    <div class="slide" id="slide-subspace-basis">
+                        <h2>⚖️ Basis for a Subspace</h2>
+
+                        <div class="definition-box">
+                            <h3>🔍 General Principle</h3>
+                            <p>If \( W \) is a subspace of \( \mathbb{R}^n
+                                \),</p>
+                            <p style="margin-top: 10px;">a <strong>basis for
+                                    W</strong> is any independent set of vectors
+                                that span \( W \).</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example: Plane in \( \mathbb{R}^3 \)</h4>
+                            <div class="formula">
+                                $$W = \{ (x, y, z) : x + y + z = 0 \}$$
+                            </div>
+                            <p style="margin-top: 20px;">We can express z as \(
+                                z = -x - y \), so:</p>
+                            <div class="formula">
+                                $$(x, y, z) = (x, y, -x-y) = x(1,0,-1) +
+                                y(0,1,-1)$$
+                            </div>
+                            <p style="margin-top: 20px;" class="success-text">✅
+                                Basis:</p>
+                            <div class="formula">
+                                $$\{ (1,0,-1), (0,1,-1) \}$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>✅ Dimension =
+                                    2</strong></p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 General Strategy</h4>
+                            <ol style="line-height: 1.8; margin-top: 10px;">
+                                <li>Express the constraint equation in
+                                    parametric form</li>
+                                <li>Identify the free variables</li>
+                                <li>Write the general vector as a linear
+                                    combination</li>
+                                <li>The coefficient vectors form the basis</li>
+                            </ol>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>🔍 Verification</h4>
+                            <p>For the basis \( \{ (1,0,-1), (0,1,-1) \} \):</p>
+                            <ul style="margin-top: 10px;">
+                                <li><strong>Independent?</strong> Neither is a
+                                    multiple of the other ✓</li>
+                                <li><strong>In W?</strong> Both satisfy \(
+                                    x+y+z=0 \) ✓</li>
+                                <li><strong>Span W?</strong> Any vector in W can
+                                    be written as their combination ✓</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">74</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 75: Rank-Nullity Theorem -->
+                    <div class="slide" id="slide-rank-nullity">
+                        <h2>📏 Dimension Theorem (Rank-Nullity Theorem)</h2>
+
+                        <div class="definition-box">
+                            <h3>🔑 One of the Most Important Theorems</h3>
+                            <p>For a matrix \( A \) with \( n \) columns:</p>
+                            <div class="formula" style="margin-top: 15px;">
+                                $$\text{rank}(A) + \text{nullity}(A) = n$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📋 Definitions</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li><strong>rank(A)</strong> = dimension of
+                                    column space = # of pivot columns</li>
+                                <li><strong>nullity(A)</strong> = dimension of
+                                    null space = # of free variables</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Example</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                1 & 2 & 1 \\
+                                2 & 4 & 2
+                                \end{bmatrix}$$
+                            </div>
+                            <p
+                                style="margin-top: 20px;"><strong>Analysis:</strong></p>
+                            <ul style="margin-top: 10px; line-height: 1.8;">
+                                <li>rank(A) = 1 (one pivot column)</li>
+                                <li>nullity(A) = 2 (two free variables)</li>
+                                <li>Number of columns = 3</li>
+                            </ul>
+                            <p style="margin-top: 20px;" class="success-text">✅
+                                rank + nullity = 1 + 2 = 3 = number of
+                                columns</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Intuitive Meaning</h4>
+                            <p>This theorem tells us:</p>
+                            <ul style="margin-top: 10px; line-height: 1.8;">
+                                <li>The dimensions of the column space and null
+                                    space are complementary</li>
+                                <li>They must "add up" to the total number of
+                                    columns</li>
+                                <li>More independent columns → smaller null
+                                    space</li>
+                                <li>Fewer independent columns → larger null
+                                    space</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">75</span> of
+                                <span class="totalSlides">76</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 76: Summary -->
+                    <div class="slide" id="slide-bases-dimensions-summary">
+                        <h2>🧩 Bases and Dimensions: Complete Summary</h2>
+
+                        <div style="overflow-x: auto; margin: 30px 0;">
+                            <table
+                                style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.2);">
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Concept</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Definition</th>
+                                        <th
+                                            style="padding: 15px; text-align: left; border: 1px solid var(--border-color);">Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Basis</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Smallest
+                                            independent set that spans a
+                                            space</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">\(
+                                            \{(1,0,0),(0,1,0),(0,0,1)\} \) for
+                                            \( \mathbb{R}^3 \)</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Dimension</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">#
+                                            of vectors in any basis</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">dim(\(
+                                            \mathbb{R}^3 \)) = 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Column
+                                                Space</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">All
+                                            linear combinations of A's
+                                            columns</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Basis
+                                            from pivot columns</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Null
+                                                Space</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Solutions
+                                            of \( Ax=0 \)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Basis
+                                            from free variable vectors</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Rank</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">dim(Col
+                                            A)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">#
+                                            of pivots</td>
+                                    </tr>
+                                    <tr
+                                        style="background: rgba(99, 102, 241, 0.05);">
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Nullity</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">dim(Nul
+                                            A)</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">#
+                                            of free variables</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);"><strong>Rank
+                                                + Nullity</strong></td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">=
+                                            # of columns</td>
+                                        <td
+                                            style="padding: 12px; border: 1px solid var(--border-color);">Always
+                                            holds true</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="note-box" style="margin-top: 30px;">
+                            <h4>💡 In Summary</h4>
+                            <p>A <strong>basis</strong> is like the "skeleton"
+                                of a vector space — the minimal structure that
+                                holds it together.</p>
+                            <p style="margin-top: 15px;">The
+                                <strong>dimension</strong> tells you <em>how
+                                    many directions</em> are needed to describe
+                                that space.</p>
+                            <p style="margin-top: 15px;">Together, they form the
+                                foundation for everything in linear algebra:
+                                solving systems, describing transformations, and
+                                understanding geometry in higher dimensions.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="margin-top: 30px; background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>🔑 Key Takeaways</h4>
+                            <ul style="font-size: 1.1rem; line-height: 1.8;">
+                                <li>✅ Bases are minimal spanning sets
+                                    (independent + span)</li>
+                                <li>✅ All bases of the same space have the same
+                                    size</li>
+                                <li>✅ Dimension measures the "size" of a
+                                    space</li>
+                                <li>✅ Rank = dimension of column space</li>
+                                <li>✅ Nullity = dimension of null space</li>
+                                <li>✅ Rank + Nullity = # columns (always!)</li>
+                            </ul>
+                        </div>
+
+                        <div class="definition-box"
+                            style="margin-top: 30px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));">
+                            <h4
+                                style="text-align: center; font-size: 1.5rem; color: var(--primary-color);">🎉
+                                Chapter 4 Complete!</h4>
+                            <p
+                                style="text-align: center; font-size: 1.1rem; margin-top: 15px;">
+                                You now understand vector spaces, subspaces,
+                                bases, and dimensions — the complete foundation
+                                of abstract linear algebra!
+                            </p>
+                            <p style="text-align: center; margin-top: 15px;">
+                                These concepts form the core of linear algebra
+                                and open the door to advanced topics like linear
+                                transformations, eigenvalues, and more!
+                            </p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">76</span> of
+                                <span class="totalSlides">76</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()" disabled>Next ➡</button>
