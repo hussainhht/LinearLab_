@@ -40,62 +40,68 @@
                         <div class="lesson-item" onclick="showSlide(6)">1.7 No
                             Solution</div>
                         <div class="lesson-item" onclick="showSlide(7)">1.8
+                            Solution Type Checker</div>
+                        <div class="lesson-item" onclick="showSlide(8)">1.9
                             Matrix Representation</div>
                         <div class="lesson-item" onclick="showSlide(8)">1.9
-                            Augmented Matrix</div>
+                            Matrix Representation</div>
                         <div class="lesson-item" onclick="showSlide(9)">1.10
-                            Solution Methods</div>
+                            Augmented Matrix</div>
                         <div class="lesson-item" onclick="showSlide(10)">1.11
-                            Gauss-Jordan: Introduction</div>
+                            Solution Methods</div>
                         <div class="lesson-item" onclick="showSlide(11)">1.12
-                            Gauss-Jordan: Row Operations</div>
+                            Gauss-Jordan: Introduction</div>
                         <div class="lesson-item" onclick="showSlide(12)">1.13
-                            Gauss-Jordan: Step-by-Step</div>
+                            Gauss-Jordan: Row Operations</div>
                         <div class="lesson-item" onclick="showSlide(13)">1.14
-                            Gauss-Jordan: Complete Example</div>
+                            Gauss-Jordan: Step-by-Step</div>
                         <div class="lesson-item" onclick="showSlide(14)">1.15
-                            Gaussian vs Gauss-Jordan</div>
+                            Gauss-Jordan: Complete Example</div>
                         <div class="lesson-item" onclick="showSlide(15)">1.16
-                            Real-World Applications</div>
+                            Gaussian vs Gauss-Jordan</div>
                         <div class="lesson-item" onclick="showSlide(16)">1.17
-                            Interactive Visualizations</div>
+                            Real-World Applications</div>
                         <div class="lesson-item" onclick="showSlide(17)">1.18
+                            Interactive Visualizations</div>
+                        <div class="lesson-item" onclick="showSlide(18)">1.19
                             Summary</div>
                         <div class="lesson-item" onclick="showSlide(18)">1.19
-                            Matrix Definition</div>
+                            Summary</div>
                         <div class="lesson-item" onclick="showSlide(19)">1.20
-                            Matrix Equality</div>
+                            Matrix Definition</div>
                         <div class="lesson-item" onclick="showSlide(20)">1.21
-                            Matrix Addition & Subtraction</div>
+                            Matrix Equality</div>
                         <div class="lesson-item" onclick="showSlide(21)">1.22
-                            Scalar Multiplication</div>
+                            Matrix Addition & Subtraction</div>
                         <div class="lesson-item" onclick="showSlide(22)">1.23
-                            Matrix Multiplication</div>
+                            Scalar Multiplication</div>
                         <div class="lesson-item" onclick="showSlide(23)">1.24
-                            Matrix Transpose</div>
+                            Matrix Multiplication</div>
                         <div class="lesson-item" onclick="showSlide(24)">1.25
-                            Special Matrices</div>
+                            Matrix Transpose</div>
                         <div class="lesson-item" onclick="showSlide(25)">1.26
-                            Matrix Operations Summary</div>
+                            Special Matrices</div>
                         <div class="lesson-item" onclick="showSlide(26)">1.27
-                            Inverse Matrix: Introduction</div>
+                            Matrix Operations Summary</div>
                         <div class="lesson-item" onclick="showSlide(27)">1.28
-                            When Does Inverse Exist?</div>
+                            Inverse Matrix: Introduction</div>
                         <div class="lesson-item" onclick="showSlide(28)">1.29
-                            Finding Inverse (2×2 Formula)</div>
+                            When Does Inverse Exist?</div>
                         <div class="lesson-item" onclick="showSlide(29)">1.30
-                            Gauss-Jordan Method for Inverse</div>
+                            Finding Inverse (2×2 Formula)</div>
                         <div class="lesson-item" onclick="showSlide(30)">1.31
-                            Verifying the Inverse</div>
+                            Gauss-Jordan Method for Inverse</div>
                         <div class="lesson-item" onclick="showSlide(31)">1.32
-                            Properties of Inverse</div>
+                            Verifying the Inverse</div>
                         <div class="lesson-item" onclick="showSlide(32)">1.33
-                            Singular Matrices</div>
+                            Properties of Inverse</div>
                         <div class="lesson-item" onclick="showSlide(33)">1.34
-                            Solving Systems with Inverse</div>
+                            Singular Matrices</div>
                         <div class="lesson-item" onclick="showSlide(34)">1.35
-                            Geometric Interpretation</div>
+                            Solving Systems with Inverse</div>
                         <div class="lesson-item" onclick="showSlide(35)">1.36
+                            Geometric Interpretation</div>
+                        <div class="lesson-item" onclick="showSlide(36)">1.37
                             Inverse Matrix Summary</div>
                     </div>
                 </div>
@@ -687,7 +693,148 @@
                         </div>
                     </div>
 
-                    <!-- Slide 8: Matrix Representation -->
+                    <!-- Slide 8: Matrix Solution Type Checker -->
+                    <div class="slide" id="slide-solution-checker">
+                        <h2>🔍 Interactive Matrix Solution Checker</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 Check Your Matrix Solution Type</h3>
+                            <p>Enter the coefficients of your system's augmented
+                                matrix to determine if it has:</p>
+                            <ul>
+                                <li>✅ <strong>Unique Solution</strong> (one
+                                    answer)</li>
+                                <li>∞ <strong>Infinite Solutions</strong>
+                                    (dependent system)</li>
+                                <li>❌ <strong>No Solution</strong> (inconsistent
+                                    system)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>📊 2×2 System Checker</h4>
+                            <p>For a system: <em>a₁x + b₁y = c₁</em> and <em>a₂x
+                                    + b₂y = c₂</em></p>
+
+                            <div
+                                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0;">
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; font-weight: 600;">a₁:</label>
+                                    <input type="number" id="checker_a1"
+                                        value="1"
+                                        style="width: 100%; padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; background: var(--bg-dark); color: var(--text-color);">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; font-weight: 600;">b₁:</label>
+                                    <input type="number" id="checker_b1"
+                                        value="2"
+                                        style="width: 100%; padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; background: var(--bg-dark); color: var(--text-color);">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; font-weight: 600;">c₁:</label>
+                                    <input type="number" id="checker_c1"
+                                        value="4"
+                                        style="width: 100%; padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; background: var(--bg-dark); color: var(--text-color);">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; font-weight: 600;">a₂:</label>
+                                    <input type="number" id="checker_a2"
+                                        value="2"
+                                        style="width: 100%; padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; background: var(--bg-dark); color: var(--text-color);">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; font-weight: 600;">b₂:</label>
+                                    <input type="number" id="checker_b2"
+                                        value="4"
+                                        style="width: 100%; padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; background: var(--bg-dark); color: var(--text-color);">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 5px; font-weight: 600;">c₂:</label>
+                                    <input type="number" id="checker_c2"
+                                        value="8"
+                                        style="width: 100%; padding: 8px; border: 2px solid var(--border-color); border-radius: 5px; background: var(--bg-dark); color: var(--text-color);">
+                                </div>
+                            </div>
+
+                            <button onclick="checkSolutionType()"
+                                style="width: 100%; padding: 12px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 10px;">
+                                🔍 Check Solution Type
+                            </button>
+
+                            <div id="checkerResult"
+                                style="margin-top: 20px; padding: 20px; border-radius: 8px; display: none;"></div>
+
+                            <div id="checkerGraphContainer"
+                                style="display: none; margin-top: 20px;">
+                                <div
+                                    style="background: var(--surface-color); padding: 20px; border-radius: 10px; border: 2px solid var(--border-color);">
+                                    <h4
+                                        style="color: var(--primary-color); margin-bottom: 15px;">📊
+                                        Visual Graph</h4>
+                                    <div id="checkerGraph"
+                                        style="width: 100%; height: 500px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📖 How the Checker Works</h4>
+                            <p>The checker analyzes your system using these
+                                rules:</p>
+                            <ul>
+                                <li><strong>Determinant ≠ 0:</strong> Unique
+                                    solution exists (lines intersect at one
+                                    point)</li>
+                                <li><strong>Determinant = 0 & proportional
+                                        equations:</strong> Infinite solutions
+                                    (same line)</li>
+                                <li><strong>Determinant = 0 & different
+                                        constants:</strong> No solution
+                                    (parallel lines)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>💡 Try These Examples:</h4>
+                            <p><strong>Example 1 (Unique):</strong> x + y = 3, x
+                                - y = 1</p>
+                            <p style="margin-left: 20px;">Enter: a₁=1, b₁=1,
+                                c₁=3, a₂=1, b₂=-1, c₂=1</p>
+
+                            <p style="margin-top: 15px;"><strong>Example 2
+                                    (Infinite):</strong> x + 2y = 4, 2x + 4y =
+                                8</p>
+                            <p style="margin-left: 20px;">Enter: a₁=1, b₁=2,
+                                c₁=4, a₂=2, b₂=4, c₂=8</p>
+
+                            <p style="margin-top: 15px;"><strong>Example 3 (No
+                                    Solution):</strong> x + 2y = 4, x + 2y =
+                                6</p>
+                            <p style="margin-left: 20px;">Enter: a₁=1, b₁=2,
+                                c₁=4, a₂=1, b₂=2, c₂=6</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">8</span> of
+                                <span class="totalSlides">13</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 9: Matrix Representation -->
                     <div class="slide" id="slide-matrix">
                         <h2>🧮 Matrix Representation</h2>
 

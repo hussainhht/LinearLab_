@@ -849,3 +849,16 @@
         grid-template-columns: repeat(3, 60px);
     }
 }
+
+/* Animation for result display */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
