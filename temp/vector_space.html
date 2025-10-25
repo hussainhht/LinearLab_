@@ -51,6 +51,10 @@
                         <span class="tab-icon">🧮</span>
                         <span class="tab-text">Check by Vectors</span>
                     </button>
+                    <button class="tab-btn" data-mode="axioms">
+                        <span class="tab-icon">✅</span>
+                        <span class="tab-text">Check 8 Axioms</span>
+                    </button>
                     <button class="tab-btn" data-mode="learn">
                         <span class="tab-icon">🧠</span>
                         <span class="tab-text">Interactive Learning</span>
@@ -237,7 +241,115 @@
                 </div>
             </div>
 
-            <!-- Mode 3: Interactive Learning -->
+            <!-- Mode 3: Check 8 Axioms -->
+            <div id="axiomsMode" class="mode-content">
+                <div class="main-content">
+                    <div class="control-panel">
+                        <h2>✅ Vector Space Axiom Checker</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 How to Use</h3>
+                            <p>This tool checks if a set with given operations
+                                satisfies all <strong>8 axioms</strong> required
+                                to be a vector space.</p>
+                            <p>Enter test vectors from your set and the tool
+                                will verify each axiom:</p>
+                            <ul>
+                                <li><strong>Closure</strong> under addition and
+                                    scalar multiplication</li>
+                                <li><strong>Commutativity</strong> and
+                                    <strong>Associativity</strong></li>
+                                <li>Existence of <strong>Zero Vector</strong>
+                                    and <strong>Additive Inverse</strong></li>
+                                <li><strong>Distributivity</strong> and
+                                    <strong>Scalar Identity</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Select Space Type</h3>
+                            <select id="spaceType" class="form-select">
+                                <option value="rn">ℝⁿ - Standard Vector
+                                    Space</option>
+                                <option value="custom">Custom Set (Define
+                                    Operations)</option>
+                            </select>
+
+                            <div id="rnConfig">
+                                <label>Dimension (ℝⁿ):</label>
+                                <select id="axiomDimension" class="form-select">
+                                    <option value="2">ℝ² (2D)</option>
+                                    <option value="3" selected>ℝ³ (3D)</option>
+                                    <option value="4">ℝ⁴ (4D)</option>
+                                </select>
+
+                                <h4>Enter Test Vectors</h4>
+                                <p
+                                    style="font-size: 0.9em; color: #94a3b8;">We'll
+                                    test the axioms using these vectors</p>
+
+                                <div id="axiomVectorInputs"></div>
+
+                                <div
+                                    style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                                    <button id="checkAxioms"
+                                        class="btn btn-success">
+                                        🔍 Check All 8 Axioms
+                                    </button>
+                                    <button id="randomAxiomVectors"
+                                        class="btn btn-info">
+                                        🎲 Random Test Vectors
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="customConfig" style="display: none;">
+                                <div class="note-box">
+                                    <p>⚠️ Custom operation verification requires
+                                        specific mathematical definitions.</p>
+                                    <p>For now, use the ℝⁿ mode or the
+                                        equation/vector checkers for other
+                                        spaces.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>📖 Quick Examples</h3>
+                        <div class="quick-examples">
+                            <button class="btn-small btn-secondary"
+                                onclick="loadAxiomExample(1)">
+                                Standard ℝ³ ✅
+                            </button>
+                            <button class="btn-small btn-secondary"
+                                onclick="loadAxiomExample(2)">
+                                Test ℝ² ✅
+                            </button>
+                            <button class="btn-small btn-info"
+                                onclick="loadAxiomExample(3)">
+                                Zero Vectors ℝ³
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h2>📝 Axiom Verification Results</h2>
+                        <div id="axiomResult" class="result-content">
+                            <p class="empty-state">Enter test vectors and click
+                                "Check All 8 Axioms" to verify if this is a
+                                vector space.</p>
+                        </div>
+
+                        <div id="axiomVisualization" class="visualization-panel"
+                            style="display: none;">
+                            <h3>📊 Visual Summary</h3>
+                            <div id="axiomChart"
+                                style="min-height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 4: Interactive Learning -->
             <div id="learnMode" class="mode-content">
                 <div class="learning-content">
                     <h2>🧠 Vector Spaces & Subspaces: Interactive Learning</h2>

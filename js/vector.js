@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeModes();
     initializeEquationMode();
     initializeVectorMode();
+    initializeAxiomMode();
     initializeLearningMode();
 });
 
@@ -709,7 +710,339 @@ function visualize3DVectors(div, vectors) {
 }
 
 // ========================================
-// MODE 3: Interactive Learning
+// MODE 3: Check 8 Axioms
+// ========================================
+function initializeAxiomMode() {
+    document.getElementById('spaceType').addEventListener('change', updateAxiomConfig);
+    document.getElementById('axiomDimension').addEventListener('change', updateAxiomVectorInputs);
+    document.getElementById('checkAxioms').addEventListener('click', checkAllAxioms);
+    document.getElementById('randomAxiomVectors').addEventListener('click', generateRandomAxiomVectors);
+    updateAxiomVectorInputs();
+}
+
+function updateAxiomConfig() {
+    const spaceType = document.getElementById('spaceType').value;
+    document.getElementById('rnConfig').style.display = spaceType === 'rn' ? 'block' : 'none';
+    document.getElementById('customConfig').style.display = spaceType === 'custom' ? 'block' : 'none';
+}
+
+function updateAxiomVectorInputs() {
+    const dimension = parseInt(document.getElementById('axiomDimension').value);
+    const container = document.getElementById('axiomVectorInputs');
+
+    let html = '<div class="vector-input-container">';
+
+    // We need 3 vectors for testing (u, v, w)
+    const vectorNames = ['u', 'v', 'w'];
+    const labels = ['x', 'y', 'z', 'w'];
+
+    for (let i = 0; i < 3; i++) {
+        html += `<div class="vector-input-row">
+            <h4>Vector ${vectorNames[i]}</h4>
+            <div class="vector-components">`;
+
+        for (let j = 0; j < dimension; j++) {
+            html += `<input type="number" id="axiom_${vectorNames[i]}_${j}" placeholder="${labels[j]}" value="0" step="any">`;
+            if (j < dimension - 1) html += '<span>,</span>';
+        }
+
+        html += `</div></div>`;
+    }
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+function generateRandomAxiomVectors() {
+    const dimension = parseInt(document.getElementById('axiomDimension').value);
+    const vectorNames = ['u', 'v', 'w'];
+
+    // Generate random integers between -5 and 5
+    const randomValue = () => Math.floor(Math.random() * 11) - 5;
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < dimension; j++) {
+            const input = document.getElementById(`axiom_${vectorNames[i]}_${j}`);
+            if (input) {
+                input.value = randomValue();
+            }
+        }
+    }
+}
+
+function checkAllAxioms() {
+    const dimension = parseInt(document.getElementById('axiomDimension').value);
+    const vectorNames = ['u', 'v', 'w'];
+
+    // Read vectors
+    const vectors = {};
+    for (let i = 0; i < 3; i++) {
+        const vector = [];
+        for (let j = 0; j < dimension; j++) {
+            const val = parseFloat(document.getElementById(`axiom_${vectorNames[i]}_${j}`).value) || 0;
+            vector.push(val);
+        }
+        vectors[vectorNames[i]] = vector;
+    }
+
+    // Perform all 8 axiom checks
+    const results = verifyAllAxioms(vectors.u, vectors.v, vectors.w, dimension);
+    displayAxiomResults(results, vectors, dimension);
+}
+
+function verifyAllAxioms(u, v, w, dimension) {
+    const axioms = [];
+    const tolerance = 1e-10;
+
+    // Helper function to add vectors
+    const addVectors = (a, b) => a.map((val, i) => val + b[i]);
+
+    // Helper function to scale vector
+    const scaleVector = (c, vec) => vec.map(val => c * val);
+
+    // Helper function to check vector equality
+    const vectorsEqual = (a, b) => a.every((val, i) => Math.abs(val - b[i]) < tolerance);
+
+    // Helper function to check if vector is in Rn (always true for standard operations)
+    const isInSpace = (vec) => vec.length === dimension && vec.every(val => isFinite(val));
+
+    // Axiom 1: Closure under Addition (u + v ∈ V)
+    const sum_uv = addVectors(u, v);
+    axioms.push({
+        number: 1,
+        name: 'Closure under Addition',
+        formula: 'u + v ∈ V',
+        passed: isInSpace(sum_uv),
+        explanation: `u + v = ${vectorToString(sum_uv)}`,
+        detail: isInSpace(sum_uv) ? 'Result is in ℝⁿ ✓' : 'Result is not in ℝⁿ ✗'
+    });
+
+    // Axiom 2: Commutativity (u + v = v + u)
+    const sum_vu = addVectors(v, u);
+    const commutative = vectorsEqual(sum_uv, sum_vu);
+    axioms.push({
+        number: 2,
+        name: 'Commutativity',
+        formula: 'u + v = v + u',
+        passed: commutative,
+        explanation: `u + v = ${vectorToString(sum_uv)}\nv + u = ${vectorToString(sum_vu)}`,
+        detail: commutative ? 'Both sums are equal ✓' : 'Sums are not equal ✗'
+    });
+
+    // Axiom 3: Associativity of Addition ((u + v) + w = u + (v + w))
+    const left = addVectors(addVectors(u, v), w);
+    const right = addVectors(u, addVectors(v, w));
+    const associative = vectorsEqual(left, right);
+    axioms.push({
+        number: 3,
+        name: 'Associativity of Addition',
+        formula: '(u + v) + w = u + (v + w)',
+        passed: associative,
+        explanation: `(u + v) + w = ${vectorToString(left)}\nu + (v + w) = ${vectorToString(right)}`,
+        detail: associative ? 'Both are equal ✓' : 'Not equal ✗'
+    });
+
+    // Axiom 4: Zero Vector (∃ 0 : u + 0 = u)
+    const zero = new Array(dimension).fill(0);
+    const u_plus_zero = addVectors(u, zero);
+    const hasZero = vectorsEqual(u, u_plus_zero);
+    axioms.push({
+        number: 4,
+        name: 'Zero Vector',
+        formula: '∃ 0 : u + 0 = u',
+        passed: hasZero,
+        explanation: `Zero vector: ${vectorToString(zero)}\nu + 0 = ${vectorToString(u_plus_zero)}\nOriginal u = ${vectorToString(u)}`,
+        detail: hasZero ? 'Zero vector exists and works correctly ✓' : 'Zero vector property fails ✗'
+    });
+
+    // Axiom 5: Additive Inverse (∃ -u : u + (-u) = 0)
+    const neg_u = scaleVector(-1, u);
+    const u_plus_neg_u = addVectors(u, neg_u);
+    const hasInverse = vectorsEqual(u_plus_neg_u, zero);
+    axioms.push({
+        number: 5,
+        name: 'Additive Inverse',
+        formula: '∃ -u : u + (-u) = 0',
+        passed: hasInverse,
+        explanation: `-u = ${vectorToString(neg_u)}\nu + (-u) = ${vectorToString(u_plus_neg_u)}`,
+        detail: hasInverse ? 'Additive inverse exists ✓' : 'Additive inverse fails ✗'
+    });
+
+    // Axiom 6: Closure under Scalar Multiplication (c·u ∈ V)
+    const c = 2.5;
+    const cu = scaleVector(c, u);
+    const closureScalar = isInSpace(cu);
+    axioms.push({
+        number: 6,
+        name: 'Closure under Scalar Multiplication',
+        formula: 'c·u ∈ V',
+        passed: closureScalar,
+        explanation: `Scalar c = ${c}\nc·u = ${vectorToString(cu)}`,
+        detail: closureScalar ? 'Result is in ℝⁿ ✓' : 'Result is not in ℝⁿ ✗'
+    });
+
+    // Axiom 7: Distributivity (c(u + v) = cu + cv)
+    const c_uv = scaleVector(c, sum_uv);
+    const cu_cv = addVectors(scaleVector(c, u), scaleVector(c, v));
+    const distributive = vectorsEqual(c_uv, cu_cv);
+    axioms.push({
+        number: 7,
+        name: 'Distributivity',
+        formula: 'c(u + v) = c·u + c·v',
+        passed: distributive,
+        explanation: `c(u + v) = ${vectorToString(c_uv)}\nc·u + c·v = ${vectorToString(cu_cv)}`,
+        detail: distributive ? 'Distributive property holds ✓' : 'Distributive property fails ✗'
+    });
+
+    // Axiom 8: Scalar Identity (1·u = u)
+    const one_u = scaleVector(1, u);
+    const scalarIdentity = vectorsEqual(one_u, u);
+    axioms.push({
+        number: 8,
+        name: 'Scalar Identity',
+        formula: '1·u = u',
+        passed: scalarIdentity,
+        explanation: `1·u = ${vectorToString(one_u)}\nOriginal u = ${vectorToString(u)}`,
+        detail: scalarIdentity ? 'Scalar identity holds ✓' : 'Scalar identity fails ✗'
+    });
+
+    const allPassed = axioms.every(axiom => axiom.passed);
+
+    return {
+        axioms: axioms,
+        allPassed: allPassed,
+        passedCount: axioms.filter(a => a.passed).length,
+        totalCount: axioms.length
+    };
+}
+
+function displayAxiomResults(results, vectors, dimension) {
+    const resultDiv = document.getElementById('axiomResult');
+    const vizDiv = document.getElementById('axiomVisualization');
+
+    let html = '';
+
+    // Main result
+    if (results.allPassed) {
+        html += `<div class="result-box success">
+            <h3>✅ This IS a Vector Space!</h3>
+            <p>All ${results.totalCount} axioms are satisfied. The set ℝ${dimension} with standard addition and scalar multiplication forms a valid vector space.</p>
+        </div>`;
+    } else {
+        html += `<div class="result-box error">
+            <h3>❌ This is NOT a Vector Space</h3>
+            <p>Failed ${results.totalCount - results.passedCount} out of ${results.totalCount} axioms. All 8 axioms must be satisfied for a vector space.</p>
+        </div>`;
+    }
+
+    // Test vectors used
+    html += `<div class="result-box info">
+        <h3>📊 Test Vectors Used</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 10px;">
+            <div>
+                <strong>Vector u:</strong> ${vectorToString(vectors.u)}
+            </div>
+            <div>
+                <strong>Vector v:</strong> ${vectorToString(vectors.v)}
+            </div>
+            <div>
+                <strong>Vector w:</strong> ${vectorToString(vectors.w)}
+            </div>
+        </div>
+    </div>`;
+
+    // Individual axiom results
+    html += '<div class="result-box info"><h3>📋 Individual Axiom Verification</h3>';
+    html += '<div class="axiom-results">';
+
+    results.axioms.forEach(axiom => {
+        const icon = axiom.passed ? '✅' : '❌';
+        const statusClass = axiom.passed ? 'success' : 'error';
+        html += `
+            <div class="axiom-check-item">
+                <div class="axiom-header">
+                    <span class="check-icon" style="font-size: 1.5em;">${icon}</span>
+                    <div>
+                        <strong>Axiom ${axiom.number}: ${axiom.name}</strong>
+                        <div class="formula" style="margin: 5px 0; color: #818cf8; font-size: 1.1em;">${axiom.formula}</div>
+                    </div>
+                </div>
+                <p style="white-space: pre-line; margin: 10px 0; color: #cbd5e1;">${axiom.explanation}</p>
+                <p class="${statusClass}" style="font-weight: bold; margin-top: 5px;">${axiom.detail}</p>
+            </div>
+        `;
+    });
+
+    html += '</div></div>';
+
+    resultDiv.innerHTML = html;
+
+    // Show visualization
+    vizDiv.style.display = 'block';
+    visualizeAxiomResults(results);
+
+    // Scroll to result
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function visualizeAxiomResults(results) {
+    const chartDiv = document.getElementById('axiomChart');
+
+    const axiomNames = results.axioms.map(a => `${a.number}. ${a.name}`);
+    const axiomStatus = results.axioms.map(a => a.passed ? 1 : 0);
+    const colors = results.axioms.map(a => a.passed ? '#10b981' : '#ef4444');
+
+    const trace = {
+        x: axiomNames,
+        y: axiomStatus,
+        type: 'bar',
+        marker: {
+            color: colors,
+            line: {
+                color: colors.map(c => c === '#10b981' ? '#059669' : '#dc2626'),
+                width: 2
+            }
+        },
+        text: axiomStatus.map(s => s === 1 ? '✓ PASSED' : '✗ FAILED'),
+        textposition: 'outside',
+        textfont: {
+            size: 14,
+            color: '#e2e8f0'
+        },
+        hovertemplate: '<b>%{x}</b><br>Status: %{text}<extra></extra>'
+    };
+
+    const layout = {
+        title: {
+            text: `Vector Space Axioms: ${results.passedCount}/${results.totalCount} Passed`,
+            font: { color: '#e2e8f0', size: 20 }
+        },
+        xaxis: {
+            title: '',
+            tickangle: -45,
+            tickfont: { size: 10, color: '#cbd5e1' },
+            gridcolor: '#334155'
+        },
+        yaxis: {
+            title: 'Status',
+            tickvals: [0, 1],
+            ticktext: ['Failed', 'Passed'],
+            gridcolor: '#334155',
+            range: [-0.1, 1.3],
+            font: { color: '#e2e8f0' }
+        },
+        paper_bgcolor: '#1e293b',
+        plot_bgcolor: '#0f172a',
+        font: { color: '#e2e8f0' },
+        margin: { b: 150, t: 80 },
+        showlegend: false
+    };
+
+    Plotly.newPlot(chartDiv, [trace], layout, { responsive: true });
+}
+
+// ========================================
+// MODE 4: Interactive Learning
 // ========================================
 function initializeLearningMode() {
     // Sections are collapsed by default
@@ -801,5 +1134,47 @@ function loadVectorExample(exampleNum) {
         document.getElementById('v2_0').value = '0';
         document.getElementById('v2_1').value = '0';
         document.getElementById('v2_2').value = '1';
+    }
+}
+
+function loadAxiomExample(exampleNum) {
+    const dim = document.getElementById('axiomDimension');
+
+    if (exampleNum === 1) {
+        // Standard R3 vectors
+        dim.value = '3';
+        updateAxiomVectorInputs();
+        document.getElementById('axiom_u_0').value = '1';
+        document.getElementById('axiom_u_1').value = '2';
+        document.getElementById('axiom_u_2').value = '3';
+        document.getElementById('axiom_v_0').value = '4';
+        document.getElementById('axiom_v_1').value = '5';
+        document.getElementById('axiom_v_2').value = '6';
+        document.getElementById('axiom_w_0').value = '7';
+        document.getElementById('axiom_w_1').value = '8';
+        document.getElementById('axiom_w_2').value = '9';
+    } else if (exampleNum === 2) {
+        // R2 test
+        dim.value = '2';
+        updateAxiomVectorInputs();
+        document.getElementById('axiom_u_0').value = '3';
+        document.getElementById('axiom_u_1').value = '4';
+        document.getElementById('axiom_v_0').value = '-1';
+        document.getElementById('axiom_v_1').value = '2';
+        document.getElementById('axiom_w_0').value = '5';
+        document.getElementById('axiom_w_1').value = '-3';
+    } else if (exampleNum === 3) {
+        // Zero vectors
+        dim.value = '3';
+        updateAxiomVectorInputs();
+        document.getElementById('axiom_u_0').value = '0';
+        document.getElementById('axiom_u_1').value = '0';
+        document.getElementById('axiom_u_2').value = '0';
+        document.getElementById('axiom_v_0').value = '1';
+        document.getElementById('axiom_v_1').value = '1';
+        document.getElementById('axiom_v_2').value = '1';
+        document.getElementById('axiom_w_0').value = '-2';
+        document.getElementById('axiom_w_1').value = '3';
+        document.getElementById('axiom_w_2').value = '1';
     }
 }
