@@ -43,6 +43,7 @@ function switchMode(mode) {
 function initializeEquationMode() {
     document.getElementById('equationDimension').addEventListener('change', updateEquationInputs);
     document.getElementById('checkEquation').addEventListener('click', checkEquationSubspace);
+    document.getElementById('randomEquation').addEventListener('click', generateRandomEquation);
     updateEquationInputs();
 }
 
@@ -50,6 +51,30 @@ function updateEquationInputs() {
     const dimension = document.getElementById('equationDimension').value;
     document.getElementById('equation2D').style.display = dimension === '2' ? 'block' : 'none';
     document.getElementById('equation3D').style.display = dimension === '3' ? 'block' : 'none';
+}
+
+function generateRandomEquation() {
+    const dimension = document.getElementById('equationDimension').value;
+
+    // Generate random integers between -5 and 5 (excluding 0)
+    const randomCoeff = () => {
+        let val = Math.floor(Math.random() * 11) - 5; // -5 to 5
+        return val === 0 ? 1 : val; // Avoid zero coefficients
+    };
+
+    // Random constant (50% chance to be 0 for valid subspaces)
+    const randomConstant = () => Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 7) - 3;
+
+    if (dimension === '2') {
+        document.getElementById('eq2d_a').value = randomCoeff();
+        document.getElementById('eq2d_b').value = randomCoeff();
+        document.getElementById('eq2d_c').value = randomConstant();
+    } else {
+        document.getElementById('eq3d_a').value = randomCoeff();
+        document.getElementById('eq3d_b').value = randomCoeff();
+        document.getElementById('eq3d_c').value = randomCoeff();
+        document.getElementById('eq3d_d').value = randomConstant();
+    }
 }
 
 function checkEquationSubspace() {
@@ -369,6 +394,7 @@ function initializeVectorMode() {
     document.getElementById('vectorDimension').addEventListener('change', updateVectorInputs);
     document.getElementById('vectorCount').addEventListener('change', updateVectorInputs);
     document.getElementById('checkVectors').addEventListener('click', analyzeVectors);
+    document.getElementById('randomVectors').addEventListener('click', generateRandomVectors);
     updateVectorInputs();
 }
 
@@ -393,6 +419,23 @@ function updateVectorInputs() {
     }
 
     container.innerHTML = html;
+}
+
+function generateRandomVectors() {
+    const dimension = parseInt(document.getElementById('vectorDimension').value);
+    const count = parseInt(document.getElementById('vectorCount').value);
+
+    // Generate random integers between -5 and 5
+    const randomValue = () => Math.floor(Math.random() * 11) - 5; // -5 to 5
+
+    for (let i = 0; i < count; i++) {
+        for (let j = 0; j < dimension; j++) {
+            const input = document.getElementById(`v${i}_${j}`);
+            if (input) {
+                input.value = randomValue();
+            }
+        }
+    }
 }
 
 function analyzeVectors() {
