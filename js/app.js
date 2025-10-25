@@ -476,16 +476,16 @@ class MatrixOperations {
                 aCell.classList.add('highlight-current');
                 bCell.classList.add('highlight-current');
 
-                // Add calculation step
+                // Add calculation step with improved animation
                 let stepHtml = `
-                    <div class="calc-step">
+                    <div class="calc-step" style="animation: slideIn 0.5s ease-out, fadeInScale 0.5s ease-out;">
                         <span class="step-number">Step ${idx + 1}:</span>
                         <span class="calc-term">
-                            <span class="highlight-a">A[${calc.aPos[0] + 1},${calc.aPos[1] + 1}] = ${this.formatNumber(calc.aValue)}</span>
+                            <span class="highlight-a" style="animation: highlightPulse 0.6s ease-out;">${this.formatNumber(calc.aValue)}</span>
                             <span class="multiply-sign">×</span>
-                            <span class="highlight-b">B[${calc.bPos[0] + 1},${calc.bPos[1] + 1}] = ${this.formatNumber(calc.bValue)}</span>
+                            <span class="highlight-b" style="animation: highlightPulse 0.6s ease-out 0.1s;">${this.formatNumber(calc.bValue)}</span>
                             <span class="equals-sign">=</span>
-                            <span class="calc-product">${this.formatNumber(calc.product)}</span>
+                            <span class="calc-product" style="animation: highlightPulse 0.6s ease-out 0.2s;">${this.formatNumber(calc.product)}</span>
                         </span>
                     </div>
                 `;
@@ -493,9 +493,14 @@ class MatrixOperations {
                 const breakdownDiv = document.querySelector('.calculation-breakdown');
                 if (breakdownDiv) {
                     breakdownDiv.innerHTML += stepHtml;
+
+                    // Scroll to bottom to show new step
+                    setTimeout(() => {
+                        breakdownDiv.scrollTop = breakdownDiv.scrollHeight;
+                    }, 100);
                 }
 
-            }, idx * 700);
+            }, idx * 800);
         });
 
         // Show sum after all steps
@@ -503,19 +508,26 @@ class MatrixOperations {
             const calcDiv = document.querySelector('.current-calculation');
             if (calcDiv) {
                 calcDiv.innerHTML += `
-                    <div class="calculation-sum">
-                        <div class="sum-label">💡 Final Sum:</div>
-                        <div class="sum-formula">${step.calculations.map(c => this.formatNumber(c.product)).join(' + ')} = <span class="final-sum">${this.formatNumber(step.sum)}</span></div>
+                    <div class="calculation-sum" style="animation: slideIn 0.6s ease-out, glowPulse 2s ease-in-out infinite;">
+                        <div class="sum-label">✨ Final Sum:</div>
+                        <div class="sum-formula">
+                            ${step.calculations.map(c => this.formatNumber(c.product)).join(' + ')} 
+                            = 
+                            <span class="final-sum" style="animation: popIn 0.7s ease-out, glow 2s ease-in-out infinite;">
+                                ${this.formatNumber(step.sum)}
+                            </span>
+                        </div>
                     </div>
                 `;
             }
 
-            // Clear current highlights
+            // Clear current highlights with fade out
             document.querySelectorAll('.highlight-current').forEach(cell => {
+                cell.style.transition = 'all 0.5s ease-out';
                 cell.classList.remove('highlight-current');
             });
 
-            // Update result cell
+            // Update result cell with enhanced animation
             const resultCell = document.getElementById(`C_${i}_${j}`);
             if (resultCell) {
                 resultCell.textContent = this.formatNumber(step.sum);
@@ -525,10 +537,10 @@ class MatrixOperations {
                 setTimeout(() => {
                     resultCell.classList.remove('highlight-result');
                     resultCell.classList.add('completed');
-                }, 600);
+                }, 1000);
             }
 
-        }, step.calculations.length * 700 + 200);
+        }, step.calculations.length * 800 + 300);
 
         state.currentStep++;
 
@@ -537,7 +549,7 @@ class MatrixOperations {
             setTimeout(() => {
                 this.showNotification('✨ All elements computed! Matrix multiplication complete.', 'success');
                 document.getElementById('stepAnimation').disabled = true;
-            }, step.calculations.length * 700 + 1000);
+            }, step.calculations.length * 800 + 1500);
         }
     }
 
@@ -1420,6 +1432,11 @@ class RREFSolver {
                 // Mark zeros
                 if (Math.abs(val) < 1e-10) {
                     div.classList.add('zero');
+                }
+
+                // Mark ones with red color
+                if (Math.abs(val - 1) < 1e-10) {
+                    div.classList.add('one-red');
                 }
 
                 // Add separator for augmented part

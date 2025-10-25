@@ -3646,7 +3646,96 @@
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
                                 Slide <span class="currentSlide">33</span> of
-                                <span class="totalSlides">36</span>
+                                <span class="totalSlides">37</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 33.5: Interactive Matrix Inverse Calculator -->
+                    <div class="slide" id="slide-inverse-calculator">
+                        <h2>🧮 Interactive Matrix Inverse Calculator</h2>
+                        <p class="subtitle">Enter your matrix and see the
+                            step-by-step Gauss-Jordan process to find its
+                            inverse!</p>
+
+                        <div class="calculator-container"
+                            style="display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+                            <!-- Input Section -->
+                            <div class="input-section"
+                                style="flex: 1; min-width: 300px;">
+                                <div class="definition-box"
+                                    style="margin-bottom: 20px;">
+                                    <h3>📊 Matrix Setup</h3>
+                                    <label
+                                        style="display: block; margin: 15px 0;">
+                                        <strong>Matrix Size:</strong>
+                                        <select id="inverseMatrixSize"
+                                            style="margin-left: 10px; padding: 8px; background: var(--surface-color); color: var(--text-color); border: 2px solid var(--border-color); border-radius: 6px; font-size: 1rem;"
+                                            onchange="createInverseMatrixInput()">
+                                            <option value="2">2×2</option>
+                                            <option value="3"
+                                                selected>3×3</option>
+                                        </select>
+                                    </label>
+
+                                    <div id="inverseMatrixInputContainer"
+                                        style="margin: 20px 0;"></div>
+
+                                    <div
+                                        style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+                                        <button class="btn btn-success"
+                                            onclick="calculateInverseSteps()"
+                                            style="flex: 1;">
+                                            🔍 Calculate Inverse
+                                        </button>
+                                        <button class="btn btn-info"
+                                            onclick="loadInverseExample()"
+                                            style="flex: 1;">
+                                            📖 Load Example
+                                        </button>
+                                        <button class="btn btn-secondary"
+                                            onclick="clearInverseMatrix()"
+                                            style="flex: 1;">
+                                            🗑️ Clear
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Results Section -->
+                            <div class="results-section"
+                                style="flex: 1; min-width: 300px;">
+                                <div id="inverseResultContainer"
+                                    class="definition-box"
+                                    style="min-height: 200px;">
+                                    <h3>✨ Result</h3>
+                                    <div id="inverseResultContent"
+                                        style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                        Enter a matrix and click
+                                        "Calculate Inverse" to see the
+                                        step-by-step solution.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step-by-Step Display -->
+                        <div id="inverseStepsContainer"
+                            style="margin-top: 30px; display: none;">
+                            <div class="example-box">
+                                <h3>📝 Step-by-Step Solution</h3>
+                                <div id="inverseStepsContent"></div>
+                            </div>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">34</span> of
+                                <span class="totalSlides">37</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()">Next ➡</button>

@@ -1297,4 +1297,240 @@ window.addEventListener('load', () => {
     if (document.getElementById('vectorSpaceSelect')) {
         updateVectorSpaceDescription();
     }
+    if (document.getElementById('inverseMatrixSize')) {
+        createInverseMatrixInput();
+    }
 });
+
+// ============================================
+// Interactive Matrix Inverse Calculator
+// ============================================
+
+function createInverseMatrixInput() {
+    const size = parseInt(document.getElementById('inverseMatrixSize').value);
+    const container = document.getElementById('inverseMatrixInputContainer');
+
+    let html = '<div style="display: inline-block; padding: 15px; background: var(--bg-color); border-radius: 8px; border: 2px solid var(--border-color);">';
+    html += '<table style="border-collapse: separate; border-spacing: 8px;">';
+
+    for (let i = 0; i < size; i++) {
+        html += '<tr>';
+        for (let j = 0; j < size; j++) {
+            html += `<td><input type="number" id="inv_${i}_${j}" value="0" step="any" 
+                style="width: 60px; padding: 8px; background: var(--surface-color); color: var(--text-color); 
+                border: 2px solid var(--border-color); border-radius: 6px; text-align: center; font-size: 1rem;"></td>`;
+        }
+        html += '</tr>';
+    }
+
+    html += '</table></div>';
+    container.innerHTML = html;
+}
+
+function loadInverseExample() {
+    const size = parseInt(document.getElementById('inverseMatrixSize').value);
+
+    if (size === 2) {
+        // 2x2 example: [[2, 1], [1, 3]]
+        document.getElementById('inv_0_0').value = 2;
+        document.getElementById('inv_0_1').value = 1;
+        document.getElementById('inv_1_0').value = 1;
+        document.getElementById('inv_1_1').value = 3;
+    } else {
+        // 3x3 example: [[2, 1, 0], [1, 2, 1], [0, 1, 2]]
+        document.getElementById('inv_0_0').value = 2;
+        document.getElementById('inv_0_1').value = 1;
+        document.getElementById('inv_0_2').value = 0;
+        document.getElementById('inv_1_0').value = 1;
+        document.getElementById('inv_1_1').value = 2;
+        document.getElementById('inv_1_2').value = 1;
+        document.getElementById('inv_2_0').value = 0;
+        document.getElementById('inv_2_1').value = 1;
+        document.getElementById('inv_2_2').value = 2;
+    }
+}
+
+function clearInverseMatrix() {
+    const size = parseInt(document.getElementById('inverseMatrixSize').value);
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            document.getElementById(`inv_${i}_${j}`).value = 0;
+        }
+    }
+    document.getElementById('inverseResultContent').innerHTML = 'Enter a matrix and click "Calculate Inverse" to see the step-by-step solution.';
+    document.getElementById('inverseStepsContainer').style.display = 'none';
+}
+
+function calculateInverseSteps() {
+    const size = parseInt(document.getElementById('inverseMatrixSize').value);
+
+    // Read matrix
+    const matrix = [];
+    for (let i = 0; i < size; i++) {
+        matrix[i] = [];
+        for (let j = 0; j < size; j++) {
+            matrix[i][j] = parseFloat(document.getElementById(`inv_${i}_${j}`).value) || 0;
+        }
+    }
+
+    // Create augmented matrix [A | I]
+    const augmented = [];
+    for (let i = 0; i < size; i++) {
+        augmented[i] = [...matrix[i]];
+        for (let j = 0; j < size; j++) {
+            augmented[i].push(i === j ? 1 : 0);
+        }
+    }
+
+    const steps = [];
+    const operations = [];
+
+    // Save initial state
+    steps.push(JSON.parse(JSON.stringify(augmented)));
+    operations.push('Initial augmented matrix [A | I]');
+
+    // Gauss-Jordan elimination
+    try {
+        for (let col = 0; col < size; col++) {
+            // Find pivot
+            let pivotRow = col;
+            for (let row = col + 1; row < size; row++) {
+                if (Math.abs(augmented[row][col]) > Math.abs(augmented[pivotRow][col])) {
+                    pivotRow = row;
+                }
+            }
+
+            // Check for singular matrix
+            if (Math.abs(augmented[pivotRow][col]) < 1e-10) {
+                throw new Error('Matrix is singular (non-invertible)');
+            }
+
+            // Swap rows if needed
+            if (pivotRow !== col) {
+                [augmented[col], augmented[pivotRow]] = [augmented[pivotRow], augmented[col]];
+                steps.push(JSON.parse(JSON.stringify(augmented)));
+                operations.push(`Swap R${col + 1} ↔ R${pivotRow + 1}`);
+            }
+
+            // Scale pivot row to make leading coefficient 1
+            const pivot = augmented[col][col];
+            if (Math.abs(pivot - 1) > 1e-10) {
+                for (let j = 0; j < size * 2; j++) {
+                    augmented[col][j] /= pivot;
+                }
+                steps.push(JSON.parse(JSON.stringify(augmented)));
+                operations.push(`R${col + 1} → R${col + 1} / ${pivot.toFixed(3)}`);
+            }
+
+            // Eliminate column
+            for (let row = 0; row < size; row++) {
+                if (row !== col && Math.abs(augmented[row][col]) > 1e-10) {
+                    const factor = augmented[row][col];
+                    for (let j = 0; j < size * 2; j++) {
+                        augmented[row][j] -= factor * augmented[col][j];
+                    }
+                    steps.push(JSON.parse(JSON.stringify(augmented)));
+                    operations.push(`R${row + 1} → R${row + 1} - (${factor.toFixed(3)}) × R${col + 1}`);
+                }
+            }
+        }
+
+        // Extract inverse (right side of augmented matrix)
+        const inverse = [];
+        for (let i = 0; i < size; i++) {
+            inverse[i] = augmented[i].slice(size);
+        }
+
+        displayInverseResult(matrix, inverse, steps, operations, size);
+
+    } catch (error) {
+        document.getElementById('inverseResultContent').innerHTML = `
+            <div style="color: var(--error-color); padding: 20px;">
+                <h3>❌ ${error.message}</h3>
+                <p>This matrix does not have an inverse because its determinant is 0.</p>
+            </div>
+        `;
+        document.getElementById('inverseStepsContainer').style.display = 'none';
+    }
+}
+
+function displayInverseResult(original, inverse, steps, operations, size) {
+    // Display final result
+    let resultHTML = '<div style="padding: 20px;">';
+    resultHTML += '<h3 style="color: var(--success-color);">✅ Inverse Found!</h3>';
+    resultHTML += '<div style="display: flex; gap: 20px; align-items: center; justify-content: center; margin: 20px 0; flex-wrap: wrap;">';
+
+    // Original matrix
+    resultHTML += '<div><strong>Original Matrix A:</strong>';
+    resultHTML += formatMatrix(original);
+    resultHTML += '</div>';
+
+    resultHTML += '<div style="font-size: 2rem; color: var(--primary-color);">→</div>';
+
+    // Inverse matrix
+    resultHTML += '<div><strong style="color: var(--success-color);">Inverse A⁻¹:</strong>';
+    resultHTML += formatMatrix(inverse);
+    resultHTML += '</div>';
+
+    resultHTML += '</div></div>';
+
+    document.getElementById('inverseResultContent').innerHTML = resultHTML;
+
+    // Display steps
+    let stepsHTML = '';
+    for (let i = 0; i < steps.length; i++) {
+        stepsHTML += `<div style="margin: 20px 0; padding: 15px; background: var(--surface-color); border-radius: 8px; border-left: 4px solid var(--primary-color);">`;
+        stepsHTML += `<strong style="color: var(--info-color);">Step ${i}: ${operations[i]}</strong>`;
+        stepsHTML += formatAugmentedMatrix(steps[i], size);
+        stepsHTML += '</div>';
+    }
+
+    document.getElementById('inverseStepsContent').innerHTML = stepsHTML;
+    document.getElementById('inverseStepsContainer').style.display = 'block';
+}
+
+function formatMatrix(matrix) {
+    let html = '<div style="display: inline-block; padding: 10px; background: var(--bg-color); border-radius: 8px; margin: 10px;">';
+    html += '<table style="border-collapse: separate; border-spacing: 5px;">';
+
+    for (let i = 0; i < matrix.length; i++) {
+        html += '<tr>';
+        for (let j = 0; j < matrix[0].length; j++) {
+            const val = matrix[i][j];
+            const displayVal = Math.abs(val) < 1e-10 ? '0' : val.toFixed(3);
+            html += `<td style="padding: 8px; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 4px; text-align: center; min-width: 60px;">${displayVal}</td>`;
+        }
+        html += '</tr>';
+    }
+
+    html += '</table></div>';
+    return html;
+}
+
+function formatAugmentedMatrix(augmented, size) {
+    let html = '<div style="display: inline-block; padding: 10px; background: var(--bg-color); border-radius: 8px; margin: 10px 0;">';
+    html += '<table style="border-collapse: separate; border-spacing: 5px;">';
+
+    for (let i = 0; i < augmented.length; i++) {
+        html += '<tr>';
+        for (let j = 0; j < augmented[0].length; j++) {
+            const val = augmented[i][j];
+            const displayVal = Math.abs(val) < 1e-10 ? '0' : val.toFixed(3);
+            const isIdentityPart = j >= size;
+            const cellStyle = isIdentityPart ?
+                'background: rgba(99, 102, 241, 0.2);' :
+                'background: var(--surface-color);';
+
+            html += `<td style="padding: 8px; ${cellStyle} border: 1px solid var(--border-color); border-radius: 4px; text-align: center; min-width: 50px; font-size: 0.9rem;">${displayVal}</td>`;
+
+            // Add separator
+            if (j === size - 1) {
+                html += '<td style="border-left: 3px solid var(--primary-color); padding: 0 5px;"></td>';
+            }
+        }
+        html += '</tr>';
+    }
+
+    html += '</table></div>';
+    return html;
+}
