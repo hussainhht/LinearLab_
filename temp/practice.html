@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Practice Sets | LinearLab</title>
+        <link rel="stylesheet" href="../style/main.css">
+        <link rel="stylesheet" href="../style/practice.css">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>📝 Practice Sets</h1>
+                <p class="subtitle">Test your knowledge with auto-generated
+                    Linear Algebra problems</p>
+
+                <!-- Navigation Links -->
+                <div class="header-navigation">
+                    <a href="index.html" class="nav-link">
+                        <button class="btn btn-info nav-btn">
+                            <span>🔧</span>
+                            <span>Matrix Tools</span>
+                        </button>
+                    </a>
+                    <a href="vector_space.html" class="nav-link">
+                        <button class="btn btn-secondary nav-btn">
+                            <span>📐</span>
+                            <span>Vector Spaces</span>
+                        </button>
+                    </a>
+                    <a href="learn.html" class="nav-link">
+                        <button class="btn btn-secondary nav-btn">
+                            <span>📚</span>
+                            <span>Learn</span>
+                        </button>
+                    </a>
+                </div>
+            </header>
+
+            <main class="practice">
+                <div class="practice-header">
+                    <div class="topic-selector">
+                        <label for="topic">Choose Topic:</label>
+                        <select id="topic" class="form-select">
+                            <option value="systems">Systems of
+                                Equations</option>
+                            <option value="gaussjordan">Gauss-Jordan
+                                Elimination</option>
+                            <option value="determinant">Determinants</option>
+                            <option value="inverse">Matrix Inverse</option>
+                            <option value="rank">Rank & Nullity</option>
+                        </select>
+                    </div>
+                    <button id="btn-generate" class="btn btn-primary">
+                        <span>🎲</span>
+                        <span>Generate 5 Problems</span>
+                    </button>
+                </div>
+
+                <div class="practice-info">
+                    <p class="info-text">
+                        <strong>How it works:</strong> Select a topic, generate
+                        problems, answer them, and check your score!
+                        Your last score is saved automatically.
+                    </p>
+                    <div id="last-score-display"></div>
+                </div>
+
+                <section id="problems" class="problems-container">
+                    <div class="empty-state">
+                        <p>🎯 Click "Generate 5 Problems" to start
+                            practicing!</p>
+                    </div>
+                </section>
+
+                <footer class="practice-actions" style="display: none;">
+                    <button id="btn-check" class="btn btn-success">
+                        <span>✓</span>
+                        <span>Check Answers</span>
+                    </button>
+                    <button id="btn-reset" class="btn btn-secondary">
+                        <span>↻</span>
+                        <span>New Set</span>
+                    </button>
+                    <div id="score" class="score-display"></div>
+                </footer>
+            </main>
+
+            <footer>
+                <p>Built with ❤️ by student Hussain Ali | University of
+                    Bahrain</p>
+                <p class="footer-note">Making math visual & fun ✨</p>
+            </footer>
+        </div>
+
+        <script src="../js/practice.js"></script>
+    </body>
+</html>
