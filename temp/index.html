@@ -57,6 +57,10 @@
                         <span class="tab-icon">🧮</span>
                         <span class="tab-text">Matrix Operations</span>
                     </button>
+                    <button class="tab-btn" data-tab="multiplication">
+                        <span class="tab-icon">🎯</span>
+                        <span class="tab-text">Matrix Multiplication</span>
+                    </button>
                 </div>
             </header>
 
@@ -347,6 +351,78 @@
             </div>
             <!-- End Operations Section -->
 
+            <!-- Matrix Multiplication Animation Section -->
+            <div id="multiplicationSection" class="tab-content">
+                <div class="main-content">
+                    <div class="control-panel">
+                        <h2>🎯 Matrix Multiplication Animation</h2>
+                        
+                        <div class="info-box" style="background: rgba(99, 102, 241, 0.1); border: 2px solid #6366f1; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                            <h3 style="color: #818cf8; margin-bottom: 10px;">📐 Formula:</h3>
+                            <div style="text-align: center; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 8px; margin: 10px 0;">
+                                <code style="color: #a78bfa; font-size: 1.1em; font-weight: bold;">
+                                    c<sub>ij</sub> = a<sub>i1</sub>b<sub>1j</sub> + a<sub>i2</sub>b<sub>2j</sub> + ... + a<sub>ir</sub>b<sub>rj</sub>
+                                </code>
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                            <h3 style="color: #60a5fa; margin-bottom: 10px;">📌 Important Rules:</h3>
+                            <ul style="margin-left: 20px; color: #cbd5e1;">
+                                <li style="margin: 8px 0;"><strong style="color: #60a5fa;">Number of columns in A</strong> must equal <strong style="color: #60a5fa;">number of rows in B</strong></li>
+                                <li style="margin: 8px 0;">Result matrix C will have size: <strong style="color: #60a5fa;">rows of A × columns of B</strong></li>
+                                <li style="margin: 8px 0;">Each element c<sub>ij</sub> is calculated by multiplying row i of A with column j of B</li>
+                            </ul>
+                        </div>
+
+                        <div class="size-controls">
+                            <label>
+                                Matrix A rows: <input type="number" id="rowsA" min="1" max="4" value="3">
+                            </label>
+                            <label>
+                                Matrix A cols / B rows: <input type="number" id="colsA" min="1" max="4" value="2">
+                            </label>
+                            <label>
+                                Matrix B cols: <input type="number" id="colsB" min="1" max="4" value="3">
+                            </label>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button onclick="generateMultMatrices()" class="btn btn-primary">Generate Matrices</button>
+                            <button onclick="randomMultFill()" class="btn btn-info">🎲 Random Fill</button>
+                        </div>
+
+                        <div class="solve-controls">
+                            <button id="startMultBtn" onclick="startMultAnimation()" class="btn btn-success">▶️ Start Animation</button>
+                            <button onclick="resetMultAnimation()" class="btn btn-warning">🔄 Reset</button>
+                        </div>
+
+                        <div class="speed-control">
+                            <label>
+                                Animation Speed:
+                                <input type="range" id="speedSliderMult" min="100" max="2000" value="1000" step="100">
+                                <span id="speedValueMult">1.0s</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="matrix-and-explanation">
+                        <div class="matrix-section" style="flex: 1; max-width: none;">
+                            <div id="errorMsgMult" style="display: none; background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 15px; border-radius: 10px; border: 2px solid #ef4444; margin: 20px 0; text-align: center; font-weight: bold;"></div>
+
+                            <div id="calculationDisplayMult" style="background: rgba(251, 191, 36, 0.1); border: 2px solid #fbbf24; border-radius: 10px; padding: 20px; margin: 20px 0; min-height: 80px;">
+                                <div style="color: #fbbf24; font-size: 1.1em; text-align: center;">Click "Start Animation" to see the step-by-step multiplication process</div>
+                            </div>
+
+                            <div id="visualizationMult" style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 40px 0; flex-wrap: wrap; min-height: 400px;">
+                                <!-- Matrices will be dynamically generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Matrix Multiplication Section -->
+
             <!-- Step History (shared for operations) -->
             <div class="history-section">
                 <h2>📚 Step History</h2>
@@ -365,5 +441,340 @@
         </div>
 
         <script src="../js/app.js"></script>
+        <script>
+            // Matrix Multiplication Animation Code
+            let animationSpeed = 1000;
+            let isAnimating = false;
+            let currentStep = { i: 0, j: 0 };
+
+            // Update speed display
+            document.getElementById('speedSliderMult').addEventListener('input', function(e) {
+                animationSpeed = parseInt(e.target.value);
+                document.getElementById('speedValueMult').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            });
+
+            function generateMultMatrices() {
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsA = parseInt(document.getElementById('colsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+
+                const visualization = document.getElementById('visualizationMult');
+                visualization.innerHTML = '';
+
+                // Matrix A
+                const containerA = document.createElement('div');
+                containerA.style.position = 'relative';
+                containerA.innerHTML = `<div style="text-align: center; font-size: 1.3em; font-weight: bold; color: #818cf8; margin-bottom: 15px;">Matrix A (${rowsA}×${colsA})</div>`;
+                const matrixA = document.createElement('div');
+                matrixA.style.cssText = 'display: inline-grid; gap: 5px; padding: 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; border: 2px solid rgba(129, 140, 248, 0.3);';
+                matrixA.id = 'matrixAMult';
+                matrixA.style.gridTemplateColumns = `repeat(${colsA}, 70px)`;
+                
+                // Add brackets
+                const beforeBracket = document.createElement('div');
+                beforeBracket.style.cssText = 'position: absolute; left: 10px; top: 10px; bottom: 10px; width: 3px; border-left: 3px solid #818cf8; border-top: 3px solid #818cf8; border-bottom: 3px solid #818cf8;';
+                matrixA.appendChild(beforeBracket);
+                
+                const afterBracket = document.createElement('div');
+                afterBracket.style.cssText = 'position: absolute; right: 10px; top: 10px; bottom: 10px; width: 3px; border-right: 3px solid #818cf8; border-top: 3px solid #818cf8; border-bottom: 3px solid #818cf8;';
+                matrixA.appendChild(afterBracket);
+                
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsA; j++) {
+                        const cell = document.createElement('div');
+                        cell.style.cssText = 'width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: rgba(51, 65, 85, 0.6); border: 2px solid rgba(148, 163, 184, 0.3); border-radius: 8px; font-size: 20px; font-weight: bold; transition: all 0.3s; position: relative;';
+                        cell.id = `a-mult-${i}-${j}`;
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.value = 0;
+                        input.id = `input-a-mult-${i}-${j}`;
+                        input.style.cssText = 'width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 20px; font-weight: bold; color: #e2e8f0;';
+                        cell.appendChild(input);
+                        matrixA.appendChild(cell);
+                    }
+                }
+                containerA.appendChild(matrixA);
+                visualization.appendChild(containerA);
+
+                // Multiplication sign
+                const operator = document.createElement('div');
+                operator.style.cssText = 'font-size: 3em; font-weight: bold; color: #818cf8; text-shadow: 0 0 20px rgba(129, 140, 248, 0.5);';
+                operator.textContent = '×';
+                visualization.appendChild(operator);
+
+                // Matrix B
+                const containerB = document.createElement('div');
+                containerB.style.position = 'relative';
+                containerB.innerHTML = `<div style="text-align: center; font-size: 1.3em; font-weight: bold; color: #60a5fa; margin-bottom: 15px;">Matrix B (${colsA}×${colsB})</div>`;
+                const matrixB = document.createElement('div');
+                matrixB.style.cssText = 'display: inline-grid; gap: 5px; padding: 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; border: 2px solid rgba(96, 165, 250, 0.3);';
+                matrixB.id = 'matrixBMult';
+                matrixB.style.gridTemplateColumns = `repeat(${colsB}, 70px)`;
+                
+                // Add brackets
+                const beforeBracketB = document.createElement('div');
+                beforeBracketB.style.cssText = 'position: absolute; left: 10px; top: 10px; bottom: 10px; width: 3px; border-left: 3px solid #60a5fa; border-top: 3px solid #60a5fa; border-bottom: 3px solid #60a5fa;';
+                matrixB.appendChild(beforeBracketB);
+                
+                const afterBracketB = document.createElement('div');
+                afterBracketB.style.cssText = 'position: absolute; right: 10px; top: 10px; bottom: 10px; width: 3px; border-right: 3px solid #60a5fa; border-top: 3px solid #60a5fa; border-bottom: 3px solid #60a5fa;';
+                matrixB.appendChild(afterBracketB);
+                
+                for (let i = 0; i < colsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const cell = document.createElement('div');
+                        cell.style.cssText = 'width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: rgba(51, 65, 85, 0.6); border: 2px solid rgba(148, 163, 184, 0.3); border-radius: 8px; font-size: 20px; font-weight: bold; transition: all 0.3s; position: relative;';
+                        cell.id = `b-mult-${i}-${j}`;
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.value = 0;
+                        input.id = `input-b-mult-${i}-${j}`;
+                        input.style.cssText = 'width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 20px; font-weight: bold; color: #e2e8f0;';
+                        cell.appendChild(input);
+                        matrixB.appendChild(cell);
+                    }
+                }
+                containerB.appendChild(matrixB);
+                visualization.appendChild(containerB);
+
+                // Equals sign
+                const equals = document.createElement('div');
+                equals.style.cssText = 'font-size: 3em; font-weight: bold; color: #818cf8; text-shadow: 0 0 20px rgba(129, 140, 248, 0.5);';
+                equals.textContent = '=';
+                visualization.appendChild(equals);
+
+                // Result Matrix C
+                const containerC = document.createElement('div');
+                containerC.style.position = 'relative';
+                containerC.innerHTML = `<div style="text-align: center; font-size: 1.3em; font-weight: bold; color: #34d399; margin-bottom: 15px;">Matrix C (${rowsA}×${colsB})</div>`;
+                const matrixC = document.createElement('div');
+                matrixC.style.cssText = 'display: inline-grid; gap: 5px; padding: 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; border: 2px solid rgba(52, 211, 153, 0.3);';
+                matrixC.id = 'matrixCMult';
+                matrixC.style.gridTemplateColumns = `repeat(${colsB}, 70px)`;
+                
+                // Add brackets
+                const beforeBracketC = document.createElement('div');
+                beforeBracketC.style.cssText = 'position: absolute; left: 10px; top: 10px; bottom: 10px; width: 3px; border-left: 3px solid #34d399; border-top: 3px solid #34d399; border-bottom: 3px solid #34d399;';
+                matrixC.appendChild(beforeBracketC);
+                
+                const afterBracketC = document.createElement('div');
+                afterBracketC.style.cssText = 'position: absolute; right: 10px; top: 10px; bottom: 10px; width: 3px; border-right: 3px solid #34d399; border-top: 3px solid #34d399; border-bottom: 3px solid #34d399;';
+                matrixC.appendChild(afterBracketC);
+                
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const cell = document.createElement('div');
+                        cell.style.cssText = 'width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: rgba(51, 65, 85, 0.4); border: 2px solid rgba(148, 163, 184, 0.2); border-radius: 8px; font-size: 20px; font-weight: bold; transition: all 0.3s; position: relative; color: #94a3b8;';
+                        cell.id = `c-mult-${i}-${j}`;
+                        cell.textContent = '?';
+                        matrixC.appendChild(cell);
+                    }
+                }
+                containerC.appendChild(matrixC);
+                visualization.appendChild(containerC);
+
+                document.getElementById('errorMsgMult').style.display = 'none';
+                resetMultAnimation();
+            }
+
+            function randomMultFill() {
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsA = parseInt(document.getElementById('colsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsA; j++) {
+                        const input = document.getElementById(`input-a-mult-${i}-${j}`);
+                        if (input) input.value = Math.floor(Math.random() * 9) + 1;
+                    }
+                }
+
+                for (let i = 0; i < colsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const input = document.getElementById(`input-b-mult-${i}-${j}`);
+                        if (input) input.value = Math.floor(Math.random() * 9) + 1;
+                    }
+                }
+            }
+
+            function resetMultAnimation() {
+                isAnimating = false;
+                currentStep = { i: 0, j: 0 };
+                document.getElementById('startMultBtn').disabled = false;
+                document.getElementById('calculationDisplayMult').innerHTML = 
+                    '<div style="color: #fbbf24; font-size: 1.1em; text-align: center;">Click "Start Animation" to see the step-by-step multiplication process</div>';
+                
+                // Clear all highlights
+                document.querySelectorAll('[id^="a-mult-"], [id^="b-mult-"], [id^="c-mult-"]').forEach(cell => {
+                    cell.style.background = cell.id.startsWith('c-mult-') ? 'rgba(51, 65, 85, 0.4)' : 'rgba(51, 65, 85, 0.6)';
+                    cell.style.transform = 'scale(1)';
+                    cell.style.boxShadow = 'none';
+                    cell.style.zIndex = '1';
+                    cell.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                });
+
+                // Reset result matrix
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const cell = document.getElementById(`c-mult-${i}-${j}`);
+                        if (cell) {
+                            cell.textContent = '?';
+                            cell.style.background = 'rgba(51, 65, 85, 0.4)';
+                            cell.style.color = '#94a3b8';
+                        }
+                    }
+                }
+            }
+
+            async function startMultAnimation() {
+                if (isAnimating) return;
+
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsA = parseInt(document.getElementById('colsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+
+                // Get matrix values
+                const matrixA = [];
+                const matrixB = [];
+
+                for (let i = 0; i < rowsA; i++) {
+                    matrixA[i] = [];
+                    for (let j = 0; j < colsA; j++) {
+                        const input = document.getElementById(`input-a-mult-${i}-${j}`);
+                        matrixA[i][j] = parseFloat(input.value) || 0;
+                    }
+                }
+
+                for (let i = 0; i < colsA; i++) {
+                    matrixB[i] = [];
+                    for (let j = 0; j < colsB; j++) {
+                        const input = document.getElementById(`input-b-mult-${i}-${j}`);
+                        matrixB[i][j] = parseFloat(input.value) || 0;
+                    }
+                }
+
+                isAnimating = true;
+                document.getElementById('startMultBtn').disabled = true;
+
+                // Animate each cell calculation
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        await animateMultCell(i, j, matrixA, matrixB, colsA);
+                    }
+                }
+
+                isAnimating = false;
+                document.getElementById('startMultBtn').disabled = false;
+                document.getElementById('calculationDisplayMult').innerHTML = 
+                    '<div style="color: #34d399; font-size: 1.5em; text-align: center;">✓ Multiplication Complete!</div>';
+            }
+
+            async function animateMultCell(i, j, matrixA, matrixB, colsA) {
+                // Clear previous highlights
+                document.querySelectorAll('[id^="a-mult-"], [id^="b-mult-"], [id^="c-mult-"]').forEach(cell => {
+                    if (cell.id.startsWith('c-mult-') && cell.textContent !== '?') {
+                        cell.style.background = 'rgba(52, 211, 153, 0.2)';
+                        cell.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+                    } else if (cell.id.startsWith('c-mult-')) {
+                        cell.style.background = 'rgba(51, 65, 85, 0.4)';
+                        cell.style.borderColor = 'rgba(148, 163, 184, 0.2)';
+                    } else {
+                        cell.style.background = 'rgba(51, 65, 85, 0.6)';
+                        cell.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                    }
+                    cell.style.transform = 'scale(1)';
+                    cell.style.boxShadow = 'none';
+                    cell.style.zIndex = '1';
+                });
+
+                let calculation = `Calculating c<sub>${i+1}${j+1}</sub> = `;
+                let terms = [];
+                let sum = 0;
+
+                for (let k = 0; k < colsA; k++) {
+                    // Highlight current elements
+                    const cellA = document.getElementById(`a-mult-${i}-${k}`);
+                    const cellB = document.getElementById(`b-mult-${k}-${j}`);
+                    
+                    cellA.style.background = 'rgba(251, 191, 36, 0.4)';
+                    cellA.style.borderColor = '#fbbf24';
+                    cellA.style.transform = 'scale(1.15)';
+                    cellA.style.boxShadow = '0 0 25px rgba(251, 191, 36, 0.6)';
+                    cellA.style.zIndex = '10';
+                    
+                    cellB.style.background = 'rgba(59, 130, 246, 0.4)';
+                    cellB.style.borderColor = '#3b82f6';
+                    cellB.style.transform = 'scale(1.15)';
+                    cellB.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.6)';
+                    cellB.style.zIndex = '10';
+
+                    const product = matrixA[i][k] * matrixB[k][j];
+                    sum += product;
+                    terms.push(`(${matrixA[i][k]} × ${matrixB[k][j]})`);
+
+                    document.getElementById('calculationDisplayMult').innerHTML = `
+                        <div style="margin: 10px 0; color: #fbbf24; font-weight: bold; font-size: 1.1em;">
+                            ${calculation}${terms.join(' + ')}
+                        </div>
+                        <div style="margin: 10px 0; color: #34d399; font-weight: bold; font-size: 1.2em;">
+                            = ${terms.map((t, idx) => {
+                                const a = matrixA[i][idx];
+                                const b = matrixB[idx][j];
+                                return a * b;
+                            }).join(' + ')} = <span style="color: #10b981; font-size: 1.3em;">${sum}</span>
+                        </div>
+                    `;
+
+                    await sleep(animationSpeed / colsA);
+
+                    // Remove highlights from current elements
+                    cellA.style.background = 'rgba(51, 65, 85, 0.6)';
+                    cellA.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                    cellA.style.transform = 'scale(1)';
+                    cellA.style.boxShadow = 'none';
+                    cellA.style.zIndex = '1';
+                    
+                    cellB.style.background = 'rgba(51, 65, 85, 0.6)';
+                    cellB.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                    cellB.style.transform = 'scale(1)';
+                    cellB.style.boxShadow = 'none';
+                    cellB.style.zIndex = '1';
+                }
+
+                // Show final result with animation
+                const resultCell = document.getElementById(`c-mult-${i}-${j}`);
+                resultCell.textContent = sum;
+                resultCell.style.color = '#10b981';
+                resultCell.style.background = 'rgba(52, 211, 153, 0.5)';
+                resultCell.style.borderColor = '#34d399';
+                resultCell.style.transform = 'scale(1.2)';
+                resultCell.style.boxShadow = '0 0 30px rgba(52, 211, 153, 0.8)';
+                resultCell.style.zIndex = '15';
+                resultCell.style.animation = 'pulse 0.5s';
+                
+                await sleep(animationSpeed / 2);
+                resultCell.style.transform = 'scale(1)';
+                resultCell.style.boxShadow = '0 0 10px rgba(52, 211, 153, 0.3)';
+                resultCell.style.zIndex = '1';
+                resultCell.style.background = 'rgba(52, 211, 153, 0.2)';
+                resultCell.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // Add pulse animation to CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1.2); }
+                    50% { transform: scale(1.3); }
+                }
+            `;
+            document.head.appendChild(style);
+        </script>
     </body>
 </html>

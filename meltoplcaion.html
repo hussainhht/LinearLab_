@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Matrix Multiplication Animation</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        .formula {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+
+        .formula-box {
+            display: inline-block;
+            padding: 15px 25px;
+            background: #e8f5e9;
+            border: 3px solid #4caf50;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .input-group {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .visualization {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .matrix-container {
+            position: relative;
+        }
+
+        .matrix-label {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .matrix {
+            display: inline-grid;
+            gap: 5px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .matrix::before,
+        .matrix::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            width: 3px;
+            background: #333;
+        }
+
+        .matrix::before {
+            left: 10px;
+            border-left: 3px solid #333;
+            border-top: 3px solid #333;
+            border-bottom: 3px solid #333;
+        }
+
+        .matrix::after {
+            right: 10px;
+            border-right: 3px solid #333;
+            border-top: 3px solid #333;
+            border-bottom: 3px solid #333;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .operator {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .highlight-row {
+            background: #ffeb3b !important;
+            border-color: #fbc02d !important;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(251, 192, 45, 0.6);
+            z-index: 10;
+        }
+
+        .highlight-col {
+            background: #03a9f4 !important;
+            border-color: #0277bd !important;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(2, 119, 189, 0.6);
+            z-index: 10;
+        }
+
+        .highlight-result {
+            background: #4caf50 !important;
+            border-color: #2e7d32 !important;
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
+            z-index: 15;
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.2); }
+            50% { transform: scale(1.3); }
+        }
+
+        .calculation-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #fff3e0;
+            border-radius: 10px;
+            border: 3px solid #ff9800;
+            min-height: 80px;
+            font-size: 1.2em;
+        }
+
+        .calculation-step {
+            margin: 10px 0;
+            color: #e65100;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .dimension-label {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .arrow-connection {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .speed-control {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .speed-control label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .speed-control input[type="range"] {
+            width: 200px;
+            vertical-align: middle;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #ef5350;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🎯 Matrix Multiplication Animation</h1>
+
+            <div class="formula">
+                <div>For matrices A (size r×n) and B (size n×p):</div>
+                <div class="formula-box">
+                    c<sub>ij</sub> = a<sub>i1</sub>b<sub>1j</sub> +
+                    a<sub>i2</sub>b<sub>2j</sub> + ... +
+                    a<sub>ir</sub>b<sub>rj</sub>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📌 Important Rules:</h3>
+                <ul>
+                    <li><strong>Number of columns in A</strong> must equal
+                        <strong>number of rows in B</strong></li>
+                    <li>Result matrix C will have size: <strong>rows of A ×
+                            columns of B</strong></li>
+                    <li>Each element c<sub>ij</sub> is calculated by multiplying
+                        row i of A with column j of B</li>
+                </ul>
+            </div>
+
+            <div class="controls">
+                <div class="input-group">
+                    <label>Matrix A rows:</label>
+                    <input type="number" id="rowsA" min="1" max="4" value="3">
+                </div>
+                <div class="input-group">
+                    <label>Matrix A cols / B rows:</label>
+                    <input type="number" id="colsA" min="1" max="4" value="2">
+                </div>
+                <div class="input-group">
+                    <label>Matrix B cols:</label>
+                    <input type="number" id="colsB" min="1" max="4" value="3">
+                </div>
+                <br>
+                <button onclick="generateMatrices()">Generate Matrices</button>
+                <button onclick="randomFill()">Random Fill</button>
+                <button id="startBtn" onclick="startAnimation()">Start
+                    Animation</button>
+                <button onclick="resetAnimation()">Reset</button>
+            </div>
+
+            <div class="speed-control">
+                <label>Animation Speed:</label>
+                <input type="range" id="speedSlider" min="100" max="2000"
+                    value="1000" step="100">
+                <span id="speedValue">1.0s</span>
+            </div>
+
+            <div id="errorMsg" class="error-message"
+                style="display: none;"></div>
+
+            <div class="calculation-display" id="calculationDisplay">
+                <div>Click "Start Animation" to see the step-by-step
+                    multiplication process</div>
+            </div>
+
+            <div class="visualization" id="visualization">
+                <!-- Matrices will be dynamically generated here -->
+            </div>
+        </div>
+
+        <script>
+        let animationSpeed = 1000;
+        let isAnimating = false;
+        let currentStep = { i: 0, j: 0 };
+
+        // Update speed display
+        document.getElementById('speedSlider').addEventListener('input', function(e) {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedValue').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+        });
+
+        function generateMatrices() {
+            const rowsA = parseInt(document.getElementById('rowsA').value);
+            const colsA = parseInt(document.getElementById('colsA').value);
+            const colsB = parseInt(document.getElementById('colsB').value);
+
+            const visualization = document.getElementById('visualization');
+            visualization.innerHTML = '';
+
+            // Matrix A
+            const containerA = document.createElement('div');
+            containerA.className = 'matrix-container';
+            containerA.innerHTML = `<div class="matrix-label">Matrix A (${rowsA}×${colsA})</div>`;
+            const matrixA = document.createElement('div');
+            matrixA.className = 'matrix';
+            matrixA.id = 'matrixA';
+            matrixA.style.gridTemplateColumns = `repeat(${colsA}, 60px)`;
+            
+            for (let i = 0; i < rowsA; i++) {
+                for (let j = 0; j < colsA; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `a-${i}-${j}`;
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = 0;
+                    input.id = `input-a-${i}-${j}`;
+                    cell.appendChild(input);
+                    matrixA.appendChild(cell);
+                }
+            }
+            containerA.appendChild(matrixA);
+            visualization.appendChild(containerA);
+
+            // Multiplication sign
+            const operator = document.createElement('div');
+            operator.className = 'operator';
+            operator.textContent = '×';
+            visualization.appendChild(operator);
+
+            // Matrix B
+            const containerB = document.createElement('div');
+            containerB.className = 'matrix-container';
+            containerB.innerHTML = `<div class="matrix-label">Matrix B (${colsA}×${colsB})</div>`;
+            const matrixB = document.createElement('div');
+            matrixB.className = 'matrix';
+            matrixB.id = 'matrixB';
+            matrixB.style.gridTemplateColumns = `repeat(${colsB}, 60px)`;
+            
+            for (let i = 0; i < colsA; i++) {
+                for (let j = 0; j < colsB; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `b-${i}-${j}`;
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = 0;
+                    input.id = `input-b-${i}-${j}`;
+                    cell.appendChild(input);
+                    matrixB.appendChild(cell);
+                }
+            }
+            containerB.appendChild(matrixB);
+            visualization.appendChild(containerB);
+
+            // Equals sign
+            const equals = document.createElement('div');
+            equals.className = 'operator';
+            equals.textContent = '=';
+            visualization.appendChild(equals);
+
+            // Result Matrix C
+            const containerC = document.createElement('div');
+            containerC.className = 'matrix-container';
+            containerC.innerHTML = `<div class="matrix-label">Matrix C (${rowsA}×${colsB})</div>`;
+            const matrixC = document.createElement('div');
+            matrixC.className = 'matrix';
+            matrixC.id = 'matrixC';
+            matrixC.style.gridTemplateColumns = `repeat(${colsB}, 60px)`;
+            
+            for (let i = 0; i < rowsA; i++) {
+                for (let j = 0; j < colsB; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `c-${i}-${j}`;
+                    cell.textContent = '?';
+                    cell.style.background = '#e0e0e0';
+                    matrixC.appendChild(cell);
+                }
+            }
+            containerC.appendChild(matrixC);
+            visualization.appendChild(containerC);
+
+            document.getElementById('errorMsg').style.display = 'none';
+            resetAnimation();
+        }
+
+        function randomFill() {
+            const rowsA = parseInt(document.getElementById('rowsA').value);
+            const colsA = parseInt(document.getElementById('colsA').value);
+            const colsB = parseInt(document.getElementById('colsB').value);
+
+            for (let i = 0; i < rowsA; i++) {
+                for (let j = 0; j < colsA; j++) {
+                    const input = document.getElementById(`input-a-${i}-${j}`);
+                    if (input) input.value = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+
+            for (let i = 0; i < colsA; i++) {
+                for (let j = 0; j < colsB; j++) {
+                    const input = document.getElementById(`input-b-${i}-${j}`);
+                    if (input) input.value = Math.floor(Math.random() * 9) + 1;
+                }
+            }
+        }
+
+        function resetAnimation() {
+            isAnimating = false;
+            currentStep = { i: 0, j: 0 };
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('calculationDisplay').innerHTML = 
+                '<div>Click "Start Animation" to see the step-by-step multiplication process</div>';
+            
+            // Clear all highlights
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('highlight-row', 'highlight-col', 'highlight-result');
+            });
+
+            // Reset result matrix
+            const rowsA = parseInt(document.getElementById('rowsA').value);
+            const colsB = parseInt(document.getElementById('colsB').value);
+            for (let i = 0; i < rowsA; i++) {
+                for (let j = 0; j < colsB; j++) {
+                    const cell = document.getElementById(`c-${i}-${j}`);
+                    if (cell) {
+                        cell.textContent = '?';
+                        cell.style.background = '#e0e0e0';
+                    }
+                }
+            }
+        }
+
+        async function startAnimation() {
+            if (isAnimating) return;
+
+            const rowsA = parseInt(document.getElementById('rowsA').value);
+            const colsA = parseInt(document.getElementById('colsA').value);
+            const colsB = parseInt(document.getElementById('colsB').value);
+
+            // Get matrix values
+            const matrixA = [];
+            const matrixB = [];
+
+            for (let i = 0; i < rowsA; i++) {
+                matrixA[i] = [];
+                for (let j = 0; j < colsA; j++) {
+                    const input = document.getElementById(`input-a-${i}-${j}`);
+                    matrixA[i][j] = parseFloat(input.value) || 0;
+                }
+            }
+
+            for (let i = 0; i < colsA; i++) {
+                matrixB[i] = [];
+                for (let j = 0; j < colsB; j++) {
+                    const input = document.getElementById(`input-b-${i}-${j}`);
+                    matrixB[i][j] = parseFloat(input.value) || 0;
+                }
+            }
+
+            isAnimating = true;
+            document.getElementById('startBtn').disabled = true;
+
+            // Animate each cell calculation
+            for (let i = 0; i < rowsA; i++) {
+                for (let j = 0; j < colsB; j++) {
+                    await animateCell(i, j, matrixA, matrixB, colsA);
+                }
+            }
+
+            isAnimating = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('calculationDisplay').innerHTML = 
+                '<div style="color: #4caf50; font-size: 1.5em;">✓ Multiplication Complete!</div>';
+        }
+
+        async function animateCell(i, j, matrixA, matrixB, colsA) {
+            // Clear previous highlights
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('highlight-row', 'highlight-col', 'highlight-result');
+            });
+
+            let calculation = `Calculating c<sub>${i+1}${j+1}</sub> = `;
+            let terms = [];
+            let sum = 0;
+
+            for (let k = 0; k < colsA; k++) {
+                // Highlight current elements
+                document.getElementById(`a-${i}-${k}`).classList.add('highlight-row');
+                document.getElementById(`b-${k}-${j}`).classList.add('highlight-col');
+
+                const product = matrixA[i][k] * matrixB[k][j];
+                sum += product;
+                terms.push(`(${matrixA[i][k]} × ${matrixB[k][j]})`);
+
+                document.getElementById('calculationDisplay').innerHTML = `
+                    <div class="calculation-step">
+                        ${calculation}${terms.join(' + ')}
+                    </div>
+                    <div class="calculation-step">
+                        = ${terms.map((t, idx) => {
+                            const a = matrixA[i][idx];
+                            const b = matrixB[idx][j];
+                            return a * b;
+                        }).join(' + ')} = ${sum}
+                    </div>
+                `;
+
+                await sleep(animationSpeed / colsA);
+
+                // Remove highlights from current elements
+                document.getElementById(`a-${i}-${k}`).classList.remove('highlight-row');
+                document.getElementById(`b-${k}-${j}`).classList.remove('highlight-col');
+            }
+
+            // Show final result
+            const resultCell = document.getElementById(`c-${i}-${j}`);
+            resultCell.textContent = sum;
+            resultCell.classList.add('highlight-result');
+            
+            await sleep(animationSpeed / 2);
+            resultCell.classList.remove('highlight-result');
+            resultCell.style.background = '#c8e6c9';
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            generateMatrices();
+            randomFill();
+        };
+    </script>
+    </body>
+</html>

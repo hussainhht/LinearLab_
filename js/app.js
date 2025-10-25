@@ -2330,6 +2330,13 @@ function initializeTabs() {
                 document.getElementById('rrefSection').classList.add('active');
             } else if (tabName === 'operations') {
                 document.getElementById('operationsSection').classList.add('active');
+            } else if (tabName === 'multiplication') {
+                document.getElementById('multiplicationSection').classList.add('active');
+                // Initialize matrices when tab is opened for the first time
+                if (!document.getElementById('matrixAMult')) {
+                    generateMultMatrices();
+                    randomMultFill();
+                }
             }
         });
     });
