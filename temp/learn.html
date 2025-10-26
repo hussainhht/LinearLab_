@@ -6435,10 +6435,987 @@
                     </div>
 
                     <!-- ============================================================ -->
+                    <!-- CHAPTER 4.3: LINEAR INDEPENDENCE (COMPREHENSIVE) -->
+                    <!-- ============================================================ -->
+
+                    <!-- Slide 65: Linear Independence - The Full Story -->
+                    <div class="slide" id="slide-linear-independence-full">
+                        <h2>🎯 Linear Independence — The Full Story</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 Core Idea (One Sentence)</h3>
+                            <p>A set of vectors is <strong>linearly
+                                    independent</strong> if the
+                                <strong>only</strong> way to combine them to get
+                                the zero vector is to use <strong>all-zero
+                                    coefficients</strong>.</p>
+
+                            <div class="formula" style="margin: 20px 0;">
+                                $$c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0 \quad
+                                \Rightarrow \quad c_1 = c_2 = \cdots = c_k = 0$$
+                            </div>
+
+                            <p style="margin-top: 15px;">If there exists a
+                                <strong>non-trivial</strong> choice (some \( c_i
+                                \neq 0 \)) giving zero, the set is
+                                <strong>linearly dependent</strong>.</p>
+                            <p
+                                style="margin-top: 10px; color: var(--highlight-color);"><strong>Plain
+                                    English:</strong> No vector in the set can
+                                be "made" from the others.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1);">
+                            <h4>⚡ Fast Facts to Memorize</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>\( \{v\} \) is independent
+                                    <strong>iff</strong> \( v \neq 0 \)</li>
+                                <li>Any set containing the <strong>zero
+                                        vector</strong> is dependent</li>
+                                <li>In \( \mathbb{R}^n \), <strong>more than \(
+                                        n \)</strong> vectors are
+                                    <strong>always</strong> dependent</li>
+                                <li>In \( \mathbb{R}^n \), <strong>exactly \( n
+                                        \)</strong> vectors are independent
+                                    <strong>iff</strong> they span \(
+                                    \mathbb{R}^n \) <strong>iff</strong>
+                                    determinant \( \neq 0 \)</li>
+                                <li><strong>Orthogonal nonzero</strong> vectors
+                                    are automatically independent</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">65</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 66: Why Linear Independence Matters -->
+                    <div class="slide" id="slide-independence-importance">
+                        <h2>🔍 Why Linear Independence Matters</h2>
+
+                        <div class="note-box">
+                            <h4>💡 Unique Coordinates</h4>
+                            <p>If \( S = \{v_1, \dots, v_k\} \) is independent,
+                                every vector in \( \text{span}(S) \) has a
+                                <strong>unique</strong> representation as a
+                                linear combination of \( S \).</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🧩 Bases & Dimension</h4>
+                            <p>A <strong>basis</strong> is an independent
+                                spanning set. Its size is the
+                                <strong>dimension</strong>.</p>
+                            <p style="margin-top: 10px;">Independence guarantees
+                                "no redundancy" — every basis vector contributes
+                                something new.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1);">
+                            <h4>📊 Rank & Nullity</h4>
+                            <p>Independence of the columns of a matrix is
+                                equivalent to its <strong>null space</strong>
+                                being \( \{0\} \) (no free variables).</p>
+                            <div class="formula" style="margin: 15px 0;">
+                                $$\text{Independent columns} \Leftrightarrow
+                                \text{rank}(A) = k \Leftrightarrow
+                                \text{nullity}(A) = 0$$
+                            </div>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Solving Systems</h4>
+                            <p>For \( A \in \mathbb{R}^{n \times n} \),
+                                independent columns \( \Leftrightarrow \det A
+                                \neq 0 \Leftrightarrow \) the system \( Ax = b
+                                \) has a <strong>unique</strong> solution for
+                                every \( b \).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">66</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 67: The Two Most-Used Tests -->
+                    <div class="slide" id="slide-independence-tests">
+                        <h2>🧪 The Two Most-Used Tests</h2>
+
+                        <div class="definition-box">
+                            <h3>Test A: The Definition Test (Coefficient
+                                Test)</h3>
+                            <p>Try to solve:</p>
+                            <div class="formula">
+                                $$c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0$$
+                            </div>
+                            <p style="margin-top: 15px;">If the
+                                <strong>only</strong> solution is \( c_1 =
+                                \cdots = c_k = 0 \), the set is
+                                <strong>independent</strong>; otherwise
+                                <strong>dependent</strong>.</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="background: rgba(99, 102, 241, 0.1);">
+                            <h3>Test B: The Matrix/RREF (Null Space) Test</h3>
+                            <p>Form the matrix \( A = [v_1 \ \cdots \ v_k] \)
+                                (vectors as <strong>columns</strong>) and
+                                solve:</p>
+                            <div class="formula">
+                                $$Ac = 0$$
+                            </div>
+                            <ul style="margin-top: 15px; line-height: 1.8;">
+                                <li>If the <strong>only</strong> solution is \(
+                                    c = 0 \), →
+                                    <strong>independent</strong></li>
+                                <li>If there are <strong>free variables</strong>
+                                    (nontrivial solutions), →
+                                    <strong>dependent</strong></li>
+                            </ul>
+                            <p
+                                style="margin-top: 15px; padding: 12px; background: rgba(251, 191, 36, 0.15); border-radius: 8px;">
+                                <strong>Shortcut:</strong>
+                                "Pivot in every column" \( \Rightarrow \)
+                                independent<br>
+                                Equivalently: \( \text{nullity}(A) = 0 \) and \(
+                                \text{rank}(A) = k \)
+                            </p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">67</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 68: Geometry Intuition -->
+                    <div class="slide" id="slide-independence-geometry">
+                        <h2>📐 Geometry Intuition (Builds Your Instincts)</h2>
+
+                        <div class="example-box">
+                            <h4>In \( \mathbb{R}^2 \)</h4>
+                            <p>Two vectors are independent <strong>iff</strong>
+                                they <strong>aren't collinear</strong> (not
+                                scalar multiples).</p>
+                            <div style="margin: 20px 0; text-align: center;">
+                                <div
+                                    style="display: inline-block; padding: 15px; background: rgba(52, 211, 153, 0.1); border-radius: 10px; margin: 10px;">
+                                    <strong
+                                        style="color: var(--success-color);">✓
+                                        Independent</strong><br>
+                                    <span style="font-size: 0.9em;">Not
+                                        parallel</span>
+                                </div>
+                                <div
+                                    style="display: inline-block; padding: 15px; background: rgba(239, 68, 68, 0.1); border-radius: 10px; margin: 10px;">
+                                    <strong
+                                        style="color: var(--danger-color);">✗
+                                        Dependent</strong><br>
+                                    <span
+                                        style="font-size: 0.9em;">Parallel/collinear</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1);">
+                            <h4>In \( \mathbb{R}^3 \)</h4>
+                            <ul style="line-height: 1.8;">
+                                <li><strong>Two nonzero non-collinear
+                                        vectors:</strong> independent</li>
+                                <li><strong>Three vectors:</strong> independent
+                                    <strong>iff</strong> they don't lie in the
+                                    same plane through the origin</li>
+                                <li>For a square \( 3 \times 3 \) matrix \( A
+                                    \): \( \det A \neq 0 \Leftrightarrow \) the
+                                    three column vectors form a nonzero-volume
+                                    parallelepiped \( \Leftrightarrow \)
+                                    independent</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box" style="margin-top: 20px;">
+                            <h4>💡 Visual Meaning</h4>
+                            <p>Independent vectors point in
+                                "genuinely different directions" — each adds a
+                                new dimension to what you can reach.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">68</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 69: Worked Example 1 - Obvious Dependence -->
+                    <div class="slide" id="slide-example-dependence-r2">
+                        <h2>📝 Example 1: Obvious Dependence in \( \mathbb{R}^2
+                            \)</h2>
+
+                        <div class="example-box">
+                            <h4>Problem</h4>
+                            <p>Test if \( v_1 = (1, 2) \), \( v_2 = (2, 4) \)
+                                are independent.</p>
+                        </div>
+
+                        <div class="definition-box">
+                            <h4>Solution (By Observation)</h4>
+                            <p>Notice: \( 2v_1 - v_2 = (0, 0) \) with nonzero
+                                coefficients</p>
+                            <div class="formula">
+                                $$2(1, 2) - (2, 4) = (2, 4) - (2, 4) = (0, 0)$$
+                            </div>
+                            <p
+                                style="margin-top: 15px; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; color: var(--danger-color);">
+                                <strong>✗ Dependent!</strong> We found a
+                                non-trivial combination giving zero.
+                            </p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1);">
+                            <h4>RREF View</h4>
+                            <div class="formula">
+                                $$A = \begin{bmatrix} 1 & 2 \\ 2 & 4
+                                \end{bmatrix} \xrightarrow{R_2 \leftarrow R_2 -
+                                2R_1} \begin{bmatrix} 1 & 2 \\ 0 & 0
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">One pivot only \(
+                                \Rightarrow \) free variable \( \Rightarrow \)
+                                dependent</p>
+                            <p
+                                style="margin-top: 10px; font-size: 0.95em; color: var(--text-muted);">Second
+                                column has no pivot, so there's a nontrivial
+                                solution to \( Ac = 0 \).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">69</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 70: Worked Example 2 - Clean Independence -->
+                    <div class="slide" id="slide-example-independence-r3">
+                        <h2>📝 Example 2: Clean Independence in \( \mathbb{R}^3
+                            \)</h2>
+
+                        <div class="example-box">
+                            <h4>Problem</h4>
+                            <p>Test: \( v_1 = (1, 2, 0) \), \( v_2 = (0, 1, 3)
+                                \), \( v_3 = (0, 0, 1) \)</p>
+                        </div>
+
+                        <div class="definition-box">
+                            <h4>Solution</h4>
+                            <p>Matrix with columns \( v_i \):</p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\
+                                0 & 3 & 1 \end{bmatrix}$$
+                            </div>
+                            <p
+                                style="margin-top: 15px;"><strong>Row-reduce:</strong></p>
+                            <ul style="margin: 10px 0; line-height: 1.8;">
+                                <li>\( R_2 \leftarrow R_2 - 2R_1 \): \(
+                                    \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0
+                                    & 3 & 1 \end{bmatrix} \)</li>
+                                <li>\( R_3 \leftarrow R_3 - 3R_2 \): \(
+                                    \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0
+                                    & 0 & 1 \end{bmatrix} = I_3 \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Result</h4>
+                            <ul style="line-height: 1.8;">
+                                <li><strong>Pivot in every column</strong></li>
+                                <li>\( \det A = 1 \neq 0 \)</li>
+                                <li><strong>Independent!</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">70</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 71: Polynomials Example -->
+                    <div class="slide" id="slide-example-polynomials">
+                        <h2>📝 Example 3: Polynomials in \( P_2 \)</h2>
+
+                        <div class="example-box">
+                            <h4>Problem</h4>
+                            <p>Consider: \( p_1(t) = 1 + t \), \( p_2(t) = t +
+                                t^2 \), \( p_3(t) = 1 + 2t + 3t^2 \)</p>
+                            <p style="margin-top: 10px;">Check \( c_1p_1 +
+                                c_2p_2 + c_3p_3 = 0 \)</p>
+                        </div>
+
+                        <div class="definition-box">
+                            <h4>Solution: Compare Coefficients</h4>
+                            <p>Expand and compare coefficients of \( 1, t, t^2
+                                \):</p>
+                            <ul style="margin: 15px 0; line-height: 1.8;">
+                                <li><strong>Constant term:</strong> \( c_1 + c_3
+                                    = 0 \)</li>
+                                <li><strong>\( t \)-term:</strong> \( c_1 + c_2
+                                    + 2c_3 = 0 \)</li>
+                                <li><strong>\( t^2 \)-term:</strong> \( c_2 +
+                                    3c_3 = 0 \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1);">
+                            <h4>Solve the System</h4>
+                            <p><strong>From \( t^2 \):</strong> \( c_2 = -3c_3
+                                \)</p>
+                            <p><strong>From \( t \):</strong> \( c_1 + (-3c_3) +
+                                2c_3 = 0 \Rightarrow c_1 - c_3 = 0 \Rightarrow
+                                c_1 = c_3 \)</p>
+                            <p><strong>From constant:</strong> \( c_1 + c_3 =
+                                2c_3 = 0 \Rightarrow c_3 = 0 \)</p>
+                            <p style="margin-top: 15px;">Therefore: \( c_1 = c_2
+                                = c_3 = 0 \)</p>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Conclusion</h4>
+                            <p>Only trivial solution \( \Rightarrow \)
+                                <strong>Independent!</strong></p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">71</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 72: Too Many Vectors & Orthogonality -->
+                    <div class="slide" id="slide-quick-examples">
+                        <h2>⚡ Quick Examples & Shortcuts</h2>
+
+                        <div class="example-box">
+                            <h4>Example 4: A Classic "Too Many Vectors"</h4>
+                            <p>In \( \mathbb{R}^3 \), any set of
+                                <strong>four</strong> vectors is dependent — no
+                                test needed!</p>
+                            <p
+                                style="margin-top: 10px; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">
+                                <strong>Reason:</strong> rank \( \leq 3 \). With
+                                4 columns, some column must be a linear combo of
+                                previous ones.
+                            </p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1);">
+                            <h4>Example 5: Orthogonality Saves Time</h4>
+                            <p>Let \( v_1 = (1, 1, 0) \), \( v_2 = (1, -1, 0)
+                                \), \( v_3 = (0, 0, 5) \)</p>
+                            <p style="margin-top: 15px;">They're
+                                <strong>pairwise orthogonal</strong> and
+                                <strong>nonzero</strong></p>
+                            <p
+                                style="margin-top: 10px; padding: 12px; background: rgba(52, 211, 153, 0.15); border-radius: 8px;">
+                                <strong>✅ Independent!</strong> No row reduction
+                                needed.<br>
+                                <span
+                                    style="font-size: 0.9em; color: var(--text-muted);">Orthogonal
+                                    nonzero vectors are always
+                                    independent.</span>
+                            </p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🚀 Pro Tip</h4>
+                            <p>If you spot orthogonality, you can immediately
+                                conclude independence without any
+                                calculations!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">72</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 73: Dependency & Span Relationship -->
+                    <div class="slide" id="slide-dependency-span">
+                        <h2>🔗 "One Vector is a Combo of the Others" ⇔
+                            Dependence</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 Key Theorem</h3>
+                            <p>A set \( \{v_1, \dots, v_k\} \) is dependent
+                                <strong>iff</strong> at least one vector lies in
+                                the span of the others.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Proof Sketch</h4>
+                            <p><strong>Forward (\( \Rightarrow \)):</strong> If
+                                \( v_j = \sum_{i \neq j} a_i v_i \), then</p>
+                            <div class="formula">
+                                $$\sum_{i \neq j} a_i v_i - 1 \cdot v_j = 0$$
+                            </div>
+                            <p>This is a nontrivial dependence.</p>
+                            <p style="margin-top: 15px;"><strong>Backward (\(
+                                    \Leftarrow \)):</strong> Any nontrivial
+                                solution to \( c_1v_1 + \cdots + c_kv_k = 0 \)
+                                lets you solve for one vector as a combination
+                                of the others.</p>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>💡 Practical Impact</h4>
+                            <p>If you detect a dependency,
+                                <strong>remove</strong> the redundant vector —
+                                you won't shrink the span — and keep reducing
+                                until the remaining set is independent.</p>
+                            <p style="margin-top: 10px;">That's exactly how you
+                                extract a <strong>basis</strong> from a spanning
+                                set!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">73</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 74: Rank-Nullity Connection -->
+                    <div class="slide" id="slide-rank-nullity-independence">
+                        <h2>📊 Rank–Nullity & the Independence Test</h2>
+
+                        <div class="definition-box">
+                            <h3>Matrix View</h3>
+                            <p>For \( A = [v_1 \ \cdots \ v_k] \in \mathbb{R}^{n
+                                \times k} \):</p>
+                            <ul style="margin: 15px 0; line-height: 1.8;">
+                                <li>\( \text{rank}(A) = \) number of pivots =
+                                    dimension of \( \text{col}(A) \)</li>
+                                <li>\( \text{nullity}(A) = k - \text{rank}(A)
+                                    \)</li>
+                                <li><strong>Independent columns</strong> \(
+                                    \Leftrightarrow \text{rank}(A) = k
+                                    \Leftrightarrow \text{nullity}(A) = 0
+                                    \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1);">
+                            <h4>🎯 The Test</h4>
+                            <p>Reduce \( A \) to RREF and count pivots:</p>
+                            <div
+                                style="margin: 20px 0; padding: 20px; background: rgba(0, 0, 0, 0.2); border-radius: 10px;">
+                                <p
+                                    style="text-align: center; font-size: 1.2em; color: var(--highlight-color);">
+                                    <strong>Pivot in every column</strong> ⇔
+                                    Independent
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 Why This Works</h4>
+                            <p>If every column has a pivot, then \( Ac = 0 \)
+                                has only the trivial solution \( c = 0 \).</p>
+                            <p style="margin-top: 10px;">If any column lacks a
+                                pivot, it's a free variable → nontrivial
+                                solutions exist → dependent.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">74</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 75: Invertible Matrix Theorem -->
+                    <div class="slide" id="slide-invertible-matrix-theorem">
+                        <h2>🏆 The Invertible Matrix Theorem</h2>
+
+                        <div class="definition-box">
+                            <h3>Square Case: All Equivalences</h3>
+                            <p>For \( A \in \mathbb{R}^{n \times n} \), the
+                                following are <strong>equivalent</strong>:</p>
+                        </div>
+
+                        <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>1. \( A \) is <strong>invertible</strong></p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>2. \( \det A \neq 0 \)</p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>3. \( \text{rank}(A) = n \)</p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>4. Columns are
+                                    <strong>independent</strong></p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>5. Columns <strong>span</strong> \(
+                                    \mathbb{R}^n \)</p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>6. \( x \mapsto Ax \) is 1-1 and onto</p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>7. \( Ax = 0 \Rightarrow x = 0 \)</p>
+                            </div>
+                            <div class="example-box"
+                                style="background: rgba(52, 211, 153, 0.1);">
+                                <p>8. \( \text{nullity}(A) = 0 \)</p>
+                            </div>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>🎯 The Big Picture</h4>
+                            <p>For square matrices, testing
+                                <strong>independence</strong>,
+                                <strong>spanning</strong>,
+                                <strong>invertibility</strong>, and
+                                <strong>uniqueness of solutions</strong> are
+                                <strong>all the same test</strong> in
+                                disguise!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">75</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 76: Quick By-Eye Heuristics -->
+                    <div class="slide" id="slide-heuristics">
+                        <h2>👀 Quick "By-Eye" Heuristics</h2>
+
+                        <div class="example-box">
+                            <h4>Before You Compute, Check For:</h4>
+                            <ul style="line-height: 2;">
+                                <li><strong>Collinearity in \( \mathbb{R}^2
+                                        \)</strong> or "same direction" ⇒
+                                    dependent</li>
+                                <li><strong>Coplanarity in \( \mathbb{R}^3
+                                        \)</strong> of three vectors ⇒
+                                    dependent</li>
+                                <li><strong>Triangular matrices</strong> with
+                                    <strong>nonzero diagonal</strong> ⇒
+                                    independent columns</li>
+                                <li><strong>Orthogonal nonzero</strong> sets ⇒
+                                    independent</li>
+                                <li><strong>Zero vector present</strong> ⇒
+                                    dependent immediately</li>
+                                <li><strong>More vectors than ambient
+                                        dimension</strong> ⇒ dependent</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(139, 92, 246, 0.1);">
+                            <h4>🚀 Strategy</h4>
+                            <p>Use these to spot the answer quickly, then
+                                confirm by RREF if needed!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">76</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 77: Common Pitfalls -->
+                    <div class="slide" id="slide-pitfalls">
+                        <h2>⚠️ Common Pitfalls (And How to Avoid Them)</h2>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--danger-color);">
+                            <h4>❌ Pitfall 1</h4>
+                            <p><strong>Wrong:</strong>
+                                "Each vector is nonzero, so they're independent."</p>
+                            <p
+                                style="margin-top: 10px; color: var(--danger-color);"><strong>Counterexample:</strong>
+                                \( (1, 2) \) and \( (2, 4) \) are both nonzero
+                                yet dependent!</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--danger-color);">
+                            <h4>❌ Pitfall 2</h4>
+                            <p><strong>Wrong:</strong>
+                                "Pairwise non-parallel in \( \mathbb{R}^3 \) ⇒ independent."</p>
+                            <p
+                                style="margin-top: 10px; color: var(--danger-color);"><strong>False!</strong>
+                                Three vectors can be non-parallel yet still lie
+                                in the same plane.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--danger-color);">
+                            <h4>❌ Pitfall 3</h4>
+                            <p><strong>Wrong:</strong>
+                                "RREF on the wrong orientation."</p>
+                            <p
+                                style="margin-top: 10px; color: var(--danger-color);">Always
+                                put vectors as <strong>columns</strong> if
+                                you're testing <strong>column</strong>
+                                independence!</p>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ How to Avoid</h4>
+                            <p>Always test using the formal definition or RREF
+                                method. Don't rely on intuition alone!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">77</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 78: Strategy Playbook -->
+                    <div class="slide" id="slide-strategy">
+                        <h2>📋 Strategy Playbook (Exams & Proofs)</h2>
+
+                        <div class="definition-box">
+                            <h3>1️⃣ Square Case (\( n \) vectors in \(
+                                \mathbb{R}^n \))</h3>
+                            <p>Compute \( \det \) or check RREF. One nonzero
+                                determinant settles it.</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="background: rgba(99, 102, 241, 0.1);">
+                            <h3>2️⃣ Rectangular Case (more columns than
+                                rows)</h3>
+                            <p>Immediately <strong>dependent</strong> — no
+                                calculation needed!</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="background: rgba(139, 92, 246, 0.1);">
+                            <h3>3️⃣ Abstract Spaces (polynomials, functions,
+                                matrices)</h3>
+                            <p>Expand into coordinates relative to a known basis
+                                (e.g., for \( P_2 \), use \( \{1, t, t^2\} \))
+                                and test via RREF.</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="background: rgba(52, 211, 153, 0.1);">
+                            <h3>4️⃣ Proof Tasks</h3>
+                            <p>Use the definition: show the only solution to \(
+                                c_1v_1 + \cdots + c_kv_k = 0 \) is \( c = 0
+                                \).</p>
+                            <p style="margin-top: 10px;">Or prove contrapositive
+                                by producing a specific nontrivial
+                                combination.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">78</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 79: More Quick Examples -->
+                    <div class="slide" id="slide-mini-problems">
+                        <h2>🎯 More Worked Mini-Problems</h2>
+
+                        <div class="example-box">
+                            <h4>(a) Are \( \{(1,0,1), (0,1,1), (1,1,2)\} \)
+                                independent?</h4>
+                            <p style="margin-top: 10px;">Notice: \( (1,0,1) +
+                                (0,1,1) = (1,1,2) \)</p>
+                            <p
+                                style="padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; margin-top: 10px;">
+                                <strong>✗ Dependent!</strong> Nontrivial
+                                dependence found.
+                            </p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.05);">
+                            <h4>(b) Are \( \{(1,1,1), (1,2,3), (2,3,4)\} \)
+                                independent?</h4>
+                            <p style="margin-top: 10px;">RREF gives only trivial
+                                solution.</p>
+                            <p
+                                style="padding: 10px; background: rgba(52, 211, 153, 0.1); border-radius: 8px; margin-top: 10px;">
+                                <strong>✓ Independent!</strong> (Matrix has full
+                                rank)
+                            </p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.05);">
+                            <h4>(d) Four vectors in \( \mathbb{R}^3 \)</h4>
+                            <p
+                                style="padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; margin-top: 10px;">
+                                Answer in one word: <strong>Dependent</strong>
+                            </p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.05);">
+                            <h4>(e) \( \{(1,0,0), (1,1,0), (1,1,1)\} \) in \(
+                                \mathbb{R}^3 \)</h4>
+                            <p style="margin-top: 10px;">Determinant = 1 \( \neq
+                                0 \)</p>
+                            <p
+                                style="padding: 10px; background: rgba(52, 211, 153, 0.1); border-radius: 8px; margin-top: 10px;">
+                                <strong>✓ Independent!</strong>
+                            </p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">79</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 80: Building & Extending Bases -->
+                    <div class="slide" id="slide-building-basis">
+                        <h2>🏗️ Building a Basis from a Spanning Set</h2>
+
+                        <div class="definition-box">
+                            <h3>De-Redundancy Process</h3>
+                            <p>If \( S = \{v_1, \dots, v_m\} \)
+                                <strong>spans</strong> some subspace \( W \) but
+                                is dependent:</p>
+                            <ol style="margin: 15px 0; line-height: 1.8;">
+                                <li>Row-reduce \( [v_1 \ \cdots \ v_m] \)</li>
+                                <li>The columns that contain
+                                    <strong>pivots</strong> correspond to an
+                                    <strong>independent</strong> subset \( B
+                                    \subseteq S \)</li>
+                                <li>That subset \( B \) still spans \( W \)</li>
+                                <li>\( B \) is a <strong>basis</strong> of \( W
+                                    \)</li>
+                            </ol>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>💡 Key Insight</h4>
+                            <p>This is the standard, systematic way to
+                                "trim fat" and keep only the essential
+                                vectors!</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="background: rgba(99, 102, 241, 0.1); margin-top: 20px;">
+                            <h3>Extending an Independent Set</h3>
+                            <p>If \( S \) is independent and \( v \notin
+                                \text{span}(S) \), then \( S \cup \{v\} \) is
+                                <strong>still independent</strong>.</p>
+                            <p style="margin-top: 10px;">You can keep adding
+                                such vectors until you form a basis of the whole
+                                ambient space!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">80</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 81: Exam Checklist & Final Perspective -->
+                    <div class="slide" id="slide-independence-summary">
+                        <h2>✅ Quick Checklist & Final Perspective</h2>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>📝 Exam-Time Checklist</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>✓ Did I set up \( A = [v_1 \ \cdots \ v_k]
+                                    \) with <strong>columns</strong>?</li>
+                                <li>✓ Did I check for a pivot in
+                                    <strong>every</strong> column / \( \det \neq
+                                    0 \) (square case)?</li>
+                                <li>✓ Did I catch trivial traps (zero vector,
+                                    too many vectors)?</li>
+                                <li>✓ If abstract (polynomials/functions), did I
+                                    expand into coordinates first?</li>
+                                <li>✓ If I found a dependence, can I
+                                    <strong>exhibit</strong> the coefficients
+                                    explicitly?</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1)); border: 2px solid var(--primary-color); margin-top: 20px;">
+                            <h4>🎯 One Final Perspective</h4>
+                            <p>Think of independence as
+                                <strong>"no hidden recipe."</strong></p>
+                            <p style="margin-top: 10px;">If a set is
+                                independent, each vector contributes a
+                                <strong>new direction</strong> you genuinely
+                                can't recreate from the others.</p>
+                            <p
+                                style="margin-top: 15px; font-size: 1.1em; color: var(--highlight-color);">
+                                <strong>That's why independence is the backbone
+                                    of <em>basis</em>, <em>dimension</em>, and
+                                    the entire grammar of linear
+                                    algebra.</strong>
+                            </p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color); margin-top: 20px;">
+                            <h4>🎓 You Now Know</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>The formal definition and intuitive
+                                    meaning</li>
+                                <li>Multiple testing methods (definition, RREF,
+                                    determinant, geometry)</li>
+                                <li>Common pitfalls and how to avoid them</li>
+                                <li>The connection to rank, nullity, bases, and
+                                    invertibility</li>
+                                <li>Practical strategies for exams and
+                                    proofs</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">81</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
                     <!-- CHAPTER 4.4 & 4.5: BASES AND DIMENSIONS -->
                     <!-- ============================================================ -->
 
-                    <!-- Slide 65: Introduction to Bases and Dimensions -->
+                    <!-- Slide 82: Introduction to Bases and Dimensions -->
                     <div class="slide" id="slide-bases-intro">
                         <h2>🧠 Chapter 4.4 & 4.5 – Bases and Dimensions</h2>
 
