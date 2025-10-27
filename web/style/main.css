@@ -27,26 +27,28 @@ body {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: var(--text-color);
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 1400px;
     margin: 0 auto;
+    width: 100%;
 }
 
 /* Header */
 header {
     text-align: center;
-    margin-bottom: 40px;
-    padding: 40px;
+    margin-bottom: 20px;
+    padding: 20px;
     background: var(--surface-color);
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 header h1 {
-    font-size: 4rem;
+    font-size: clamp(1.5rem, 5vw, 4rem);
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -56,31 +58,36 @@ header h1 {
 
 .subtitle {
     color: var(--text-muted);
-    font-size: 1.4rem;
-    margin-bottom: 25px;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    margin-bottom: 15px;
 }
 
 /* Tab Navigation */
 .tab-navigation {
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .tab-btn {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 18px 40px;
+    gap: 8px;
+    padding: 12px 20px;
     background: rgba(99, 102, 241, 0.1);
     border: 2px solid var(--border-color);
     border-radius: 12px;
     color: var(--text-color);
-    font-size: 1.3rem;
+    font-size: clamp(0.85rem, 2vw, 1.3rem);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex: 1 1 auto;
+    min-width: 140px;
+    max-width: 300px;
+    justify-content: center;
 }
 
 .tab-btn:hover {
@@ -98,7 +105,11 @@ header h1 {
 }
 
 .tab-icon {
-    font-size: 1.8rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+}
+
+.tab-text {
+    white-space: nowrap;
 }
 
 .tab-text {
@@ -130,9 +141,16 @@ header h1 {
 /* Main Content Grid */
 .main-content {
     display: grid;
-    grid-template-columns: 300px 1fr 350px;
-    gap: 20px;
+    grid-template-columns: minmax(250px, 300px) 1fr minmax(300px, 350px);
+    gap: 15px;
     margin-bottom: 30px;
+}
+
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
 }
 
 /* Panels */
@@ -142,17 +160,61 @@ header h1 {
 .history-section {
     background: var(--surface-color);
     border-radius: 12px;
-    padding: 25px;
+    padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.control-panel {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.control-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.control-panel::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 10px;
+}
+
+.control-panel::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
 }
 
 .control-panel h2,
 .matrix-section h2,
 .explanation-panel h2,
 .history-section h2 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: var(--primary-color);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+}
+
+/* Graph Panel Styles */
+.graph-panel {
+    background: var(--bg-color);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+#graphContainer {
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.matrix-and-explanation {
+    display: flex;
+    gap: 20px;
+    width: 100%;
 }
 
 /* Control Panel */
@@ -160,40 +222,57 @@ header h1 {
 .action-buttons,
 .solve-controls,
 .speed-control {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+}
+
+.size-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .size-controls label {
-    display: block;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 100px;
 }
 
 .size-controls input {
-    width: 80px;
-    margin-left: 10px;
+    width: 70px;
+    flex-shrink: 0;
+}
+
+.size-controls .btn {
+    flex: 1 1 100%;
+    margin-top: 5px;
 }
 
 input[type="number"] {
-    padding: 12px;
+    padding: 10px;
     background: var(--bg-color);
     border: 2px solid var(--border-color);
     border-radius: 6px;
     color: var(--text-color);
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 /* Buttons */
 .btn {
     width: 100%;
-    padding: 16px 24px;
-    margin-bottom: 10px;
+    padding: 12px 18px;
+    margin-bottom: 8px;
     border: none;
     border-radius: 8px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .btn:hover {
@@ -440,20 +519,22 @@ input[type="number"] {
 
 /* Matrix Operations in RREF Section */
 .matrix-operations-rref {
-    margin-top: 20px;
-    padding-top: 20px;
+    margin-top: 15px;
+    padding-top: 15px;
     border-top: 2px solid var(--border-color);
 }
 
 .matrix-operations-rref h3 {
     color: var(--info-color);
-    margin-bottom: 15px;
-    font-size: 1.1rem;
+    margin-bottom: 12px;
+    font-size: 1rem;
 }
 
 .matrix-operations-rref .btn {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    padding: 10px 15px;
 }
 
 /* Operation Result Display */
@@ -1610,31 +1691,143 @@ footer {
     .operation-result {
         max-width: 100%;
     }
+
+    .matrix-selector-top {
+        min-width: 100%;
+    }
+
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
 }
 
 @media (max-width: 1200px) {
-    .main-content {
-        grid-template-columns: 1fr;
+    header h1 {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
     }
 
-    header h1 {
-        font-size: 2rem;
+    .tab-navigation {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .tab-btn {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 140px;
+        padding: 10px 15px;
+    }
+
+    /* Navigation buttons in header */
+    header > div[style*="display: flex"] {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+    }
+
+    header > div[style*="display: flex"] a {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 140px;
+    }
+
+    header > div[style*="display: flex"] button {
+        width: 100%;
+        padding: 10px 15px !important;
+        font-size: 0.95rem !important;
+    }
+
+    .matrix-and-explanation {
+        flex-direction: column;
+    }
+
+    .control-panel,
+    .matrix-section,
+    .explanation-panel {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        padding: 8px;
+    }
+
+    header {
+        padding: 15px;
+        margin-bottom: 15px;
     }
 
     .tab-navigation {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
     }
 
     .tab-btn {
         width: 100%;
-        justify-content: center;
+        flex: 1 1 100%;
+        padding: 12px 20px;
+    }
+
+    .matrix-size-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .matrix-size-controls label {
+        width: 100%;
+    }
+
+    .matrix-size-controls .btn-small {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .quick-examples {
+        flex-wrap: wrap;
+    }
+
+    .control-panel {
+        max-height: none;
+        overflow-y: visible;
     }
 }
 
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
+    header h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .subtitle {
+        font-size: clamp(0.9rem, 2vw, 1.1rem);
+    }
+
+    /* Navigation buttons responsive */
+    header > div[style*="display: flex"] {
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin: 15px 0 !important;
+    }
+
+    header > div[style*="display: flex"] a {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 100%;
+    }
+
+    header > div[style*="display: flex"] button {
+        padding: 12px 18px !important;
+        font-size: 0.95rem !important;
+        justify-content: center !important;
+    }
+
+    .tab-btn {
+        padding: 12px 18px;
+        font-size: 1rem;
+        min-width: 120px;
+    }
+
+    .tab-icon {
+        font-size: 1.3rem;
     }
 
     .matrix-cell,
@@ -1645,7 +1838,7 @@ footer {
     }
 
     .btn {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         padding: 10px 15px;
     }
 
@@ -1653,47 +1846,29 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .tab-btn {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
-
-    .tab-icon {
-        font-size: 1.2rem;
-    }
-
-    header h1 {
-        font-size: 1.8rem;
-    }
-
-    .subtitle {
-        font-size: 0.95rem;
-    }
-
     .multiplication-container {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
+        padding: 15px;
     }
 
     .multiply-symbol,
     .equals-symbol {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         transform: rotate(90deg);
-    }
-
-    .equals-symbol {
         margin: 10px 0;
     }
 
     .anim-cell {
-        min-width: 40px;
-        min-height: 40px;
-        padding: 8px;
+        min-width: 45px;
+        min-height: 45px;
+        padding: 10px;
         font-size: 1rem;
     }
 
     .animation-controls {
         flex-direction: column;
+        gap: 8px;
     }
 
     .btn-animate {
@@ -1703,6 +1878,264 @@ footer {
     .calculation-formula {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .size-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .size-controls label {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .size-controls input {
+        width: 80px;
+        max-width: none;
+    }
+
+    .action-buttons,
+    .solve-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .action-buttons .btn,
+    .solve-controls .btn {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .matrix-input-top {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .matrix-selector-top {
+        min-width: 100%;
+    }
+
+    .control-panel,
+    .matrix-section,
+    .explanation-panel {
+        padding: 12px;
+    }
+
+    .control-panel h2,
+    .matrix-section h2,
+    .explanation-panel h2 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+    }
+
+    /* History section */
+    .history-section {
+        padding: 12px;
+    }
+
+    .history-item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+
+    /* Graph Container - Make smaller on mobile */
+    #graphContainer {
+        min-height: 350px !important;
+        max-height: 400px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .graph-panel {
+        padding: 10px !important;
+        margin-top: 15px !important;
+    }
+
+    .graph-panel h3 {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    header {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+
+    header h1 {
+        font-size: clamp(1.2rem, 6vw, 1.5rem);
+    }
+
+    .subtitle {
+        font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+        margin-bottom: 10px;
+    }
+
+    .tab-navigation {
+        gap: 6px;
+    }
+
+    .tab-btn {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        gap: 6px;
+        min-width: 110px;
+    }
+
+    .tab-icon {
+        font-size: 1.1rem;
+    }
+
+    .tab-text {
+        font-size: 0.8rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+    }
+
+    .btn-small {
+        padding: 7px 10px;
+        font-size: 0.75rem;
+    }
+
+    header > div[style*="display: flex"] {
+        gap: 6px !important;
+        margin: 10px 0 !important;
+    }
+
+    header > div[style*="display: flex"] button {
+        padding: 10px 12px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .matrix-cell {
+        min-width: 45px;
+        font-size: 0.9rem;
+        padding: 8px 4px;
+    }
+
+    .mini-matrix-cell {
+        width: 55px;
+        padding: 10px 6px;
+        font-size: 0.95rem;
+    }
+
+    .control-panel h2,
+    .matrix-section h2,
+    .explanation-panel h2 {
+        font-size: 1.1rem;
+    }
+
+    input[type="number"] {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .control-panel,
+    .matrix-section,
+    .explanation-panel,
+    .history-section {
+        padding: 10px;
+    }
+
+    .matrix-operations-rref .btn {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+
+    .anim-cell {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .multiplication-container {
+        padding: 10px;
+    }
+
+    .multiply-symbol,
+    .equals-symbol {
+        font-size: 1.5rem;
+    }
+
+    /* Make 3D visualization responsive */
+    #graphContainer {
+        min-height: 250px !important;
+        max-height: 300px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .graph-panel {
+        padding: 8px !important;
+        margin-top: 10px !important;
+    }
+
+    .graph-panel h3 {
+        font-size: 1rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Graph toggle buttons */
+    #graphToggle {
+        flex-wrap: wrap;
+        gap: 6px !important;
+    }
+
+    #graphToggle button {
+        padding: 6px 12px !important;
+        font-size: 0.8rem !important;
+    }
+
+    /* Matrix and Explanation section */
+    .matrix-and-explanation {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .matrix-section,
+    .explanation-panel {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Ensure matrix doesn't overflow */
+    .matrix-container {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 15px 10px;
+    }
+
+    /* History items */
+    .history-item {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    /* Step counter */
+    .step-counter {
+        font-size: 0.9rem;
+    }
+
+    /* Speed control */
+    .speed-control label {
+        font-size: 0.85rem;
     }
 }
 
