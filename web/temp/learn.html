@@ -229,6 +229,40 @@
                             Rank-Nullity Theorem</div>
                         <div class="lesson-item" onclick="showSlide(76)">4.26
                             Summary</div>
+                        <div class="lesson-item" onclick="showSlide(77)">4.27
+                            Fundamental Subspaces - Intro</div>
+                        <div class="lesson-item" onclick="showSlide(78)">4.28
+                            Precise Definitions</div>
+                        <div class="lesson-item" onclick="showSlide(79)">4.29
+                            Fundamental Theorem</div>
+                        <div class="lesson-item" onclick="showSlide(80)">4.30
+                            Computing Four Subspaces</div>
+                        <div class="lesson-item" onclick="showSlide(81)">4.31
+                            Example Part 1</div>
+                        <div class="lesson-item" onclick="showSlide(82)">4.32
+                            Example Part 2</div>
+                        <div class="lesson-item" onclick="showSlide(83)">4.33
+                            Example Part 3</div>
+                        <div class="lesson-item" onclick="showSlide(84)">4.34
+                            Example Part 4</div>
+                        <div class="lesson-item" onclick="showSlide(85)">4.35
+                            Geometry & Intuition</div>
+                        <div class="lesson-item" onclick="showSlide(86)">4.36
+                            Rank-Nullity Proof</div>
+                        <div class="lesson-item" onclick="showSlide(87)">4.37
+                            Projections & Least Squares</div>
+                        <div class="lesson-item" onclick="showSlide(88)">4.38
+                            Second Example</div>
+                        <div class="lesson-item" onclick="showSlide(89)">4.39
+                            Edge Cases</div>
+                        <div class="lesson-item" onclick="showSlide(90)">4.40
+                            Common Mistakes</div>
+                        <div class="lesson-item" onclick="showSlide(91)">4.41
+                            Minimal Algorithms</div>
+                        <div class="lesson-item" onclick="showSlide(92)">4.42
+                            Quick Practice</div>
+                        <div class="lesson-item" onclick="showSlide(93)">4.43
+                            Final Takeaway</div>
                     </div>
                 </div>
 
@@ -8344,7 +8378,1049 @@
                                 onclick="prevSlide()">⬅ Previous</button>
                             <div class="slide-progress">
                                 Slide <span class="currentSlide">76</span> of
-                                <span class="totalSlides">76</span>
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- CHAPTER 4: FUNDAMENTAL SUBSPACES OF A MATRIX -->
+                    <!-- ============================================================ -->
+
+                    <!-- Slide 77: Fundamental Subspaces - Introduction -->
+                    <div class="slide" id="slide-fundamental-subspaces-intro">
+                        <h2>🎯 Fundamental Subspaces of a Matrix</h2>
+
+                        <div class="definition-box">
+                            <h3>📘 Setup and Notation</h3>
+                            <p>Let \( A \in \mathbb{R}^{m \times n} \). Think of
+                                \( A \) as the linear map:</p>
+                            <div class="formula">
+                                $$T: \mathbb{R}^n \to \mathbb{R}^m, \qquad T(x)
+                                = Ax$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🔍 Four Canonical Subspaces</h4>
+                            <p>There are four fundamental subspaces attached to
+                                \( A \):</p>
+                            <ul
+                                style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                                <li><strong>Column space:</strong> \(
+                                    \mathrm{Col}(A) \subseteq \mathbb{R}^m
+                                    \)</li>
+                                <li><strong>Row space:</strong> \(
+                                    \mathrm{Row}(A) \subseteq \mathbb{R}^n
+                                    \)</li>
+                                <li><strong>Null space</strong> (right
+                                    nullspace): \( \mathrm{N}(A) \subseteq
+                                    \mathbb{R}^n \)</li>
+                                <li><strong>Left null space:</strong> \(
+                                    \mathrm{N}(A^\top) \subseteq \mathbb{R}^m
+                                    \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📐 The Rank</h4>
+                            <p>The <strong>rank</strong> of \( A \) is \( r =
+                                \mathrm{rank}(A) \).</p>
+                            <p style="margin-top: 10px;">We always have: \( 0
+                                \le r \le \min\{m, n\} \)</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">77</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 78: Definitions -->
+                    <div class="slide" id="slide-fundamental-definitions">
+                        <h2>📋 Precise Definitions</h2>
+
+                        <div class="example-box">
+                            <h4>🔵 Column Space \( \mathrm{Col}(A) \)</h4>
+                            <p>All linear combinations of the columns of \( A
+                                \).</p>
+                            <p style="margin-top: 10px;">Equivalently: \(
+                                \mathrm{Col}(A) = \{Ax : x \in \mathbb{R}^n\}
+                                \)</p>
+                            <p style="margin-top: 10px;"><strong>Lives
+                                    in:</strong> \( \mathbb{R}^m \)</p>
+                            <p><strong>Dimension:</strong> \( \dim
+                                \mathrm{Col}(A) = r \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🟣 Row Space \( \mathrm{Row}(A) \)</h4>
+                            <p>All linear combinations of the rows of \( A
+                                \).</p>
+                            <p style="margin-top: 10px;">Equivalently: \(
+                                \mathrm{Row}(A) = \mathrm{Col}(A^\top) \)</p>
+                            <p style="margin-top: 10px;"><strong>Lives
+                                    in:</strong> \( \mathbb{R}^n \)</p>
+                            <p><strong>Dimension:</strong> \( \dim
+                                \mathrm{Row}(A) = r \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>🟢 Null Space \( \mathrm{N}(A) \)</h4>
+                            <p>The solution set of \( Ax = 0 \).</p>
+                            <p style="margin-top: 10px;"><strong>Lives
+                                    in:</strong> \( \mathbb{R}^n \)</p>
+                            <p><strong>Dimension:</strong> \( \dim \mathrm{N}(A)
+                                = n - r \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>🟡 Left Null Space \( \mathrm{N}(A^\top) \)</h4>
+                            <p>The solution set of \( A^\top y = 0 \).</p>
+                            <p style="margin-top: 10px;"><strong>Lives
+                                    in:</strong> \( \mathbb{R}^m \)</p>
+                            <p><strong>Dimension:</strong> \( \dim
+                                \mathrm{N}(A^\top) = m - r \)</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">78</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 79: Fundamental Theorem -->
+                    <div class="slide" id="slide-fundamental-theorem">
+                        <h2>⚡ The Fundamental Theorem</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 Structure at a Glance</h3>
+                            <p><strong>1. Equal ranks:</strong></p>
+                            <div class="formula">
+                                $$\dim \mathrm{Col}(A) = \dim \mathrm{Row}(A) =
+                                r$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Rank–Nullity</h4>
+                            <div class="formula">
+                                $$\dim \mathrm{N}(A) = n - r$$
+                                $$\dim \mathrm{N}(A^\top) = m - r$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>🔄 Orthogonal Decompositions</h4>
+                            <div class="formula">
+                                $$\mathbb{R}^n = \mathrm{Row}(A) \oplus
+                                \mathrm{N}(A)$$
+                                $$\mathbb{R}^m = \mathrm{Col}(A) \oplus
+                                \mathrm{N}(A^\top)$$
+                            </div>
+                            <p style="margin-top: 15px;">Here "\( \oplus \)"
+                                means direct sum and the two summands are
+                                orthogonal complements.</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>⊥ Orthogonality Relations</h4>
+                            <div class="formula">
+                                $$\mathrm{Row}(A) \perp \mathrm{N}(A)$$
+                                $$\mathrm{Col}(A) \perp \mathrm{N}(A^\top)$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>Why?</strong>
+                                If \( r^\top \) is any row of \( A \) and \( x
+                                \in \mathrm{N}(A) \), then \( r^\top x \) is a
+                                component of \( Ax = 0 \), hence zero.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">79</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 80: Computing the Four Subspaces -->
+                    <div class="slide" id="slide-computing-subspaces">
+                        <h2>🔧 How to Compute the Four Subspaces</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 Reliable Recipe</h3>
+                            <p><strong>Step 1:</strong> Put \( A \) into
+                                <strong>RREF</strong> (reduced row-echelon form)
+                                by elementary row operations.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>1️⃣ Column Space \( \mathrm{Col}(A) \)</h4>
+                            <p>Identify the <strong>pivot columns in the
+                                    RREF</strong>, then take the
+                                <strong>corresponding columns from the original
+                                    \( A \)</strong> (not from the RREF).</p>
+                            <p style="margin-top: 10px;">Those original columns
+                                form a basis for \( \mathrm{Col}(A) \).</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>2️⃣ Row Space \( \mathrm{Row}(A) \)</h4>
+                            <p>The <strong>nonzero rows of the RREF</strong>
+                                form a basis for \( \mathrm{Row}(A) \).</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>3️⃣ Null Space \( \mathrm{N}(A) \)</h4>
+                            <p>Solve \( Ax = 0 \) (or equivalently the RREF
+                                system).</p>
+                            <p style="margin-top: 10px;">Express free variables
+                                as parameters and read off a basis from the
+                                parameter vectors.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>4️⃣ Left Null Space \( \mathrm{N}(A^\top)
+                                \)</h4>
+                            <p>Solve \( A^\top y = 0 \) (i.e., do the same
+                                null-space computation on \( A^\top \)).</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>⚠️ Critical Note</h4>
+                            <p><strong>Row operations</strong> preserve the row
+                                space and the solution set of \( Ax = 0 \), but
+                                do <strong>not</strong> preserve the actual
+                                column space vectors.</p>
+                            <p style="margin-top: 10px;">That's why we always go
+                                back to the <strong>original</strong> pivot
+                                columns of \( A \) for \( \mathrm{Col}(A)
+                                \).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">80</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 81: Worked Example Part 1 -->
+                    <div class="slide" id="slide-example-part1">
+                        <h2>📝 Complete Example (Part 1)</h2>
+
+                        <div class="definition-box">
+                            <h3>Problem</h3>
+                            <p>Consider:</p>
+                            <div class="formula">
+                                $$A = \begin{bmatrix}
+                                1 & 2 & 0 & 1 \\
+                                0 & 0 & 1 & 1 \\
+                                1 & 2 & 1 & 2
+                                \end{bmatrix} \in \mathbb{R}^{3 \times 4}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Step 1: RREF and Pivot Structure</h4>
+                            <p><strong>Row reduction outline:</strong></p>
+                            <p style="margin-top: 10px;">• \( R_3 \leftarrow R_3
+                                - R_1 \) gives:</p>
+                            <div class="formula">
+                                $$\begin{bmatrix}
+                                1 & 2 & 0 & 1 \\
+                                0 & 0 & 1 & 1 \\
+                                0 & 0 & 1 & 1
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 10px;">• \( R_3 \leftarrow R_3
+                                - R_2 \) gives:</p>
+                            <div class="formula">
+                                $$\begin{bmatrix}
+                                1 & 2 & 0 & 1 \\
+                                0 & 0 & 1 & 1 \\
+                                0 & 0 & 0 & 0
+                                \end{bmatrix}$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>✅ Result</h4>
+                            <p>This is already in RREF (pivots in columns 1 and
+                                3).</p>
+                            <p style="margin-top: 10px;">Thus: \(
+                                \mathrm{rank}(A) = r = 2 \)</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">81</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 82: Worked Example Part 2 -->
+                    <div class="slide" id="slide-example-part2">
+                        <h2>📝 Complete Example (Part 2)</h2>
+
+                        <div class="example-box">
+                            <h4>🔵 Column Space \( \mathrm{Col}(A) \)</h4>
+                            <p>Pivot columns are 1 and 3; take those from the
+                                <strong>original \( A \)</strong>:</p>
+                            <div class="formula">
+                                $$c_1 = \begin{bmatrix} 1 \\ 0 \\ 1
+                                \end{bmatrix}, \quad
+                                c_3 = \begin{bmatrix} 0 \\ 1 \\ 1
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>Basis:</strong>
+                                \( \{(1,0,1)^\top, (0,1,1)^\top\} \)</p>
+                            <p><strong>Dimension:</strong> \( \dim
+                                \mathrm{Col}(A) = 2 \) (matches \( r \))</p>
+                            <p><strong>Lives in:</strong> \( \mathbb{R}^m =
+                                \mathbb{R}^3 \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🟣 Row Space \( \mathrm{Row}(A) \)</h4>
+                            <p>Take the nonzero rows of the RREF:</p>
+                            <div class="formula">
+                                $$(1, 2, 0, 1), \quad (0, 0, 1, 1)$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>Basis:</strong>
+                                \( \{(1,2,0,1), (0,0,1,1)\} \)</p>
+                            <p><strong>Dimension:</strong> \( \dim
+                                \mathrm{Row}(A) = 2 = r \)</p>
+                            <p><strong>Lives in:</strong> \( \mathbb{R}^n =
+                                \mathbb{R}^4 \)</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">82</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 83: Worked Example Part 3 -->
+                    <div class="slide" id="slide-example-part3">
+                        <h2>📝 Complete Example (Part 3)</h2>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>🟢 Null Space \( \mathrm{N}(A) \)</h4>
+                            <p>Solve \( Ax = 0 \) via the RREF system:</p>
+                            <div class="formula">
+                                $$\begin{aligned}
+                                x_1 + 2x_2 + x_4 &= 0 \\
+                                x_3 + x_4 &= 0
+                                \end{aligned}$$
+                            </div>
+                            <p style="margin-top: 15px;">This gives us:</p>
+                            <div class="formula">
+                                $$x_1 = -2s - t, \quad x_2 = s, \quad x_3 = -t,
+                                \quad x_4 = t$$
+                            </div>
+                            <p style="margin-top: 15px;">with free parameters \(
+                                s, t \in \mathbb{R} \). Therefore:</p>
+                            <div class="formula">
+                                $$x = s\begin{bmatrix} -2 \\ 1 \\ 0 \\ 0
+                                \end{bmatrix}
+                                + t\begin{bmatrix} -1 \\ 0 \\ -1 \\ 1
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>Basis:</strong>
+                                \( \{(-2,1,0,0), (-1,0,-1,1)\} \)</p>
+                            <p><strong>Dimension:</strong> \( \dim \mathrm{N}(A)
+                                = 2 = n - r = 4 - 2 \)</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">83</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 84: Worked Example Part 4 -->
+                    <div class="slide" id="slide-example-part4">
+                        <h2>📝 Complete Example (Part 4)</h2>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>🟡 Left Null Space \( \mathrm{N}(A^\top) \)</h4>
+                            <p>Solve \( A^\top y = 0 \). Here:</p>
+                            <div class="formula">
+                                $$A^\top = \begin{bmatrix}
+                                1 & 0 & 1 \\
+                                2 & 0 & 2 \\
+                                0 & 1 & 1 \\
+                                1 & 1 & 2
+                                \end{bmatrix}$$
+                            </div>
+                            <p style="margin-top: 15px;">A short reduction gives
+                                \( y = (-t, -t, t) \).</p>
+                            <p style="margin-top: 15px;"><strong>Basis:</strong>
+                                \( \{(-1, -1, 1)\} \)</p>
+                            <p><strong>Dimension:</strong> \( \dim
+                                \mathrm{N}(A^\top) = 1 = m - r = 3 - 2 \)</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>✅ Orthogonality Check (Sanity)</h4>
+                            <p><strong>Check 1:</strong> Pick \( r_1 = (1,2,0,1)
+                                \in \mathrm{Row}(A) \) and \( v = (-2,1,0,0) \in
+                                \mathrm{N}(A) \):</p>
+                            <div class="formula">
+                                $$r_1 \cdot v = 1(-2) + 2(1) + 0 + 1(0) = 0
+                                \quad ✅$$
+                            </div>
+                            <p style="margin-top: 15px;"><strong>Check
+                                    2:</strong> Pick \( c_1 = (1,0,1) \in
+                                \mathrm{Col}(A) \) and \( w = (-1,-1,1) \in
+                                \mathrm{N}(A^\top) \):</p>
+                            <div class="formula">
+                                $$c_1 \cdot w = 1(-1) + 0(-1) + 1(1) = 0 \quad
+                                ✅$$
+                            </div>
+                            <p style="margin-top: 15px;"
+                                class="success-text">Everything is
+                                consistent!</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">84</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 85: Geometry and Intuition -->
+                    <div class="slide" id="slide-geometry-intuition">
+                        <h2>🎨 Geometry and Intuition</h2>
+
+                        <div class="definition-box">
+                            <h3>🌍 What These Spaces Mean</h3>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🟣 Row Space & Null Space</h4>
+                            <p>\( \mathrm{Row}(A) \) captures <strong>all linear
+                                    constraints</strong> embedded in the
+                                equations \( Ax = b \).</p>
+                            <p style="margin-top: 10px;">Vectors in \(
+                                \mathrm{N}(A) \) are exactly the
+                                <strong>directions that satisfy all constraints
+                                    with zero right-hand side</strong> — they
+                                "slip through" the equations.</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>🔵 Column Space</h4>
+                            <p>\( \mathrm{Col}(A) \) is the set of <strong>all
+                                    reachable right-hand sides</strong>.</p>
+                            <p style="margin-top: 10px;">A system \( Ax = b \)
+                                is solvable <strong>if and only if</strong> \( b
+                                \in \mathrm{Col}(A) \).</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>🟡 Left Null Space</h4>
+                            <p>\( \mathrm{N}(A^\top) \) contains the
+                                <strong>residual directions</strong> orthogonal
+                                to everything \( A \) can produce.</p>
+                            <p style="margin-top: 10px;">In least squares, the
+                                error vector \( (b - A\hat{x}) \) always lies in
+                                \( \mathrm{N}(A^\top) \).</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔄 Domain and Codomain Decompositions</h4>
+                            <p>• The domain \( \mathbb{R}^n \) decomposes: \(
+                                \mathbb{R}^n = \mathrm{Row}(A) \oplus
+                                \mathrm{N}(A) \)</p>
+                            <p style="margin-top: 10px;">Any input vector \( x
+                                \) splits uniquely into a part the rows "see"
+                                and a part they "ignore."</p>
+                            <p style="margin-top: 15px;">• The codomain \(
+                                \mathbb{R}^m \) decomposes: \( \mathbb{R}^m =
+                                \mathrm{Col}(A) \oplus \mathrm{N}(A^\top) \)</p>
+                            <p style="margin-top: 10px;">Any output \( b \)
+                                splits into a <strong>projectable</strong>
+                                component \( b_\parallel \in \mathrm{Col}(A) \)
+                                and a <strong>non-projectable</strong> component
+                                \( b_\perp \in \mathrm{N}(A^\top) \).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">85</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 86: Rank-Nullity Why It's True -->
+                    <div class="slide" id="slide-rank-nullity-proof">
+                        <h2>💡 Rank–Nullity: Why It's True</h2>
+
+                        <div class="definition-box">
+                            <h3>🔍 The Proof Sketch</h3>
+                            <p>Row-reduce \( A \) to RREF. There are \( r \)
+                                pivots and \( n - r \) free variables.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📊 Understanding the Structure</h4>
+                            <p>Each free variable gives one independent
+                                direction in \( \mathrm{N}(A) \), hence:</p>
+                            <div class="formula">
+                                $$\dim \mathrm{N}(A) = n - r$$
+                            </div>
+                            <p style="margin-top: 15px;">And since \( \dim
+                                \mathrm{Row}(A) = r \), we get:</p>
+                            <div class="formula">
+                                $$\dim \mathrm{Row}(A) + \dim \mathrm{N}(A) = r
+                                + (n-r) = n = \dim \mathbb{R}^n$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔄 Transposing Yields the Other Relation</h4>
+                            <p>Applying the same logic to \( A^\top \):</p>
+                            <div class="formula">
+                                $$\dim \mathrm{Col}(A) + \dim \mathrm{N}(A^\top)
+                                = m$$
+                            </div>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">86</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 87: Projections and Least Squares -->
+                    <div class="slide" id="slide-projections-least-squares">
+                        <h2>🎯 Projections and Least Squares</h2>
+
+                        <div class="definition-box">
+                            <h3>📐 Power Tools</h3>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>🔵 Projection onto \( \mathrm{Col}(A) \)</h4>
+                            <p>When \( A \) has full column rank (\( r = n
+                                \)):</p>
+                            <div class="formula">
+                                $$P_{\mathrm{col}} = A(A^\top A)^{-1}A^\top$$
+                            </div>
+                            <p style="margin-top: 15px;">Where:</p>
+                            <ul style="margin-top: 10px;">
+                                <li>\( b_\parallel = P_{\mathrm{col}} b \in
+                                    \mathrm{Col}(A) \)</li>
+                                <li>\( b_\perp = b - b_\parallel \in
+                                    \mathrm{N}(A^\top) \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>📊 Normal Equations (Least Squares)</h4>
+                            <p>For any \( A \), a least-squares solution \(
+                                \hat{x} \) satisfies:</p>
+                            <div class="formula">
+                                $$A^\top A \hat{x} = A^\top b$$
+                            </div>
+                            <p style="margin-top: 15px;">The residual \( r = b -
+                                A\hat{x} \) lies in \( \mathrm{N}(A^\top)
+                                \).</p>
+                            <p style="margin-top: 10px;">If columns are
+                                independent:</p>
+                            <div class="formula">
+                                $$\hat{x} = (A^\top A)^{-1}A^\top b$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🟣 Full Row Rank (\( r = m \))</h4>
+                            <p>Projection onto \( \mathrm{Row}(A) \) is:</p>
+                            <div class="formula">
+                                $$P_{\mathrm{row}} = A^\top(AA^\top)^{-1}A$$
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>💡 SVD Viewpoint</h4>
+                            <p>The singular value decomposition \( A = U\Sigma
+                                V^\top \) gives <strong>orthonormal
+                                    bases</strong> for all four spaces:</p>
+                            <ul style="margin-top: 10px;">
+                                <li>Columns of \( U \) for \( \mathrm{Col}(A) \)
+                                    and \( \mathrm{N}(A^\top) \)</li>
+                                <li>Columns of \( V \) for \( \mathrm{Row}(A) \)
+                                    and \( \mathrm{N}(A) \)</li>
+                                <li>Zero singular values span the
+                                    nullspaces</li>
+                                <li>Nonzero singular values span the row/column
+                                    spaces</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">87</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 88: Second Example -->
+                    <div class="slide" id="slide-second-example">
+                        <h2>📋 A Second Example</h2>
+
+                        <div class="definition-box">
+                            <h3>Different Shape and Ranks</h3>
+                            <p>Let:</p>
+                            <div class="formula">
+                                $$B = \begin{bmatrix}
+                                1 & 1 & 2 \\
+                                0 & 1 & 1 \\
+                                0 & 0 & 0 \\
+                                1 & 2 & 3
+                                \end{bmatrix} \in \mathbb{R}^{4 \times 3}$$
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Row Reduce</h4>
+                            <div class="formula">
+                                $$\mathrm{RREF}(B) = \begin{bmatrix}
+                                1 & 0 & 1 \\
+                                0 & 1 & 1 \\
+                                0 & 0 & 0 \\
+                                0 & 0 & 0
+                                \end{bmatrix} \quad \Rightarrow \quad r = 2$$
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>🔵 \( \mathrm{Col}(B) \)</h4>
+                            <p>Pivot columns are 1 and 2 → basis from original
+                                \( B \):</p>
+                            <p>\( \{(1,0,0,1)^\top, (1,1,0,2)^\top\} \)</p>
+                            <p><strong>Dimension:</strong> 2</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🟣 \( \mathrm{Row}(B) \)</h4>
+                            <p>Nonzero rows of RREF: \( \{(1,0,1), (0,1,1)\}
+                                \)</p>
+                            <p><strong>Dimension:</strong> 2</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>🟢 \( \mathrm{N}(B) \)</h4>
+                            <p>One free variable → \( \dim = 3 - 2 = 1 \)</p>
+                            <p>Basis: \( \{(-1,-1,1)\} \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>🟡 \( \mathrm{N}(B^\top) \)</h4>
+                            <p>\( \dim = 4 - 2 = 2 \)</p>
+                            <p>Basis: e.g., \( \{(0,0,1,0), (-1,-1,0,1)\} \)</p>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>📊 Observation</h4>
+                            <p>This example shows a <strong>tall</strong> matrix
+                                with \( r = 2 \), nontrivial left nullspace of
+                                dimension \( m - r = 2 \).</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">88</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 89: Edge Cases -->
+                    <div class="slide" id="slide-edge-cases">
+                        <h2>🔍 Edge Cases and Quick Diagnostics</h2>
+
+                        <div class="example-box">
+                            <h4>Full Column Rank (\( r = n \), tall or
+                                square)</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>\( \mathrm{N}(A) = \{0\} \) (unique solution
+                                    in least squares)</li>
+                                <li>\( \dim \mathrm{N}(A^\top) = m - n \)</li>
+                                <li>If also \( m = n \): \( A \) invertible ⇒ \(
+                                    \mathrm{Col}(A) = \mathbb{R}^m \), \(
+                                    \mathrm{N}(A^\top) = \{0\} \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>Full Row Rank (\( r = m \), wide or square)</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>\( \mathrm{N}(A^\top) = \{0\} \) (all \( b
+                                    \) lie in \( \mathrm{Col}(A) \))</li>
+                                <li>\( \dim \mathrm{N}(A) = n - m \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>Rank-Deficient</h4>
+                            <p>Both nullspaces are nontrivial; the
+                                decompositions</p>
+                            <div class="formula">
+                                $$\mathbb{R}^n = \mathrm{Row}(A) \oplus
+                                \mathrm{N}(A)$$
+                                $$\mathbb{R}^m = \mathrm{Col}(A) \oplus
+                                \mathrm{N}(A^\top)$$
+                            </div>
+                            <p style="margin-top: 10px;">are especially valuable
+                                for reasoning about solvability and error.</p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">89</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 90: Common Mistakes -->
+                    <div class="slide" id="slide-common-mistakes">
+                        <h2>⚠️ Common Mistakes to Avoid</h2>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>❌ Mistake 1: Using RREF Columns for Col(A)</h4>
+                            <p><strong>Wrong:</strong> Using RREF columns as a
+                                basis for \( \mathrm{Col}(A) \)</p>
+                            <p style="margin-top: 10px;"><strong>Right:</strong>
+                                Use the <strong>original</strong> columns
+                                corresponding to pivot columns</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>❌ Mistake 2: Forgetting Dimensions</h4>
+                            <p><strong>Remember:</strong></p>
+                            <ul style="margin-top: 10px;">
+                                <li>\( \mathrm{Col}(A) \subseteq \mathbb{R}^m
+                                    \)</li>
+                                <li>\( \mathrm{Row}(A) \subseteq \mathbb{R}^n
+                                    \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--error-color);">
+                            <h4>❌ Mistake 3: Assuming Orthogonality Without
+                                Checking</h4>
+                            <p><strong>Remember the precise pairs:</strong></p>
+                            <ul style="margin-top: 10px;">
+                                <li>\( \mathrm{Row}(A) \perp \mathrm{N}(A)
+                                    \)</li>
+                                <li>\( \mathrm{Col}(A) \perp \mathrm{N}(A^\top)
+                                    \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">90</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 91: Minimal Algorithms -->
+                    <div class="slide" id="slide-minimal-algorithms">
+                        <h2>🔧 Minimal Algorithms (Checklist)</h2>
+
+                        <div class="definition-box">
+                            <h3>Copy-Paste Mental Checklist</h3>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>Step-by-Step Process</h4>
+                            <ol
+                                style="font-size: 1.1rem; line-height: 1.8; margin-top: 15px;">
+                                <li>Compute RREF, read off <strong>pivot
+                                        columns</strong> ⇒ \( r \)</li>
+                                <li><strong>Col(A):</strong> original pivot
+                                    columns</li>
+                                <li><strong>Row(A):</strong> nonzero RREF
+                                    rows</li>
+                                <li><strong>N(A):</strong> solve homogeneous
+                                    system (free variables ⇒ basis)</li>
+                                <li><strong>N(A<sup>T</sup>):</strong> repeat
+                                    for \( A^\top \)</li>
+                            </ol>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>✅ Verify</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>\( \dim \mathrm{Row}(A) = \dim
+                                    \mathrm{Col}(A) = r \)</li>
+                                <li>\( \dim \mathrm{N}(A) = n - r \)</li>
+                                <li>\( \dim \mathrm{N}(A^\top) = m - r \)</li>
+                                <li>Orthogonality of the right pairs</li>
+                            </ul>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">91</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 92: Quick Practice -->
+                    <div class="slide" id="slide-quick-practice">
+                        <h2>📝 Quick Practice (With Answers)</h2>
+
+                        <div class="example-box">
+                            <h4>Q1</h4>
+                            <p>Let \( A = \begin{bmatrix} 1 & 0 & 1 \\ 2 & 1 & 3
+                                \end{bmatrix} \).</p>
+                            <p>Find \( \dim \mathrm{Col}(A) \), \( \dim
+                                \mathrm{N}(A) \).</p>
+                            <p style="margin-top: 15px;"><strong>Hint:</strong>
+                                RREF has pivots in columns 1 and 2 ⇒ \( r = 2
+                                \)</p>
+                            <div class="note-box"
+                                style="margin-top: 15px; background: rgba(52, 211, 153, 0.1);">
+                                <p><strong>Answer:</strong></p>
+                                <p>\( \dim \mathrm{Col}(A) = 2 \)</p>
+                                <p>\( \dim \mathrm{N}(A) = 3 - 2 = 1 \)</p>
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>Q2</h4>
+                            <p>If \( A \in \mathbb{R}^{5 \times 3} \) has rank
+                                \( r = 3 \), what are the nullspace
+                                dimensions?</p>
+                            <div class="note-box"
+                                style="margin-top: 15px; background: rgba(52, 211, 153, 0.1);">
+                                <p><strong>Answer:</strong></p>
+                                <p>\( \dim \mathrm{N}(A) = 3 - 3 = 0 \)</p>
+                                <p>\( \dim \mathrm{N}(A^\top) = 5 - 3 = 2 \)</p>
+                            </div>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>Q3</h4>
+                            <p>In least squares, why is the residual \( b -
+                                A\hat{x} \) orthogonal to \( \mathrm{Col}(A)
+                                \)?</p>
+                            <div class="note-box"
+                                style="margin-top: 15px; background: rgba(52, 211, 153, 0.1);">
+                                <p><strong>Answer:</strong></p>
+                                <p>Normal equations \( A^\top(b - A\hat{x}) = 0
+                                    \) say the residual is in \(
+                                    \mathrm{N}(A^\top) \), i.e., orthogonal to
+                                    \( \mathrm{Col}(A) \).</p>
+                            </div>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">92</span> of
+                                <span class="totalSlides">93</span>
+                            </div>
+                            <button class="nav-btn btn-next"
+                                onclick="nextSlide()">Next ➡</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 93: Final Takeaway -->
+                    <div class="slide" id="slide-final-takeaway">
+                        <h2>🎓 Final Takeaway</h2>
+
+                        <div class="definition-box"
+                            style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));">
+                            <h3
+                                style="text-align: center; font-size: 1.8rem; color: var(--primary-color);">Key
+                                Insights</h3>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(99, 102, 241, 0.1); border-left-color: var(--primary-color);">
+                            <h4>🔵 Two Subspaces in the Domain</h4>
+                            <p>\( \mathrm{Row}(A) \) and \( \mathrm{N}(A) \) in
+                                \( \mathbb{R}^n \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(139, 92, 246, 0.1); border-left-color: var(--secondary-color);">
+                            <h4>🟣 Two Subspaces in the Codomain</h4>
+                            <p>\( \mathrm{Col}(A) \) and \( \mathrm{N}(A^\top)
+                                \) in \( \mathbb{R}^m \)</p>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(52, 211, 153, 0.1); border-left-color: var(--success-color);">
+                            <h4>✅ Dimensions Add Up Perfectly</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>In domain: \( \dim \mathrm{Row}(A) + \dim
+                                    \mathrm{N}(A) = n \)</li>
+                                <li>In codomain: \( \dim \mathrm{Col}(A) + \dim
+                                    \mathrm{N}(A^\top) = m \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="example-box"
+                            style="background: rgba(251, 191, 36, 0.1); border-left-color: var(--pivot-color);">
+                            <h4>⊥ Orthogonality Pairs</h4>
+                            <ul style="line-height: 1.8;">
+                                <li>\( \mathrm{Row}(A) \perp \mathrm{N}(A)
+                                    \)</li>
+                                <li>\( \mathrm{Col}(A) \perp \mathrm{N}(A^\top)
+                                    \)</li>
+                            </ul>
+                        </div>
+
+                        <div class="note-box">
+                            <h4>🔧 RREF is the Workhorse</h4>
+                            <p>Use row reduction to compute everything
+                                cleanly.</p>
+                        </div>
+
+                        <div class="note-box"
+                            style="background: rgba(99, 102, 241, 0.1);">
+                            <h4>🎯 Applications</h4>
+                            <p>Projections & least squares live on top of this
+                                structure!</p>
+                        </div>
+
+                        <div class="definition-box"
+                            style="margin-top: 30px; background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(16, 185, 129, 0.15));">
+                            <h4
+                                style="text-align: center; font-size: 1.5rem; color: var(--success-color);">🎉
+                                Fundamental Subspaces Complete!</h4>
+                            <p
+                                style="text-align: center; font-size: 1.1rem; margin-top: 15px;">
+                                You now understand the complete structure of
+                                matrices through their four fundamental
+                                subspaces!
+                            </p>
+                            <p style="text-align: center; margin-top: 15px;">
+                                This forms the foundation for advanced topics in
+                                linear algebra, optimization, and data science!
+                            </p>
+                        </div>
+
+                        <div class="slide-navigation">
+                            <button class="nav-btn btn-prev"
+                                onclick="prevSlide()">⬅ Previous</button>
+                            <div class="slide-progress">
+                                Slide <span class="currentSlide">93</span> of
+                                <span class="totalSlides">93</span>
                             </div>
                             <button class="nav-btn btn-next"
                                 onclick="nextSlide()" disabled>Next ➡</button>
