@@ -13,10 +13,22 @@
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </head>
     <body>
+        <!-- Mobile Sidebar Toggle Button -->
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+
         <div class="learn-container">
             <!-- Sidebar Navigation -->
             <aside class="sidebar">
-                <h2>📚 Course Contents</h2>
+                <h2>
+                    <span>📚 Course Contents</span>
+                    <button class="sidebar-close"
+                        onclick="closeSidebar()">✕</button>
+                </h2>
 
                 <!-- Chapter 1 -->
                 <div class="chapter">
@@ -8345,6 +8357,102 @@
 
         <script src="./js/learn.js"></script>
         <script>
+        // Sidebar Toggle Functions
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            // For mobile: use sidebar-open class
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle('sidebar-open');
+                overlay.classList.toggle('active');
+            } else {
+                // For desktop: use sidebar-collapsed class
+                sidebar.classList.toggle('sidebar-collapsed');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            // Works for both mobile and desktop
+            sidebar.classList.remove('sidebar-open');
+            sidebar.classList.remove('sidebar-collapsed');
+            overlay.classList.remove('active');
+        }
+
+        function openSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('sidebar-open');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+            }
+        }
+
+        // Close sidebar when a lesson or chapter is clicked (mobile only)
+        document.addEventListener('DOMContentLoaded', function() {
+            const lessonItems = document.querySelectorAll('.lesson-item');
+            const chapterTitles = document.querySelectorAll('.chapter-title');
+            
+            // Close sidebar when clicking on any lesson
+            lessonItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            // Close sidebar when clicking on any chapter title
+            chapterTitles.forEach(title => {
+                title.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            // Close sidebar when clicking anywhere on the main content
+            const mainContent = document.querySelector('.main-learn-content');
+            if (mainContent) {
+                mainContent.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        closeSidebar();
+                    }
+                });
+            }
+
+            // Prevent sidebar from closing when clicking inside it
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // Close sidebar when pressing ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeSidebar();
+                }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const sidebar = document.querySelector('.sidebar');
+                // On resize to desktop, remove mobile classes
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('sidebar-open');
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
         // Graph plotting functions using Plotly.js
         
         // Unique Solution Graph (Slide 5)
