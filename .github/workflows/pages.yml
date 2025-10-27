@@ -26,12 +26,12 @@ jobs:
 
       - name: Ensure .nojekyll
         run: |
-          touch temp/.nojekyll
+          touch web/.nojekyll
 
-      - name: Upload artifact (temp/)
+      - name: Upload artifact (web/)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "temp"   
+          path: "web"   
 
       - name: Deploy to GitHub Pages
         id: deployment
