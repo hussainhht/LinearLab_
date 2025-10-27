@@ -35,6 +35,20 @@ jobs:
             cp web/temp/index.html web/index.html
           fi
 
+          # Ensure assets are available relative to temp/*.html
+          if [ -d "web/style" ]; then
+            mkdir -p web/temp
+            cp -r web/style web/temp/
+          fi
+          if [ -d "web/js" ]; then
+            mkdir -p web/temp
+            cp -r web/js web/temp/
+          fi
+          if [ -d "web/data" ]; then
+            mkdir -p web/temp
+            cp -r web/data web/temp/
+          fi
+
       - name: Upload artifact (web/)
         uses: actions/upload-pages-artifact@v3
         with:
