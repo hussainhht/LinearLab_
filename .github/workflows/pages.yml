@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ linerarlap-learning]  
+    branches: [linerarlap-learning]
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
           # Ensure GitHub Pages doesn't run Jekyll
           mkdir -p web
           touch web/.nojekyll
-          
+
           # Make index.html available at the site root as well
           if [ -f "web/temp/index.html" ]; then
             cp web/temp/index.html web/index.html
@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Publish the entire web directory so CSS/JS/data are included
-          path: "web"   
+          path: "web"
 
       - name: Deploy to GitHub Pages
         id: deployment
