@@ -30,10 +30,27 @@ jobs:
           mkdir -p web
           touch web/.nojekyll
 
-          # Make index.html available at the site root as well
-          if [ -f "web/temp/index.html" ]; then
-            cp web/temp/index.html web/index.html
-          fi
+          # Create a root index.html that redirects to temp/index.html
+          # This keeps all relative links and asset paths working inside temp/
+          cat > web/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content="0; url=temp/index.html">
+            <title>Redirecting…</title>
+            <link rel="canonical" href="temp/index.html" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <script>
+              // Fallback redirect if meta refresh is blocked
+              window.location.replace('temp/index.html');
+            </script>
+          </head>
+          <body>
+            Redirecting to <a href="temp/index.html">temp/index.html</a>…
+          </body>
+          </html>
+          EOF
 
           # Ensure assets are available relative to temp/*.html
           if [ -d "web/style" ]; then
