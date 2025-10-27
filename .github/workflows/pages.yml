@@ -24,13 +24,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure .nojekyll
+      - name: Prepare site folder
         run: |
+          # Ensure GitHub Pages doesn't run Jekyll
+          mkdir -p web
           touch web/.nojekyll
+          
+          # Make index.html available at the site root as well
+          if [ -f "web/temp/index.html" ]; then
+            cp web/temp/index.html web/index.html
+          fi
 
       - name: Upload artifact (web/)
         uses: actions/upload-pages-artifact@v3
         with:
+          # Publish the entire web directory so CSS/JS/data are included
           path: "web"   
 
       - name: Deploy to GitHub Pages
