@@ -10,9 +10,16 @@
     <body>
         <div class="container">
             <header>
-                <h1>🎓 Linear Algebra Studio</h1>
-                <p class="subtitle">Interactive Matrix Operations & RREF
-                    Solver</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <div style="flex: 1;">
+                        <h1>🎓 Linear Algebra Studio</h1>
+                        <p class="subtitle">Interactive Matrix Operations & RREF
+                            Solver</p>
+                    </div>
+                    <button id="themeToggle" onclick="toggleTheme()" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; min-width: auto; width: auto; max-width: 120px;">
+                        🌙 Dark Mode
+                    </button>
+                </div>
 
                 <!-- Navigation Links -->
                 <div

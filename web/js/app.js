@@ -2341,3 +2341,49 @@ function initializeTabs() {
         });
     });
 }
+
+// ============================================
+// Theme Toggle Functions
+// ============================================
+
+function toggleTheme() {
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('themeToggle');
+    
+    // Toggle dark mode class
+    body.classList.toggle('dark-mode');
+    
+    // Check if dark mode is active
+    const isDarkMode = body.classList.contains('dark-mode');
+    
+    // Update button text and icon
+    if (isDarkMode) {
+        themeToggleBtn.innerHTML = ' Light Mode';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        themeToggleBtn.innerHTML = ' Dark Mode';
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Load saved theme on page load
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('themeToggle');
+    
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        if (themeToggleBtn) {
+            themeToggleBtn.innerHTML = ' Light Mode';
+        }
+    } else {
+        body.classList.remove('dark-mode');
+        if (themeToggleBtn) {
+            themeToggleBtn.innerHTML = ' Dark Mode';
+        }
+    }
+}
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', loadTheme);

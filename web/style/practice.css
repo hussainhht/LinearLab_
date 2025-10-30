@@ -479,3 +479,54 @@ input.answer:focus {
         justify-content: center;
     }
 }
+/* ============================================
+   DARK MODE STYLES FOR PRACTICE PAGE
+   ============================================ */
+
+body.dark-mode .practice {
+    background: #000000;
+}
+
+body.dark-mode .practice-header {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .topic-selector {
+    background: #0a0a0a;
+}
+
+body.dark-mode .problems-container {
+    background: #000000;
+}
+
+body.dark-mode .problem-card {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .problem-card:hover {
+    border-color: #818cf8;
+    box-shadow: 0 6px 20px rgba(129, 140, 248, 0.3);
+}
+
+body.dark-mode .practice-info {
+    background: rgba(129, 140, 248, 0.08);
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .empty-state {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .score-display {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .practice-actions {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}

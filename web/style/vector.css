@@ -1062,3 +1062,136 @@ footer {
     flex-direction: column;
     gap: 12px;
 }
+/* ============================================
+   DARK MODE STYLES FOR VECTOR SPACE PAGE
+   ============================================ */
+
+body.dark-mode .mode-content {
+    background: #000000;
+}
+
+body.dark-mode .definition-box {
+    background: rgba(129, 140, 248, 0.08);
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .input-section {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .coefficient-inputs {
+    background: #0a0a0a;
+}
+
+body.dark-mode .vector-input-grid {
+    background: #0a0a0a;
+}
+
+body.dark-mode .axiom-checker {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .axiom-item {
+    background: #000000;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .axiom-item:hover {
+    border-color: #818cf8;
+    background: rgba(129, 140, 248, 0.05);
+}
+
+body.dark-mode .learning-section {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .example-box {
+    background: rgba(52, 211, 153, 0.08);
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .result-display {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .form-select {
+    background: #000000;
+    border-color: #2a2a2a;
+    color: #e2e8f0;
+}
+
+body.dark-mode .form-select:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
+}
+
+/* ============================================
+   DARK MODE STYLES FOR VECTOR SPACE PAGE
+   ============================================ */
+
+body.dark-mode .mode-content {
+    background: #000000;
+}
+
+body.dark-mode .definition-box {
+    background: rgba(129, 140, 248, 0.08);
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .input-section {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .coefficient-inputs {
+    background: #0a0a0a;
+}
+
+body.dark-mode .vector-input-grid {
+    background: #0a0a0a;
+}
+
+body.dark-mode .axiom-checker {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .axiom-item {
+    background: #000000;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .axiom-item:hover {
+    border-color: #818cf8;
+    background: rgba(129, 140, 248, 0.05);
+}
+
+body.dark-mode .learning-section {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .example-box {
+    background: rgba(52, 211, 153, 0.08);
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .result-display {
+    background: #0a0a0a;
+    border-color: #1f1f1f;
+}
+
+body.dark-mode .form-select {
+    background: #000000;
+    border-color: #2a2a2a;
+    color: #e2e8f0;
+}
+
+body.dark-mode .form-select:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
+}
