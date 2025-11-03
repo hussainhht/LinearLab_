@@ -704,11 +704,35 @@ function showSlide(index) {
     slides[currentSlide].classList.add("active");
   }
 
+  // Save current slide to localStorage
+  localStorage.setItem("lastSlide", currentSlide);
+
   // Update active lesson in sidebar (guarded)
   const lessonItems = document.querySelectorAll(".lesson-item");
   lessonItems.forEach((item) => item.classList.remove("active"));
   if (lessonItems[currentSlide]) {
     lessonItems[currentSlide].classList.add("active");
+
+    // Scroll the active lesson into view in the sidebar
+    lessonItems[currentSlide].scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+
+    // Ensure the chapter containing this lesson is expanded
+    const parentChapter = lessonItems[currentSlide].closest(".chapter");
+    if (parentChapter) {
+      const lessons = parentChapter.querySelector(".lessons");
+      const icon = parentChapter.querySelector(".chapter-icon");
+      const title = parentChapter.querySelector(".chapter-title");
+
+      if (lessons && !lessons.classList.contains("active")) {
+        lessons.classList.add("active");
+        if (icon) icon.textContent = "▼";
+        if (title) title.classList.add("active");
+      }
+    }
   }
 
   // Update navigation buttons
@@ -842,7 +866,45 @@ function showSlideById(id) {
 // Initialize
 function initializeSlides() {
   totalSlides = document.querySelectorAll(".slide").length;
+
+  // Sync sidebar lesson items with actual slide indices
+  const lessonItems = document.querySelectorAll(".lesson-item");
+  lessonItems.forEach((item, index) => {
+    // Update the onclick to use the correct index
+    item.setAttribute("onclick", `showSlide(${index})`);
+  });
+
   updateProgress();
+
+  // Check for starting slide from URL parameter or localStorage
+  const urlParams = new URLSearchParams(window.location.search);
+  const startSlide =
+    urlParams.get("slide") || localStorage.getItem("lastSlide");
+
+  if (startSlide && !isNaN(startSlide)) {
+    const slideIndex = parseInt(startSlide);
+    if (slideIndex >= 0 && slideIndex < totalSlides) {
+      showSlide(slideIndex);
+      return; // Skip expanding first chapter
+    }
+  }
+
+  // Default: show first slide and expand first chapter
+  showSlide(0);
+
+  // Expand first chapter by default
+  const firstChapter = document.querySelector(".chapter");
+  if (firstChapter) {
+    const lessons = firstChapter.querySelector(".lessons");
+    const icon = firstChapter.querySelector(".chapter-icon");
+    const title = firstChapter.querySelector(".chapter-title");
+
+    if (lessons && !lessons.classList.contains("active")) {
+      lessons.classList.add("active");
+      if (icon) icon.textContent = "▼";
+      if (title) title.classList.add("active");
+    }
+  }
 }
 
 // Initialize when DOM is ready
