@@ -1,0 +1,118 @@
+.calculator {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  background: var(--sheet);
+  min-width: 0;
+}
+
+.calcTitle {
+  font-size: var(--text-xl);
+}
+
+.calcBody {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 46rem) {
+  .calcBody {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+}
+
+.work {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.formula {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.line {
+  font-size: var(--text-lg);
+}
+
+.terms {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.terms li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+}
+
+.details summary {
+  cursor: pointer;
+  width: fit-content;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.details > * + * {
+  margin-top: var(--space-1);
+}
+
+.muted {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-6);
+}
+
+/* Cramer */
+.equationForm {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.columns > div {
+  display: grid;
+  gap: var(--space-1);
+  justify-items: start;
+}
+
+.checkLine {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.checkLine svg {
+  color: var(--success);
+}

@@ -1,0 +1,62 @@
+.intro {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  max-width: 50rem;
+}
+
+.title {
+  font-size: var(--text-3xl);
+}
+
+.lede {
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+/* Tools index */
+.toolList {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.toolItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2) var(--space-6);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 48rem) {
+  .toolItem {
+    grid-template-columns: 16rem minmax(0, 1fr) auto;
+    align-items: baseline;
+  }
+}
+
+.toolName {
+  font-size: var(--text-xl);
+}
+
+.toolName a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.toolName a:hover {
+  text-decoration: underline;
+}
+
+.toolDescription {
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-6);
+}

@@ -1,0 +1,364 @@
+.workspace {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.inputs {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 52rem) {
+  .inputs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.matrixPanel {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--sheet);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+.matrixHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-4);
+}
+
+.matrixName {
+  margin-right: auto;
+  font-size: var(--text-3xl);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.fillRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+.exampleRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: end;
+  padding: var(--space-3);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+}
+
+.panelHeading {
+  font-size: var(--text-xl);
+}
+
+.operations {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.opsSettings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-4) var(--space-6);
+}
+
+.scalar {
+  width: 8rem;
+}
+
+.opGroups {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 64rem) {
+  .opGroups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.opGroup {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.opGroupLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.opButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.opButton {
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  min-width: 7rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+  text-align: left;
+}
+
+.opButton:hover {
+  border-color: var(--ink-2);
+}
+
+.opButton[aria-pressed='true'] {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+  background: var(--accent-soft);
+}
+
+.opNotation {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.2;
+}
+
+.opLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.output {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-top: 2px solid var(--ink);
+  min-width: 0;
+}
+
+.empty {
+  color: var(--ink-3);
+}
+
+.muted {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.result {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.resultTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-2xl);
+}
+
+.resultSheet {
+  justify-self: start;
+  max-width: 100%;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+}
+
+.explanation {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+
+.subheading {
+  font-size: var(--text-lg);
+  margin-top: var(--space-2);
+}
+
+.details summary {
+  cursor: pointer;
+  width: fit-content;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.check svg {
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--success);
+}
+.check[data-ok='false'] svg {
+  color: var(--danger);
+}
+
+.spaceGrid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 64rem) {
+  .spaceGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.spaceGrid section {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+}
+
+.vectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* Multiplication visualizer */
+.multiply {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.multiplyStage {
+  display: flex;
+  align-items: center;
+  justify-content: safe center;
+  gap: var(--space-2) var(--space-3);
+  overflow-x: auto;
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--sheet);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.multiplyStage > figure {
+  flex: none;
+}
+
+.operator {
+  flex: none;
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  color: var(--ink-2);
+}
+
+.calculation {
+  display: grid;
+  gap: var(--space-2);
+  min-height: 7.5rem;
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+}
+
+.calcHeading {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+}
+
+.calcLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-lg);
+}
+
+.calcLabel {
+  margin-right: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.calcTerm {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 0 2px;
+  border-radius: var(--radius-s);
+}
+
+.calcTerm[data-current] {
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.plus {
+  margin: 0 var(--space-1);
+  color: var(--ink-3);
+}
+
+.pending {
+  color: var(--ink-3);
+}
+
+.calcResult {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--success);
+}
+
+.undoRow {
+  justify-self: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--sheet);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.undoButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}

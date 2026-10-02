@@ -1,0 +1,340 @@
+/* LinearLab design tokens.
+   Light theme: graph paper and blue-black ink. Dark theme: a slate chalkboard.
+   Semantic matrix colors always pair with a shape or text cue in components. */
+
+:root {
+  color-scheme: light;
+
+  --paper: #f3f6f5;
+  --sheet: #ffffff;
+  --sheet-sunken: #e9efed;
+  --grid-line: #dde6e3;
+  --rule: #cbd6d3;
+  --rule-strong: #8d9f9b;
+
+  --ink: #16253a;
+  --ink-2: #43536a;
+  --ink-3: #5f6f84;
+
+  --accent: #1f4fb2;
+  --accent-hover: #173e8c;
+  --accent-soft: #e3eafa;
+  --on-accent: #ffffff;
+
+  --pivot-fill: #ffe066;
+  --pivot-ink: #3a2c00;
+  --pivot-ring: #a87c00;
+  --target: #0a6f78;
+  --target-soft: #dcf0f1;
+  --source: #6a46c0;
+  --source-soft: #eee8fb;
+  --free: #9a5605;
+  --free-soft: #fdf0de;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --success: #1c7343;
+  --success-soft: #e2f3e8;
+  --warning: #8f5b00;
+  --warning-soft: #fff3d2;
+
+  --focus: #1f4fb2;
+  --shadow-sheet: 0 1px 0 rgb(22 37 58 / 0.04), 0 12px 32px -18px rgb(22 37 58 / 0.28);
+
+  --font-serif: var(--font-stix, 'STIX Two Text'), 'Times New Roman', serif;
+  --font-sans: var(--font-atkinson, 'Atkinson Hyperlegible Next'), system-ui, sans-serif;
+
+  /* Type scale (17px body, classical ratios). */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: clamp(2rem, 1.4rem + 2.2vw, 2.75rem);
+  --text-4xl: clamp(2.4rem, 1.5rem + 3.6vw, 3.75rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 14px;
+
+  --page-max: 82rem;
+  --prose-max: 42rem;
+  --gutter: clamp(1rem, 3vw, 2rem);
+  --header-height: 3.75rem;
+
+  --duration: 180ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #15221e;
+    --sheet: #1c2b27;
+    --sheet-sunken: #111c19;
+    --grid-line: #22352f;
+    --rule: #2f4540;
+    --rule-strong: #5f7c74;
+    --ink: #eaf0ea;
+    --ink-2: #b8c7bf;
+    --ink-3: #93a89f;
+    --accent: #93b9ff;
+    --accent-hover: #b8d0ff;
+    --accent-soft: #1f3150;
+    --on-accent: #0c172b;
+    --pivot-fill: #f4d35e;
+    --pivot-ink: #2a1f00;
+    --pivot-ring: #ffe9a1;
+    --target: #62d0d8;
+    --target-soft: #163b3e;
+    --source: #c4b0ff;
+    --source-soft: #2c2645;
+    --free: #f2b467;
+    --free-soft: #3a2c17;
+    --danger: #ff9184;
+    --danger-soft: #42201c;
+    --success: #79d8a3;
+    --success-soft: #173728;
+    --warning: #f4c66c;
+    --warning-soft: #3a3018;
+    --focus: #93b9ff;
+    --shadow-sheet: 0 1px 0 rgb(0 0 0 / 0.2), 0 16px 40px -20px rgb(0 0 0 / 0.6);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #15221e;
+  --sheet: #1c2b27;
+  --sheet-sunken: #111c19;
+  --grid-line: #22352f;
+  --rule: #2f4540;
+  --rule-strong: #5f7c74;
+  --ink: #eaf0ea;
+  --ink-2: #b8c7bf;
+  --ink-3: #93a89f;
+  --accent: #93b9ff;
+  --accent-hover: #b8d0ff;
+  --accent-soft: #1f3150;
+  --on-accent: #0c172b;
+  --pivot-fill: #f4d35e;
+  --pivot-ink: #2a1f00;
+  --pivot-ring: #ffe9a1;
+  --target: #62d0d8;
+  --target-soft: #163b3e;
+  --source: #c4b0ff;
+  --source-soft: #2c2645;
+  --free: #f2b467;
+  --free-soft: #3a2c17;
+  --danger: #ff9184;
+  --danger-soft: #42201c;
+  --success: #79d8a3;
+  --success-soft: #173728;
+  --warning: #f4c66c;
+  --warning-soft: #3a3018;
+  --focus: #93b9ff;
+  --shadow-sheet: 0 1px 0 rgb(0 0 0 / 0.2), 0 16px 40px -20px rgb(0 0 0 / 0.6);
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  line-height: 1.05;
+}
+h2 {
+  font-size: var(--text-2xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  color: var(--accent-hover);
+  text-decoration-thickness: 2px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+code,
+kbd {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.9em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--pivot-fill);
+  color: var(--pivot-ink);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -4rem;
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-s);
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: var(--space-2);
+  color: var(--paper);
+}
+
+main:focus {
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Tabular numerals wherever numbers are compared in columns. */
+.num {
+  font-family: var(--font-serif);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* KaTeX: inherit ink color and keep wide displays scrollable rather than overflowing the page. */
+.katex {
+  font-size: 1.08em;
+}
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--space-2) 0;
+  margin: var(--space-4) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  :root {
+    --paper: #ffffff;
+    --sheet: #ffffff;
+    --ink: #000000;
+  }
+  body {
+    background: #fff;
+    font-size: 11pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

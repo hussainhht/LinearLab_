@@ -1,0 +1,78 @@
+The **determinant** of a square matrix $A$ is a single number, written $\det A$ or $|A|$. Its most important job:
+
+$$
+A \text{ is invertible} \iff \det A \neq 0.
+$$
+
+## 2×2 determinants
+
+$$
+\det\begin{bmatrix} a & b \\ c & d \end{bmatrix} = ad - bc
+$$
+
+This is the $\Delta$ from the 2×2 inverse formula. For example, $\det\begin{bmatrix} 2 & 3 \\ 4 & 5 \end{bmatrix} = (2)(5) - (3)(4) = 10 - 12 = -2$.
+
+<Determinant2x2Calculator initial={[[2, 3], [4, 5]]} id="lesson-det2" />
+
+## Minors and cofactors
+
+Larger determinants are built from smaller ones.
+
+<Definition term="Minor and cofactor">
+
+The **minor** $M_{ij}$ is the determinant of the matrix left after deleting row $i$ and column $j$ of $A$. The **cofactor** is $C_{ij} = (-1)^{i+j}M_{ij}$: the minor with a sign from the checkerboard pattern $\begin{bmatrix} + & - & + \\ - & + & - \\ + & - & + \end{bmatrix}$.
+
+</Definition>
+
+## 3×3 determinants by cofactor expansion
+
+Expanding along the first row:
+
+$$
+\det A = a_{11}C_{11} + a_{12}C_{12} + a_{13}C_{13}
+= a_{11}\begin{vmatrix} a_{22} & a_{23} \\ a_{32} & a_{33} \end{vmatrix}
+- a_{12}\begin{vmatrix} a_{21} & a_{23} \\ a_{31} & a_{33} \end{vmatrix}
++ a_{13}\begin{vmatrix} a_{21} & a_{22} \\ a_{31} & a_{32} \end{vmatrix}
+$$
+
+<Example title="det of [1 2 3; 0 4 5; 1 0 6]">
+
+$$
+\begin{aligned}
+\det A &= 1\begin{vmatrix} 4 & 5 \\ 0 & 6 \end{vmatrix} - 2\begin{vmatrix} 0 & 5 \\ 1 & 6 \end{vmatrix} + 3\begin{vmatrix} 0 & 4 \\ 1 & 0 \end{vmatrix} \\
+&= 1(24 - 0) - 2(0 - 5) + 3(0 - 4) \\
+&= 24 + 10 - 12 = 22.
+\end{aligned}
+$$
+
+</Example>
+
+You may expand along **any** row or column, using the matching signs; the answer is always the same. Choose the line with the most zeros. Column 1 above contains a 0:
+
+$$
+\det A = 1\begin{vmatrix} 4 & 5 \\ 0 & 6 \end{vmatrix} - 0\begin{vmatrix} 2 & 3 \\ 0 & 6 \end{vmatrix} + 1\begin{vmatrix} 2 & 3 \\ 4 & 5 \end{vmatrix} = 24 - 0 + (10 - 12) = 22.
+$$
+
+## The diagonal shortcut (3×3 only)
+
+For 3×3 matrices only, the **rule of Sarrus** gives the same value: add the three products along the down-right diagonals and subtract the three along the down-left diagonals (wrapping around):
+
+$$
+\det A = (a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32}) - (a_{13}a_{22}a_{31} + a_{11}a_{23}a_{32} + a_{12}a_{21}a_{33}).
+$$
+
+For the example: $(24 + 10 + 0) - (12 + 0 + 0) = 22$. The shortcut does **not** extend to 4×4 matrices; use cofactors or row reduction (next lesson) there.
+
+<Determinant3x3Calculator initial={[[1, 2, 3], [0, 4, 5], [1, 0, 6]]} id="lesson-det3" />
+
+<Correction>
+
+The earlier 3×3 calculator read its numbers from the Cramer's rule inputs instead of its own fields, so for this matrix it displayed 20. Each calculator now keeps its own entries, and the result is 22.
+
+</Correction>
+
+<NumericCheck
+  question="Find det [2 −1 0; 1 3 2; 0 1 4]."
+  fields={[{ label: 'det', answer: '24' }]}
+  explanation="Expanding along row 1: 2(3·4 − 2·1) − (−1)(1·4 − 2·0) + 0 = 2(10) + 4 = 24."
+/>
