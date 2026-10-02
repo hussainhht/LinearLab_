@@ -2,7 +2,7 @@ import { lessons } from '../../content/lessons/catalog'
 import { expect, markWindow, stillSameDocument, test } from './fixtures'
 
 test('main navigation is client-side and Back/Forward work', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('./')
   await expect(page.getByRole('heading', { level: 1, name: 'Linear algebra you can step through' })).toBeVisible()
   await markWindow(page)
 
@@ -30,7 +30,7 @@ test('main navigation is client-side and Back/Forward work', async ({ page }) =>
 })
 
 test('every lesson opens from the course navigation with its own title', async ({ page }) => {
-  await page.goto(`/learn/${lessons[0]!.slug}/`)
+  await page.goto(`learn/${lessons[0]!.slug}/`)
   const courseNav = page.getByRole('navigation', { name: 'Course' })
   for (const lesson of lessons) {
     await courseNav.getByRole('link', { name: new RegExp(`^${lesson.number}\\s`) }).click()
@@ -41,7 +41,7 @@ test('every lesson opens from the course navigation with its own title', async (
 
 test('a lesson URL works when opened directly, with previous and next links', async ({ page }) => {
   const lesson = lessons.find((l) => l.slug === 'gauss-jordan-elimination')!
-  await page.goto(`/learn/${lesson.slug}/`)
+  await page.goto(`learn/${lesson.slug}/`)
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Gauss–Jordan elimination')
   await expect(page.locator('.katex').first()).toBeVisible()
   const pager = page.getByRole('navigation', { name: 'Lesson navigation' })
@@ -52,13 +52,13 @@ test('a lesson URL works when opened directly, with previous and next links', as
 })
 
 test('unknown routes show the not-found page', async ({ page }) => {
-  const response = await page.goto('/learn/vector-spaces/')
+  const response = await page.goto('learn/vector-spaces/')
   expect(response?.status()).toBe(404)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('This page is not in the course')
 })
 
 test('the theme toggle switches and remembers the theme', async ({ page }) => {
-  await page.goto('/')
+  await page.goto('./')
   await page.getByRole('button', { name: 'Switch to dark theme' }).click()
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
   await page.reload()

@@ -1,6 +1,6 @@
 import { expect, test } from './fixtures'
 
-const pages = ['/', '/learn/', '/learn/inverse-by-row-reduction/', '/tools/rref/?example=four-by-four', '/tools/matrices/', '/tools/determinant/', '/tools/cramer/', '/practice/three-by-three/']
+const pages = ['./', 'learn/', 'learn/inverse-by-row-reduction/', 'tools/rref/?example=four-by-four', 'tools/matrices/', 'tools/determinant/', 'tools/cramer/', 'practice/three-by-three/']
 
 for (const path of pages) {
   test(`no horizontal page scroll at phone width: ${path}`, async ({ page }) => {
@@ -12,7 +12,7 @@ for (const path of pages) {
 }
 
 test('the solver shows the matrix before the setup panel on phones, and steps work', async ({ page }) => {
-  await page.goto('/tools/rref/?example=three-by-three')
+  await page.goto('tools/rref/?example=three-by-three')
   const sheetTop = await page.locator('#rref-0-0').boundingBox()
   const setupTop = await page.getByRole('heading', { name: 'Problem' }).boundingBox()
   expect(sheetTop!.y).toBeLessThan(setupTop!.y)

@@ -1,45 +1,77 @@
-# Builds the static export and publishes it to GitHub Pages.
-# Manual only: the live site changes only when someone runs this workflow.
 name: Deploy to GitHub Pages
 
+# Manual only: the live site changes when someone runs this workflow (Actions -> Deploy to GitHub
+# Pages -> Run workflow), never as a side effect of a push or a merge. It publishes master only.
 on:
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
+# One deployment at a time; a running deployment is allowed to finish rather than be cancelled.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
 
 jobs:
+  # Everything CI checks, including the browser tests against a sub-path build.
+  checks:
+    if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/ci.yml
+
   build:
+    name: Build site
+    needs: checks
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write # configure-pages reads the site settings
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm test
-      - name: Build for the repository sub-path
+
+      # base_path is "/<repo>" for a project site and "" for a user site or a custom domain, so the
+      # same workflow keeps working if the site moves.
+      - id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Build static export
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
-      - run: touch out/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+          LINEARLAB_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+      - name: Verify the export that will be published
+        run: npm run verify:export
+        env:
+          LINEARLAB_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      # Not needed when publishing through Actions, but harmless, and it keeps _next/ safe from
+      # Jekyll if the output is ever published from a branch. upload-pages-artifact skips dotfiles
+      # unless told otherwise, hence include-hidden-files below.
+      - name: Disable Jekyll
+        run: touch out/.nojekyll && test -f out/.nojekyll
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: out
+          include-hidden-files: true
 
   deploy:
+    name: Publish
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write # publish to Pages
+      id-token: write # verify the deployment originates from this workflow
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

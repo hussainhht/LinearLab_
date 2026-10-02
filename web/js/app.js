@@ -1553,8 +1553,6 @@ class RREFSolver {
     // Get current matrix from input fields (excluding augmented column)
     getCurrentMatrix() {
         const matrix = [];
-        const inputs = this.matrixContainer.querySelectorAll('input.matrix-cell');
-
         for (let i = 0; i < this.rows; i++) {
             matrix[i] = [];
             for (let j = 0; j < this.cols; j++) {
@@ -1848,7 +1846,6 @@ class RREFSolver {
         const originalMatrix = this.steps[0].matrix;
         const finalMatrix = this.steps[this.steps.length - 1].matrix;
 
-        const m = originalMatrix.length;
         const n = originalMatrix[0].length - 1;
 
         // Only generate graphs for 2 or 3 variables
@@ -2025,7 +2022,6 @@ class RREFSolver {
 
                 const xCoeff = coeffs[proj.xIdx];
                 const yCoeff = coeffs[proj.yIdx];
-                const zCoeff = coeffs[proj.zIdx];
 
                 if (Math.abs(yCoeff) > epsilon) {
                     // Solve for y-axis variable

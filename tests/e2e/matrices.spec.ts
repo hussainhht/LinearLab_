@@ -2,7 +2,7 @@ import { appAlert, expect, test } from './fixtures'
 
 test.describe('matrix operations', () => {
   test('runs every operation on the default matrices', async ({ page }) => {
-    await page.goto('/tools/matrices/')
+    await page.goto('tools/matrices/')
     const result = page.locator('section[aria-labelledby="result-heading"]')
     const run = (label: string) => page.getByRole('button', { name: new RegExp(label) }).click()
 
@@ -35,7 +35,7 @@ test.describe('matrix operations', () => {
   })
 
   test('steps through the multiplication visualizer without errors', async ({ page }) => {
-    await page.goto('/tools/matrices/?A=2,0,1;3,1,2&B=1,3;0,2;4,-1&op=multiply')
+    await page.goto('tools/matrices/?A=2,0,1;3,1,2&B=1,3;0,2;4,-1&op=multiply')
     const controls = page.getByRole('group', { name: 'Multiplication controls' })
     await expect(controls.getByText('of 12')).toBeVisible()
     await controls.getByRole('button', { name: 'Next product' }).click()
@@ -59,7 +59,7 @@ test.describe('matrix operations', () => {
   })
 
   test('explains incompatible sizes and non-square matrices', async ({ page }) => {
-    await page.goto('/tools/matrices/?A=1,2,3&B=1,2;3,4')
+    await page.goto('tools/matrices/?A=1,2,3&B=1,2;3,4')
     await page.getByRole('button', { name: /A × B/ }).click()
     await expect(appAlert(page)).toContainText('A is 1×3 (3 columns) and B is 2×2 (2 rows)')
     await page.getByRole('button', { name: /A \+ B/ }).click()
@@ -69,17 +69,17 @@ test.describe('matrix operations', () => {
   })
 
   test('inverts a tiny but invertible matrix and finds a null space', async ({ page }) => {
-    await page.goto('/tools/matrices/?A=0.000001,0;0,0.000001&op=inverse')
+    await page.goto('tools/matrices/?A=0.000001,0;0,0.000001&op=inverse')
     await expect(page.getByRole('table', { name: 'Inverse of A' })).toContainText('1000000')
     await expect(page.getByText(/Verified by multiplication/)).toBeVisible()
 
-    await page.goto('/tools/matrices/?A=1,2,0,3;2,4,1,4;3,6,1,7&op=spaces')
+    await page.goto('tools/matrices/?A=1,2,0,3;2,4,1,4;3,6,1,7&op=spaces')
     await expect(page.getByRole('heading', { name: 'rank A = 2, nullity = 2' })).toBeVisible()
     await expect(page.getByText('Checked: A·v = 0 for every vector above.')).toBeVisible()
   })
 
   test('fills special matrices, undoes the fill and feeds a result back in', async ({ page }) => {
-    await page.goto('/tools/matrices/')
+    await page.goto('tools/matrices/')
     const panelA = page.locator('section[aria-labelledby="matrix-A"]')
     await panelA.getByRole('button', { name: 'Identity' }).click()
     await expect(page.locator('#mA-0-1')).toHaveValue('0')
