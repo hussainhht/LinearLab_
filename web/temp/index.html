@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RREF Studio 🎓 - Gauss-Jordan Elimination Visualizer</title>
+        <link rel="stylesheet" href="./style/main.css">
+        <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <div style="flex: 1;">
+                        <h1>🎓 Linear Algebra Studio</h1>
+                        <p class="subtitle">Interactive Matrix Operations & RREF
+                            Solver</p>
+                    </div>
+                    <button id="themeToggle" onclick="toggleTheme()" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; min-width: auto; width: auto; max-width: 120px;">
+                        🌙 Dark Mode
+                    </button>
+                </div>
+
+                <!-- Navigation Links -->
+                <div
+                    style="display: flex; justify-content: center; gap: 15px; margin: 20px 0;">
+                    <a href="index.html" style="text-decoration: none;">
+                        <button class="btn btn-info"
+                            style="padding: 12px 25px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px;">
+                            <span>🔧</span>
+                            <span>Practice Tools</span>
+                        </button>
+                    </a>
+                    <a href="learn.html" style="text-decoration: none;">
+                        <button class="btn btn-success"
+                            style="padding: 12px 25px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">
+                            <span>📚</span>
+                            <span>Learn Linear Algebra</span>
+                        </button>
+                    </a>
+                    <a href="practice.html" style="text-decoration: none;">
+                        <button class="btn btn-secondary"
+                            style="padding: 12px 25px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #fbbf24, #f59e0b); box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);">
+                            <span>🛠️</span>
+                            <span>Practice Problems</span>
+                        </button>
+                    </a>
+                    <a href="vector_space.html" style="text-decoration: none;">
+                        <button class="btn btn-primary"
+                            style="padding: 12px 25px; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #8b5cf6, #6366f1); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);">
+                            <span>📐</span>
+                            <span>Vector Spaces</span>
+                        </button>
+                    </a>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-btn active" data-tab="rref">
+                        <span class="tab-icon">🔢</span>
+                        <span class="tab-text">RREF Solver</span>
+                    </button>
+                    <button class="tab-btn" data-tab="operations">
+                        <span class="tab-icon">🧮</span>
+                        <span class="tab-text">Matrix Operations</span>
+                    </button>
+                    <button class="tab-btn" data-tab="multiplication">
+                        <span class="tab-icon">🎯</span>
+                        <span class="tab-text">Matrix Multiplication</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- RREF Solver Section -->
+            <div id="rrefSection" class="tab-content active">
+                <div class="main-content">
+                    <!-- Control Panel -->
+                    <div class="control-panel">
+                        <h2>📊 Matrix Setup</h2>
+
+                        <div class="size-controls">
+                            <label>
+                                Rows: <input type="number" id="rows" value="3"
+                                    min="2" max="6">
+                            </label>
+                            <label>
+                                Columns: <input type="number" id="cols"
+                                    value="3"
+                                    min="2" max="6">
+                            </label>
+                            <button id="createMatrix"
+                                class="btn btn-primary">Create
+                                Matrix</button>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="loadExample"
+                                class="btn btn-secondary">📖
+                                Load Example</button>
+                            <button id="randomMatrix"
+                                class="btn btn-secondary">🎲
+                                Random Matrix</button>
+                            <button id="clearMatrix"
+                                class="btn btn-secondary">🗑️
+                                Clear</button>
+                        </div>
+
+                        <div class="solve-controls">
+                            <button id="startSolve" class="btn btn-success">▶️
+                                Start
+                                Solution</button>
+                            <button id="nextStep" class="btn btn-primary"
+                                disabled>⏭️ Next Step</button>
+                            <button id="autoPlay" class="btn btn-info"
+                                disabled>⏩
+                                Auto Play</button>
+                            <button id="reset" class="btn btn-warning">🔄
+                                Reset</button>
+                        </div>
+
+                        <div class="speed-control">
+                            <label>
+                                Animation Speed:
+                                <input type="range" id="speed" min="500"
+                                    max="3000"
+                                    value="1500" step="250">
+                                <span id="speedLabel">1.5s</span>
+                            </label>
+                        </div>
+
+                        <!-- Single Matrix Operations -->
+                        <div class="matrix-operations-rref">
+                            <h3>🔧 Matrix Operations</h3>
+                            <button id="rrefTranspose"
+                                class="btn btn-secondary">Transpose</button>
+                            <button id="rrefDeterminant"
+                                class="btn btn-warning">Determinant</button>
+                            <button id="rrefInverse"
+                                class="btn btn-danger">Inverse</button>
+                            <button id="rrefRank"
+                                class="btn btn-info">Rank</button>
+                        </div>
+                    </div>
+
+                    <div class="matrix-and-explanation">
+                        <!-- Matrix Display -->
+                        <div class="matrix-section">
+                            <h2>Matrix [A|b]</h2>
+                            <div id="matrixContainer" class="matrix-container">
+                                <!-- Matrix will be generated here -->
+                            </div>
+                            <div class="step-counter">
+                                <span id="stepNumber">Step 0</span> of <span
+                                    id="totalSteps">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Explanation Panel -->
+                        <div class="explanation-panel">
+                            <h2>📝 Explanation</h2>
+                            <div id="explanationContent"
+                                class="explanation-content">
+                                <p class="instruction">👉 Enter your matrix
+                                    values
+                                    and
+                                    click "Start Solution" to begin.</p>
+                            </div>
+
+                            <div id="solutionPanel" class="solution-panel"
+                                style="display: none;">
+                                <h3>✨ Solution</h3>
+                                <div id="solutionContent"></div>
+                            </div>
+
+                            <!-- Graph Visualization -->
+                            <div id="graphPanel" class="graph-panel"
+                                style="display: none; margin-top: 25px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <h3>📊 Visual Representation</h3>
+                                    <div id="graphToggle" style="display: none; gap: 10px;">
+                                        <button id="show2D" class="btn-small btn-info" style="padding: 8px 15px;">2D View</button>
+                                        <button id="show3D" class="btn-small btn-primary" style="padding: 8px 15px;">3D View</button>
+                                    </div>
+                                </div>
+                                <div id="graphContainer" style="min-height: 500px; background: rgba(31, 41, 55, 0.5); border-radius: 8px; padding: 15px;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Step History for RREF -->
+                    <div class="history-section">
+                        <h2>📚 Step History</h2>
+                        <div id="historyList" class="history-list">
+                            <p class="empty-state">No steps yet. Start solving
+                                to
+                                see
+                                the history.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End RREF Section -->
+
+            <!-- Matrix Operations Section -->
+            <div id="operationsSection" class="tab-content">
+                    <!-- Matrix Input at Top -->
+                    <div class="matrix-input-top">
+                        <div class="matrix-selector-top">
+                            <h3>Matrix A</h3>
+                            <div class="matrix-size-controls">
+                                <label>Rows: <input type="number"
+                                        id="matrixARows"
+                                        value="2" min="1" max="5"></label>
+                                <label>Cols: <input type="number"
+                                        id="matrixACols"
+                                        value="2" min="1" max="5"></label>
+                                <button id="createMatrixA"
+                                    class="btn-small btn-primary">Create
+                                    A</button>
+                                <button id="randomMatrixA"
+                                    class="btn-small btn-info">🎲
+                                    Random</button>
+                                <button id="clearMatrixA"
+                                    class="btn-small btn-secondary">🗑️
+                                    Clear</button>
+                            </div>
+                            <div id="matrixAContainer"
+                                class="mini-matrix-container"></div>
+                            <div class="quick-examples">
+                                <label>Quick Examples:</label>
+                                <button id="exampleA1"
+                                    class="btn-tiny">2×2</button>
+                                <button id="exampleA2"
+                                    class="btn-tiny">3×3</button>
+                            </div>
+                        </div>
+
+                        <div class="matrix-selector-top">
+                            <h3>Matrix B</h3>
+                            <div class="matrix-size-controls">
+                                <label>Rows: <input type="number"
+                                        id="matrixBRows"
+                                        value="2" min="1" max="5"></label>
+                                <label>Cols: <input type="number"
+                                        id="matrixBCols"
+                                        value="2" min="1" max="5"></label>
+                                <button id="createMatrixB"
+                                    class="btn-small btn-primary">Create
+                                    B</button>
+                                <button id="randomMatrixB"
+                                    class="btn-small btn-info">🎲
+                                    Random</button>
+                                <button id="clearMatrixB"
+                                    class="btn-small btn-secondary">🗑️
+                                    Clear</button>
+                            </div>
+                            <div id="matrixBContainer"
+                                class="mini-matrix-container"></div>
+                            <div class="quick-examples">
+                                <label>Quick Examples:</label>
+                                <button id="exampleB1"
+                                    class="btn-tiny">2×2</button>
+                                <button id="exampleB2"
+                                    class="btn-tiny">3×3</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Operations and Results -->
+                    <div class="operations-layout">
+                        <!-- Sidebar -->
+                        <div class="operations-sidebar">
+                            <h2>🧮 Controls</h2>
+
+                            <!-- Level 1 Operations -->
+                            <div class="operations-group">
+                                <h3>📊 Level 1: Basic Operations</h3>
+
+                                <div class="op-buttons">
+                                    <button id="opAdd"
+                                        class="btn-op btn-success">A
+                                        +
+                                        B</button>
+                                    <button id="opSubtract"
+                                        class="btn-op btn-success">A
+                                        -
+                                        B</button>
+                                    <button id="opMultiply"
+                                        class="btn-op btn-info">A ×
+                                        B</button>
+                                    <button id="opTranspose"
+                                        class="btn-op btn-secondary">Transpose
+                                        A</button>
+                                </div>
+
+                                <div class="scalar-controls">
+                                    <label>
+                                        Scalar k:
+                                        <input type="number" id="scalarValue"
+                                            value="2"
+                                            step="0.1">
+                                        <button id="opScalar"
+                                            class="btn-op btn-warning">k ·
+                                            A</button>
+                                    </label>
+                                </div>
+
+                                <div class="special-matrices">
+                                    <h4>Special Matrices</h4>
+                                    <div class="op-buttons">
+                                        <button id="createIdentity"
+                                            class="btn-op btn-secondary">Identity</button>
+                                        <button id="createZero"
+                                            class="btn-op btn-secondary">Zero</button>
+                                        <button id="createRandom"
+                                            class="btn-op btn-info">Random</button>
+                                    </div>
+                                    <label>Size: <input type="number"
+                                            id="specialSize"
+                                            value="3" min="1" max="6"></label>
+                                </div>
+                            </div>
+
+                            <!-- Level 2 Operations -->
+                            <div class="operations-group">
+                                <h3>🎓 Level 2: Advanced Operations</h3>
+
+                                <div class="op-buttons">
+                                    <button id="opDeterminant"
+                                        class="btn-op btn-warning">Determinant</button>
+                                    <button id="opInverse"
+                                        class="btn-op btn-danger">Inverse</button>
+                                    <button id="opRank"
+                                        class="btn-op btn-info">Rank</button>
+                                    <button id="opSpaces"
+                                        class="btn-op btn-secondary">Column/Null
+                                        Space</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Content Area -->
+                        <div class="operations-main">
+                            <!-- Result Display -->
+                            <div id="operationResult" class="operation-result">
+                                <h3>Result</h3>
+                                <div id="resultContent" class="result-content">
+                                    <p class="empty-state">Perform an operation
+                                        to
+                                        see
+                                        results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Operations Section -->
+
+            <!-- Matrix Multiplication Animation Section -->
+            <div id="multiplicationSection" class="tab-content">
+                <div class="main-content">
+                    <div class="control-panel">
+                        <h2>🎯 Matrix Multiplication Animation</h2>
+                        
+                        <div class="info-box" style="background: rgba(99, 102, 241, 0.1); border: 2px solid #6366f1; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                            <h3 style="color: #818cf8; margin-bottom: 10px;">📐 Formula:</h3>
+                            <div style="text-align: center; padding: 15px; background: rgba(139, 92, 246, 0.1); border-radius: 8px; margin: 10px 0;">
+                                <code style="color: #a78bfa; font-size: 1.1em; font-weight: bold;">
+                                    c<sub>ij</sub> = a<sub>i1</sub>b<sub>1j</sub> + a<sub>i2</sub>b<sub>2j</sub> + ... + a<sub>ir</sub>b<sub>rj</sub>
+                                </code>
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                            <h3 style="color: #60a5fa; margin-bottom: 10px;">📌 Important Rules:</h3>
+                            <ul style="margin-left: 20px; color: #cbd5e1;">
+                                <li style="margin: 8px 0;"><strong style="color: #60a5fa;">Number of columns in A</strong> must equal <strong style="color: #60a5fa;">number of rows in B</strong></li>
+                                <li style="margin: 8px 0;">Result matrix C will have size: <strong style="color: #60a5fa;">rows of A × columns of B</strong></li>
+                                <li style="margin: 8px 0;">Each element c<sub>ij</sub> is calculated by multiplying row i of A with column j of B</li>
+                            </ul>
+                        </div>
+
+                        <div class="size-controls">
+                            <label>
+                                Matrix A rows: <input type="number" id="rowsA" min="1" max="4" value="3">
+                            </label>
+                            <label>
+                                Matrix A cols / B rows: <input type="number" id="colsA" min="1" max="4" value="2">
+                            </label>
+                            <label>
+                                Matrix B cols: <input type="number" id="colsB" min="1" max="4" value="3">
+                            </label>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button onclick="generateMultMatrices()" class="btn btn-primary">Generate Matrices</button>
+                            <button onclick="randomMultFill()" class="btn btn-info">🎲 Random Fill</button>
+                        </div>
+
+                        <div class="solve-controls">
+                            <button id="startMultBtn" onclick="startMultAnimation()" class="btn btn-success">▶️ Start Animation</button>
+                            <button onclick="resetMultAnimation()" class="btn btn-warning">🔄 Reset</button>
+                        </div>
+
+                        <div class="speed-control">
+                            <label>
+                                Animation Speed:
+                                <input type="range" id="speedSliderMult" min="100" max="2000" value="1000" step="100">
+                                <span id="speedValueMult">1.0s</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="matrix-and-explanation">
+                        <div class="matrix-section" style="flex: 1; max-width: none;">
+                            <div id="errorMsgMult" style="display: none; background: rgba(239, 68, 68, 0.2); color: #fca5a5; padding: 15px; border-radius: 10px; border: 2px solid #ef4444; margin: 20px 0; text-align: center; font-weight: bold;"></div>
+
+                            <div id="calculationDisplayMult" style="background: rgba(251, 191, 36, 0.1); border: 2px solid #fbbf24; border-radius: 10px; padding: 20px; margin: 20px 0; min-height: 80px;">
+                                <div style="color: #fbbf24; font-size: 1.1em; text-align: center;">Click "Start Animation" to see the step-by-step multiplication process</div>
+                            </div>
+
+                            <div id="visualizationMult" style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 40px 0; flex-wrap: wrap; min-height: 400px;">
+                                <!-- Matrices will be dynamically generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Matrix Multiplication Section -->
+
+
+
+            <footer>
+                <p>Built with ❤️ by student Hussain Ali | University of
+                    Bahrain</p>
+                <p class="footer-note">Making math visual & fun ✨</p>
+                <div class="footer-links">
+                    <a href="https://github.com/hussainhht" target="_blank">GitHub</a>
+                    <a href="https://www.instagram.com/hussain_hht/" target="_blank">Instagram</a>
+                </div>
+            </footer>
+        </div>
+
+        <script src="./js/app.js"></script>
+        <script>
+            // Matrix Multiplication Animation Code
+            let animationSpeed = 1000;
+            let isAnimating = false;
+            let currentStep = { i: 0, j: 0 };
+
+            // Update speed display
+            document.getElementById('speedSliderMult').addEventListener('input', function(e) {
+                animationSpeed = parseInt(e.target.value);
+                document.getElementById('speedValueMult').textContent = (animationSpeed / 1000).toFixed(1) + 's';
+            });
+
+            function generateMultMatrices() {
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsA = parseInt(document.getElementById('colsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+
+                const visualization = document.getElementById('visualizationMult');
+                visualization.innerHTML = '';
+
+                // Matrix A
+                const containerA = document.createElement('div');
+                containerA.style.position = 'relative';
+                containerA.innerHTML = `<div style="text-align: center; font-size: 1.3em; font-weight: bold; color: #818cf8; margin-bottom: 15px;">Matrix A (${rowsA}×${colsA})</div>`;
+                const matrixA = document.createElement('div');
+                matrixA.style.cssText = 'display: inline-grid; gap: 5px; padding: 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; border: 2px solid rgba(129, 140, 248, 0.3);';
+                matrixA.id = 'matrixAMult';
+                matrixA.style.gridTemplateColumns = `repeat(${colsA}, 70px)`;
+                
+                // Add brackets
+                const beforeBracket = document.createElement('div');
+                beforeBracket.style.cssText = 'position: absolute; left: 10px; top: 10px; bottom: 10px; width: 3px; border-left: 3px solid #818cf8; border-top: 3px solid #818cf8; border-bottom: 3px solid #818cf8;';
+                matrixA.appendChild(beforeBracket);
+                
+                const afterBracket = document.createElement('div');
+                afterBracket.style.cssText = 'position: absolute; right: 10px; top: 10px; bottom: 10px; width: 3px; border-right: 3px solid #818cf8; border-top: 3px solid #818cf8; border-bottom: 3px solid #818cf8;';
+                matrixA.appendChild(afterBracket);
+                
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsA; j++) {
+                        const cell = document.createElement('div');
+                        cell.style.cssText = 'width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: rgba(51, 65, 85, 0.6); border: 2px solid rgba(148, 163, 184, 0.3); border-radius: 8px; font-size: 20px; font-weight: bold; transition: all 0.3s; position: relative;';
+                        cell.id = `a-mult-${i}-${j}`;
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.value = 0;
+                        input.id = `input-a-mult-${i}-${j}`;
+                        input.style.cssText = 'width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 20px; font-weight: bold; color: #e2e8f0;';
+                        cell.appendChild(input);
+                        matrixA.appendChild(cell);
+                    }
+                }
+                containerA.appendChild(matrixA);
+                visualization.appendChild(containerA);
+
+                // Multiplication sign
+                const operator = document.createElement('div');
+                operator.style.cssText = 'font-size: 3em; font-weight: bold; color: #818cf8; text-shadow: 0 0 20px rgba(129, 140, 248, 0.5);';
+                operator.textContent = '×';
+                visualization.appendChild(operator);
+
+                // Matrix B
+                const containerB = document.createElement('div');
+                containerB.style.position = 'relative';
+                containerB.innerHTML = `<div style="text-align: center; font-size: 1.3em; font-weight: bold; color: #60a5fa; margin-bottom: 15px;">Matrix B (${colsA}×${colsB})</div>`;
+                const matrixB = document.createElement('div');
+                matrixB.style.cssText = 'display: inline-grid; gap: 5px; padding: 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; border: 2px solid rgba(96, 165, 250, 0.3);';
+                matrixB.id = 'matrixBMult';
+                matrixB.style.gridTemplateColumns = `repeat(${colsB}, 70px)`;
+                
+                // Add brackets
+                const beforeBracketB = document.createElement('div');
+                beforeBracketB.style.cssText = 'position: absolute; left: 10px; top: 10px; bottom: 10px; width: 3px; border-left: 3px solid #60a5fa; border-top: 3px solid #60a5fa; border-bottom: 3px solid #60a5fa;';
+                matrixB.appendChild(beforeBracketB);
+                
+                const afterBracketB = document.createElement('div');
+                afterBracketB.style.cssText = 'position: absolute; right: 10px; top: 10px; bottom: 10px; width: 3px; border-right: 3px solid #60a5fa; border-top: 3px solid #60a5fa; border-bottom: 3px solid #60a5fa;';
+                matrixB.appendChild(afterBracketB);
+                
+                for (let i = 0; i < colsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const cell = document.createElement('div');
+                        cell.style.cssText = 'width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: rgba(51, 65, 85, 0.6); border: 2px solid rgba(148, 163, 184, 0.3); border-radius: 8px; font-size: 20px; font-weight: bold; transition: all 0.3s; position: relative;';
+                        cell.id = `b-mult-${i}-${j}`;
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.value = 0;
+                        input.id = `input-b-mult-${i}-${j}`;
+                        input.style.cssText = 'width: 100%; height: 100%; border: none; background: transparent; text-align: center; font-size: 20px; font-weight: bold; color: #e2e8f0;';
+                        cell.appendChild(input);
+                        matrixB.appendChild(cell);
+                    }
+                }
+                containerB.appendChild(matrixB);
+                visualization.appendChild(containerB);
+
+                // Equals sign
+                const equals = document.createElement('div');
+                equals.style.cssText = 'font-size: 3em; font-weight: bold; color: #818cf8; text-shadow: 0 0 20px rgba(129, 140, 248, 0.5);';
+                equals.textContent = '=';
+                visualization.appendChild(equals);
+
+                // Result Matrix C
+                const containerC = document.createElement('div');
+                containerC.style.position = 'relative';
+                containerC.innerHTML = `<div style="text-align: center; font-size: 1.3em; font-weight: bold; color: #34d399; margin-bottom: 15px;">Matrix C (${rowsA}×${colsB})</div>`;
+                const matrixC = document.createElement('div');
+                matrixC.style.cssText = 'display: inline-grid; gap: 5px; padding: 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; border: 2px solid rgba(52, 211, 153, 0.3);';
+                matrixC.id = 'matrixCMult';
+                matrixC.style.gridTemplateColumns = `repeat(${colsB}, 70px)`;
+                
+                // Add brackets
+                const beforeBracketC = document.createElement('div');
+                beforeBracketC.style.cssText = 'position: absolute; left: 10px; top: 10px; bottom: 10px; width: 3px; border-left: 3px solid #34d399; border-top: 3px solid #34d399; border-bottom: 3px solid #34d399;';
+                matrixC.appendChild(beforeBracketC);
+                
+                const afterBracketC = document.createElement('div');
+                afterBracketC.style.cssText = 'position: absolute; right: 10px; top: 10px; bottom: 10px; width: 3px; border-right: 3px solid #34d399; border-top: 3px solid #34d399; border-bottom: 3px solid #34d399;';
+                matrixC.appendChild(afterBracketC);
+                
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const cell = document.createElement('div');
+                        cell.style.cssText = 'width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: rgba(51, 65, 85, 0.4); border: 2px solid rgba(148, 163, 184, 0.2); border-radius: 8px; font-size: 20px; font-weight: bold; transition: all 0.3s; position: relative; color: #94a3b8;';
+                        cell.id = `c-mult-${i}-${j}`;
+                        cell.textContent = '?';
+                        matrixC.appendChild(cell);
+                    }
+                }
+                containerC.appendChild(matrixC);
+                visualization.appendChild(containerC);
+
+                document.getElementById('errorMsgMult').style.display = 'none';
+                resetMultAnimation();
+            }
+
+            function randomMultFill() {
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsA = parseInt(document.getElementById('colsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsA; j++) {
+                        const input = document.getElementById(`input-a-mult-${i}-${j}`);
+                        if (input) input.value = Math.floor(Math.random() * 9) + 1;
+                    }
+                }
+
+                for (let i = 0; i < colsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const input = document.getElementById(`input-b-mult-${i}-${j}`);
+                        if (input) input.value = Math.floor(Math.random() * 9) + 1;
+                    }
+                }
+            }
+
+            function resetMultAnimation() {
+                isAnimating = false;
+                currentStep = { i: 0, j: 0 };
+                document.getElementById('startMultBtn').disabled = false;
+                document.getElementById('calculationDisplayMult').innerHTML = 
+                    '<div style="color: #fbbf24; font-size: 1.1em; text-align: center;">Click "Start Animation" to see the step-by-step multiplication process</div>';
+                
+                // Clear all highlights
+                document.querySelectorAll('[id^="a-mult-"], [id^="b-mult-"], [id^="c-mult-"]').forEach(cell => {
+                    cell.style.background = cell.id.startsWith('c-mult-') ? 'rgba(51, 65, 85, 0.4)' : 'rgba(51, 65, 85, 0.6)';
+                    cell.style.transform = 'scale(1)';
+                    cell.style.boxShadow = 'none';
+                    cell.style.zIndex = '1';
+                    cell.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                });
+
+                // Reset result matrix
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        const cell = document.getElementById(`c-mult-${i}-${j}`);
+                        if (cell) {
+                            cell.textContent = '?';
+                            cell.style.background = 'rgba(51, 65, 85, 0.4)';
+                            cell.style.color = '#94a3b8';
+                        }
+                    }
+                }
+            }
+
+            async function startMultAnimation() {
+                if (isAnimating) return;
+
+                const rowsA = parseInt(document.getElementById('rowsA').value);
+                const colsA = parseInt(document.getElementById('colsA').value);
+                const colsB = parseInt(document.getElementById('colsB').value);
+
+                // Get matrix values
+                const matrixA = [];
+                const matrixB = [];
+
+                for (let i = 0; i < rowsA; i++) {
+                    matrixA[i] = [];
+                    for (let j = 0; j < colsA; j++) {
+                        const input = document.getElementById(`input-a-mult-${i}-${j}`);
+                        matrixA[i][j] = parseFloat(input.value) || 0;
+                    }
+                }
+
+                for (let i = 0; i < colsA; i++) {
+                    matrixB[i] = [];
+                    for (let j = 0; j < colsB; j++) {
+                        const input = document.getElementById(`input-b-mult-${i}-${j}`);
+                        matrixB[i][j] = parseFloat(input.value) || 0;
+                    }
+                }
+
+                isAnimating = true;
+                document.getElementById('startMultBtn').disabled = true;
+
+                // Animate each cell calculation
+                for (let i = 0; i < rowsA; i++) {
+                    for (let j = 0; j < colsB; j++) {
+                        await animateMultCell(i, j, matrixA, matrixB, colsA);
+                    }
+                }
+
+                isAnimating = false;
+                document.getElementById('startMultBtn').disabled = false;
+                document.getElementById('calculationDisplayMult').innerHTML = 
+                    '<div style="color: #34d399; font-size: 1.5em; text-align: center;">✓ Multiplication Complete!</div>';
+            }
+
+            async function animateMultCell(i, j, matrixA, matrixB, colsA) {
+                // Clear previous highlights
+                document.querySelectorAll('[id^="a-mult-"], [id^="b-mult-"], [id^="c-mult-"]').forEach(cell => {
+                    if (cell.id.startsWith('c-mult-') && cell.textContent !== '?') {
+                        cell.style.background = 'rgba(52, 211, 153, 0.2)';
+                        cell.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+                    } else if (cell.id.startsWith('c-mult-')) {
+                        cell.style.background = 'rgba(51, 65, 85, 0.4)';
+                        cell.style.borderColor = 'rgba(148, 163, 184, 0.2)';
+                    } else {
+                        cell.style.background = 'rgba(51, 65, 85, 0.6)';
+                        cell.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                    }
+                    cell.style.transform = 'scale(1)';
+                    cell.style.boxShadow = 'none';
+                    cell.style.zIndex = '1';
+                });
+
+                let calculation = `Calculating c<sub>${i+1}${j+1}</sub> = `;
+                let terms = [];
+                let sum = 0;
+
+                for (let k = 0; k < colsA; k++) {
+                    // Highlight current elements
+                    const cellA = document.getElementById(`a-mult-${i}-${k}`);
+                    const cellB = document.getElementById(`b-mult-${k}-${j}`);
+                    
+                    cellA.style.background = 'rgba(251, 191, 36, 0.4)';
+                    cellA.style.borderColor = '#fbbf24';
+                    cellA.style.transform = 'scale(1.15)';
+                    cellA.style.boxShadow = '0 0 25px rgba(251, 191, 36, 0.6)';
+                    cellA.style.zIndex = '10';
+                    
+                    cellB.style.background = 'rgba(59, 130, 246, 0.4)';
+                    cellB.style.borderColor = '#3b82f6';
+                    cellB.style.transform = 'scale(1.15)';
+                    cellB.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.6)';
+                    cellB.style.zIndex = '10';
+
+                    const product = matrixA[i][k] * matrixB[k][j];
+                    sum += product;
+                    terms.push(`(${matrixA[i][k]} × ${matrixB[k][j]})`);
+
+                    document.getElementById('calculationDisplayMult').innerHTML = `
+                        <div style="margin: 10px 0; color: #fbbf24; font-weight: bold; font-size: 1.1em;">
+                            ${calculation}${terms.join(' + ')}
+                        </div>
+                        <div style="margin: 10px 0; color: #34d399; font-weight: bold; font-size: 1.2em;">
+                            = ${terms.map((t, idx) => {
+                                const a = matrixA[i][idx];
+                                const b = matrixB[idx][j];
+                                return a * b;
+                            }).join(' + ')} = <span style="color: #10b981; font-size: 1.3em;">${sum}</span>
+                        </div>
+                    `;
+
+                    await sleep(animationSpeed / colsA);
+
+                    // Remove highlights from current elements
+                    cellA.style.background = 'rgba(51, 65, 85, 0.6)';
+                    cellA.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                    cellA.style.transform = 'scale(1)';
+                    cellA.style.boxShadow = 'none';
+                    cellA.style.zIndex = '1';
+                    
+                    cellB.style.background = 'rgba(51, 65, 85, 0.6)';
+                    cellB.style.borderColor = 'rgba(148, 163, 184, 0.3)';
+                    cellB.style.transform = 'scale(1)';
+                    cellB.style.boxShadow = 'none';
+                    cellB.style.zIndex = '1';
+                }
+
+                // Show final result with animation
+                const resultCell = document.getElementById(`c-mult-${i}-${j}`);
+                resultCell.textContent = sum;
+                resultCell.style.color = '#10b981';
+                resultCell.style.background = 'rgba(52, 211, 153, 0.5)';
+                resultCell.style.borderColor = '#34d399';
+                resultCell.style.transform = 'scale(1.2)';
+                resultCell.style.boxShadow = '0 0 30px rgba(52, 211, 153, 0.8)';
+                resultCell.style.zIndex = '15';
+                resultCell.style.animation = 'pulse 0.5s';
+                
+                await sleep(animationSpeed / 2);
+                resultCell.style.transform = 'scale(1)';
+                resultCell.style.boxShadow = '0 0 10px rgba(52, 211, 153, 0.3)';
+                resultCell.style.zIndex = '1';
+                resultCell.style.background = 'rgba(52, 211, 153, 0.2)';
+                resultCell.style.borderColor = 'rgba(52, 211, 153, 0.4)';
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // Add pulse animation to CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0%, 100% { transform: scale(1.2); }
+                    50% { transform: scale(1.3); }
+                }
+            `;
+            document.head.appendChild(style);
+        </script>
+    </body>
+</html>
