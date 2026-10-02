@@ -2,7 +2,7 @@ import { appAlert, editorValues, expect, test } from './fixtures'
 
 test.describe('course and calculators', () => {
   test('the 3×3 determinant calculator uses its own inputs (22, not 20)', async ({ page }) => {
-    await page.goto('/tools/determinant/')
+    await page.goto('tools/determinant/')
     const three = page.locator('section[aria-labelledby="det3-title"]')
     await expect(three.getByText('det A = 22')).toBeVisible()
     // Editing the 2×2 calculator must not change the 3×3 one.
@@ -13,7 +13,7 @@ test.describe('course and calculators', () => {
   })
 
   test('Cramer’s rule explains a singular system and offers the solver', async ({ page }) => {
-    await page.goto('/tools/cramer/?A=6,-4;3,-2&b=2,1')
+    await page.goto('tools/cramer/?A=6,-4;3,-2&b=2,1')
     await expect(page.getByText('Cramer’s rule does not apply').first()).toBeVisible()
     await page.getByRole('link', { name: 'Classify this system with the system solver' }).first().click()
     await expect(page).toHaveURL(/\/tools\/rref\//)
@@ -21,14 +21,14 @@ test.describe('course and calculators', () => {
   })
 
   test('a lesson’s example opens the exact problem in the solver', async ({ page }) => {
-    await page.goto('/learn/gauss-jordan-elimination/')
+    await page.goto('learn/gauss-jordan-elimination/')
     await page.getByRole('link', { name: 'Open this system in the solver' }).click()
     await expect(page).toHaveURL(/\/tools\/rref\/\?A=/)
     expect(await editorValues(page, 'rref', 2, 3)).toEqual([['1', '2', '5'], ['3', '-1', '4']])
   })
 
   test('quick checks and numeric checks give feedback', async ({ page }) => {
-    await page.goto('/learn/gauss-jordan-elimination/')
+    await page.goto('learn/gauss-jordan-elimination/')
     await page.getByRole('textbox', { name: 'x =' }).fill('1')
     await page.getByRole('textbox', { name: 'y =' }).fill('3')
     await page.getByRole('button', { name: 'Check answer' }).click()
@@ -37,19 +37,19 @@ test.describe('course and calculators', () => {
     await page.getByRole('button', { name: 'Check answer' }).click()
     await expect(page.getByText('Correct, exactly.')).toBeVisible()
 
-    await page.goto('/learn/linear-systems/')
+    await page.goto('learn/linear-systems/')
     await page.getByText('2x − 3y = √5').click()
     await page.getByRole('button', { name: 'Check answer' }).click()
     await expect(page.getByText('Correct.')).toBeVisible()
   })
 
   test('marks lessons complete and resets progress', async ({ page }) => {
-    await page.goto('/learn/linear-systems/')
+    await page.goto('learn/linear-systems/')
     await page.getByRole('button', { name: 'Mark lesson complete' }).click()
     await expect(page.getByRole('button', { name: 'Completed' })).toBeVisible()
     await expect(page.getByText('1 of 22 complete')).toBeVisible()
 
-    await page.goto('/learn/')
+    await page.goto('learn/')
     await expect(page.getByText('of 22 lessons complete')).toContainText('1')
     await page.getByRole('button', { name: 'Reset progress' }).click()
     await page.getByRole('group', { name: 'Confirm reset' }).getByRole('button', { name: 'Reset progress' }).click()
@@ -57,7 +57,7 @@ test.describe('course and calculators', () => {
   })
 
   test('the lines explorer reacts to parallel lines', async ({ page }) => {
-    await page.goto('/learn/solution-sets/')
+    await page.goto('learn/solution-sets/')
     await expect(page.getByText('One solution: the lines cross once.')).toBeVisible()
     await page.locator('#lines-1-1').fill('1')
     await page.locator('#lines-1-2').fill('5')
@@ -67,7 +67,7 @@ test.describe('course and calculators', () => {
 
 test.describe('practice', () => {
   test('accepts chosen and typed operations, judges them, and reaches RREF', async ({ page }) => {
-    await page.goto('/practice/two-by-two/')
+    await page.goto('practice/two-by-two/')
     // Invalid: scaling by zero.
     await page.getByText('Scale', { exact: true }).click()
     await page.getByLabel('by the factor').fill('0')
@@ -89,7 +89,7 @@ test.describe('practice', () => {
   })
 
   test('offers progressively specific hints and undo', async ({ page }) => {
-    await page.goto('/practice/needs-a-swap/')
+    await page.goto('practice/needs-a-swap/')
     await page.getByRole('button', { name: 'Get a hint' }).click()
     await page.getByRole('button', { name: 'More specific hint' }).click()
     await page.getByRole('button', { name: 'More specific hint' }).click()

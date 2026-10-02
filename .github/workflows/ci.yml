@@ -1,28 +1,83 @@
 name: CI
 
+# Runs on pushes to master and on pull requests. The deploy workflow also calls it, so the checks
+# that gate a deployment are exactly the ones every change already passed.
 on:
   push:
     branches: [master]
   pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
 
 jobs:
-  check:
+  # The site served from the root, like `npm run dev` and most hosts.
+  verify:
+    name: Verify (site at /)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
+
+      # `npm run typecheck` generates Next.js route types (PageProps, ...) before running tsc.
+      - name: Type check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Unit tests
+        run: npm test
+
+      - name: Build static export
+        run: npm run build
+      - name: Verify the export
+        run: npm run verify:export
+
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
+      - name: Browser tests
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: playwright-traces
+          name: playwright-results-root
           path: test-results/
+          if-no-files-found: ignore
+
+  # The same site under a repository sub-path, which is how GitHub Pages serves a project site
+  # (https://<user>.github.io/<repo>/). Catches links or assets that assume the site is at "/".
+  verify-subpath:
+    name: Verify (site under /<repo>)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      LINEARLAB_BASE_PATH: /${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Build static export
+        run: npm run build
+      - name: Verify the export
+        run: npm run verify:export
+
+      - run: npx playwright install --with-deps chromium
+      - name: Browser tests
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-results-subpath
+          path: test-results/
+          if-no-files-found: ignore

@@ -2,7 +2,7 @@ import { appAlert, editorValues, expect, test } from './fixtures'
 
 test.describe('system solver', () => {
   test('loads an example, solves it and steps forward and back', async ({ page }) => {
-    await page.goto('/tools/rref/')
+    await page.goto('tools/rref/')
     await page.getByLabel('Example').selectOption('fraction-answer')
     await page.getByRole('button', { name: 'Load', exact: true }).click()
     expect(await editorValues(page, 'rref', 2, 3)).toEqual([['1', '2', '5'], ['3', '-1', '4']])
@@ -25,7 +25,7 @@ test.describe('system solver', () => {
   })
 
   test('jumps to a step from the history and supports arrow keys', async ({ page }) => {
-    await page.goto('/tools/rref/?example=three-by-three')
+    await page.goto('tools/rref/?example=three-by-three')
     await page.getByRole('button', { name: 'Solve step by step' }).click()
     await page.getByRole('navigation', { name: 'Step history' }).getByRole('button', { name: /^5 / }).click()
     const counter = page.getByRole('group', { name: 'Step controls' }).locator('p')
@@ -38,7 +38,7 @@ test.describe('system solver', () => {
   })
 
   test('plays, pauses, changes speed and stops at the end', async ({ page }) => {
-    await page.goto('/tools/rref/?example=two-by-two')
+    await page.goto('tools/rref/?example=two-by-two')
     await page.getByRole('button', { name: 'Solve step by step' }).click()
     const controls = page.getByRole('group', { name: 'Step controls' })
     await controls.getByText('Fast').click()
@@ -56,13 +56,13 @@ test.describe('system solver', () => {
   })
 
   test('classifies inconsistent and infinite systems', async ({ page }) => {
-    await page.goto('/tools/rref/?example=no-solution')
+    await page.goto('tools/rref/?example=no-solution')
     await page.getByRole('button', { name: 'Solve step by step' }).click()
     await page.getByRole('button', { name: 'Go to the end' }).click()
     await expect(page.getByRole('heading', { name: 'No solution' })).toBeVisible()
     await expect(page.getByText('0 = 1').first()).toBeVisible()
 
-    await page.goto('/tools/rref/?example=infinite-solutions')
+    await page.goto('tools/rref/?example=infinite-solutions')
     await page.getByRole('button', { name: 'Solve step by step' }).click()
     await page.getByRole('button', { name: 'Go to the end' }).click()
     await expect(page.getByRole('heading', { name: 'Infinitely many solutions' })).toBeVisible()
@@ -71,7 +71,7 @@ test.describe('system solver', () => {
   })
 
   test('editing after solving invalidates the old steps', async ({ page }) => {
-    await page.goto('/tools/rref/?example=two-by-two')
+    await page.goto('tools/rref/?example=two-by-two')
     await page.getByRole('button', { name: 'Solve step by step' }).click()
     await page.getByText('Edit input').click()
     await page.locator('#rref-0-0').fill('5')
@@ -80,7 +80,7 @@ test.describe('system solver', () => {
   })
 
   test('rejects invalid entries instead of treating them as zero', async ({ page }) => {
-    await page.goto('/tools/rref/?example=two-by-two')
+    await page.goto('tools/rref/?example=two-by-two')
     await page.locator('#rref-1-1').fill('abc')
     await page.locator('#rref-0-2').fill('')
     await page.getByRole('button', { name: 'Solve step by step' }).click()
@@ -92,7 +92,7 @@ test.describe('system solver', () => {
   })
 
   test('keeps work when navigating away and back, and restores a saved workspace', async ({ page }) => {
-    await page.goto('/tools/rref/')
+    await page.goto('tools/rref/')
     await page.locator('#rref-0-0').fill('7/2')
     await page.getByText('Save and share').click()
     await page.getByRole('button', { name: 'Save', exact: true }).click()
@@ -114,7 +114,7 @@ test.describe('system solver', () => {
   })
 
   test('accepts a pasted block and moves between entries with the keyboard', async ({ page }) => {
-    await page.goto('/tools/rref/')
+    await page.goto('tools/rref/')
     await page.locator('#rref-0-0').focus()
     await page.evaluate(() => {
       const data = new DataTransfer()
@@ -133,7 +133,7 @@ test.describe('system solver', () => {
   })
 
   test('loads a system from the URL', async ({ page }) => {
-    await page.goto('/tools/rref/?A=1,1;1,-1&b=3,1')
+    await page.goto('tools/rref/?A=1,1;1,-1&b=3,1')
     // The URL is applied after hydration; wait until the 2×2 system has replaced the default 3×3.
     await expect(page.locator('#rref-2-0')).toHaveCount(0)
     await expect(page.locator('#rref-0-0')).toHaveValue('1')
