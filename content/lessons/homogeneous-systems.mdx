@@ -1,0 +1,60 @@
+<Definition term="Homogeneous system">
+
+A linear system is **homogeneous** if every constant on the right-hand side is zero:
+
+$$
+\begin{aligned}
+a_{11}x_1 + \dots + a_{1p}x_p &= 0 \\
+&\ \ \vdots \\
+a_{n1}x_1 + \dots + a_{np}x_p &= 0
+\end{aligned}
+$$
+
+</Definition>
+
+Setting every variable to zero satisfies every equation, so a homogeneous system **always has at least one solution**, the **trivial solution** $(0, 0, \dots, 0)$. It is never inconsistent. The interesting question is whether it has other, **nontrivial** solutions, and by the previous lesson that happens exactly when it has infinitely many.
+
+## More unknowns than equations
+
+If a homogeneous system has more variables than equations, it always has nontrivial solutions. Row reduction (chapter 2) can produce at most one pivot per equation, so with more variables than equations at least one variable is left free to take any value.
+
+<Example title="Two equations, three unknowns">
+
+$$
+\begin{aligned} 2x - 3y + 4z &= 0 \\ x - y - z &= 0 \end{aligned}
+$$
+
+Row reduction gives $x = 7z$ and $y = 6z$, with $z$ free. Taking $z = 1$ gives the nontrivial solution $(7, 6, 1)$. Check it: $2(7) - 3(6) + 4(1) = 0$ and $7 - 6 - 1 = 0$. Every multiple $(7t, 6t, t)$ is a solution too.
+
+</Example>
+
+<TryInTool example="homogeneous-free" />
+
+## A square system can go either way
+
+With as many equations as unknowns, both outcomes are possible.
+
+<Example title="Only the trivial solution">
+
+$$
+\begin{aligned} x_1 + x_2 - x_3 &= 0 \\ x_1 - 2x_2 &= 0 \\ x_1 - x_3 &= 0 \end{aligned}
+$$
+
+Row reduction ends with a pivot in every column, so the only solution is $x_1 = x_2 = x_3 = 0$. Step through it:
+
+<EliminationDemo a={[[1, 1, -1], [1, -2, 0], [1, 0, -1]]} b={[0, 0, 0]} />
+
+</Example>
+
+<Correction>
+
+The earlier version of this lesson said this system "may also have non-trivial solutions". Row reduction shows it does not: its coefficient matrix is invertible (its determinant is $1$), so the trivial solution is the only one.
+
+</Correction>
+
+<QuickCheck
+  question="A homogeneous system has 3 equations and 5 unknowns. What can you conclude?"
+  choices={["It may have no solution", "It has only the trivial solution", "It has infinitely many solutions", "It has exactly two solutions"]}
+  answer={2}
+  explanation="A homogeneous system is always consistent, and with more unknowns than equations at least two variables are free, so there are infinitely many solutions."
+/>

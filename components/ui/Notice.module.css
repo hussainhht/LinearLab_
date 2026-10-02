@@ -1,0 +1,59 @@
+.notice {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-m);
+  border: 1px solid var(--notice-line);
+  border-left-width: 4px;
+  background: var(--notice-bg);
+  color: var(--ink);
+  font-size: var(--text-sm);
+}
+
+.icon {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--notice-line);
+}
+
+.body {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.text {
+  color: var(--ink-2);
+}
+
+.text :where(p + p) {
+  margin-top: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.info {
+  --notice-line: var(--accent);
+  --notice-bg: var(--accent-soft);
+}
+.success {
+  --notice-line: var(--success);
+  --notice-bg: var(--success-soft);
+}
+.warning {
+  --notice-line: var(--warning);
+  --notice-bg: var(--warning-soft);
+}
+.danger {
+  --notice-line: var(--danger);
+  --notice-bg: var(--danger-soft);
+}

@@ -1,0 +1,57 @@
+Row operations are aimed at a target shape: a staircase that makes the solutions easy to read.
+
+In each nonzero row, the first nonzero entry from the left is its **leading entry**. The position of a leading entry is a **pivot position**, and its column is a **pivot column**.
+
+<Definition term="Row echelon form (REF)">
+
+A matrix is in row echelon form when
+
+1. every row of zeros is below every nonzero row, and
+2. each leading entry is strictly to the right of the leading entry in the row above.
+
+It follows that every entry below a leading entry is zero, which is the staircase.
+
+</Definition>
+
+<Definition term="Reduced row echelon form (RREF)">
+
+A matrix in row echelon form is in **reduced** row echelon form when also
+
+3. every leading entry is $1$ (a **leading 1**), and
+4. each leading 1 is the only nonzero entry in its column.
+
+</Definition>
+
+$$
+\underbrace{\begin{bmatrix} 2 & 1 & 4 \\ 0 & -3 & 5 \\ 0 & 0 & 0 \end{bmatrix}}_{\text{REF, not reduced}}
+\qquad
+\underbrace{\begin{bmatrix} 1 & 0 & 7 \\ 0 & 1 & -2 \\ 0 & 0 & 0 \end{bmatrix}}_{\text{RREF}}
+$$
+
+<Note title="Textbooks differ on condition 3">
+
+Some books (Anton, for example) also require leading 1s in plain row echelon form; others (Lay, Strang) do not. LinearLab follows the second convention: REF needs only conditions 1 and 2, and leading 1s are part of RREF.
+
+</Note>
+
+## Classify them
+
+| Matrix | Form | Reason |
+| --- | --- | --- |
+| $\begin{bmatrix} 1 & 1 & 0 & 0 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & 0 & 0 \end{bmatrix}$ | REF, not reduced | The 1 above the second leading 1 is not cleared |
+| $\begin{bmatrix} 0 & 0 & 1 & 0 & 2 \\ 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 \end{bmatrix}$ | RREF | Leading 1s, clean pivot columns, zero row last |
+| $\begin{bmatrix} 1 & 0 & 1 \\ 0 & 1 & 0 \\ 0 & 0 & 0 \end{bmatrix}$ | RREF | Column 3 has no pivot, so it may hold any values |
+| $\begin{bmatrix} 1 & 0 & 1 \\ 0 & 2 & 0 \\ 0 & 0 & 0 \end{bmatrix}$ | REF, not reduced | The second leading entry is 2, not 1 |
+| $\begin{bmatrix} 0 & 1 & 0 & 1 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix}$ | Neither | Row 2 leads to the left of row 1 |
+| $\begin{bmatrix} 1 & 2 \\ 0 & 0 \\ 0 & 1 \end{bmatrix}$ | Neither | A zero row sits above a nonzero row |
+
+## One matrix, one RREF
+
+A matrix can be row reduced to many different echelon forms, but to **exactly one** reduced row echelon form, whatever sequence of row operations you use. That uniqueness is why RREF is the standard answer: the system solver, practice mode and your own hand work all end at the same matrix.
+
+<QuickCheck
+  question="Which describes [1 3 0 | 2; 0 0 1 | 5; 0 0 0 | 0]?"
+  choices={["Row echelon form but not reduced", "Reduced row echelon form", "Neither"]}
+  answer={1}
+  explanation="The leading 1s are in columns 1 and 3 and each is the only nonzero entry in its column; column 2 has no pivot, so its 3 is allowed. The zero row is at the bottom."
+/>

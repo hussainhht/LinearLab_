@@ -1,0 +1,41 @@
+.explanation {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.kicker {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.title {
+  font-size: var(--text-xl);
+}
+
+.operation {
+  width: fit-content;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--target-soft);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-variant-numeric: lining-nums;
+  box-shadow: inset 3px 0 0 var(--target);
+}
+
+.reason {
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-3);
+  color: var(--ink-2);
+}
+
+.conclusion {
+  margin-top: var(--space-2);
+}

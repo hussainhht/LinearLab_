@@ -1,0 +1,26 @@
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--gutter) 0;
+}
+
+.narrow {
+  max-width: 58rem;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  max-width: 48rem;
+}
+
+.title {
+  font-size: var(--text-3xl);
+}
+
+.lede {
+  font-size: var(--text-lg);
+  color: var(--ink-2);
+  max-width: 60ch;
+}

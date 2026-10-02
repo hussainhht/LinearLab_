@@ -1,0 +1,76 @@
+A **linear equation** in the variables $x_1, x_2, \dots, x_p$ is an equation that can be written as
+
+$$
+a_1x_1 + a_2x_2 + \dots + a_px_p = b,
+$$
+
+where the **coefficients** $a_1, \dots, a_p$ and the **constant** $b$ are numbers. Each variable appears to the first power and is multiplied only by a number: no products of variables, no powers, no functions such as $\sin$ or $\sqrt{\ }$ applied to a variable.
+
+<Definition term="System of linear equations">
+
+A system of linear equations, or **linear system**, is a collection of linear equations in the same variables. A system of $n$ equations in $p$ variables has the general form
+
+$$
+\begin{aligned}
+a_{11}x_1 + a_{12}x_2 + \dots + a_{1p}x_p &= b_1 \\
+a_{21}x_1 + a_{22}x_2 + \dots + a_{2p}x_p &= b_2 \\
+&\ \ \vdots \\
+a_{n1}x_1 + a_{n2}x_2 + \dots + a_{np}x_p &= b_n
+\end{aligned}
+$$
+
+The coefficient $a_{ij}$ belongs to equation $i$ and multiplies variable $x_j$.
+
+</Definition>
+
+## Linear or not?
+
+An equation can look unusual and still be linear: $y = 2x + 3$ rearranges to $-2x + y = 3$. What matters is how the variables appear, not where they are written.
+
+| Equation | Linear? | Reason |
+| --- | --- | --- |
+| $3x + 2y = 7$ | Yes | Each variable to the first power |
+| $5x_1 - 2x_2 + x_3 = 10$ | Yes | Same, with three variables |
+| $y = 2x + 3$ | Yes | Rearranges to $-2x + y = 3$ |
+| $x^2 + y = 5$ | No | $x$ is squared |
+| $xy + z = 1$ | No | Two variables are multiplied |
+| $\sin(x) + y = 0$ | No | A function is applied to $x$ |
+| $\sqrt{x} + y = 3$ | No | A square root of $x$ |
+| $x_1 + x_2 + 3x_1x_2 = 0$ | No | The term $3x_1x_2$ multiplies variables |
+
+A system is linear only when every equation in it is linear. The system $x_1 - 2x_2^2 + x_3 = 0,\ x_1 + x_2 + x_3 = 1$ is not linear because of the $x_2^2$ term, even though its second equation is.
+
+## Counting equations and variables
+
+We describe a system by its numbers of equations and variables. A variable that is missing from an equation simply has coefficient $0$ there.
+
+<Example title="Three systems, three shapes">
+
+**(a)** Two equations in three variables $x, y, z$:
+
+$$
+\begin{aligned} x - 3y + z &= 1 \\ 2x + 4y + 5z &= 2 \end{aligned}
+$$
+
+**(b)** One equation in four variables $x, y, z, t$:
+
+$$
+x + y - z + t = 0
+$$
+
+**(c)** Two equations in four variables. The second equation has $0x_2$ and $0x_4$:
+
+$$
+\begin{aligned} x_1 + 2x_2 + 3x_3 + 4x_4 &= 1 \\ x_1 - 2x_3 &= -1 \end{aligned}
+$$
+
+</Example>
+
+A **solution** of a system is a list of values, one per variable, that makes every equation true at the same time. For example, $(x, y) = (2, 1)$ solves both $x + y = 3$ and $x - y = 1$. The next lesson looks at how many solutions a system can have.
+
+<QuickCheck
+  question="Which of these equations is linear in x and y?"
+  choices={["xy = 4", "2x − 3y = √5", "x² − y = 0", "1/x + y = 2"]}
+  answer={1}
+  explanation="In 2x − 3y = √5 each variable appears to the first power with a number as its coefficient; √5 is just a constant. The others multiply x by y, square x, or divide by x."
+/>
