@@ -1,0 +1,83 @@
+Cramer's rule writes the solution of a square system directly in terms of determinants.
+
+<Definition term="Cramer's rule">
+
+Let $A\mathbf{x} = \mathbf{b}$ be a system of $n$ equations in $n$ unknowns with $\det A \neq 0$. Let $A_i$ be the matrix $A$ with its $i$-th column replaced by $\mathbf{b}$. Then the unique solution is
+
+$$
+x_i = \frac{\det A_i}{\det A}, \qquad i = 1, \dots, n.
+$$
+
+</Definition>
+
+## 2×2 systems
+
+For $a_1x + b_1y = c_1$ and $a_2x + b_2y = c_2$:
+
+$$
+\det A = a_1b_2 - a_2b_1, \qquad
+x = \frac{c_1b_2 - c_2b_1}{\det A}, \qquad
+y = \frac{a_1c_2 - a_2c_1}{\det A}.
+$$
+
+<Example title="2x + 3y = 8 and 4x − y = 2">
+
+$$
+\det A = (2)(-1) - (4)(3) = -14, \qquad
+x = \frac{(8)(-1) - (2)(3)}{-14} = \frac{-14}{-14} = 1, \qquad
+y = \frac{(2)(2) - (4)(8)}{-14} = \frac{-28}{-14} = 2.
+$$
+
+Check: $2(1) + 3(2) = 8$ and $4(1) - 2 = 2$.
+
+</Example>
+
+## 3×3 systems
+
+<Example title="x + 2y + z = 9, 2x − y + 2z = 6, 3x + y − z = 2">
+
+$$
+\det A = \begin{vmatrix} 1 & 2 & 1 \\ 2 & -1 & 2 \\ 3 & 1 & -1 \end{vmatrix} = 20.
+$$
+
+Replacing one column at a time by $\mathbf{b} = (9, 6, 2)$:
+
+$$
+\det A_1 = \begin{vmatrix} 9 & 2 & 1 \\ 6 & -1 & 2 \\ 2 & 1 & -1 \end{vmatrix} = 19, \quad
+\det A_2 = \begin{vmatrix} 1 & 9 & 1 \\ 2 & 6 & 2 \\ 3 & 2 & -1 \end{vmatrix} = 48, \quad
+\det A_3 = \begin{vmatrix} 1 & 2 & 9 \\ 2 & -1 & 6 \\ 3 & 1 & 2 \end{vmatrix} = 65.
+$$
+
+So $x = \frac{19}{20}$, $y = \frac{48}{20} = \frac{12}{5}$, $z = \frac{65}{20} = \frac{13}{4}$.
+
+**Check** with denominators of 20: $\frac{19}{20} + \frac{96}{20} + \frac{65}{20} = \frac{180}{20} = 9$; $\frac{38}{20} - \frac{48}{20} + \frac{130}{20} = \frac{120}{20} = 6$; $\frac{57}{20} + \frac{48}{20} - \frac{65}{20} = \frac{40}{20} = 2$.
+
+</Example>
+
+<Correction>
+
+The earlier version gave $x = 1$, $y = 3$, $z = 2$. Substituting into the third equation gives $3 + 3 - 2 = 4$, not $2$. The determinant $\det A = 20$ was right; the solution was not.
+
+</Correction>
+
+<CramerSolver size={3} id="lesson-cramer3" title="Try it: the 3×3 example" />
+
+## When to use it, and when not
+
+**Advantages.** It is a direct formula, convenient for 2×2 and 3×3 systems, and it can give one unknown without solving for the others.
+
+**Limits.** It requires a square system with $\det A \neq 0$. When $\det A = 0$ the rule would divide by zero, and the system has either no solution or infinitely many; Cramer's rule cannot tell which. Row reduction can. For large $n$, computing $n + 1$ determinants is far slower than one elimination.
+
+<Example title="When det A = 0">
+
+For $6x - 4y = 2$ and $3x - 2y = 1$, $\det A = 6(-2) - (-4)(3) = 0$. Cramer's rule does not apply. Row reduction shows the second equation is half the first, so there are infinitely many solutions.
+
+</Example>
+
+<CramerSolver size={2} initialA={[[6, -4], [3, -2]]} initialB={[2, 1]} id="lesson-cramer-singular" title="Try it: a singular system" />
+
+<NumericCheck
+  question="Use Cramer's rule on x + y = 3, x − y = 1."
+  fields={[{ label: 'x', answer: '2' }, { label: 'y', answer: '1' }]}
+  explanation="det A = (1)(−1) − (1)(1) = −2, x = ((3)(−1) − (1)(1))/(−2) = 2, y = ((1)(1) − (1)(3))/(−2) = 1."
+/>

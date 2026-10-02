@@ -1,0 +1,66 @@
+## Row operations and determinants
+
+Each elementary row operation changes the determinant in a predictable way:
+
+| Operation | Effect on det |
+| --- | --- |
+| Swap two rows | Changes the sign |
+| Multiply a row by $k$ | Multiplies det by $k$ |
+| Add a multiple of one row to another | No change |
+
+Two consequences: a matrix with a **row of zeros** has determinant 0, and so does a matrix with **two equal rows** (swapping them changes the sign but not the matrix, so $\det A = -\det A$).
+
+## Triangular matrices and an efficient method
+
+The determinant of a triangular matrix is the **product of its diagonal entries**. Combined with the table above, this gives the practical way to compute determinants of any size: reduce to triangular form with replacements and swaps, then multiply the diagonal and fix the sign.
+
+<Example title="det of [1 2 3; 0 4 5; 1 0 6] by elimination">
+
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 5 \\ 1 & 0 & 6 \end{bmatrix}
+\xrightarrow{R_3 \leftarrow R_3 - R_1}
+\begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 5 \\ 0 & -2 & 3 \end{bmatrix}
+\xrightarrow{R_3 \leftarrow R_3 + \frac12 R_2}
+\begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 5 \\ 0 & 0 & \frac{11}{2} \end{bmatrix}
+$$
+
+Only replacements were used, so the determinant did not change: $\det A = 1 \cdot 4 \cdot \frac{11}{2} = 22$, matching the cofactor expansion.
+
+</Example>
+
+<TryInTool tool="matrices" a="det-22" op="determinant">See this elimination in the matrix tool</TryInTool>
+
+Because the computation is exact, LinearLab never has to guess whether a determinant is "close enough" to zero. A matrix such as $\begin{bmatrix} 0.000001 & 0 \\ 0 & 0.000001 \end{bmatrix}$ has determinant $10^{-12}$, which is small but not zero, so the matrix is invertible.
+
+<TryInTool tool="matrices" a="tiny-scale" op="inverse">Invert the tiny-but-invertible matrix</TryInTool>
+
+## Products, transposes, scalars, inverses
+
+For $n \times n$ matrices:
+
+| Property | Formula |
+| --- | --- |
+| Product | $\det(AB) = \det A \cdot \det B$ |
+| Transpose | $\det(A^T) = \det A$ |
+| Scalar multiple | $\det(kA) = k^n \det A$ (each of the $n$ rows is scaled) |
+| Inverse | $\det(A^{-1}) = \dfrac{1}{\det A}$, from $\det A \cdot \det A^{-1} = \det I = 1$ |
+
+There is **no** simple rule for $\det(A + B)$.
+
+## What the number means
+
+For a 2×2 matrix, $|\det A|$ is the factor by which $A$ scales areas: the unit square is sent to a parallelogram of area $|\det A|$. For 3×3 matrices it scales volumes. The sign records whether orientation is preserved (positive) or flipped (negative). A determinant of 0 means space is flattened onto a line or plane, which is exactly why such a matrix cannot be undone.
+
+<QuickCheck
+  question="A is 3×3 with det A = 5. What is det(2A)?"
+  choices={["10", "25", "40", "125"]}
+  answer={2}
+  explanation="Multiplying A by 2 doubles each of its 3 rows, so det(2A) = 2³ · det A = 8 · 5 = 40."
+/>
+
+<QuickCheck
+  question="Swapping two rows of B and then multiplying one row by 3 gives a matrix with determinant 12. What is det B?"
+  choices={["−4", "4", "−36", "36"]}
+  answer={0}
+  explanation="The swap multiplies det by −1 and the scaling by 3, so 12 = −3 · det B and det B = −4."
+/>

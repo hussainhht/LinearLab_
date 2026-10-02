@@ -1,0 +1,74 @@
+## Solving AX = B with an inverse
+
+Write a square system as $AX = B$. If $A$ is invertible, multiply both sides on the left by $A^{-1}$:
+
+$$
+A^{-1}(AX) = A^{-1}B \;\Longrightarrow\; (A^{-1}A)X = A^{-1}B \;\Longrightarrow\; X = A^{-1}B.
+$$
+
+So the system has exactly one solution, $X = A^{-1}B$. The method needs two things: as many equations as unknowns (a square $A$) and an invertible $A$.
+
+<Example title="A 3×3 system">
+
+$$
+\begin{aligned} x_1 + 2x_2 + 3x_3 &= 5 \\ 2x_1 + 5x_2 + 3x_3 &= 3 \\ x_1 + 8x_3 &= 17 \end{aligned}
+\qquad
+A = \begin{bmatrix} 1 & 2 & 3 \\ 2 & 5 & 3 \\ 1 & 0 & 8 \end{bmatrix},\quad
+B = \begin{bmatrix} 5 \\ 3 \\ 17 \end{bmatrix}
+$$
+
+Row reducing $[A \mid I]$ gives $A^{-1} = \begin{bmatrix} -40 & 16 & 9 \\ 13 & -5 & -3 \\ 5 & -2 & -1 \end{bmatrix}$. Then
+
+$$
+X = A^{-1}B = \begin{bmatrix} -40(5) + 16(3) + 9(17) \\ 13(5) - 5(3) - 3(17) \\ 5(5) - 2(3) - 1(17) \end{bmatrix}
+= \begin{bmatrix} -200 + 48 + 153 \\ 65 - 15 - 51 \\ 25 - 6 - 17 \end{bmatrix}
+= \begin{bmatrix} 1 \\ -1 \\ 2 \end{bmatrix}.
+$$
+
+**Check:** $1 - 2 + 6 = 5$, $2 - 5 + 6 = 3$, $1 + 16 = 17$.
+
+</Example>
+
+<TryInTool example="inverse-application" />
+
+For a single system, row reducing $[A \mid B]$ directly is less work than finding $A^{-1}$. The inverse pays off when the same $A$ is used with many right-hand sides, and it is the key to the theory below.
+
+## When is A invertible?
+
+For a square $n \times n$ matrix $A$, these statements are all equivalent: if one is true, all are.
+
+1. $A$ is invertible.
+2. The reduced row echelon form of $A$ is $I_n$.
+3. $A$ has $n$ pivots: $\operatorname{rank} A = n$.
+4. $A\mathbf{x} = \mathbf{0}$ has only the trivial solution.
+5. $A\mathbf{x} = \mathbf{b}$ has exactly one solution for every $\mathbf{b}$.
+6. $\det A \neq 0$ (chapter 5).
+
+## When A is not invertible
+
+<Example title="For which a and b is 6x − 4y = a, 3x − 2y = b consistent?">
+
+Here $\Delta = 6(-2) - (-4)(3) = 0$, so $A$ is not invertible and $X = A^{-1}B$ is unavailable. Row reduce instead:
+
+$$
+\left[\begin{array}{cc|c} 6 & -4 & a \\ 3 & -2 & b \end{array}\right]
+\xrightarrow{R_2 \leftarrow R_2 - \frac12 R_1}
+\left[\begin{array}{cc|c} 6 & -4 & a \\ 0 & 0 & b - \frac a2 \end{array}\right]
+$$
+
+The second row reads $0 = b - \frac a2$. The system is **consistent exactly when $a = 2b$**, and then $y$ is free, so there are infinitely many solutions. If $a \neq 2b$ there are none.
+
+</Example>
+
+<Correction>
+
+The earlier version asked for a condition on "a, b, c" (there is no $c$) and stopped at the augmented matrix. The completed answer is $a = 2b$.
+
+</Correction>
+
+<QuickCheck
+  question="How many solutions does 6x − 4y = 4, 3x − 2y = 2 have?"
+  choices={["None", "Exactly one", "Infinitely many"]}
+  answer={2}
+  explanation="Here a = 4 and b = 2, so a = 2b: the system is consistent, and because det A = 0 it cannot have a unique solution."
+/>
