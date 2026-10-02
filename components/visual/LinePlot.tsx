@@ -1,5 +1,3 @@
-'use client'
-
 import type { Matrix, Vector } from '@/lib/math/matrix'
 import { formatAffine, formatNumber, rowLabel } from '@/lib/math/notation'
 import { Rational } from '@/lib/math/rational'

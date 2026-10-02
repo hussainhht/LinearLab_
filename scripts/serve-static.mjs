@@ -1,12 +1,13 @@
-// Serves the static export in ./out for local previews and browser tests.
-// Usage: node scripts/serve-static.mjs [port]   (honours NEXT_PUBLIC_BASE_PATH)
+// Serves the static export in ./out the way a static host (GitHub Pages) would: directory URLs
+// get a trailing slash, unknown URLs get 404.html, and the site lives under the base path.
+// Usage: node scripts/serve-static.mjs [port]   (honours LINEARLAB_BASE_PATH, see config/deployment.mjs)
 import { createReadStream, existsSync, statSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
+import { basePath } from '../config/deployment.mjs'
 
 const root = resolve('out')
 const port = Number(process.argv[2] ?? process.env.PORT ?? 4173)
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',

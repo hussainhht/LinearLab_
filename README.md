@@ -1,536 +1,164 @@
 # LinearLab
-# 🎓 LinearLab - Interactive Linear Algebra Learning Platform
-
-> **Master linear algebra through interactive visualization, practice problems, and hands-on exploration**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-f7df1e.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Interactive](https://img.shields.io/badge/Type-Interactive-brightgreen.svg)](https://github.com)
 
 An interactive linear algebra course and a set of step-by-step matrix tools. Every calculation uses exact fractions, every row operation comes with the reason for it, and every worked example in the course opens in the matching tool with one click.
 
-## 🌟 What is LinearLab?
+![The system solver part-way through a 3×3 Gauss–Jordan elimination](docs/screenshots/solver-steps.png)
 
-**LinearLab** is a comprehensive web-based educational platform designed to make learning linear algebra intuitive, visual, and engaging. Whether you're a student struggling with abstract concepts or an instructor looking for demonstration tools, LinearLab provides interactive tools that bring mathematics to life.
+## What it does
 
-### ✨ Key Features
+**System solver** (`/tools/rref/`)
+- Edit the augmented matrix [A | b] (up to 6 equations and 6 variables). Entries can be integers, decimals, fractions such as `1/3`, or scientific notation. An invalid or empty entry is reported next to its cell, never treated as 0.
+- Arrow keys and Enter move between entries. A block pasted from a spreadsheet, CSV or MATLAB (`[1 2; 3 4]`) fills the grid.
+- Gauss–Jordan elimination with every swap, scaling and replacement recorded. Each step shows its notation (`R₂ ← R₂ − 3R₁`), the reason for it, and the arithmetic that creates the zero.
+- Step forward and back, jump to any step in the history, play or pause, and choose a speed. ←, →, Home and End also work.
+- The answer is classified as one solution, infinitely many (free variables are tagged, with the general and vector forms), or none (the contradictory row is labeled `0 = c`). It is then verified by substituting back into the original equations.
+- Systems in two variables are graphed as lines: intersecting, parallel or coincident.
+- Examples, random systems with whole-number answers, save/restore in the browser, shareable links, copy as text or LaTeX, and a print-friendly report of every step.
+- Changing the input after solving clears the outdated steps instead of showing them for a different problem.
 
-- **🔧 Matrix Operations Studio** - Perform RREF, calculate determinants, find inverses
-- **📐 Vector Space Analyzer** - Explore subspaces, linear independence, and basis
-- **📚 Interactive Learning** - Theory, examples, and visualizations in one place
-- **🎯 Practice Problems** - 32+ curated problems across 5 topics with auto-grading
-- **📊 Live Visualizations** - See 2D/3D plots of planes, lines, and vectors
-- **💡 Instant Feedback** - Step-by-step solutions and explanations
+**Matrix operations** (`/tools/matrices/`)
+- A + B, A − B, A × B, kA, transpose, determinant, inverse, rank, column space and null space. Results are explained, can be copied, and can be fed back in as A or B.
+- A multiplication walkthrough that highlights the row of A, the column of B and each product, keeps a running sum, and fills C entry by entry.
+- Determinants by elimination (swaps flip the sign), inverses through [A | I] → [I | A⁻¹] with the products A·A⁻¹ and A⁻¹·A actually computed, and null space vectors checked against A·v = 0.
+- Identity, zero and random fills; every whole-matrix replacement can be undone.
 
----
+**Determinants and Cramer's rule** (`/tools/determinant/`, `/tools/cramer/`): 2×2 and 3×3 calculators that show the hand method (ad − bc, cofactor expansion, the diagonal rule as a check). Each calculator keeps its own inputs. When det A = 0, Cramer's rule explains why it cannot be used and links the system to the solver.
 
-## 🚀 Quick Start
+**Course** (`/learn/`): 22 lessons in 5 chapters: systems of equations, row reduction, matrix algebra, inverses and determinants. Each lesson has an objective, an explanation, notation typeset with KaTeX, worked examples, a quick check, and links that load its examples into the tools. Some lessons embed interactive step-throughs, a line explorer, or calculators. Completed lessons are tracked in the browser and can be reset.
 
-### Option 1: Open Directly
-1. Clone or download this repository
-2. Open `temp/index.html` in your web browser
-3. Start exploring!
+**Practice** (`/practice/`): reduce a system yourself by choosing or typing row operations (`R2 <- R2 - 3R1`, `R1 <-> R2`, `1/2 R1 -> R1`, …). Each move is checked and labeled as progress, no progress, or a setback, judged mathematically against the reduced form, so any valid order counts. Three levels of hints, undo, and the full solution from the current matrix are available. A system from the solver can be practised directly.
 
-### Option 2: Navigate From Index
-```
-index.html → Choose your tool:
-├── 🔧 Practice Tools (Matrix operations)
-├── 📚 Learn Linear Algebra (Theory + examples)
-├── 🛠️ Practice Problems (32+ quiz questions)
-└── 📐 Vector Spaces (Subspace analyzer)
-```
+| | |
+| --- | --- |
+| ![Home page](docs/screenshots/home.png) | ![Infinitely many solutions with the free variable tagged](docs/screenshots/solver-solution.png) |
+| ![Multiplication walkthrough](docs/screenshots/multiplication.png) | ![Practice mode with feedback and a hint](docs/screenshots/practice.png) |
+| ![A lesson with KaTeX notation](docs/screenshots/lesson.png) | ![The solver on a phone in the dark theme](docs/screenshots/mobile-dark.png) |
 
-### No Installation Required!
-✅ Works in any modern browser (Chrome, Firefox, Edge, Safari)  
-✅ No server setup needed  
-✅ No dependencies to install  
+## Stack
 
----
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack) with React 19, exported as a static site
+- TypeScript in strict mode (including `noUncheckedIndexedAccess`)
+- MDX lessons through `@next/mdx`, with `remark-math` and `rehype-katex` rendering equations at build time
+- CSS Modules on a small set of design tokens; fonts are STIX Two Text and Atkinson Hyperlegible Next, via `next/font`
+- Vitest for the math engine and content checks, Playwright for browser tests
 
-## 📦 What's Inside?
+There is no backend: all calculation, progress and saved work stay in the browser.
 
-### 🔧 1. Matrix Operations Studio (`index.html`)
+## Getting started
 
-Your complete toolkit for matrix computations:
+Requires Node.js 20.9 or later.
 
-**Features:**
-- ✅ Gauss-Jordan Elimination (RREF)
-- ✅ Determinant Calculator (with cofactor expansion)
-- ✅ Matrix Inverse Finder
-- ✅ Rank & Nullity Analysis
-- ✅ Graph Visualization (incidence/adjacency matrices)
-- ✅ Step-by-step solutions
-
-**Use Cases:**
-- Solve systems of linear equations
-- Check if matrices are invertible
-- Analyze graph connectivity
-- Verify homework solutions
-
----
-
-### 📐 2. Vector Space Analyzer (`vector_space.html`)
-
-Three powerful modes for understanding vector spaces:
-
-#### **Mode 1: Check by Equation** 📝
-- Input: Linear equation (e.g., `x + y + z = 0`)
-- Output: Subspace verification + 3D visualization
-- Tests: Zero vector, closure under addition & scalar multiplication
-
-#### **Mode 2: Check by Vectors** 🧮
-- Input: Set of 2-4 vectors
-- Output: Linear independence, rank, basis analysis
-- Algorithm: RREF-based computation
-- Visualization: Vectors as arrows in space
-
-#### **Mode 3: Interactive Learning** 🧠
-- Complete theory guide with 5 sections
-- Worked examples (subspaces & non-subspaces)
-- 5 practice problems with solutions
-- Definitions, theorems, and geometric interpretations
-
-**Perfect for:**
-- Understanding abstract subspace concepts
-- Verifying vector set properties
-- Preparing for exams
-- Building geometric intuition
-
----
-
-### 📚 3. Learning Platform (`learn.html`)
-
-Comprehensive educational content:
-
-**Topics Covered:**
-- Systems of Linear Equations
-- Gauss-Jordan Elimination
-- Matrix Operations
-- Determinants
-- Matrix Inverses
-- Vector Spaces & Subspaces
-- Linear Independence
-- Basis & Dimension
-- Rank & Nullity
-
-**Features:**
-- 📖 Theory explanations with mathematical notation
-- 🎯 Step-by-step examples
-- 🧪 Interactive demonstrations
-- 🔗 Integrated with practice tools
-
----
-
-### 🎯 4. Practice Problem Bank (`practice.html`)
-
-Quiz yourself with **32 curated problems** across 5 topics:
-
-| Topic                  | Problems | Type         |
-|------------------------|----------|--------------|
-| Systems of Equations   | 6        | MCQ + Numeric|
-| Gauss-Jordan          | 6        | MCQ + Numeric|
-| Determinants          | 7        | MCQ + Numeric|
-| Matrix Inverses       | 6        | MCQ + Numeric|
-| Rank & Nullity        | 7        | MCQ + Numeric|
-
-**Features:**
-- ✅ Auto-grading with instant feedback
-- ✅ Randomized problem selection
-- ✅ Detailed explanations for wrong answers
-- ✅ Score persistence (localStorage)
-- ✅ Topic-specific practice
-
-**Study Modes:**
-- 🐢 Slow & steady: Read explanations carefully
-- ⚡ Speed test: Complete 5 problems in 3 minutes
-- 🎯 Topic focus: Master one concept at a time
-
----
-
-## 🎨 Technology Stack
-
-### Frontend
-- **HTML5** - Semantic structure
-- **CSS3** - Modern styling with Grid & Flexbox
-- **Vanilla JavaScript (ES6+)** - No framework dependencies
-
-### Libraries
-- **[Plotly.js](https://plotly.com/javascript/)** - Interactive 2D/3D visualizations
-- **[MathJax 3](https://www.mathjax.org/)** - Beautiful mathematical notation rendering
-
-### Algorithms Implemented
-- ✅ Gaussian Elimination with partial pivoting
-- ✅ RREF (Reduced Row Echelon Form)
-- ✅ Determinant via cofactor expansion
-- ✅ Matrix inversion using augmented matrices
-- ✅ Rank computation
-- ✅ Subspace verification with random testing
-- ✅ Linear independence checking
-
----
-
-## 📁 Project Structure
-
-```
-LinearLab/
-│
-├── temp/                          # Main HTML pages
-│   ├── index.html                # Matrix operations studio
-│   ├── learn.html                # Learning platform
-│   ├── practice.html             # Quiz system
-│   └── vector_space.html         # Vector space analyzer
-│
-├── js/                           # JavaScript modules
-│   ├── app.js                    # Matrix operations logic
-│   ├── learn.js                  # Learning platform handlers
-│   ├── practice.js               # Quiz engine
-│   └── vector.js                 # Vector space algorithms
-│
-├── style/                        # CSS stylesheets
-│   ├── main.css                  # Global styles
-│   ├── learn.css                 # Learning platform styles
-│   ├── practice.css              # Quiz interface styles
-│   └── vector.css                # Vector space tool styles
-│
-├── data/                         # JSON data files
-│   └── practice-bank.json        # Problem bank (32 questions)
-│
-├── examples.json                 # Matrix operation examples
-├── examples_vector.json          # Vector space examples
-│
-└── docs/                         # Documentation
-    ├── README.md                 # This file
-    ├── IMPLEMENTATION_SUMMARY.md # Technical overview
-    ├── VECTOR_SPACE_FEATURE.md   # Vector tool docs
-    ├── VECTOR_SPACE_QUICKSTART.md
-    ├── PRACTICE_SETS_README.md
-    └── PRACTICE_SETS_QUICKSTART.md
+```bash
+npm install
+npm run dev          # http://localhost:3000
 ```
 
----
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run typegen` | Generate Next.js route types (the global `PageProps<'/route'>` helper, `next-env.d.ts`) without building |
+| `npm run typecheck` | `typegen`, then `tsc --noEmit`. Works on a fresh checkout; plain `tsc` fails without the generated types |
+| `npm run lint` | ESLint with the Next.js core-web-vitals and TypeScript configs |
+| `npm test` | Unit tests: math engine, input parsing, practice checks, and every number stated in the lessons |
+| `npm run build` | Static export to `out/` |
+| `npm run verify:export` | Checks `out/`: every lesson, practice and tool route exists, math is rendered, every URL is under the base path and resolves to a file (run after `build`) |
+| `npm start` | Serve `out/` at http://localhost:4173 the way a static host would |
+| `npm run test:e2e` | Playwright browser tests against `out/` (run `npm run build` first; `npx playwright install chromium` once) |
+| `npm run check` | Typecheck, lint, unit tests, build and export verification in one go |
 
-## 🎯 Who is LinearLab For?
+## Architecture
 
-### 👨‍🎓 Students
-- Verify homework answers
-- Visualize abstract concepts
-- Practice with instant feedback
-- Study for exams with confidence
-
-### 👨‍🏫 Instructors
-- Demonstrate concepts in class
-- Assign practice problems
-- Create visual examples
-- Supplement textbook material
-
-### 🔬 Self-Learners
-- Build intuition through experimentation
-- Follow structured learning paths
-- Test understanding with quizzes
-- Learn at your own pace
-
----
-
-## 💡 Learning Paths
-
-### Path 1: Complete Beginner
 ```
-1. Learn Platform → Systems of Equations
-2. Practice Tool → Solve simple systems
-3. Learn Platform → Gauss-Jordan method
-4. Practice Problems → Systems (6 problems)
-5. Matrix Studio → Try RREF calculator
-```
-
-### Path 2: Vector Spaces Focus
-```
-1. Vector Analyzer → Learning Mode (all 5 sections)
-2. Vector Analyzer → Try Mode 1 examples
-3. Vector Analyzer → Try Mode 2 examples
-4. Vector Analyzer → Practice problems (Section 5)
-5. Create your own test cases!
+app/                    Routes: /, /learn, /learn/[slug], /tools/*, /practice, /practice/[id], /practice/custom
+components/
+  ui/                   Buttons, form controls, notices, toasts, icons
+  matrix/               MatrixView (annotated display), MatrixEditor (keyboard + paste), RationalText
+  steps/                usePlayback, step controls, history, explanation, EliminationPlayer
+  tools/                Solver, matrix operations, determinant and Cramer calculators, WorkspaceProvider
+  learning/             Course navigation, progress, quick checks, MDX building blocks and widgets
+  practice/             The guided practice session
+lib/
+  math/                 The engine (no React, no DOM)
+  storage/              Safe localStorage access, progress, saved workspaces
+  url/                  Encoding problems in shareable URLs
+content/lessons/        catalog.ts (the course outline) and one .mdx file per lesson
+data/examples/          Example systems, matrices and practice problems
+config/deployment.mjs   The one place deployment settings live (the base path)
+scripts/serve-static.mjs  Local static host for out/, behaving like GitHub Pages
+tests/unit/             Math engine, parsing, practice and lesson-content checks
+tests/export/           Inspects the static export in out/
+tests/e2e/              Playwright browser tests (also run against a sub-path build)
+.github/workflows/      ci.yml (checks) and deploy-pages.yml (manual publish)
+web/, nots/             Legacy files from the original static site; not part of the app (see below)
 ```
 
-### Path 3: Exam Preparation
-```
-1. Review Learn Platform → All topics
-2. Practice Problems → All topics (32 problems)
-3. Matrix Studio → Verify complex calculations
-4. Vector Analyzer → Test subspace understanding
-5. Repeat weak areas
-```
+**One math engine.** `lib/math` is plain TypeScript with no React, DOM or timers. A single elimination routine (`elimination.ts`) produces structured steps (operation, purpose, before and after snapshots, pivot, changed cells). The solver, inverse, rank and null space, determinant, practice checks and lesson demos all use it. Explanations are generated from those steps (`explain.ts`), so the text always describes the operation that was actually applied.
 
----
+**One course outline.** `content/lessons/catalog.ts` lists the chapters and lessons with stable ids and slugs. Navigation, numbering, previous/next links, static route generation and progress tracking all derive from it. `bodies.ts` maps every slug to its MDX file, typed so a missing body fails to compile, and a unit test checks that there are no stray files.
 
-## 🌟 Highlights & Special Features
+**Client-side, static, shareable.** Pages are prerendered at build time; interactive tools are Client Components and lesson text stays server-rendered. Navigation between sections is client-side, and tool inputs live in a provider above the routes, so work survives moving between lessons and tools. Problems can be loaded from the URL (`/tools/rref/?A=1,2;3,-1&b=5,4`, `?example=…`). A link is applied once, so Back and Forward never overwrite later edits.
 
-### 🎨 Visual Learning
-- **3D Plotly Graphs** - Rotate, zoom, and explore planes and vectors
-- **2D Line Plots** - See lines through the origin vs. shifted lines
-- **Color Coding** - Green = correct/subspace, Red = incorrect/non-subspace
-- **Animated Transitions** - Smooth interface interactions
+**Playback without stale timers.** Stepping is driven by one index. The only timer lives in an effect keyed on that index and the problem, so pausing, resetting, loading another problem, navigating away or unmounting cancels it.
 
-### 🧮 Smart Algorithms
-- **RREF Implementation** - Full Gaussian elimination from scratch
-- **Random Vector Testing** - Robustly verify closure properties
-- **Numerical Precision** - Handles floating-point arithmetic carefully
-- **Edge Case Handling** - Graceful error messages for invalid inputs
+## Mathematical accuracy
 
-### 📱 Responsive Design
-- **Desktop** - Side-by-side layouts with sticky controls
-- **Tablet** - Stacked views with full-width graphs
-- **Mobile** - Optimized touch targets and collapsible sections
+- **Exact arithmetic.** Values are `Rational`s backed by BigInt, always kept in lowest terms. `0.1 + 0.2` is exactly `3/10`, and fractions never drift.
+- **No tolerance thresholds.** A determinant is zero only when it is exactly zero. The matrix `[[0.000001, 0], [0, 0.000001]]` has determinant 10⁻¹² and is inverted correctly; the previous version rejected it.
+- **Display is separate from computation.** Decimal display rounds for reading only (marked ≈); results are never computed from rounded values.
+- **Strict input.** Parsing never uses `eval`. Empty or malformed entries are errors, sizes are checked before every operation, and incompatible dimensions get an explanation.
+- **Independent checks.** Solutions are substituted back into the original equations, inverses are multiplied out in both orders, and null space vectors are checked against A·v = 0, both in the UI and in the tests. `tests/unit/lessons.test.ts` recomputes every result quoted in the lessons.
+- **Safe storage.** Saved work stores the strings you typed (never BigInt), with versioned, validated keys. Storage failures degrade quietly.
 
-### 💾 Smart Features
-- **localStorage** - Saves your quiz scores
-- **Quick Examples** - One-click test cases in every tool
-- **Keyboard Shortcuts** - Tab navigation, Enter to submit
-- **Print-Friendly** - Clean output for documentation
+### Corrected from the previous version
 
----
+The rebuild replaced the original `temp/*.html`, `js/*.js` and `style/*.css` pages. Defects found and fixed:
 
-## 🚀 Usage Examples
+- The course sidebar listed 49 lessons for 41 slides; many titles opened unrelated slides and eight opened nothing. Navigation is now generated from the outline.
+- The 3×3 determinant calculator read the Cramer calculator's inputs and showed 20 instead of 22 for `[[1,2,3],[0,4,5],[1,0,6]]`.
+- Starting the multiplication animation replaced its own workspace with a notification and threw errors.
+- Starting the RREF solver replaced the inputs, so later operations read missing elements.
+- A fixed `1e-10` determinant threshold called invertible matrices singular.
+- `historyList` appeared twice with the same id; determinant, inverse and rank logic existed in several copies; "Load Example" always loaded the same system.
+- Wrong worked examples: `x + 2y = 5, 3x − y = 4` (correct answer 13/7, 11/7, not 1, 2); the 3×3 Cramer example (19/20, 12/5, 13/4, not 1, 3, 2); `[[2a, a+1], [4, 2]]` (det = −4 for every a, with no exceptional value); a `(3A)⁻¹` example missing a factor of 1/3; a row swap that changed a zero row; a homogeneous system said to have nontrivial solutions that it does not have. Lessons note each correction where it appears.
 
-### Example 1: Is This a Subspace?
+## Deployment
 
-**Question:** Is `W = {(x, y, z) | x + y + z = 0}` a subspace of ℝ³?
+LinearLab is a static Next.js export (`output: 'export'`): `npm run build` writes plain HTML, CSS and JavaScript to `out/`, and any static host can serve it. There is no server, API route, middleware or runtime file access to host.
 
-**Steps:**
-1. Open `vector_space.html`
-2. Select "📝 Check by Equation"
-3. Choose dimension: ℝ³
-4. Enter: a=1, b=1, c=1, d=0
-5. Click "Check if Subspace"
+### GitHub Pages
 
-**Result:**
-```
-✅ This IS a Subspace!
+A project site is served from a sub-path (`https://<user>.github.io/<repo>/`), so the site is built with a base path. Next.js then prefixes every link, script, stylesheet and font itself; the application code does not know about it.
 
-✅ Contains zero vector
-✅ Closed under addition  
-✅ Closed under scalar multiplication
-
-[3D visualization shows plane through origin]
+```bash
+LINEARLAB_BASE_PATH=/LinearLab_ npm run build
+LINEARLAB_BASE_PATH=/LinearLab_ npm start      # http://localhost:4173/LinearLab_/
 ```
 
----
+`LINEARLAB_BASE_PATH` is read in one module, `config/deployment.mjs`, which normalizes it and rejects malformed values (`/a b`, `/a/../b`, ...). The build, the local static server and the Playwright config all import it. Leave it unset for local development and for hosts that serve from the root.
 
-### Example 2: Solve a System
+**Workflows** (`.github/workflows/`):
 
-**System:**
-```
-x + 2y - z = 1
-2x + 3y + z = 3
-x + y + 2z = 2
-```
+- `ci.yml` runs on pushes to `master` and on pull requests: type check (with generated route types), lint, unit tests, build, `verify:export` and the browser tests, once for the site at `/` and once under a `/<repo>` sub-path.
+- `deploy-pages.yml` is **manual** (Actions → Deploy to GitHub Pages → Run workflow) and publishes `master` only. It runs `ci.yml` as a gate, builds with the base path reported by GitHub Pages (`/<repo>` for a project site, empty for a user site or custom domain), verifies the export, and publishes `out/`. Merging does not deploy.
 
-**Steps:**
-1. Open `index.html`
-2. Select "Gauss-Jordan" tab
-3. Enter coefficients in 3×4 matrix
-4. Click "Calculate RREF"
+In the repository settings, Pages → Build and deployment → Source must be **GitHub Actions**.
 
-**Result:** Step-by-step reduction + solution!
+### Static export notes
 
----
+- Every lesson and practice route is generated from the lesson and practice data with `generateStaticParams()` and `dynamicParams = false`, so there is one list of routes. Unknown URLs get `404.html`.
+- Tool pages that read `?A=…&b=…` use `useSearchParams` inside `<Suspense>`; the HTML is prerendered and the problem is applied in the browser after load.
+- `images.unoptimized` is set because the default image optimizer needs a server. The app has no `next/image` usage today.
+- Progress and saved work are stored in `localStorage`, so nothing needs a backend. Moving to another host later only means changing the base path variable.
 
-### Example 3: Test Your Knowledge
+## Known limitations
 
-**Goal:** Master determinants
+- Matrices are limited to 6×6 in the tools; exact arithmetic is fast at that size, but the step-by-step displays are designed for hand-sized problems.
+- The course covers systems, row reduction, matrix algebra, inverses and determinants. Topics listed in the old sidebar without content (vector spaces as a chapter, eigenvalues, orthogonality, least squares, coding theory) are not included yet.
+- Progress and saved work live in this browser's storage only; there are no accounts or sync.
+- The interface and course are in English.
+- `web/` and `nots/` are leftovers of the original static site (its vector space analyzer and practice-bank scripts, and development notes). They are not part of the Next.js app, are not built or published, and the `web/` pages are incomplete: `learn.html` and `vector_space.html` were dropped when the branches were merged, so its index links to files that no longer exist. The full original site is in the `linerarlap-learning` branch. Its scripts are linted with relaxed rules (their functions are called from inline HTML handlers).
+- The build prints a harmless warning that Next.js has no fallback metrics for Atkinson Hyperlegible Next; the CSS fallback stack is used instead.
 
-**Steps:**
-1. Open `practice.html`
-2. Select "Determinants" topic
-3. Generate 5 problems
-4. Answer and check
-5. Review explanations for mistakes
+## Author
 
-**Outcome:** Instant score + feedback!
-
----
-
-## 🎓 Key Concepts Covered
-
-### Linear Systems
-- ✅ Consistent vs inconsistent systems
-- ✅ Unique, infinite, or no solutions
-- ✅ Row operations and equivalence
-- ✅ Augmented matrix notation
-
-### Matrix Theory
-- ✅ Matrix addition, multiplication, transpose
-- ✅ Identity and zero matrices
-- ✅ Determinants and properties
-- ✅ Invertibility conditions
-- ✅ Elementary matrices
-
-### Vector Spaces
-- ✅ 8 vector space axioms
-- ✅ 3 subspace conditions
-- ✅ Span of vector sets
-- ✅ Linear independence
-- ✅ Basis and dimension
-- ✅ Rank-nullity theorem
-
-### Geometric Interpretations
-- ✅ Lines through origin (1D subspaces)
-- ✅ Planes through origin (2D subspaces)
-- ✅ Vectors as arrows in space
-- ✅ Orthogonality and angles
-
----
-
-## 🔧 Customization & Extension
-
-### Add More Practice Problems
-
-Edit `data/practice-bank.json`:
-
-```json
-{
-  "systems": [
-    {
-      "id": "sys_7",
-      "type": "mcq",
-      "q": "Your question here?",
-      "options": ["A", "B", "C", "D"],
-      "answer": "B",
-      "explain": "Explanation here"
-    }
-  ]
-}
-```
-
-### Add Vector Examples
-
-Edit `examples_vector.json`:
-
-```json
-{
-  "equations": [
-    {
-      "title": "My Example",
-      "dim": 3,
-      "coef": [1, 2, 3],
-      "constant": 0
-    }
-  ]
-}
-```
-
----
-
-## 🐛 Troubleshooting
-
-### Problem: Visualizations don't appear
-**Solution:** Ensure Plotly.js CDN is accessible. Check browser console for errors.
-
-### Problem: MathJax formulas not rendering
-**Solution:** Wait a few seconds for MathJax to load. Refresh page if needed.
-
-### Problem: Practice scores not saving
-**Solution:** Check browser allows localStorage (disable private/incognito mode).
-
-### Problem: Buttons not responding
-**Solution:** Check browser console for JavaScript errors. Ensure all JS files are loaded.
-
----
-
-## 📚 Documentation
-
-Explore detailed guides:
-
-- **[IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)** - Technical overview
-- **[VECTOR_SPACE_FEATURE.md](./VECTOR_SPACE_FEATURE.md)** - Vector analyzer deep dive
-- **[VECTOR_SPACE_QUICKSTART.md](./VECTOR_SPACE_QUICKSTART.md)** - Vector tool guide
-- **[PRACTICE_SETS_README.md](./PRACTICE_SETS_README.md)** - Quiz system details
-- **[PRACTICE_SETS_QUICKSTART.md](./PRACTICE_SETS_QUICKSTART.md)** - Practice guide
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how:
-
-1. **Report Bugs** - Open an issue with details
-2. **Suggest Features** - Share your ideas
-3. **Add Problems** - Contribute to practice bank
-4. **Improve Docs** - Help clarify explanations
-5. **Fix Code** - Submit pull requests
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Plotly.js** - Incredible visualization library
-- **MathJax** - Beautiful math rendering
-- **Linear Algebra Community** - Inspiration and feedback
-- **Students & Educators** - The reason this exists
-
----
-
-## 🎯 Project Status
-
-**Version:** 1.0.0  
-**Status:** ✅ Complete and Fully Functional  
-**Last Updated:** October 2025
-
-### What's Working:
-✅ All 4 main tools operational  
-✅ 32 practice problems with grading  
-✅ 3D visualizations functional  
-✅ Responsive design implemented  
-✅ Documentation complete  
-
-### Future Enhancements:
-🔮 More practice problems  
-🔮 Additional visualization modes  
-🔮 Export/print functionality  
-🔮 User accounts for progress tracking  
-🔮 Mobile app version  
-
----
-
-## 📞 Contact & Support
-
-- **Repository:** [LinearLab on GitHub](https://github.com/hussainhht/LinearLab_)
-- **Branch:** `linerarlap-learning`
-- **Issues:** Use GitHub Issues for bug reports
-- **Questions:** Open a discussion on GitHub
-
----
-
-## ⭐ Star This Repo!
-
-If LinearLab helps you understand linear algebra better, consider giving it a star ⭐ on GitHub!
-
----
-
-## 🎉 Start Learning!
-
-Ready to master linear algebra? 
-
-**Choose your adventure:**
-
-1. 🔰 **New to Linear Algebra?** → Start with `learn.html`
-2. 🎯 **Need to solve problems?** → Go to `index.html`
-3. 🧮 **Studying vector spaces?** → Open `vector_space.html`
-4. 📝 **Want to practice?** → Try `practice.html`
-
-**No matter where you start, you're on the path to mastery! 🚀✨**
-
----
-
-<div align="center">
-
-Made with ❤️ and ☕ for students everywhere
-
-**Happy Learning! 🎓**
-
-</div>
+Hussain Ali, University of Bahrain.
