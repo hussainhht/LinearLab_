@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vector Space & Subspace Analyzer | LinearLab</title>
+        <link rel="stylesheet" href="./style/main.css">
+        <link rel="stylesheet" href="./style/vector.css">
+        <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+        <script
+            src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div
+                    style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
+                    <div style="flex: 1;">
+                        <h1>📐 Vector Space & Subspace Analyzer</h1>
+                        <p class="subtitle">Interactive Tool for Checking Vector
+                            Spaces,
+                            Subspaces & Linear Independence</p>
+                    </div>
+                    <button id="themeToggle" onclick="toggleTheme()"
+                        class="btn btn-secondary"
+                        style="padding: 6px 12px; font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; min-width: auto; width: auto; max-width: 120px;">
+                        🌙 Dark Mode
+                    </button>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="header-navigation">
+                    <a href="index.html" class="nav-link">
+                        <button class="btn btn-info nav-btn">
+                            <span>🔧</span>
+                            <span>Matrix Tools</span>
+                        </button>
+                    </a>
+                    <a href="practice.html" class="nav-link">
+                        <button class="btn btn-success nav-btn">
+                            <span>📝</span>
+                            <span>Practice Sets</span>
+                        </button>
+                    </a>
+                    <a href="learn.html" class="nav-link">
+                        <button class="btn btn-secondary nav-btn">
+                            <span>📚</span>
+                            <span>Learn</span>
+                        </button>
+                    </a>
+                </div>
+
+                <!-- Mode Navigation -->
+                <div class="tab-navigation">
+                    <button class="tab-btn active" data-mode="equation">
+                        <span class="tab-icon">📝</span>
+                        <span class="tab-text">Check by Equation</span>
+                    </button>
+                    <button class="tab-btn" data-mode="vectors">
+                        <span class="tab-icon">🧮</span>
+                        <span class="tab-text">Check by Vectors</span>
+                    </button>
+                    <button class="tab-btn" data-mode="axioms">
+                        <span class="tab-icon">✅</span>
+                        <span class="tab-text">Check 8 Axioms</span>
+                    </button>
+                    <button class="tab-btn" data-mode="learn">
+                        <span class="tab-icon">🧠</span>
+                        <span class="tab-text">Interactive Learning</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Mode 1: Check by Equation -->
+            <div id="equationMode" class="mode-content active">
+                <div class="main-content">
+                    <div class="control-panel">
+                        <h2>📊 Subspace Checker (By Equation)</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 How to Use</h3>
+                            <p>Enter a linear equation that defines your set.
+                                For example:</p>
+                            <ul>
+                                <li><strong>W = { (x, y, z) | x + y + z = 0
+                                        }</strong></li>
+                                <li><strong>W = { (x, y) | x = 2y
+                                        }</strong></li>
+                                <li><strong>W = { (x, y, z) | 2x - y + z = 0
+                                        }</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Enter Your Equation</h3>
+                            <label>Dimension (ℝⁿ):</label>
+                            <select id="equationDimension" class="form-select">
+                                <option value="2">ℝ² (2D)</option>
+                                <option value="3" selected>ℝ³ (3D)</option>
+                            </select>
+
+                            <div id="equation2D" style="display: none;">
+                                <h4>For W = { (x, y) | ax + by = c }</h4>
+                                <div class="coefficient-inputs">
+                                    <input type="number" id="eq2d_a"
+                                        placeholder="a" value="1" step="any">
+                                    <span>x +</span>
+                                    <input type="number" id="eq2d_b"
+                                        placeholder="b" value="2" step="any">
+                                    <span>y =</span>
+                                    <input type="number" id="eq2d_c"
+                                        placeholder="c" value="0" step="any">
+                                </div>
+                            </div>
+
+                            <div id="equation3D">
+                                <h4>For W = { (x, y, z) | ax + by + cz = d
+                                    }</h4>
+                                <div class="coefficient-inputs">
+                                    <input type="number" id="eq3d_a"
+                                        placeholder="a" value="1" step="any">
+                                    <span>x +</span>
+                                    <input type="number" id="eq3d_b"
+                                        placeholder="b" value="1" step="any">
+                                    <span>y +</span>
+                                    <input type="number" id="eq3d_c"
+                                        placeholder="c" value="1" step="any">
+                                    <span>z =</span>
+                                    <input type="number" id="eq3d_d"
+                                        placeholder="d" value="0" step="any">
+                                </div>
+                            </div>
+
+                            <div
+                                style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button id="checkEquation"
+                                    class="btn btn-success">🔍 Check if
+                                    Subspace</button>
+                                <button id="randomEquation"
+                                    class="btn btn-info">🎲 Random
+                                    Numbers</button>
+                            </div>
+                        </div>
+                        <h3>📖 Quick Examples</h3>
+                        <div class="quick-examples">
+
+                            <button class="btn-small btn-secondary"
+                                onclick="loadEquationExample(1)">x + y + z = 0
+                                ✅</button>
+                            <button class="btn-small btn-secondary"
+                                onclick="loadEquationExample(2)">x = 2y (2D)
+                                ✅</button>
+                            <button class="btn-small btn-warning"
+                                onclick="loadEquationExample(3)">x + y = 1
+                                ❌</button>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h2>📝 Results</h2>
+                        <div id="equationResult" class="result-content">
+                            <p class="empty-state">Enter an equation and click
+                                "Check if Subspace" to see results.</p>
+                        </div>
+
+                        <div id="equationVisualization"
+                            class="visualization-panel" style="display: none;">
+                            <h3>📊 Geometric Visualization</h3>
+                            <div id="equationGraph"
+                                style="min-height: 500px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 2: Check by Vectors -->
+            <div id="vectorsMode" class="mode-content">
+                <div class="main-content">
+                    <div class="control-panel">
+                        <h2>🧮 Vector Set Analyzer</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 How to Use</h3>
+                            <p>Enter a set of vectors to analyze:</p>
+                            <ul>
+                                <li>Check if they're <strong>linearly
+                                        independent</strong></li>
+                                <li>Find the <strong>dimension</strong> of their
+                                    span</li>
+                                <li>Determine if they form a
+                                    <strong>basis</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Enter Your Vectors</h3>
+                            <label>Dimension (ℝⁿ):</label>
+                            <select id="vectorDimension" class="form-select">
+                                <option value="2">ℝ² (2D)</option>
+                                <option value="3" selected>ℝ³ (3D)</option>
+                            </select>
+
+                            <label>Number of Vectors:</label>
+                            <select id="vectorCount" class="form-select">
+                                <option value="2" selected>2 vectors</option>
+                                <option value="3">3 vectors</option>
+                                <option value="4">4 vectors</option>
+                            </select>
+
+                            <div id="vectorInputs"></div>
+
+                            <div
+                                style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button id="checkVectors"
+                                    class="btn btn-success">🔍
+                                    Analyze Vectors</button>
+                                <button id="randomVectors"
+                                    class="btn btn-info">🎲 Random
+                                    Numbers</button>
+                            </div>
+                        </div>
+                        <h3>📖 Quick Examples</h3>
+                        <div class="quick-examples">
+                            <button class="btn-small btn-secondary"
+                                onclick="loadVectorExample(1)">Independent
+                                ✅</button>
+                            <button class="btn-small btn-warning"
+                                onclick="loadVectorExample(2)">Dependent
+                                ❌</button>
+                            <button class="btn-small btn-info"
+                                onclick="loadVectorExample(3)">Basis for
+                                ℝ³</button>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h2>📝 Analysis Results</h2>
+                        <div id="vectorResult" class="result-content">
+                            <p class="empty-state">Enter vectors and click
+                                "Analyze Vectors" to see results.</p>
+                        </div>
+
+                        <div id="vectorVisualization"
+                            class="visualization-panel" style="display: none;">
+                            <h3>📊 Vector Visualization</h3>
+                            <div id="vectorGraph"
+                                style="min-height: 500px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 3: Check 8 Axioms -->
+            <div id="axiomsMode" class="mode-content">
+                <div class="main-content">
+                    <div class="control-panel">
+                        <h2>✅ Vector Space Axiom Checker</h2>
+
+                        <div class="definition-box">
+                            <h3>🎯 How to Use</h3>
+                            <p>This tool checks if a set with given operations
+                                satisfies all <strong>8 axioms</strong> required
+                                to be a vector space.</p>
+                            <p>Enter test vectors from your set and the tool
+                                will verify each axiom:</p>
+                            <ul>
+                                <li><strong>Closure</strong> under addition and
+                                    scalar multiplication</li>
+                                <li><strong>Commutativity</strong> and
+                                    <strong>Associativity</strong></li>
+                                <li>Existence of <strong>Zero Vector</strong>
+                                    and <strong>Additive Inverse</strong></li>
+                                <li><strong>Distributivity</strong> and
+                                    <strong>Scalar Identity</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Select Space Type</h3>
+                            <select id="spaceType" class="form-select">
+                                <option value="rn">ℝⁿ - Standard Vector
+                                    Space</option>
+                                <option value="custom">Custom Set (Define
+                                    Operations)</option>
+                            </select>
+
+                            <div id="rnConfig">
+                                <label>Dimension (ℝⁿ):</label>
+                                <select id="axiomDimension" class="form-select">
+                                    <option value="2">ℝ² (2D)</option>
+                                    <option value="3" selected>ℝ³ (3D)</option>
+                                    <option value="4">ℝ⁴ (4D)</option>
+                                </select>
+
+                                <h4>Enter Test Vectors</h4>
+                                <p
+                                    style="font-size: 0.9em; color: #94a3b8;">We'll
+                                    test the axioms using these vectors</p>
+
+                                <div id="axiomVectorInputs"></div>
+
+                                <div
+                                    style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                                    <button id="checkAxioms"
+                                        class="btn btn-success">
+                                        🔍 Check All 8 Axioms
+                                    </button>
+                                    <button id="randomAxiomVectors"
+                                        class="btn btn-info">
+                                        🎲 Random Test Vectors
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="customConfig" style="display: none;">
+                                <div class="note-box">
+                                    <p>⚠️ Custom operation verification requires
+                                        specific mathematical definitions.</p>
+                                    <p>For now, use the ℝⁿ mode or the
+                                        equation/vector checkers for other
+                                        spaces.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>📖 Quick Examples</h3>
+                        <div class="quick-examples">
+                            <button class="btn-small btn-secondary"
+                                onclick="loadAxiomExample(1)">
+                                Standard ℝ³ ✅
+                            </button>
+                            <button class="btn-small btn-secondary"
+                                onclick="loadAxiomExample(2)">
+                                Test ℝ² ✅
+                            </button>
+                            <button class="btn-small btn-info"
+                                onclick="loadAxiomExample(3)">
+                                Zero Vectors ℝ³
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <h2>📝 Axiom Verification Results</h2>
+                        <div id="axiomResult" class="result-content">
+                            <p class="empty-state">Enter test vectors and click
+                                "Check All 8 Axioms" to verify if this is a
+                                vector space.</p>
+                        </div>
+
+                        <div id="axiomVisualization" class="visualization-panel"
+                            style="display: none;">
+                            <h3>📊 Visual Summary</h3>
+                            <div id="axiomChart"
+                                style="min-height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 4: Interactive Learning -->
+            <div id="learnMode" class="mode-content">
+                <div class="learning-content">
+                    <h2>🧠 Vector Spaces & Subspaces: Interactive Learning</h2>
+
+                    <!-- Section 1: What is a Vector Space? -->
+                    <div class="learning-section">
+                        <h3 class="section-title" onclick="toggleSection(0)">
+                            <span class="section-icon">▶</span>
+                            <span>1. What is a Vector Space?</span>
+                        </h3>
+                        <div class="section-content">
+                            <div class="definition-box">
+                                <h4>📘 Definition</h4>
+                                <p>A <strong>vector space</strong> V over the
+                                    real numbers ℝ is a set equipped with two
+                                    operations:</p>
+                                <ul>
+                                    <li><strong>Vector Addition:</strong> u + v
+                                        ∈ V</li>
+                                    <li><strong>Scalar Multiplication:</strong>
+                                        c·u ∈ V (where c ∈ ℝ)</li>
+                                </ul>
+                                <p style="margin-top: 15px;">These operations
+                                    must satisfy <strong>8 axioms</strong>:</p>
+                            </div>
+
+                            <div class="axiom-grid">
+                                <div class="axiom-card">
+                                    <h5>1. Closure under Addition</h5>
+                                    <p>u + v ∈ V</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>2. Commutativity</h5>
+                                    <p>u + v = v + u</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>3. Associativity of Addition</h5>
+                                    <p>(u + v) + w = u + (v + w)</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>4. Zero Vector</h5>
+                                    <p>∃ 0 : u + 0 = u</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>5. Additive Inverse</h5>
+                                    <p>∃ -u : u + (-u) = 0</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>6. Closure under Scalar Mult.</h5>
+                                    <p>c·u ∈ V</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>7. Distributivity</h5>
+                                    <p>c(u + v) = cu + cv</p>
+                                </div>
+                                <div class="axiom-card">
+                                    <h5>8. Scalar Identity</h5>
+                                    <p>1·u = u</p>
+                                </div>
+                            </div>
+
+                            <div class="example-box">
+                                <h4>✅ Examples of Vector Spaces</h4>
+                                <ul>
+                                    <li><strong>ℝⁿ</strong>: The set of all
+                                        n-dimensional vectors</li>
+                                    <li><strong>M<sub>m×n</sub></strong>: The
+                                        set of all m×n matrices</li>
+                                    <li><strong>P<sub>n</sub></strong>: The set
+                                        of all polynomials of degree ≤ n</li>
+                                    <li><strong>C[a,b]</strong>: The set of
+                                        continuous functions on [a,b]</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: What is a Subspace? -->
+                    <div class="learning-section">
+                        <h3 class="section-title" onclick="toggleSection(1)">
+                            <span class="section-icon">▶</span>
+                            <span>2. What is a Subspace?</span>
+                        </h3>
+                        <div class="section-content">
+                            <div class="definition-box">
+                                <h4>📘 Definition</h4>
+                                <p>A <strong>subspace</strong> W of a vector
+                                    space V is a subset of V that is itself a
+                                    vector space under the same operations.</p>
+                            </div>
+
+                            <div class="theorem-box">
+                                <h4>🎯 The Subspace Test (3 Conditions)</h4>
+                                <p>To verify that W ⊆ V is a subspace, check
+                                    these <strong>three conditions</strong>:</p>
+
+                                <div class="condition-card">
+                                    <h5>1️⃣ Contains Zero Vector</h5>
+                                    <div class="formula">0 ∈ W</div>
+                                    <p>The zero vector must be in W.</p>
+                                </div>
+
+                                <div class="condition-card">
+                                    <h5>2️⃣ Closed under Addition</h5>
+                                    <div class="formula">If u, v ∈ W ⇒ u + v ∈
+                                        W</div>
+                                    <p>Adding two vectors in W gives another
+                                        vector in W.</p>
+                                </div>
+
+                                <div class="condition-card">
+                                    <h5>3️⃣ Closed under Scalar
+                                        Multiplication</h5>
+                                    <div class="formula">If u ∈ W, c ∈ ℝ ⇒ c·u ∈
+                                        W</div>
+                                    <p>Multiplying a vector in W by any scalar
+                                        gives a vector in W.</p>
+                                </div>
+                            </div>
+
+                            <div class="note-box">
+                                <h4>💡 Key Insight</h4>
+                                <p>If any of these three conditions fails, W is
+                                    <strong>NOT a subspace</strong>.</p>
+                                <p>The most common failure is <strong>not
+                                        containing the zero vector</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Examples -->
+                    <div class="learning-section">
+                        <h3 class="section-title" onclick="toggleSection(2)">
+                            <span class="section-icon">▶</span>
+                            <span>3. Examples: Subspaces vs Non-Subspaces</span>
+                        </h3>
+                        <div class="section-content">
+                            <div class="example-comparison">
+                                <div class="example-box success">
+                                    <h4>✅ SUBSPACE Examples</h4>
+
+                                    <div class="example-item">
+                                        <h5>Example 1: W = { (x, y) | x = 2y
+                                            }</h5>
+                                        <p><strong>Set:</strong> All vectors
+                                            where first component is twice the
+                                            second</p>
+                                        <div class="verification">
+                                            <p>✓ Zero vector: (0, 0) → 0 = 2(0)
+                                                ✅</p>
+                                            <p>✓ Addition: (2a, a) + (2b, b) =
+                                                (2(a+b), a+b) ✅</p>
+                                            <p>✓ Scalar mult: c(2a, a) = (2(ca),
+                                                ca) ✅</p>
+                                        </div>
+                                        <p class="conclusion">✅ This IS a
+                                            subspace of ℝ²</p>
+                                    </div>
+
+                                    <div class="example-item">
+                                        <h5>Example 2: W = { (x, y, z) | x + y +
+                                            z = 0 }</h5>
+                                        <p><strong>Set:</strong> All vectors
+                                            whose components sum to zero</p>
+                                        <div class="verification">
+                                            <p>✓ Zero vector: 0 + 0 + 0 = 0
+                                                ✅</p>
+                                            <p>✓ Addition: If x₁+y₁+z₁=0 and
+                                                x₂+y₂+z₂=0, then
+                                                (x₁+x₂)+(y₁+y₂)+(z₁+z₂)=0 ✅</p>
+                                            <p>✓ Scalar mult: If x+y+z=0, then
+                                                c·x + c·y + c·z = c(x+y+z) = 0
+                                                ✅</p>
+                                        </div>
+                                        <p class="conclusion">✅ This IS a
+                                            subspace of ℝ³ (a plane through
+                                            origin)</p>
+                                    </div>
+
+                                    <div class="example-item">
+                                        <h5>Example 3: W = { (x, 0, z) | x, z ∈
+                                            ℝ }</h5>
+                                        <p><strong>Set:</strong> The xz-plane in
+                                            ℝ³</p>
+                                        <div class="verification">
+                                            <p>✓ Zero vector: (0, 0, 0) ∈ W
+                                                ✅</p>
+                                            <p>✓ Addition: (x₁, 0, z₁) + (x₂, 0,
+                                                z₂) = (x₁+x₂, 0, z₁+z₂) ∈ W
+                                                ✅</p>
+                                            <p>✓ Scalar mult: c(x, 0, z) = (cx,
+                                                0, cz) ∈ W ✅</p>
+                                        </div>
+                                        <p class="conclusion">✅ This IS a
+                                            subspace of ℝ³</p>
+                                    </div>
+                                </div>
+
+                                <div class="example-box error">
+                                    <h4>❌ NON-SUBSPACE Examples</h4>
+
+                                    <div class="example-item">
+                                        <h5>Example 1: W = { (x, y) | x = 2y + 1
+                                            }</h5>
+                                        <p><strong>Set:</strong> A line not
+                                            through the origin</p>
+                                        <div class="verification">
+                                            <p>✗ Zero vector: (0, 0) → 0 ≠ 2(0)
+                                                + 1 ❌</p>
+                                            <p class="failure">FAILS: Zero
+                                                vector not in W!</p>
+                                        </div>
+                                        <p class="conclusion">❌ NOT a subspace
+                                            (doesn't contain origin)</p>
+                                    </div>
+
+                                    <div class="example-item">
+                                        <h5>Example 2: W = { (x, y, z) | x + y +
+                                            z = 1 }</h5>
+                                        <p><strong>Set:</strong> A plane not
+                                            through the origin</p>
+                                        <div class="verification">
+                                            <p>✗ Zero vector: 0 + 0 + 0 ≠ 1
+                                                ❌</p>
+                                            <p class="failure">FAILS: Zero
+                                                vector not in W!</p>
+                                        </div>
+                                        <p class="conclusion">❌ NOT a
+                                            subspace</p>
+                                    </div>
+
+                                    <div class="example-item">
+                                        <h5>Example 3: W = { (x, y) | x ≥ 0, y ≥
+                                            0 }</h5>
+                                        <p><strong>Set:</strong> First
+                                            quadrant</p>
+                                        <div class="verification">
+                                            <p>✓ Zero vector: (0, 0) ∈ W ✅</p>
+                                            <p>✓ Addition: Sum of non-negative
+                                                is non-negative ✅</p>
+                                            <p>✗ Scalar mult: (-1)(1, 1) = (-1,
+                                                -1) ∉ W ❌</p>
+                                            <p class="failure">FAILS: Not closed
+                                                under scalar multiplication!</p>
+                                        </div>
+                                        <p class="conclusion">❌ NOT a
+                                            subspace</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Span and Linear Independence -->
+                    <div class="learning-section">
+                        <h3 class="section-title" onclick="toggleSection(3)">
+                            <span class="section-icon">▶</span>
+                            <span>4. Span, Linear Independence & Basis</span>
+                        </h3>
+                        <div class="section-content">
+                            <div class="definition-box">
+                                <h4>📘 Span</h4>
+                                <p>The <strong>span</strong> of a set of vectors
+                                    {v₁, v₂, ..., vₖ} is the set of all possible
+                                    linear combinations:</p>
+                                <div class="formula">Span{v₁, v₂, ..., vₖ} =
+                                    {c₁v₁ + c₂v₂ + ... + cₖvₖ | c₁, c₂, ..., cₖ
+                                    ∈ ℝ}</div>
+                                <p style="margin-top: 15px;"><strong>Key
+                                        fact:</strong> The span is always a
+                                    subspace!</p>
+                            </div>
+
+                            <div class="definition-box">
+                                <h4>📘 Linear Independence</h4>
+                                <p>Vectors {v₁, v₂, ..., vₖ} are
+                                    <strong>linearly independent</strong>
+                                    if:</p>
+                                <div class="formula">c₁v₁ + c₂v₂ + ... + cₖvₖ =
+                                    0 ⟹ c₁ = c₂ = ... = cₖ = 0</div>
+                                <p style="margin-top: 15px;">In other words: The
+                                    only way to get zero is with all zero
+                                    coefficients.</p>
+                                <p><strong>Otherwise:</strong> They are linearly
+                                    <strong>dependent</strong> (one is a
+                                    combination of others).</p>
+                            </div>
+
+                            <div class="definition-box">
+                                <h4>📘 Basis</h4>
+                                <p>A <strong>basis</strong> for a subspace W is
+                                    a set of vectors that:</p>
+                                <ul>
+                                    <li>1. <strong>Spans</strong> W (every
+                                        vector in W can be written as their
+                                        combination)</li>
+                                    <li>2. Is <strong>linearly
+                                            independent</strong></li>
+                                </ul>
+                                <p
+                                    style="margin-top: 15px;"><strong>Dimension:</strong>
+                                    The number of vectors in a basis =
+                                    dim(W)</p>
+                            </div>
+
+                            <div class="example-box">
+                                <h4>🔍 Example: Standard Basis for ℝ³</h4>
+                                <div class="formula">
+                                    e₁ = (1, 0, 0), e₂ = (0, 1, 0), e₃ = (0, 0,
+                                    1)
+                                </div>
+                                <p>These three vectors:</p>
+                                <ul>
+                                    <li>✅ Are linearly independent</li>
+                                    <li>✅ Span all of ℝ³</li>
+                                    <li>✅ Form a basis for ℝ³</li>
+                                    <li>✅ dim(ℝ³) = 3</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 5: Practice Problems -->
+                    <div class="learning-section">
+                        <h3 class="section-title" onclick="toggleSection(4)">
+                            <span class="section-icon">▶</span>
+                            <span>5. Interactive Practice Problems</span>
+                        </h3>
+                        <div class="section-content">
+                            <div class="practice-problems">
+                                <div class="problem-card">
+                                    <h4>Problem 1</h4>
+                                    <p>Is W = { (x, y, z) | 2x - y + 3z = 0 } a
+                                        subspace of ℝ³?</p>
+                                    <button class="btn-small btn-info"
+                                        onclick="showAnswer(1)">Show
+                                        Answer</button>
+                                    <div id="answer1" class="answer-box"
+                                        style="display: none;">
+                                        <p><strong>Answer: YES ✅</strong></p>
+                                        <p>1. Zero vector: 2(0) - 0 + 3(0) = 0
+                                            ✓</p>
+                                        <p>2. Closed under addition ✓</p>
+                                        <p>3. Closed under scalar multiplication
+                                            ✓</p>
+                                        <p>This is a plane through the origin,
+                                            which is a subspace.</p>
+                                    </div>
+                                </div>
+
+                                <div class="problem-card">
+                                    <h4>Problem 2</h4>
+                                    <p>Is W = { (x, y) | xy = 0 } a subspace of
+                                        ℝ²?</p>
+                                    <button class="btn-small btn-info"
+                                        onclick="showAnswer(2)">Show
+                                        Answer</button>
+                                    <div id="answer2" class="answer-box"
+                                        style="display: none;">
+                                        <p><strong>Answer: NO ❌</strong></p>
+                                        <p>1. Zero vector: (0)(0) = 0 ✓</p>
+                                        <p>2. But: (1, 0) ∈ W and (0, 1) ∈ W</p>
+                                        <p> However: (1, 0) + (0, 1) = (1, 1),
+                                            and (1)(1) = 1 ≠ 0</p>
+                                        <p> So (1, 1) ∉ W ✗</p>
+                                        <p>FAILS closure under addition!</p>
+                                    </div>
+                                </div>
+
+                                <div class="problem-card">
+                                    <h4>Problem 3</h4>
+                                    <p>Are vectors v₁ = (1, 2, 3) and v₂ = (2,
+                                        4, 6) linearly independent?</p>
+                                    <button class="btn-small btn-info"
+                                        onclick="showAnswer(3)">Show
+                                        Answer</button>
+                                    <div id="answer3" class="answer-box"
+                                        style="display: none;">
+                                        <p><strong>Answer: NO, they are
+                                                DEPENDENT ❌</strong></p>
+                                        <p>Notice: v₂ = 2·v₁</p>
+                                        <p>So: 2v₁ - v₂ = 0 with non-zero
+                                            coefficients</p>
+                                        <p>These vectors are linearly
+                                            dependent.</p>
+                                        <p>They span a 1-dimensional subspace (a
+                                            line).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>Built with ❤️ by student Hussain Ali | University of
+                    Bahrain</p>
+                <p class="footer-note">Making math visual & fun ✨</p>
+            </footer>
+        </div>
+
+        <script src="./js/vector.js"></script>
+    </body>
+</html>

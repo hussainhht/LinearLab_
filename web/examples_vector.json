@@ -1,0 +1,284 @@
+{
+    "equationExamples": [
+        {
+            "name": "Plane through origin (ℝ³)",
+            "description": "x + y + z = 0",
+            "dimension": 3,
+            "coefficients": [
+                1,
+                1,
+                1
+            ],
+            "constant": 0,
+            "isSubspace": true,
+            "explanation": "This is a plane passing through the origin in 3D space. It satisfies all three subspace conditions."
+        },
+        {
+            "name": "Line through origin (ℝ²)",
+            "description": "x = 2y or x - 2y = 0",
+            "dimension": 2,
+            "coefficients": [
+                1,
+                -2
+            ],
+            "constant": 0,
+            "isSubspace": true,
+            "explanation": "This is a line through the origin in 2D. All scalar multiples and sums of vectors on this line remain on the line."
+        },
+        {
+            "name": "Parallel plane (NOT subspace)",
+            "description": "x + y + z = 1",
+            "dimension": 3,
+            "coefficients": [
+                1,
+                1,
+                1
+            ],
+            "constant": 1,
+            "isSubspace": false,
+            "explanation": "This plane does NOT pass through the origin (when x=y=z=0, we get 0≠1). It fails the zero vector test."
+        },
+        {
+            "name": "Parallel line (NOT subspace)",
+            "description": "x + y = 1",
+            "dimension": 2,
+            "coefficients": [
+                1,
+                1
+            ],
+            "constant": 1,
+            "isSubspace": false,
+            "explanation": "This line does not pass through the origin. The zero vector (0,0) does not satisfy the equation."
+        },
+        {
+            "name": "xz-plane (ℝ³)",
+            "description": "y = 0 or 0x + 1y + 0z = 0",
+            "dimension": 3,
+            "coefficients": [
+                0,
+                1,
+                0
+            ],
+            "constant": 0,
+            "isSubspace": true,
+            "explanation": "This represents the xz-plane in 3D space, which is a 2-dimensional subspace of ℝ³."
+        },
+        {
+            "name": "xy-plane (ℝ³)",
+            "description": "z = 0 or 0x + 0y + 1z = 0",
+            "dimension": 3,
+            "coefficients": [
+                0,
+                0,
+                1
+            ],
+            "constant": 0,
+            "isSubspace": true,
+            "explanation": "This represents the xy-plane in 3D space, a classic example of a 2D subspace in ℝ³."
+        },
+        {
+            "name": "Shifted plane (NOT subspace)",
+            "description": "2x - y + z = 5",
+            "dimension": 3,
+            "coefficients": [
+                2,
+                -1,
+                1
+            ],
+            "constant": 5,
+            "isSubspace": false,
+            "explanation": "This plane does not contain the origin, so it cannot be a subspace."
+        }
+    ],
+    "vectorExamples": [
+        {
+            "name": "Standard basis for ℝ²",
+            "description": "The standard basis vectors in 2D",
+            "dimension": 2,
+            "vectors": [
+                [
+                    1,
+                    0
+                ],
+                [
+                    0,
+                    1
+                ]
+            ],
+            "isIndependent": true,
+            "isBasis": true,
+            "rank": 2,
+            "explanation": "These are the standard basis vectors e₁ and e₂ for ℝ². They are linearly independent and span all of ℝ²."
+        },
+        {
+            "name": "Standard basis for ℝ³",
+            "description": "The standard basis vectors in 3D",
+            "dimension": 3,
+            "vectors": [
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    0,
+                    0,
+                    1
+                ]
+            ],
+            "isIndependent": true,
+            "isBasis": true,
+            "rank": 3,
+            "explanation": "The canonical basis for 3D space. Every vector in ℝ³ can be uniquely expressed as a combination of these three vectors."
+        },
+        {
+            "name": "Dependent vectors (scalar multiple)",
+            "description": "One vector is a scalar multiple of another",
+            "dimension": 3,
+            "vectors": [
+                [
+                    1,
+                    2,
+                    3
+                ],
+                [
+                    2,
+                    4,
+                    6
+                ]
+            ],
+            "isIndependent": false,
+            "isBasis": false,
+            "rank": 1,
+            "explanation": "The second vector is exactly 2 times the first vector, so they are linearly dependent. They span a 1D line in ℝ³."
+        },
+        {
+            "name": "Two independent vectors in ℝ³",
+            "description": "Span a plane in 3D space",
+            "dimension": 3,
+            "vectors": [
+                [
+                    1,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    1
+                ]
+            ],
+            "isIndependent": true,
+            "isBasis": false,
+            "rank": 2,
+            "explanation": "These vectors are linearly independent and span a 2D plane in ℝ³, but they don't form a basis for ℝ³."
+        },
+        {
+            "name": "Three dependent vectors",
+            "description": "One is a combination of the others",
+            "dimension": 3,
+            "vectors": [
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    1,
+                    0
+                ]
+            ],
+            "isIndependent": false,
+            "isBasis": false,
+            "rank": 2,
+            "explanation": "The third vector (1,1,0) equals the sum of the first two, so they are linearly dependent. Rank is 2."
+        },
+        {
+            "name": "Alternative basis for ℝ³",
+            "description": "A non-standard but valid basis",
+            "dimension": 3,
+            "vectors": [
+                [
+                    1,
+                    1,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    1
+                ],
+                [
+                    0,
+                    1,
+                    1
+                ]
+            ],
+            "isIndependent": true,
+            "isBasis": true,
+            "rank": 3,
+            "explanation": "These three vectors are linearly independent and span all of ℝ³, forming an alternative basis."
+        },
+        {
+            "name": "Collinear vectors in ℝ²",
+            "description": "All on the same line",
+            "dimension": 2,
+            "vectors": [
+                [
+                    1,
+                    2
+                ],
+                [
+                    2,
+                    4
+                ],
+                [
+                    3,
+                    6
+                ]
+            ],
+            "isIndependent": false,
+            "isBasis": false,
+            "rank": 1,
+            "explanation": "All vectors lie on the same line through the origin (y = 2x), so they're all scalar multiples of each other."
+        }
+    ],
+    "practiceProblems": [
+        {
+            "question": "Is W = { (x, y, z) | x + 2y - z = 0 } a subspace of ℝ³?",
+            "answer": "Yes",
+            "solution": "1. Zero vector: 0 + 2(0) - 0 = 0 ✓\n2. Closed under addition: If two vectors satisfy the equation, their sum does too ✓\n3. Closed under scalar multiplication: If a vector satisfies the equation, any scalar multiple does too ✓\nThis is a plane through the origin, which is a 2D subspace of ℝ³."
+        },
+        {
+            "question": "Is W = { (x, y) | xy = 0 } a subspace of ℝ²?",
+            "answer": "No",
+            "solution": "This set consists of the union of the x-axis and y-axis.\n1. Zero vector: (0,0) ∈ W ✓\n2. But (1,0) ∈ W and (0,1) ∈ W, yet (1,0) + (0,1) = (1,1) ∉ W ✗\nFails closure under addition, so NOT a subspace."
+        },
+        {
+            "question": "Are the vectors v₁=(1,2,3), v₂=(2,3,4), v₃=(3,4,5) linearly independent?",
+            "answer": "No",
+            "solution": "Notice that v₃ - v₂ = (1,1,1) and v₂ - v₁ = (1,1,1), so v₃ = 2v₂ - v₁.\nThis means: -v₁ + 2v₂ - v₃ = 0 with non-zero coefficients.\nTherefore, they are linearly DEPENDENT."
+        },
+        {
+            "question": "What is the dimension of W = { (x, y, z, w) | x + y = 0, z - w = 0 }?",
+            "answer": "2",
+            "solution": "We have 2 constraints in ℝ⁴:\n- x + y = 0 → y = -x (1 constraint reduces dimension by 1)\n- z - w = 0 → w = z (another constraint reduces dimension by 1)\nSo we have 2 free variables (x and z), meaning dim(W) = 4 - 2 = 2.\nW is a 2-dimensional subspace of ℝ⁴."
+        },
+        {
+            "question": "Is the set of all 2×2 matrices with determinant 0 a subspace of M₂ₓ₂?",
+            "answer": "No",
+            "solution": "Let A = [[1,0],[0,0]] and B = [[0,0],[0,1]]. Both have determinant 0.\nBut A + B = [[1,0],[0,1]] has determinant 1 ≠ 0.\nFails closure under addition, so NOT a subspace."
+        }
+    ]
+}

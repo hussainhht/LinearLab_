@@ -1,0 +1,350 @@
+{
+    "systems": [
+        {
+            "id": "sys_1",
+            "type": "numeric",
+            "q": "For a system with augmented matrix [A|b], if rank(A) = 2, rank([A|b]) = 3, and there are 3 variables, how many solutions exist?",
+            "answer": "none",
+            "explain": "rank(A) < rank([A|b]) means the system is inconsistent, so there are no solutions."
+        },
+        {
+            "id": "sys_2",
+            "type": "mcq",
+            "q": "A consistent system with rank(A) = rank([A|b]) = 3 and 3 variables has:",
+            "choices": [
+                "Exactly one unique solution",
+                "Infinitely many solutions",
+                "No solution",
+                "Cannot determine"
+            ],
+            "answerIndex": 0,
+            "explain": "When rank equals the number of variables, the system has a unique solution."
+        },
+        {
+            "id": "sys_3",
+            "type": "numeric",
+            "q": "For a system with rank(A) = rank([A|b]) = 2 and 4 variables, how many free variables are there?",
+            "answer": "2",
+            "explain": "Free variables = n - rank(A) = 4 - 2 = 2."
+        },
+        {
+            "id": "sys_4",
+            "type": "mcq",
+            "q": "If a 3×4 augmented matrix has rank 3 for both A and [A|b], the system has:",
+            "choices": [
+                "Infinitely many solutions (1 free variable)",
+                "No solution",
+                "Unique solution",
+                "Exactly 3 solutions"
+            ],
+            "answerIndex": 0,
+            "explain": "rank(A) = rank([A|b]) < n (3 < 4), so the system has infinite solutions with n - r = 1 free variable."
+        },
+        {
+            "id": "sys_5",
+            "type": "numeric",
+            "q": "A homogeneous system Ax = 0 always has at least how many solutions?",
+            "answer": "1",
+            "explain": "The zero vector x = 0 is always a solution (trivial solution)."
+        },
+        {
+            "id": "sys_6",
+            "type": "mcq",
+            "q": "Which statement guarantees infinitely many solutions?",
+            "choices": [
+                "rank(A) = rank([A|b]) < n",
+                "rank(A) < rank([A|b])",
+                "rank(A) = n",
+                "The matrix is square"
+            ],
+            "answerIndex": 0,
+            "explain": "When rank(A) = rank([A|b]) < n, there are free variables, leading to infinite solutions."
+        }
+    ],
+    "gaussjordan": [
+        {
+            "id": "gj_1",
+            "type": "mcq",
+            "q": "In Reduced Row Echelon Form (RREF), a pivot column must:",
+            "choices": [
+                "Contain exactly one 1 (pivot) and all other entries are 0",
+                "Have any non-zero pivot",
+                "Contain two pivots",
+                "Be all zeros"
+            ],
+            "answerIndex": 0,
+            "explain": "RREF requires pivot = 1 and all other entries in that column must be 0."
+        },
+        {
+            "id": "gj_2",
+            "type": "numeric",
+            "q": "How many elementary row operations are there in Gaussian elimination?",
+            "answer": "3",
+            "explain": "Three types: swap rows, multiply row by scalar, add multiple of one row to another."
+        },
+        {
+            "id": "gj_3",
+            "type": "mcq",
+            "q": "Which is NOT an elementary row operation?",
+            "choices": [
+                "Swap two rows",
+                "Multiply a row by 0",
+                "Multiply a row by non-zero scalar",
+                "Add a multiple of one row to another"
+            ],
+            "answerIndex": 1,
+            "explain": "Multiplying a row by 0 is not allowed as it loses information and is not reversible."
+        },
+        {
+            "id": "gj_4",
+            "type": "mcq",
+            "q": "After Gauss-Jordan elimination to RREF, the leading entry in each non-zero row is:",
+            "choices": [
+                "Always 1",
+                "Can be any non-zero number",
+                "Always 0",
+                "The largest number in that row"
+            ],
+            "answerIndex": 0,
+            "explain": "In RREF, all leading entries (pivots) must be 1."
+        },
+        {
+            "id": "gj_5",
+            "type": "numeric",
+            "q": "If a 3×5 matrix in RREF has 2 pivot columns, what is its rank?",
+            "answer": "2",
+            "explain": "The rank equals the number of pivot positions (non-zero rows)."
+        },
+        {
+            "id": "gj_6",
+            "type": "mcq",
+            "q": "In RREF, each pivot is to the right of pivots in:",
+            "choices": [
+                "Rows above it",
+                "Rows below it",
+                "The same row",
+                "All rows"
+            ],
+            "answerIndex": 0,
+            "explain": "Pivots form a staircase pattern - each pivot is to the right of the one above."
+        }
+    ],
+    "determinant": [
+        {
+            "id": "det_1",
+            "type": "numeric",
+            "q": "What is the determinant of a 3×3 identity matrix?",
+            "answer": "1",
+            "explain": "The determinant of any identity matrix is always 1."
+        },
+        {
+            "id": "det_2",
+            "type": "mcq",
+            "q": "If you swap two rows of a matrix, the determinant:",
+            "choices": [
+                "Changes sign (multiplied by -1)",
+                "Stays the same",
+                "Becomes 0",
+                "Doubles"
+            ],
+            "answerIndex": 0,
+            "explain": "Swapping rows changes the sign of the determinant."
+        },
+        {
+            "id": "det_3",
+            "type": "numeric",
+            "q": "If det(A) = 5, what is det(2A) for a 3×3 matrix?",
+            "answer": "40",
+            "explain": "det(kA) = k^n × det(A) for n×n matrix. So det(2A) = 2³ × 5 = 8 × 5 = 40."
+        },
+        {
+            "id": "det_4",
+            "type": "mcq",
+            "q": "A square matrix is invertible if and only if:",
+            "choices": [
+                "Its determinant is non-zero",
+                "Its determinant is zero",
+                "Its determinant is 1",
+                "Its determinant is positive"
+            ],
+            "answerIndex": 0,
+            "explain": "A matrix is invertible ⟺ det(A) ≠ 0."
+        },
+        {
+            "id": "det_5",
+            "type": "numeric",
+            "q": "What is the determinant of a matrix with a row of all zeros?",
+            "answer": "0",
+            "explain": "If any row (or column) is all zeros, the determinant is 0."
+        },
+        {
+            "id": "det_6",
+            "type": "mcq",
+            "q": "If det(A) = 4 and det(B) = 3, what is det(AB)?",
+            "choices": [
+                "12",
+                "7",
+                "1",
+                "Cannot be determined"
+            ],
+            "answerIndex": 0,
+            "explain": "det(AB) = det(A) × det(B) = 4 × 3 = 12."
+        },
+        {
+            "id": "det_7",
+            "type": "numeric",
+            "q": "For a triangular matrix (upper or lower), the determinant equals the product of what?",
+            "answer": "diagonal entries",
+            "explain": "The determinant of a triangular matrix is the product of its diagonal entries."
+        }
+    ],
+    "inverse": [
+        {
+            "id": "inv_1",
+            "type": "mcq",
+            "q": "A matrix A is invertible if and only if:",
+            "choices": [
+                "det(A) ≠ 0",
+                "det(A) = 0",
+                "A is symmetric",
+                "A is triangular"
+            ],
+            "answerIndex": 0,
+            "explain": "Invertibility requires non-zero determinant."
+        },
+        {
+            "id": "inv_2",
+            "type": "mcq",
+            "q": "If A is invertible, what is (A⁻¹)⁻¹?",
+            "choices": [
+                "A",
+                "I",
+                "0",
+                "A²"
+            ],
+            "answerIndex": 0,
+            "explain": "The inverse of the inverse returns the original matrix: (A⁻¹)⁻¹ = A."
+        },
+        {
+            "id": "inv_3",
+            "type": "mcq",
+            "q": "For invertible matrices A and B, what is (AB)⁻¹?",
+            "choices": [
+                "B⁻¹A⁻¹",
+                "A⁻¹B⁻¹",
+                "AB",
+                "BA"
+            ],
+            "answerIndex": 0,
+            "explain": "The inverse of a product reverses the order: (AB)⁻¹ = B⁻¹A⁻¹."
+        },
+        {
+            "id": "inv_4",
+            "type": "numeric",
+            "q": "If det(A) = 5, what is det(A⁻¹)?",
+            "answer": "0.2",
+            "explain": "det(A⁻¹) = 1/det(A) = 1/5 = 0.2."
+        },
+        {
+            "id": "inv_5",
+            "type": "mcq",
+            "q": "To find A⁻¹ using Gauss-Jordan, you augment A with what and row reduce to [I | ?]?",
+            "choices": [
+                "The identity matrix I",
+                "The zero matrix",
+                "Matrix A itself",
+                "A column of ones"
+            ],
+            "answerIndex": 0,
+            "explain": "Augment [A | I] and row reduce to [I | A⁻¹]."
+        },
+        {
+            "id": "inv_6",
+            "type": "mcq",
+            "q": "If A is a 3×3 matrix with rank 2, is A invertible?",
+            "choices": [
+                "No, rank must equal n for invertibility",
+                "Yes, any matrix is invertible",
+                "Only if det(A) = 1",
+                "Cannot determine"
+            ],
+            "answerIndex": 0,
+            "explain": "A matrix is invertible only if it has full rank (rank = n). Here rank 2 < 3, so not invertible."
+        }
+    ],
+    "rank": [
+        {
+            "id": "rank_1",
+            "type": "numeric",
+            "q": "What is the maximum possible rank of a 3×5 matrix?",
+            "answer": "3",
+            "explain": "rank ≤ min(m, n) = min(3, 5) = 3."
+        },
+        {
+            "id": "rank_2",
+            "type": "mcq",
+            "q": "The rank of a matrix equals:",
+            "choices": [
+                "The number of pivot positions in RREF",
+                "The number of rows",
+                "The number of columns",
+                "The determinant"
+            ],
+            "answerIndex": 0,
+            "explain": "Rank = number of leading 1's (pivots) in RREF = number of non-zero rows in RREF."
+        },
+        {
+            "id": "rank_3",
+            "type": "numeric",
+            "q": "For a 4×4 matrix A with rank 3, what is the nullity (dimension of null space)?",
+            "answer": "1",
+            "explain": "Rank-Nullity Theorem: rank + nullity = n. So 3 + nullity = 4 ⇒ nullity = 1."
+        },
+        {
+            "id": "rank_4",
+            "type": "mcq",
+            "q": "If A is a 5×5 matrix with rank 5, then A is:",
+            "choices": [
+                "Invertible (full rank)",
+                "Singular (not invertible)",
+                "Not square",
+                "Has infinite null space"
+            ],
+            "answerIndex": 0,
+            "explain": "Full rank square matrix ⇒ invertible."
+        },
+        {
+            "id": "rank_5",
+            "type": "numeric",
+            "q": "The rank-nullity theorem states: rank(A) + nullity(A) = ?",
+            "answer": "n",
+            "explain": "rank + nullity = n, where n is the number of columns."
+        },
+        {
+            "id": "rank_6",
+            "type": "mcq",
+            "q": "A matrix with rank 0 must be:",
+            "choices": [
+                "The zero matrix",
+                "The identity matrix",
+                "Invertible",
+                "Square"
+            ],
+            "answerIndex": 0,
+            "explain": "Rank 0 means all entries are zero."
+        },
+        {
+            "id": "rank_7",
+            "type": "mcq",
+            "q": "If the column space of A has dimension 3, what is rank(A)?",
+            "choices": [
+                "3",
+                "0",
+                "Cannot determine",
+                "Equal to number of columns"
+            ],
+            "answerIndex": 0,
+            "explain": "The rank equals the dimension of the column space."
+        }
+    ]
+}
