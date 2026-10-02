@@ -7,6 +7,7 @@ An interactive linear algebra course and a set of step-by-step matrix tools. Eve
 ## What it does
 
 **System solver** (`/tools/rref/`)
+
 - Edit the augmented matrix [A | b] (up to 6 equations and 6 variables). Entries can be integers, decimals, fractions such as `1/3`, or scientific notation. An invalid or empty entry is reported next to its cell, never treated as 0.
 - Arrow keys and Enter move between entries. A block pasted from a spreadsheet, CSV or MATLAB (`[1 2; 3 4]`) fills the grid.
 - Gauss–Jordan elimination with every swap, scaling and replacement recorded. Each step shows its notation (`R₂ ← R₂ − 3R₁`), the reason for it, and the arithmetic that creates the zero.
@@ -17,6 +18,7 @@ An interactive linear algebra course and a set of step-by-step matrix tools. Eve
 - Changing the input after solving clears the outdated steps instead of showing them for a different problem.
 
 **Matrix operations** (`/tools/matrices/`)
+
 - A + B, A − B, A × B, kA, transpose, determinant, inverse, rank, column space and null space. Results are explained, can be copied, and can be fed back in as A or B.
 - A multiplication walkthrough that highlights the row of A, the column of B and each product, keeps a running sum, and fills C entry by entry.
 - Determinants by elimination (swaps flip the sign), inverses through [A | I] → [I | A⁻¹] with the products A·A⁻¹ and A⁻¹·A actually computed, and null space vectors checked against A·v = 0.
@@ -28,11 +30,11 @@ An interactive linear algebra course and a set of step-by-step matrix tools. Eve
 
 **Practice** (`/practice/`): reduce a system yourself by choosing or typing row operations (`R2 <- R2 - 3R1`, `R1 <-> R2`, `1/2 R1 -> R1`, …). Each move is checked and labeled as progress, no progress, or a setback, judged mathematically against the reduced form, so any valid order counts. Three levels of hints, undo, and the full solution from the current matrix are available. A system from the solver can be practised directly.
 
-| | |
-| --- | --- |
-| ![Home page](docs/screenshots/home.png) | ![Infinitely many solutions with the free variable tagged](docs/screenshots/solver-solution.png) |
-| ![Multiplication walkthrough](docs/screenshots/multiplication.png) | ![Practice mode with feedback and a hint](docs/screenshots/practice.png) |
-| ![A lesson with KaTeX notation](docs/screenshots/lesson.png) | ![The solver on a phone in the dark theme](docs/screenshots/mobile-dark.png) |
+|                                                                    |                                                                                                  |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| ![Home page](docs/screenshots/home.png)                            | ![Infinitely many solutions with the free variable tagged](docs/screenshots/solver-solution.png) |
+| ![Multiplication walkthrough](docs/screenshots/multiplication.png) | ![Practice mode with feedback and a hint](docs/screenshots/practice.png)                         |
+| ![A lesson with KaTeX notation](docs/screenshots/lesson.png)       | ![The solver on a phone in the dark theme](docs/screenshots/mobile-dark.png)                     |
 
 ## Stack
 
@@ -53,18 +55,18 @@ npm install
 npm run dev          # http://localhost:3000
 ```
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Development server |
-| `npm run typegen` | Generate Next.js route types (the global `PageProps<'/route'>` helper, `next-env.d.ts`) without building |
-| `npm run typecheck` | `typegen`, then `tsc --noEmit`. Works on a fresh checkout; plain `tsc` fails without the generated types |
-| `npm run lint` | ESLint with the Next.js core-web-vitals and TypeScript configs |
-| `npm test` | Unit tests: math engine, input parsing, practice checks, and every number stated in the lessons |
-| `npm run build` | Static export to `out/` |
-| `npm run verify:export` | Checks `out/`: every lesson, practice and tool route exists, math is rendered, every URL is under the base path and resolves to a file (run after `build`) |
-| `npm start` | Serve `out/` at http://localhost:4173 the way a static host would |
-| `npm run test:e2e` | Playwright browser tests against `out/` (run `npm run build` first; `npx playwright install chromium` once) |
-| `npm run check` | Typecheck, lint, unit tests, build and export verification in one go |
+| Command                   | What it does                                                                                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`           | Development server                                                                                                                                            |
+| `npm run typegen`       | Generate Next.js route types (the global`PageProps<'/route'>` helper, `next-env.d.ts`) without building                                                   |
+| `npm run typecheck`     | `typegen`, then `tsc --noEmit`. Works on a fresh checkout; plain `tsc` fails without the generated types                                                |
+| `npm run lint`          | ESLint with the Next.js core-web-vitals and TypeScript configs                                                                                                |
+| `npm test`              | Unit tests: math engine, input parsing, practice checks, and every number stated in the lessons                                                               |
+| `npm run build`         | Static export to`out/`                                                                                                                                      |
+| `npm run verify:export` | Checks`out/`: every lesson, practice and tool route exists, math is rendered, every URL is under the base path and resolves to a file (run after `build`) |
+| `npm start`             | Serve`out/` at http://localhost:4173 the way a static host would                                                                                            |
+| `npm run test:e2e`      | Playwright browser tests against`out/` (run `npm run build` first; `npx playwright install chromium` once)                                              |
+| `npm run check`         | Typecheck, lint, unit tests, build and export verification in one go                                                                                          |
 
 ## Architecture
 
@@ -161,4 +163,4 @@ In the repository settings, Pages → Build and deployment → Source must be **
 
 ## Author
 
-Hussain Ali, University of Bahrain.
+Hussain Ali , computer since studint .
