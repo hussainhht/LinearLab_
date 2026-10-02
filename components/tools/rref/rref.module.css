@@ -1,0 +1,342 @@
+/* Three-zone tool layout: problem setup, the matrix stage, and the explanation. */
+.workspace {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr);
+  /* Phones see the matrix and the current explanation first; setup follows. */
+  grid-template-areas:
+    'stage'
+    'explain'
+    'setup';
+  align-items: start;
+}
+
+@media (min-width: 52rem) {
+  .workspace {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    grid-template-areas:
+      'setup setup'
+      'stage explain';
+  }
+}
+
+@media (min-width: 72rem) {
+  .workspace {
+    grid-template-columns: 15.5rem minmax(0, 1fr) minmax(19rem, 23rem);
+    grid-template-areas: 'setup stage explain';
+  }
+}
+
+.setup {
+  grid-area: setup;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+@media (min-width: 52rem) and (max-width: 71.99rem) {
+  .setup {
+    grid-template-columns: auto minmax(14rem, 1fr) auto;
+    align-items: end;
+  }
+  .setup > .panelHeading,
+  .setup > .muted {
+    display: none;
+  }
+}
+
+@media (min-width: 72rem) {
+  .setup {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+}
+
+.panelHeading {
+  font-size: var(--text-lg);
+}
+
+.sizeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.exampleRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: end;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.more {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--space-3);
+}
+.more > summary {
+  cursor: pointer;
+  width: fit-content;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.more[open] > summary {
+  margin-bottom: var(--space-3);
+}
+.more > * + * {
+  margin-top: var(--space-2);
+}
+
+.muted {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+/* The stage: graph paper sheet holding the matrix. */
+.stage {
+  grid-area: stage;
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.stageBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-items: center;
+  min-height: 17rem;
+  padding: var(--space-6) var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  background-color: var(--sheet);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+  box-shadow: var(--shadow-sheet);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sheet > * {
+  max-width: 100%;
+}
+
+.sheet:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.solveRow {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.solveRow .muted {
+  max-width: 46ch;
+}
+
+/* Explanation column */
+.explain {
+  grid-area: explain;
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  min-width: 0;
+  padding: var(--space-5);
+  border-radius: var(--radius-l);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+}
+
+.equations {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0 0 0 var(--space-5);
+  font-size: var(--text-lg);
+}
+
+.equations li::marker {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.equationPending {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--warning);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* Solution summary */
+.solution {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+  border: 1px solid var(--solution-line);
+  border-top-width: 4px;
+  background: var(--solution-bg);
+}
+.solution[data-kind='unique'] {
+  --solution-line: var(--success);
+  --solution-bg: var(--success-soft);
+}
+.solution[data-kind='infinite'] {
+  --solution-line: var(--free);
+  --solution-bg: var(--free-soft);
+}
+.solution[data-kind='inconsistent'] {
+  --solution-line: var(--danger);
+  --solution-bg: var(--danger-soft);
+}
+
+.solutionBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--solution-line);
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+}
+
+.valueRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+}
+.valueRow dt {
+  font-style: italic;
+}
+.valueRow dt::after {
+  content: ' =';
+  font-style: normal;
+}
+.valueRow dd {
+  margin: 0;
+}
+
+.general {
+  margin: 0;
+  padding-left: var(--space-5);
+  font-size: var(--text-lg);
+}
+
+.vectorForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+}
+
+.vectorName {
+  font-style: italic;
+}
+
+.vectorTerm {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.columnVector {
+  display: inline-grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 2px 0.45em;
+  border-left: 2px solid var(--ink);
+  border-right: 2px solid var(--ink);
+  border-radius: 6px;
+}
+
+.ranks {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.check svg {
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--success);
+}
+.check[data-ok='false'] svg {
+  color: var(--danger);
+}
+
+/* Print report */
+.report h1 {
+  font-size: 20pt;
+  margin-bottom: 6pt;
+}
+.report h2 {
+  font-size: 14pt;
+  margin-top: 12pt;
+}
+.reportSteps {
+  padding-left: 1.2em;
+}
+.reportSteps li {
+  break-inside: avoid;
+  margin: 8pt 0;
+}
+
+.undoRow {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+.undoButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}

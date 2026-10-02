@@ -1,0 +1,50 @@
+For the number 2, its reciprocal $\tfrac12$ undoes multiplication by 2: $2 \cdot \tfrac12 = 1$. The **inverse** of a matrix plays the same role, with the identity matrix $I$ in place of the number 1.
+
+<Definition term="Invertible matrix">
+
+A square $n \times n$ matrix $A$ is **invertible** (or nonsingular) if there is an $n \times n$ matrix $B$ with
+
+$$
+AB = BA = I_n.
+$$
+
+Then $B$ is called the **inverse** of $A$ and written $A^{-1}$. A square matrix with no inverse is **singular**.
+
+</Definition>
+
+Three facts follow straight from the definition:
+
+- **Only square matrices** have inverses. If $A$ is $m \times n$, then $AB$ is $m \times m$ and $BA$ is $n \times n$; both can equal the same identity matrix only when $m = n$.
+- **An inverse is unique.** If $B$ and $C$ are both inverses of $A$, then $B = BI = B(AC) = (BA)C = IC = C$.
+- **Not every square matrix has one.** $\begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$ is singular: its second row is twice its first, so every product $\begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}B$ has a second row equal to twice its first row, and can never be $I$.
+
+## Checking a proposed inverse
+
+To verify an inverse, multiply. If both products are $I$, it is the inverse.
+
+<Example title="Is B the inverse of A?">
+
+Let $A = \begin{bmatrix} 3 & 4 \\ 2 & 3 \end{bmatrix}$ and $B = \begin{bmatrix} 3 & -4 \\ -2 & 3 \end{bmatrix}$.
+
+$$
+AB = \begin{bmatrix} 9 - 8 & -12 + 12 \\ 6 - 6 & -8 + 9 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix},
+\qquad
+BA = \begin{bmatrix} 9 - 8 & 12 - 12 \\ -6 + 6 & -8 + 9 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}.
+$$
+
+Both products are $I$, so $A$ is invertible and $A^{-1} = B$.
+
+</Example>
+
+## Why inverses matter
+
+If $A$ is invertible, the system $A\mathbf{x} = \mathbf{b}$ can be "divided" by $A$: multiplying both sides on the left by $A^{-1}$ gives $\mathbf{x} = A^{-1}\mathbf{b}$, the unique solution. The inverse undoes what $A$ does, which is also how transformations are reversed in computer graphics and how some codes are decoded.
+
+The next lessons compute inverses: by a formula for 2×2 matrices, and by row reduction in general. Later, determinants give a one-number test for whether an inverse exists.
+
+<QuickCheck
+  question="Is [1 −1; −1 2] the inverse of [2 1; 1 1]?"
+  choices={["Yes: both products equal I", "No: the product is not I", "Cannot tell without a determinant"]}
+  answer={0}
+  explanation="[2 1; 1 1][1 −1; −1 2] = [2 − 1, −2 + 2; 1 − 1, −1 + 2] = I, and the product in the other order is I as well."
+/>

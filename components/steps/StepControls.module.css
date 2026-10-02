@@ -1,0 +1,25 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.counter {
+  min-width: 7.5rem;
+  font-size: var(--text-md);
+  font-weight: 600;
+  text-align: center;
+}
+
+.of {
+  color: var(--ink-3);
+  font-weight: 400;
+}

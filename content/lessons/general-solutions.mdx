@@ -1,0 +1,64 @@
+Not every system ends with one value per variable. The reduced row echelon form of $[A \mid b]$ tells you which of the three cases you are in, and when there are infinitely many solutions it describes all of them.
+
+## Reading the reduced matrix
+
+Variables whose columns contain a pivot are **pivot variables** (also called basic or leading variables). The rest are **free variables**.
+
+1. **No solution** if some row reads $[\,0\ \ 0\ \cdots\ 0 \mid c\,]$ with $c \neq 0$. That row says $0 = c$, which no values can satisfy.
+2. Otherwise the system is consistent, and it has **exactly one solution** if there are no free variables.
+3. It has **infinitely many solutions** if there is at least one free variable. Each free variable can take any value, and the pivot variables are then determined.
+
+In terms of rank (the number of pivots): the system is consistent exactly when $\operatorname{rank} A = \operatorname{rank}[A \mid b]$, and the solution is unique exactly when that rank also equals the number of variables.
+
+<Example title="Infinitely many solutions">
+
+$$
+\begin{aligned} x_1 + 2x_2 + 3x_3 &= 6 \\ 2x_1 + 4x_2 + 6x_3 &= 12 \\ x_1 + x_2 + x_3 &= 3 \end{aligned}
+\qquad\xrightarrow{\text{Gauss–Jordan}}\qquad
+\left[\begin{array}{ccc|c} 1 & 0 & -1 & 0 \\ 0 & 1 & 2 & 3 \\ 0 & 0 & 0 & 0 \end{array}\right]
+$$
+
+Columns 1 and 2 have pivots, so $x_1$ and $x_2$ are pivot variables and $x_3$ is free. Each nonzero row solves for its pivot variable:
+
+$$
+x_1 = x_3, \qquad x_2 = 3 - 2x_3, \qquad x_3 \text{ free}.
+$$
+
+In **vector form**, collecting the constant part and the part multiplied by $x_3$:
+
+$$
+\mathbf{x} = \begin{bmatrix} 0 \\ 3 \\ 0 \end{bmatrix} + x_3 \begin{bmatrix} 1 \\ -2 \\ 1 \end{bmatrix}.
+$$
+
+The first vector is one particular solution (take $x_3 = 0$); the second solves the homogeneous system, so adding any multiple of it stays a solution. Check with $x_3 = 1$, the point $(1, 1, 1)$: $1 + 2 + 3 = 6$, $2 + 4 + 6 = 12$, $1 + 1 + 1 = 3$.
+
+</Example>
+
+<TryInTool example="infinite-solutions" />
+
+<Example title="No solution">
+
+Changing only two constants of the same system,
+
+$$
+\begin{aligned} x_1 + 2x_2 + 3x_3 &= 4 \\ 2x_1 + 4x_2 + 6x_3 &= 9 \\ x_1 + x_2 + x_3 &= 2 \end{aligned}
+$$
+
+row reduction produces the row $[\,0\ \ 0\ \ 0 \mid 1\,]$. Doubling the first equation gives $2x_1 + 4x_2 + 6x_3 = 8$, which the second equation contradicts.
+
+</Example>
+
+<TryInTool example="no-solution" />
+
+<Note title="How the solver shows these cases">
+
+At the last step, free variable columns are tagged "free" and an impossible row is shaded and labeled with the equation it reduces to, such as $0 = 1$. The labels repeat what the colors show, so nothing depends on color alone.
+
+</Note>
+
+<QuickCheck
+  question="An augmented matrix reduces to [1 0 2 | 3; 0 1 −1 | 4; 0 0 0 | 0]. What is the solution set?"
+  choices={["Exactly one solution: (3, 4, 0)", "Infinitely many: x₁ = 3 − 2x₃, x₂ = 4 + x₃, x₃ free", "No solution, because of the zero row"]}
+  answer={1}
+  explanation="Column 3 has no pivot, so x₃ is free. A zero row only says 0 = 0; it is harmless. Each other row solves for its pivot variable."
+/>

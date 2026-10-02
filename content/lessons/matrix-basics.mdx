@@ -1,0 +1,54 @@
+So far matrices have stored linear systems. From here on they are objects in their own right, with their own arithmetic.
+
+<Definition term="Matrix">
+
+A **matrix** is a rectangular array of numbers. A matrix with $m$ rows and $n$ columns is an $m \times n$ matrix (say "m by n"); rows are always counted first. The number in row $i$ and column $j$ is the **entry** $a_{ij}$:
+
+$$
+A = \begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+$$
+
+</Definition>
+
+The matrix $\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{bmatrix}$ is $3 \times 2$: three rows, two columns. Its entry $a_{21}$ is $3$ and $a_{32}$ is $6$.
+
+A few shapes have their own names:
+
+- a **square** matrix has $m = n$;
+- a **row vector** is $1 \times n$, such as $\begin{bmatrix} 4 & -1 & 0 \end{bmatrix}$;
+- a **column vector** is $m \times 1$. Vectors in this course are column vectors unless stated otherwise, so the vector with components $2, -3, 5$ is $\mathbf{v} = \begin{bmatrix} 2 \\ -3 \\ 5 \end{bmatrix}$, sometimes written $(2, -3, 5)$ to save space.
+
+## Equality
+
+<Definition term="Equal matrices">
+
+Two matrices $A$ and $B$ are **equal** if they have the same size and every pair of corresponding entries is equal: $a_{ij} = b_{ij}$ for all $i$ and $j$.
+
+</Definition>
+
+Both conditions matter. A $2 \times 2$ matrix never equals a $2 \times 3$ matrix, and two matrices of the same size are different if even one entry differs:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},
+\qquad
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \neq \begin{bmatrix} 1 & 2 \\ 3 & 5 \end{bmatrix} \ (\text{since } 4 \neq 5).
+$$
+
+Equality of matrices is really a list of ordinary equations, one per entry, which makes it a convenient way to find unknowns.
+
+<Example title="Unknown entries">
+
+If $\begin{bmatrix} x & 2 \\ 3 & y \end{bmatrix} = \begin{bmatrix} 5 & 2 \\ 3 & -1 \end{bmatrix}$, comparing entries gives $x = 5$ and $y = -1$; the other two entries already agree.
+
+</Example>
+
+<NumericCheck
+  question="Find x and y if [x + 1, 4; 2, 2y] = [3, 4; 2, 8]."
+  fields={[{ label: 'x', answer: '2' }, { label: 'y', answer: '4' }]}
+  explanation="Entry (1, 1) gives x + 1 = 3 and entry (2, 2) gives 2y = 8."
+/>

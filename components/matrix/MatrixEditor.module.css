@@ -1,0 +1,146 @@
+.editor {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  --input-w: 4.25rem;
+  --input-h: 2.75rem;
+}
+
+.sm {
+  --input-w: 3.4rem;
+  --input-h: 2.4rem;
+}
+
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: var(--space-2) 2px;
+  max-width: 100%;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0 6px;
+  margin-inline: auto;
+}
+
+.columnLabel {
+  padding: 0 0 2px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  text-align: center;
+}
+
+.cell {
+  position: relative;
+  padding: 0 4px;
+}
+
+.cell[data-first] {
+  padding-left: 0.85rem;
+}
+.cell[data-last] {
+  padding-right: 0.85rem;
+}
+
+/* Same bracket language as the read-only matrix. */
+.cell[data-first]::before,
+.cell[data-last]::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 0.45rem;
+  pointer-events: none;
+}
+.cell[data-first]::before {
+  left: 0;
+  border-left: 2px solid var(--ink);
+}
+.cell[data-last]::after {
+  right: 0;
+  border-right: 2px solid var(--ink);
+}
+.row:first-child .cell[data-first]::before,
+.row:first-child .cell[data-last]::after {
+  border-top: 2px solid var(--ink);
+}
+.row:last-child .cell[data-first]::before,
+.row:last-child .cell[data-last]::after {
+  border-bottom: 2px solid var(--ink);
+}
+
+.cell[data-augment] {
+  padding-left: 12px;
+}
+.cell[data-augment]::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: -6px;
+  bottom: -6px;
+  border-left: 1.5px solid var(--ink-2);
+}
+
+.input {
+  width: var(--input-w);
+  height: var(--input-h);
+  padding: 0 0.35rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: var(--sheet);
+  color: var(--ink);
+  font-size: 1.125rem;
+  text-align: center;
+  transition: border-color var(--duration);
+}
+
+.input:hover {
+  border-color: var(--rule-strong);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+  border-color: var(--focus);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+
+.errors {
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--danger);
+  border-radius: var(--radius-m);
+  background: var(--danger-soft);
+  font-size: var(--text-sm);
+}
+
+.errors ul {
+  margin: var(--space-1) 0 0;
+  padding-left: var(--space-5);
+}
+
+.errorsTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.errorLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}

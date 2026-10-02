@@ -1,0 +1,58 @@
+If $A$ and $B$ are invertible $n \times n$ matrices and $k \neq 0$, then:
+
+| Rule | Formula |
+| --- | --- |
+| Identity | $I^{-1} = I$ |
+| Inverse of an inverse | $(A^{-1})^{-1} = A$ |
+| Scalar multiple | $(kA)^{-1} = \frac1k A^{-1}$ |
+| Product (order reverses) | $(AB)^{-1} = B^{-1}A^{-1}$ |
+| Transpose | $(A^T)^{-1} = (A^{-1})^T$ |
+| Powers | $(A^m)^{-1} = (A^{-1})^m$ |
+
+Each rule is proved by multiplying and getting $I$. For the product rule:
+
+$$
+(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AIA^{-1} = AA^{-1} = I,
+$$
+
+and similarly $(B^{-1}A^{-1})(AB) = I$. Undoing "first $B$, then $A$" means undoing $A$ first, which is why the order reverses.
+
+A **diagonal** matrix with nonzero diagonal entries inverts entry by entry: $\operatorname{diag}(d_1, \dots, d_n)^{-1} = \operatorname{diag}(\frac{1}{d_1}, \dots, \frac{1}{d_n})$. If any $d_i = 0$ it has no inverse.
+
+<Example title="Recovering A from (3A)⁻¹ = [2 −1; 1 1]">
+
+Invert both sides: $3A = \begin{bmatrix} 2 & -1 \\ 1 & 1 \end{bmatrix}^{-1}$. Here $\Delta = 2 \cdot 1 - (-1) \cdot 1 = 3$, so
+
+$$
+3A = \frac13\begin{bmatrix} 1 & 1 \\ -1 & 2 \end{bmatrix}
+\qquad\Longrightarrow\qquad
+A = \frac19\begin{bmatrix} 1 & 1 \\ -1 & 2 \end{bmatrix} = \begin{bmatrix} \frac19 & \frac19 \\ -\frac19 & \frac29 \end{bmatrix}.
+$$
+
+**Check:** $3A = \begin{bmatrix} \frac13 & \frac13 \\ -\frac13 & \frac23 \end{bmatrix}$, and $\begin{bmatrix} \frac13 & \frac13 \\ -\frac13 & \frac23 \end{bmatrix}\begin{bmatrix} 2 & -1 \\ 1 & 1 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.
+
+</Example>
+
+<Correction>
+
+The earlier version stopped at $A = \frac13\begin{bmatrix} 1 & 1 \\ -1 & 2 \end{bmatrix}$, which is $3A$, not $A$. Dividing by 3 once more gives the factor $\frac19$.
+
+</Correction>
+
+<Example title="Recovering A from (3A)⁻¹ = [−1 5; 1 −2]">
+
+$\Delta = (-1)(-2) - 5 \cdot 1 = -3$, so
+
+$$
+3A = -\frac13\begin{bmatrix} -2 & -5 \\ -1 & -1 \end{bmatrix} = \begin{bmatrix} \frac23 & \frac53 \\ \frac13 & \frac13 \end{bmatrix}
+\qquad\Longrightarrow\qquad
+A = \begin{bmatrix} \frac29 & \frac59 \\ \frac19 & \frac19 \end{bmatrix}.
+$$
+
+</Example>
+
+<NumericCheck
+  question="If A⁻¹ = [2 1; 1 1] and B⁻¹ = [1 0; 2 1], find the first column of (AB)⁻¹."
+  fields={[{ label: 'top', answer: '2' }, { label: 'bottom', answer: '5' }]}
+  explanation="(AB)⁻¹ = B⁻¹A⁻¹ = [1 0; 2 1][2 1; 1 1] = [2 1; 5 3]. Multiplying in the order A⁻¹B⁻¹ would give [4 1; 3 1] instead."
+/>

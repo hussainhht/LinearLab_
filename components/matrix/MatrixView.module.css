@@ -1,0 +1,265 @@
+.figure {
+  margin: 0;
+  min-width: 0;
+  --cell-w: 3.6rem;
+  --cell-h: 2.75rem;
+  --matrix-size: 1.25rem;
+}
+
+.sm {
+  --cell-w: 2.6rem;
+  --cell-h: 2.1rem;
+  --matrix-size: 1rem;
+}
+
+.lg {
+  --cell-w: 4.4rem;
+  --cell-h: 3.4rem;
+  --matrix-size: 1.5rem;
+}
+
+@media (max-width: 40rem) {
+  .md {
+    --cell-w: 2.8rem;
+    --matrix-size: 1.1rem;
+  }
+  .lg {
+    --cell-w: 3.1rem;
+    --cell-h: 2.9rem;
+    --matrix-size: 1.25rem;
+  }
+}
+
+.caption {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* Wide matrices scroll inside their own box instead of widening the page. */
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: var(--space-2) 2px;
+  max-width: 100%;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-inline: auto;
+  font-family: var(--font-serif);
+  font-size: var(--matrix-size);
+}
+
+.corner {
+  padding: 0;
+}
+
+.columnLabel {
+  padding: 0 0 var(--space-1);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.75em;
+  color: var(--ink-3);
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.columnLabel[data-free] {
+  color: var(--free);
+}
+
+.freeTag {
+  display: block;
+  margin: 0 auto 2px;
+  width: fit-content;
+  padding: 0 0.4em;
+  border: 1px dashed var(--free);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.rowLabel {
+  padding: 0 var(--space-3) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.7em;
+  font-weight: 600;
+  color: var(--ink-3);
+  text-align: right;
+  white-space: nowrap;
+  position: relative;
+}
+
+.row[data-target] .rowLabel {
+  color: var(--target);
+}
+.row[data-target] .rowLabel::before {
+  content: '';
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid var(--target);
+  border-block: 4px solid transparent;
+  transform: translateY(-50%);
+}
+
+.row[data-source] .rowLabel {
+  color: var(--source);
+}
+
+.cell {
+  position: relative;
+  min-width: var(--cell-w);
+  height: var(--cell-h);
+  padding: 0 0.55em;
+  text-align: center;
+  vertical-align: middle;
+  transition: background-color var(--duration);
+}
+
+.value {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.9em;
+  min-height: 1.9em;
+  border-radius: 999px;
+}
+
+/* Brackets: a left stroke on the first column, a right stroke on the last, with short serifs top and bottom. */
+.cell[data-first]::before,
+.cell[data-last]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.45rem;
+  pointer-events: none;
+}
+.cell[data-first]::before {
+  left: 0;
+  border-left: 2px solid var(--ink);
+}
+.cell[data-last]::after {
+  right: 0;
+  border-right: 2px solid var(--ink);
+}
+.row:first-child .cell[data-first]::before,
+.row:first-child .cell[data-last]::after {
+  border-top: 2px solid var(--ink);
+}
+.row:last-child .cell[data-first]::before,
+.row:last-child .cell[data-last]::after {
+  border-bottom: 2px solid var(--ink);
+}
+
+.cell[data-augment] {
+  border-left: 1.5px solid var(--ink-2);
+}
+
+.cell[data-zero] .value {
+  color: var(--ink-3);
+}
+
+/* Row states */
+.row[data-target] .cell {
+  background: var(--target-soft);
+}
+
+.row[data-source] .cell {
+  background: repeating-linear-gradient(-45deg, var(--source-soft) 0 6px, transparent 6px 10px);
+}
+
+.row[data-inconsistent] .cell {
+  background: var(--danger-soft);
+}
+.row[data-inconsistent] .cell .value {
+  color: var(--danger);
+}
+
+.row[data-focus-row] .cell,
+.cell[data-focus-col] {
+  background: var(--accent-soft);
+}
+
+.cell[data-free] {
+  background-image: linear-gradient(var(--free-soft), var(--free-soft));
+}
+
+/* Pivots: a circle, filled like a highlighter while active. */
+.cell[data-pivot] .value {
+  box-shadow: 0 0 0 2px var(--pivot-ring);
+}
+.cell[data-active-pivot] .value {
+  background: var(--pivot-fill);
+  color: var(--pivot-ink);
+  box-shadow: 0 0 0 2px var(--pivot-ring);
+}
+
+/* Changed entries: bold with a small corner marker. */
+.cell[data-changed] .value {
+  font-weight: 700;
+}
+.cell[data-changed] .value::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--target);
+}
+
+.cell[data-focus-cell] .value {
+  box-shadow: 0 0 0 2px var(--accent);
+  font-weight: 700;
+}
+
+.cell[data-hidden] .value {
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+}
+
+.note {
+  padding-left: var(--space-3);
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: 0.68em;
+  font-weight: 600;
+  text-align: left;
+}
+
+.noteTarget,
+.noteSource,
+.noteDanger {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border-radius: 999px;
+}
+
+.noteTarget {
+  color: var(--target);
+  border: 1px solid var(--target);
+}
+
+.noteSource {
+  color: var(--source);
+  border: 1px dashed var(--source);
+}
+
+.noteDanger {
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  background: var(--sheet);
+}

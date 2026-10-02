@@ -1,0 +1,43 @@
+The **solution set** of a system is the set of all its solutions. Linear systems have only three possibilities.
+
+| Case | Example | Solution set |
+| --- | --- | --- |
+| Exactly one solution | $x + y = 3,\ x - y = 1$ | $\{(2, 1)\}$ |
+| Infinitely many | $x + y = 3,\ 2x + 2y = 6$ | $\{(t,\ 3 - t) : t \text{ any number}\}$ |
+| No solution | $x + y = 3,\ x + y = 5$ | the empty set $\varnothing$ |
+
+In the second system the second equation is twice the first, so it adds no new information: every point with $x + y = 3$ works. In the third system the same expression $x + y$ would have to equal both $3$ and $5$, which is impossible.
+
+<Definition term="Consistent and inconsistent">
+
+A system is **consistent** if it has at least one solution (exactly one, or infinitely many). It is **inconsistent** if it has no solution.
+
+</Definition>
+
+## The picture in two variables
+
+An equation $ax + by = c$ with $a$ and $b$ not both zero describes a line in the plane. A point solves a system of two such equations exactly when it lies on both lines, so the three cases are three ways two lines can sit:
+
+- The lines **cross at one point**: one solution.
+- The lines are **parallel and distinct**: they never meet, so there is no solution.
+- The lines are **the same line**: every point on it is a solution.
+
+Edit the equations below. Making the second row a multiple of the first gives the same line; then changing only its constant gives a parallel line.
+
+<LinesExplorer a={[[1, 1], [1, -1]]} b={[3, 1]} />
+
+With three variables each equation is a plane in space, and the same three outcomes occur: planes can share a single point, a whole line or plane of points, or no common point at all.
+
+## Why never exactly two?
+
+Suppose $u$ and $v$ are two different solutions. Each equation has the form $a_1x_1 + \dots + a_px_p = b$, and because it is linear, any point $u + t(v - u)$ on the line through $u$ and $v$ gives $b + t(b - b) = b$. So every point on that line is a solution too, and the system has infinitely many. A linear system therefore has **no solution, exactly one, or infinitely many**.
+
+<QuickCheck
+  question="How many solutions does the system x + 2y = 4, 2x + 4y = 9 have?"
+  choices={["Exactly one", "Infinitely many", "None"]}
+  answer={2}
+  explanation="Doubling the first equation gives 2x + 4y = 8, which contradicts 2x + 4y = 9. The lines are parallel and distinct, so the system is inconsistent."
+/>
+
+<TryInTool example="parallel-lines">See parallel lines in the system solver</TryInTool>
+<TryInTool example="coincident-lines">See coincident lines in the system solver</TryInTool>

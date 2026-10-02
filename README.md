@@ -1,3 +1,4 @@
+# LinearLab
 # 🎓 LinearLab - Interactive Linear Algebra Learning Platform
 
 > **Master linear algebra through interactive visualization, practice problems, and hands-on exploration**
@@ -6,7 +7,7 @@
 [![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-f7df1e.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Interactive](https://img.shields.io/badge/Type-Interactive-brightgreen.svg)](https://github.com)
 
----
+An interactive linear algebra course and a set of step-by-step matrix tools. Every calculation uses exact fractions, every row operation comes with the reason for it, and every worked example in the course opens in the matching tool with one click.
 
 ## 🌟 What is LinearLab?
 
