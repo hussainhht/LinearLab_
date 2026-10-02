@@ -1,0 +1,35 @@
+.player {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  padding: var(--space-4) var(--space-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background-color: var(--sheet);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: -1px -1px;
+}
+
+.stage > * {
+  max-width: 100%;
+}
+
+.history summary {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent);
+  width: fit-content;
+}
+
+.history[open] summary {
+  margin-bottom: var(--space-2);
+}

@@ -1,0 +1,71 @@
+## The transpose
+
+<Definition term="Transpose">
+
+The **transpose** of an $m \times n$ matrix $A$ is the $n \times m$ matrix $A^T$ whose rows are the columns of $A$:
+
+$$
+(A^T)_{ij} = a_{ji}.
+$$
+
+</Definition>
+
+$$
+A = \begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \ (2 \times 3)
+\qquad\longrightarrow\qquad
+A^T = \begin{bmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{bmatrix} \ (3 \times 2)
+$$
+
+| Rule | Formula |
+| --- | --- |
+| Double transpose | $(A^T)^T = A$ |
+| Sum | $(A + B)^T = A^T + B^T$ |
+| Scalar | $(kA)^T = kA^T$ |
+| Product | $(AB)^T = B^TA^T$ |
+
+The product rule reverses the order, and it extends to longer products: $(ABC)^T = C^TB^TA^T$.
+
+<Example title="Checking (AB)ᵀ = BᵀAᵀ">
+
+With $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ and $B = \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}$, we found $AB = \begin{bmatrix} 19 & 22 \\ 43 & 50 \end{bmatrix}$, so $(AB)^T = \begin{bmatrix} 19 & 43 \\ 22 & 50 \end{bmatrix}$. In the other order,
+
+$$
+B^TA^T = \begin{bmatrix} 5 & 7 \\ 6 & 8 \end{bmatrix}\begin{bmatrix} 1 & 3 \\ 2 & 4 \end{bmatrix}
+= \begin{bmatrix} 5 + 14 & 15 + 28 \\ 6 + 16 & 18 + 32 \end{bmatrix}
+= \begin{bmatrix} 19 & 43 \\ 22 & 50 \end{bmatrix}.
+$$
+
+The un-reversed product $A^TB^T = \begin{bmatrix} 23 & 31 \\ 34 & 46 \end{bmatrix}$ is different; it equals $(BA)^T$.
+
+</Example>
+
+<TryInTool tool="matrices" a="two-by-three" op="transpose" />
+
+## Special matrices
+
+| Type | Definition | Example |
+| --- | --- | --- |
+| Zero matrix $0$ | Every entry is 0 | $\begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}$ |
+| Identity $I_n$ | Square; 1 on the main diagonal, 0 elsewhere | $\begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$ |
+| Diagonal | Square; zero off the main diagonal | $\begin{bmatrix} 2 & 0 \\ 0 & 5 \end{bmatrix}$ |
+| Scalar | Diagonal with equal diagonal entries, $kI$ | $\begin{bmatrix} 3 & 0 \\ 0 & 3 \end{bmatrix}$ |
+| Symmetric | $A^T = A$ | $\begin{bmatrix} 1 & 2 \\ 2 & 3 \end{bmatrix}$ |
+| Skew-symmetric | $A^T = -A$; the diagonal must be 0 | $\begin{bmatrix} 0 & 2 \\ -2 & 0 \end{bmatrix}$ |
+| Upper triangular | Zero below the main diagonal | $\begin{bmatrix} 1 & 2 \\ 0 & 3 \end{bmatrix}$ |
+| Lower triangular | Zero above the main diagonal | $\begin{bmatrix} 4 & 0 \\ 2 & 1 \end{bmatrix}$ |
+
+The identity plays the role of the number 1: $AI = IA = A$. The diagonal of a skew-symmetric matrix must be zero, because $a_{ii} = -a_{ii}$ forces $a_{ii} = 0$.
+
+<QuickCheck
+  question="What is (AB)ᵀ?"
+  choices={["AᵀBᵀ", "BᵀAᵀ", "BA", "(BA)ᵀ"]}
+  answer={1}
+  explanation="Transposing a product reverses the order of the factors: (AB)ᵀ = BᵀAᵀ."
+/>
+
+<QuickCheck
+  question="A matrix satisfies Aᵀ = −A. What type is it, and what is on its diagonal?"
+  choices={["Symmetric, any values", "Skew-symmetric, zeros", "Diagonal, ones"]}
+  answer={1}
+  explanation="Aᵀ = −A is the definition of skew-symmetric, and each diagonal entry satisfies aᵢᵢ = −aᵢᵢ, so it is 0."
+/>

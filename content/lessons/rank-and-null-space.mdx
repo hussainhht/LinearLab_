@@ -1,0 +1,69 @@
+Row reducing a matrix reveals more than the solutions of one system. The pivots describe two sets of vectors attached to every matrix.
+
+## Rank
+
+<Definition term="Rank">
+
+The **rank** of a matrix $A$ is the number of pivots in its reduced row echelon form. It counts the independent columns of $A$ (and, equally, its independent rows).
+
+</Definition>
+
+## Column space
+
+The **column space** of $A$ is the set of all combinations of its columns, which is every vector $A\mathbf{x}$ can produce. So $A\mathbf{x} = \mathbf{b}$ is consistent exactly when $\mathbf{b}$ lies in the column space.
+
+A **basis** for the column space is given by the **pivot columns of the original matrix** $A$. The pivot positions come from the RREF, but the vectors must come from $A$: row operations keep track of which columns are independent while changing the columns themselves.
+
+## Null space
+
+The **null space** of $A$ is the set of all solutions of the homogeneous system $A\mathbf{x} = \mathbf{0}$. To find a basis, reduce $A$, then for each free variable in turn set it to $1$ and the other free variables to $0$; the pivot variables are fixed by the RREF rows. Each choice gives one basis vector, so the number of basis vectors, the **nullity**, equals the number of free variables.
+
+<Definition term="Rank–nullity theorem">
+
+For an $m \times n$ matrix, every column is either a pivot column or a free column, so
+
+$$
+\operatorname{rank} A + \operatorname{nullity} A = n.
+$$
+
+</Definition>
+
+<Example title="A 3×4 matrix of rank 2">
+
+$$
+A = \begin{bmatrix} 1 & 2 & 0 & 3 \\ 2 & 4 & 1 & 4 \\ 3 & 6 & 1 & 7 \end{bmatrix}
+\quad\xrightarrow{\text{RREF}}\quad
+\begin{bmatrix} 1 & 2 & 0 & 3 \\ 0 & 0 & 1 & -2 \\ 0 & 0 & 0 & 0 \end{bmatrix}
+$$
+
+The pivots are in columns 1 and 3, so $\operatorname{rank} A = 2$.
+
+**Column space basis:** columns 1 and 3 of the original $A$,
+$$\begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}, \qquad \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}.$$
+
+**Null space basis:** the free variables are $x_2$ and $x_4$. The RREF rows say $x_1 = -2x_2 - 3x_4$ and $x_3 = 2x_4$.
+
+- $x_2 = 1, x_4 = 0$ gives $(-2, 1, 0, 0)$.
+- $x_2 = 0, x_4 = 1$ gives $(-3, 0, 2, 1)$.
+
+So the nullity is 2 and $2 + 2 = 4$ columns, as rank–nullity requires. **Check** the second vector: $A(-3, 0, 2, 1) = (-3 + 0 + 0 + 3,\ -6 + 0 + 2 + 4,\ -9 + 0 + 2 + 7) = (0, 0, 0)$.
+
+</Example>
+
+<TryInTool tool="matrices" a="rectangular" op="spaces" />
+
+The matrix operations tool shows these bases for any matrix you enter and checks $A\mathbf{v} = \mathbf{0}$ for every null space vector it reports.
+
+<QuickCheck
+  question="A 4×6 matrix has rank 4. What is the dimension of its null space?"
+  choices={["0", "2", "4", "6"]}
+  answer={1}
+  explanation="Rank–nullity: rank + nullity = number of columns, so nullity = 6 − 4 = 2."
+/>
+
+<QuickCheck
+  question="Why do we take column-space basis vectors from A rather than from its RREF?"
+  choices={["The RREF columns are usually simpler but span a different space", "The RREF has fewer columns", "It makes no difference"]}
+  answer={0}
+  explanation="Row operations preserve which columns are independent, but they change the columns' entries, and with them the column space. The pivot columns of the original A span A's column space."
+/>

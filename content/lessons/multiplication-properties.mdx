@@ -1,0 +1,70 @@
+Matrix multiplication keeps most of the rules of ordinary multiplication and breaks a few important ones. Knowing which is which prevents most algebra mistakes.
+
+## Rules that hold
+
+Whenever the sizes make the products defined:
+
+| Rule | Formula |
+| --- | --- |
+| Associative | $(AB)C = A(BC)$ |
+| Left distributive | $A(B + C) = AB + AC$ |
+| Right distributive | $(A + B)C = AC + BC$ |
+| Scalars move freely | $(kA)B = k(AB) = A(kB)$ |
+| Identity | $AI = IA = A$ for square $A$ and $I$ of the same size |
+| Zero matrix | $A0 = 0$ and $0A = 0$ |
+
+## Rules that break
+
+**Order matters.** In general $AB \neq BA$, even when both are defined:
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 19 & 22 \\ 43 & 50 \end{bmatrix},
+\qquad
+\begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 23 & 34 \\ 31 & 46 \end{bmatrix}.
+$$
+
+**A zero product does not need a zero factor.** Neither matrix below is zero, yet
+
+$$
+\begin{bmatrix} 1 & -1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}.
+$$
+
+**You cannot cancel freely.** With $A = \begin{bmatrix} 1 & -1 \\ 1 & -1 \end{bmatrix}$, $B = \begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}$ and $C = 0$, we have $AB = AC = 0$ but $B \neq C$. Cancelling $A$ from $AB = AC$ is valid only when $A$ is invertible (chapter 4).
+
+**Squaring a sum has four terms.** $(A + B)^2 = A^2 + AB + BA + B^2$, which equals $A^2 + 2AB + B^2$ only when $AB = BA$.
+
+## Multiplying by special matrices
+
+A **diagonal** matrix $D$ scales rows from the left and columns from the right:
+
+$$
+\begin{bmatrix} 2 & 0 \\ 0 & 3 \end{bmatrix}\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 2 & 4 \\ 9 & 12 \end{bmatrix}
+\ (\text{rows} \times 2, \times 3),
+\qquad
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}\begin{bmatrix} 2 & 0 \\ 0 & 3 \end{bmatrix} = \begin{bmatrix} 2 & 6 \\ 6 & 12 \end{bmatrix}
+\ (\text{columns} \times 2, \times 3).
+$$
+
+## Common mistakes
+
+| Mistake | Why it fails | Instead |
+| --- | --- | --- |
+| Adding matrices of different sizes | The sum is undefined | Check sizes first |
+| Assuming $AB = BA$ | False for most matrices | Keep products in order |
+| Cancelling $A$ from $AB = AC$ | Fails when $A$ is not invertible | Multiply by $A^{-1}$ only if it exists |
+| Concluding $A = 0$ or $B = 0$ from $AB = 0$ | Counterexamples exist (above) | Look at ranks or invertibility |
+| Multiplying entry by entry | That is not the matrix product | Row times column |
+
+<QuickCheck
+  question="Can a 2×3 matrix be added to a 3×2 matrix?"
+  choices={["Yes, the result is 2×2", "Yes, the result is 3×3", "No, addition needs the same size"]}
+  answer={2}
+  explanation="Addition is entry by entry, so both matrices must have exactly the same number of rows and columns."
+/>
+
+<QuickCheck
+  question="If AB = 0 for square matrices A and B, what must be true?"
+  choices={["A = 0 or B = 0", "Nothing more in general; both can be nonzero", "AB = BA"]}
+  answer={1}
+  explanation="The example above has AB = 0 with A and B both nonzero. (If A were invertible, then B = A⁻¹AB = 0.)"
+/>

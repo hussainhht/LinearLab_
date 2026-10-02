@@ -1,0 +1,68 @@
+Writing $x_1, x_2, \dots$ and plus signs over and over adds nothing: a system is determined by its numbers alone. We store those numbers in two matrices.
+
+The **coefficient matrix** $A$ holds the coefficients, one row per equation and one column per variable. The **augmented matrix** $[A \mid b]$ adds the constants as a final column, separated by a vertical bar:
+
+$$
+A = \begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1p} \\
+a_{21} & a_{22} & \cdots & a_{2p} \\
+\vdots & \vdots & & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{np}
+\end{bmatrix},
+\qquad
+[A \mid b] = \left[\begin{array}{cccc|c}
+a_{11} & a_{12} & \cdots & a_{1p} & b_1 \\
+a_{21} & a_{22} & \cdots & a_{2p} & b_2 \\
+\vdots & \vdots & & \vdots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{np} & b_n
+\end{array}\right]
+$$
+
+The bar is only a reminder of where the equals signs were. Two rules make the translation reliable: keep the variables in the same order in every row, and write $0$ for a variable that is missing from an equation.
+
+<Example title="From a system to its augmented matrix">
+
+$$
+\begin{aligned} 2x - 3y + 4z &= 1 \\ x - y \phantom{{}+ 4z} &= 2 \\ -2y + z &= 3 \end{aligned}
+\qquad\longrightarrow\qquad
+\left[\begin{array}{ccc|c} 2 & -3 & 4 & 1 \\ 1 & -1 & 0 & 2 \\ 0 & -2 & 1 & 3 \end{array}\right]
+$$
+
+The second equation has no $z$, so its third entry is $0$; the third equation has no $x$, so its first entry is $0$.
+
+</Example>
+
+<TryInTool example="augmented-example" />
+
+<Example title="Four variables, two equations">
+
+$$
+\begin{aligned} x_1 + x_2 - x_3 + 5x_4 &= 1 \\ 3x_1 + x_3 - 2x_4 &= 0 \end{aligned}
+\qquad\longrightarrow\qquad
+\left[\begin{array}{cccc|c} 1 & 1 & -1 & 5 & 1 \\ 3 & 0 & 1 & -2 & 0 \end{array}\right]
+$$
+
+</Example>
+
+## And back again
+
+Reading a matrix as a system is the same rule in reverse: column $j$ holds the coefficients of $x_j$, and the last column holds the constants.
+
+<Example title="From a matrix to its system">
+
+$$
+\left[\begin{array}{ccccc|c} 1 & 2 & 0 & 3 & 5 & 1 \\ 1 & 1 & 0 & 2 & 1 & 0 \\ 3 & 1 & -1 & 5 & 6 & 4 \end{array}\right]
+\qquad\longrightarrow\qquad
+\begin{aligned} x_1 + 2x_2 + 3x_4 + 5x_5 &= 1 \\ x_1 + x_2 + 2x_4 + x_5 &= 0 \\ 3x_1 + x_2 - x_3 + 5x_4 + 6x_5 &= 4 \end{aligned}
+$$
+
+</Example>
+
+Every tool in LinearLab works on this representation: the system solver edits $[A \mid b]$ directly and shows the equations it stands for.
+
+<QuickCheck
+  question="What is the augmented matrix of x + 2z = 4, y − z = 1 (variables x, y, z)?"
+  choices={["[1 2 | 4; 1 −1 | 1]", "[1 0 2 | 4; 0 1 −1 | 1]", "[1 2 0 | 4; 0 1 −1 | 1]", "[1 0 2 | 4; 1 −1 0 | 1]"]}
+  answer={1}
+  explanation="Keep the columns in the order x, y, z and write 0 for missing variables: the first equation is 1x + 0y + 2z = 4, the second is 0x + 1y − 1z = 1."
+/>

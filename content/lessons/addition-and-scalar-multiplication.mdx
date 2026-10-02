@@ -1,0 +1,61 @@
+## Addition and subtraction
+
+Matrices of the **same size** are added or subtracted entry by entry:
+
+$$
+(A \pm B)_{ij} = a_{ij} \pm b_{ij}.
+$$
+
+If the sizes differ, $A + B$ is not defined. There is no way to pad a smaller matrix with zeros.
+
+<Example title="Adding and subtracting 2×2 matrices">
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}
+= \begin{bmatrix} 1+5 & 2+6 \\ 3+7 & 4+8 \end{bmatrix}
+= \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}
+$$
+
+$$
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} - \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}
+= \begin{bmatrix} 1-5 & 2-6 \\ 3-7 & 4-8 \end{bmatrix}
+= \begin{bmatrix} -4 & -4 \\ -4 & -4 \end{bmatrix}
+$$
+
+</Example>
+
+<TryInTool tool="matrices" a="two-a" b="two-b" op="add" />
+
+## Scalar multiplication
+
+A number is called a **scalar** here, to distinguish it from a matrix. Multiplying a matrix by a scalar $k$ multiplies every entry:
+
+$$
+(kA)_{ij} = k\,a_{ij}, \qquad
+3\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 3 & 6 \\ 9 & 12 \end{bmatrix}.
+$$
+
+Subtraction is addition of a scalar multiple: $A - B = A + (-1)B$.
+
+## Properties
+
+These rules hold whenever the sizes allow the operations. They match the rules for ordinary numbers, which is what makes matrix algebra feel familiar.
+
+| Rule | Formula |
+| --- | --- |
+| Commutative | $A + B = B + A$ |
+| Associative | $(A + B) + C = A + (B + C)$ |
+| Zero matrix | $A + 0 = A$ |
+| Additive inverse | $A + (-A) = 0$ |
+| Scalars 1 and 0 | $1A = A$ and $0A = 0$ |
+| Distributive over matrices | $k(A + B) = kA + kB$ |
+| Distributive over scalars | $(k + m)A = kA + mA$ |
+| Associative for scalars | $k(mA) = (km)A$ |
+
+Subtraction, like subtraction of numbers, is not commutative: $B - A = -(A - B)$.
+
+<NumericCheck
+  question="With A = [1 2; 3 4] and B = [5 6; 7 8], find the entries c₁₁ and c₂₂ of C = 2A − 3B."
+  fields={[{ label: 'c₁₁', answer: '-13' }, { label: 'c₂₂', answer: '-16' }]}
+  explanation="c₁₁ = 2(1) − 3(5) = −13 and c₂₂ = 2(4) − 3(8) = −16. The full result is [−13 −14; −15 −16]."
+/>

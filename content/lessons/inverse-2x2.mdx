@@ -1,0 +1,73 @@
+For 2×2 matrices there is a short formula. The number $ad - bc$ decides everything.
+
+<Definition term="Inverse of a 2×2 matrix">
+
+Let $A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$ and $\Delta = ad - bc$. Then $A$ is invertible **if and only if** $\Delta \neq 0$, and in that case
+
+$$
+A^{-1} = \frac{1}{ad - bc}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix}.
+$$
+
+Swap the diagonal entries, negate the off-diagonal entries, divide by $\Delta$.
+
+</Definition>
+
+You can confirm the formula by multiplying: $\begin{bmatrix} a & b \\ c & d \end{bmatrix}\begin{bmatrix} d & -b \\ -c & a \end{bmatrix} = \begin{bmatrix} ad - bc & 0 \\ 0 & ad - bc \end{bmatrix} = \Delta I$.
+
+<Example title="A = [4 7; 2 6]">
+
+$\Delta = 4 \cdot 6 - 7 \cdot 2 = 24 - 14 = 10 \neq 0$, so the inverse exists:
+
+$$
+A^{-1} = \frac{1}{10}\begin{bmatrix} 6 & -7 \\ -2 & 4 \end{bmatrix} = \begin{bmatrix} \frac35 & -\frac{7}{10} \\ -\frac15 & \frac25 \end{bmatrix}
+= \begin{bmatrix} 0.6 & -0.7 \\ -0.2 & 0.4 \end{bmatrix}.
+$$
+
+</Example>
+
+<Example title="Two quick decisions">
+
+**$A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$:** $\Delta = 4 - 6 = -2$, so
+$$A^{-1} = -\frac12\begin{bmatrix} 4 & -2 \\ -3 & 1 \end{bmatrix} = \begin{bmatrix} -2 & 1 \\ \frac32 & -\frac12 \end{bmatrix}.$$
+
+**$B = \begin{bmatrix} 6 & 4 \\ 3 & 2 \end{bmatrix}$:** $\Delta = 6 \cdot 2 - 4 \cdot 3 = 0$, so $B$ is not invertible.
+
+</Example>
+
+<TryInTool tool="matrices" a="two-a" op="inverse" />
+
+## A matrix with a parameter
+
+<Example title="For which a is A = [2a, a + 1; 4, 2] invertible?">
+
+$$
+\Delta = (2a)(2) - (a + 1)(4) = 4a - 4a - 4 = -4.
+$$
+
+The determinant is $-4$ **for every real number $a$**, so $A$ is always invertible, and
+
+$$
+A^{-1} = -\frac14\begin{bmatrix} 2 & -(a+1) \\ -4 & 2a \end{bmatrix}
+= \begin{bmatrix} -\frac12 & \frac{a+1}{4} \\ 1 & -\frac{a}{2} \end{bmatrix}.
+$$
+
+**Check:** $\begin{bmatrix} 2a & a+1 \\ 4 & 2 \end{bmatrix}\begin{bmatrix} -\frac12 & \frac{a+1}{4} \\ 1 & -\frac a2 \end{bmatrix} = \begin{bmatrix} -a + a + 1 & \frac{a(a+1)}{2} - \frac{a(a+1)}{2} \\ -2 + 2 & (a + 1) - a \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.
+
+</Example>
+
+<Correction>
+
+The earlier version of this example introduced the condition $a \neq -\tfrac{1}{10}$ and the denominator $10a + 1$. Neither follows from the matrix: $\Delta = -4$ never depends on $a$, so there is no exceptional value.
+
+</Correction>
+
+<NumericCheck
+  question="Find the inverse of [2 1; 5 3]. Enter its four entries."
+  fields={[
+    { label: 'row 1, col 1', answer: '3' },
+    { label: 'row 1, col 2', answer: '-1' },
+    { label: 'row 2, col 1', answer: '-5' },
+    { label: 'row 2, col 2', answer: '2' },
+  ]}
+  explanation="Δ = 2·3 − 1·5 = 1, so the inverse is [3 −1; −5 2]. Check: [2 1; 5 3][3 −1; −5 2] = I."
+/>
