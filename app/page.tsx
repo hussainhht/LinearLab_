@@ -77,20 +77,6 @@ export default function HomePage() {
           ))}
         </ol>
       </section>
-
-      <section className={styles.exact} aria-labelledby="exact-title">
-        <h2 id="exact-title"><T k="home.exact" /></h2>
-        <div className={styles.exactBody}>
-          <p>
-            <T k="home.exactDescription" />
-          </p>
-          <p lang="en" dir="ltr">
-            That also means no guessing about “almost zero”: the matrix with 0.000001 on its diagonal has determinant
-            10<sup>−12</sup>, so it is invertible, and LinearLab inverts it. Answers are checked by substituting them back,
-            not just reported.
-          </p>
-        </div>
-      </section>
     </div>
   )
 }
