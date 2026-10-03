@@ -257,3 +257,8 @@
   max-width: 62ch;
   color: var(--ink-2);
 }
+
+@media (max-width: 40rem) {
+  .chapterLink { grid-template-columns: 2rem minmax(0, 1fr); }
+  .chapterCount { grid-column: 2; grid-row: 3; white-space: normal; }
+}

@@ -53,7 +53,7 @@
 .header {
   display: grid;
   gap: var(--space-3);
-  margin-bottom: var(--space-5);
+  margin-block-end: var(--space-5);
 }
 
 .crumbs {
@@ -94,9 +94,12 @@
   display: grid;
   gap: var(--space-1);
   padding: var(--space-3) var(--space-4);
-  border-left: 3px solid var(--pivot-ring);
+  border-inline-start: 3px solid var(--pivot-ring);
   background: color-mix(in srgb, var(--pivot-fill) 16%, transparent);
-  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  border-start-start-radius: 0;
+  border-start-end-radius: var(--radius-m);
+  border-end-end-radius: var(--radius-m);
+  border-end-start-radius: 0;
 }
 .intro p:first-child {
   font-size: var(--text-xs);
@@ -165,7 +168,7 @@
   background: var(--accent-soft);
 }
 .reviewNotes li + li {
-  margin-top: var(--space-2);
+  margin-block-start: var(--space-2);
 }
 
 /* ---------- Contents ---------- */
@@ -203,7 +206,7 @@
   color: var(--ink);
 }
 .tocList li[data-depth='3'] a {
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
   font-size: var(--text-xs);
 }
 .tocList li[data-depth='2'] a {
@@ -218,10 +221,15 @@
   color: var(--ink-3);
 }
 
+.tocText,
+.relatedExplanation {
+  display: block;
+}
+
 @media (min-width: 84rem) {
   .toc {
     position: sticky;
-    top: calc(var(--header-height) + var(--space-4));
+    inset-block-start: calc(var(--header-height) + var(--space-4));
     max-height: calc(100dvh - var(--header-height) - var(--space-6));
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -261,7 +269,7 @@
 }
 .prose > * + *,
 .section > * + * {
-  margin-top: var(--space-4);
+  margin-block-start: var(--space-4);
 }
 
 /* The few paragraphs before the first section (some chapters open with a summary) read as a lead. */
@@ -271,28 +279,28 @@
 }
 
 .section {
-  margin-top: var(--space-7);
+  margin-block-start: var(--space-7);
 }
 .section:first-child {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .section h2 {
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--rule);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--rule);
   font-size: var(--text-2xl);
 }
 .section h3 {
-  margin-top: var(--space-6);
+  margin-block-start: var(--space-6);
   font-size: var(--text-xl);
 }
 .section h4 {
-  margin-top: var(--space-5);
+  margin-block-start: var(--space-5);
   font-size: var(--text-lg);
 }
 .section h5,
 .section h6 {
-  margin-top: var(--space-4);
+  margin-block-start: var(--space-4);
   font-size: var(--text-md);
 }
 .section h2 + *,
@@ -300,11 +308,11 @@
 .section h4 + *,
 .section h5 + *,
 .section h6 + * {
-  margin-top: var(--space-3);
+  margin-block-start: var(--space-3);
 }
 
 .anchor {
-  margin-left: var(--space-2);
+  margin-inline-start: var(--space-2);
   color: var(--ink-3);
   font-family: var(--font-sans);
   font-size: 0.8em;
@@ -318,14 +326,14 @@
 
 .prose ul,
 .prose ol {
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
 }
 .prose li + li {
-  margin-top: var(--space-1);
+  margin-block-start: var(--space-1);
 }
 .prose li > :is(ul, ol),
 .itemBody > :is(ul, ol, p) {
-  margin-top: var(--space-1);
+  margin-block-start: var(--space-1);
 }
 .itemBody > :global(.katex-display) {
   margin: var(--space-2) 0;
@@ -358,24 +366,27 @@
 .prose blockquote {
   margin: var(--space-4) 0;
   padding: var(--space-3) var(--space-4);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  border-inline-start: 3px solid var(--accent);
+  border-start-start-radius: 0;
+  border-start-end-radius: var(--radius-m);
+  border-end-end-radius: var(--radius-m);
+  border-end-start-radius: 0;
   background: var(--accent-soft);
 }
 .prose blockquote > * + * {
-  margin-top: var(--space-2);
+  margin-block-start: var(--space-2);
 }
 
 .prose hr {
   margin: var(--space-5) 0;
   border: 0;
-  border-top: 1px solid var(--rule);
+  border-block-start: 1px solid var(--rule);
 }
 
 /* Notes about the source (where a version differs, which file a version is) are set apart from the working. */
 .prose p[data-note='source'] {
-  padding-left: var(--space-3);
-  border-left: 3px solid var(--source);
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--source);
   font-size: var(--text-sm);
   color: var(--ink-2);
 }
@@ -401,19 +412,19 @@
 .tableWrap th,
 .tableWrap td {
   padding: var(--space-2) var(--space-3);
-  border-bottom: 1px solid var(--rule);
-  text-align: left;
+  border-block-end: 1px solid var(--rule);
+  text-align: start;
   vertical-align: top;
 }
 .tableWrap thead th {
   font-weight: 700;
   color: var(--ink-2);
   background: var(--sheet-sunken);
-  border-bottom-color: var(--rule-strong);
+  border-block-end-color: var(--rule-strong);
   white-space: nowrap;
 }
 .tableWrap tbody tr:last-child td {
-  border-bottom: 0;
+  border-block-end: 0;
 }
 
 /* Drawings that are text, kept exactly as written. */
@@ -456,16 +467,16 @@
 
 .section[data-kind='source-version'],
 .section[data-kind='supplementary'] {
-  padding-left: var(--space-4);
-  border-left: 3px solid var(--source);
+  padding-inline-start: var(--space-4);
+  border-inline-start: 3px solid var(--source);
 }
 .section[data-kind='supplementary'] {
-  border-left-color: var(--target);
+  border-inline-start-color: var(--target);
 }
 .section[data-kind='source-version'] h2,
 .section[data-kind='supplementary'] h2 {
-  border-top: 0;
-  padding-top: 0;
+  border-block-start: 0;
+  padding-block-start: 0;
 }
 .kindLabel {
   font-size: var(--text-xs);
@@ -478,7 +489,7 @@
 
 /* The archival ledger: reference material, collapsed so it does not interrupt the teaching text. */
 .ledger {
-  margin-top: var(--space-7);
+  margin-block-start: var(--space-7);
   border: 1px dashed var(--rule-strong);
   border-radius: var(--radius-m);
   background: var(--sheet);
@@ -511,7 +522,7 @@
 .related {
   display: grid;
   gap: var(--space-4);
-  margin-top: var(--space-7);
+  margin-block-start: var(--space-7);
   padding: var(--space-5);
   border: 1px solid var(--rule);
   border-radius: var(--radius-l);
@@ -545,5 +556,5 @@
 }
 .relatedList .num {
   color: var(--ink-3);
-  margin-right: var(--space-1);
+  margin-inline-end: var(--space-1);
 }

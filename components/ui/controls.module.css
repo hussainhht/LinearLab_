@@ -159,7 +159,7 @@
 .select {
   appearance: none;
   color: var(--ink);
-  padding-right: 2.25rem;
+  padding-inline-end: 2.25rem;
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   text-overflow: ellipsis;
@@ -167,7 +167,7 @@
 
 .selectIcon {
   position: absolute;
-  right: 0.75rem;
+  inset-inline-end: 0.75rem;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   pointer-events: none;

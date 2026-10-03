@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from 'next'
-import { Atkinson_Hyperlegible_Next, STIX_Two_Text } from 'next/font/google'
+import { Atkinson_Hyperlegible_Next, Noto_Sans_Arabic, STIX_Two_Text } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { SiteFooter, SiteHeader } from '@/components/layout/SiteHeader'
 import { WorkspaceProvider } from '@/components/tools/WorkspaceProvider'
 import { ToastProvider } from '@/components/ui/Toaster'
 import { themeInitScript } from '@/lib/theme'
+import { LanguageProvider, SkipLink } from '@/components/i18n/LanguageProvider'
+import { InterfaceTitle } from '@/components/i18n/InterfaceTitle'
+import { languageInitScript } from '@/lib/i18n/language'
 import './globals.css'
 
 const serif = STIX_Two_Text({
@@ -20,6 +23,12 @@ const sans = Atkinson_Hyperlegible_Next({
   display: 'swap',
   // Next.js has no metric overrides for this family yet; fall back to the system stack instead.
   adjustFontFallback: false,
+})
+
+const arabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  variable: '--font-arabic',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -40,23 +49,25 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang="en" dir="ltr" className={`${serif.variable} ${sans.variable} ${arabic.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: languageInitScript }} />
       </head>
       <body>
-        <a href="#main" className="skip-link">
-          Skip to content
-        </a>
-        <ToastProvider>
-          <WorkspaceProvider>
-            <SiteHeader />
-            <main id="main" tabIndex={-1}>
-              {children}
-            </main>
-            <SiteFooter />
-          </WorkspaceProvider>
-        </ToastProvider>
+        <LanguageProvider>
+          <InterfaceTitle />
+          <SkipLink />
+          <ToastProvider>
+            <WorkspaceProvider>
+              <SiteHeader />
+              <main id="main" tabIndex={-1}>
+                {children}
+              </main>
+              <SiteFooter />
+            </WorkspaceProvider>
+          </ToastProvider>
+        </LanguageProvider>
       </body>
     </html>
   )

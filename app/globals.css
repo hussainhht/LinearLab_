@@ -255,7 +255,7 @@ kbd {
 
 .skip-link {
   position: absolute;
-  left: var(--space-4);
+  inset-inline-start: var(--space-4);
   top: -4rem;
   z-index: 100;
   padding: var(--space-2) var(--space-4);
@@ -337,4 +337,29 @@ main:focus {
     color: inherit;
     text-decoration: none;
   }
+}
+
+/* Arabic interface; annotated English study content keeps the original typefaces. */
+:root[lang='ar'],
+[lang='ar'] {
+  --font-sans: var(--font-arabic), var(--font-atkinson), system-ui, sans-serif;
+  --font-serif: var(--font-arabic), var(--font-stix), serif;
+}
+[lang='en'] {
+  --font-sans: var(--font-atkinson, 'Atkinson Hyperlegible Next'), system-ui, sans-serif;
+  --font-serif: var(--font-stix, 'STIX Two Text'), 'Times New Roman', serif;
+}
+:where([lang='en'][dir='ltr']) {
+  font-family: var(--font-sans);
+}
+:is(h1, h2, h3, h4):dir(rtl) {
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+code, kbd, .katex, .katex-display, input[inputmode='decimal'] {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+svg[data-directional]:dir(rtl) {
+  transform: scaleX(-1);
 }

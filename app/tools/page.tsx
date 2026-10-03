@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import { ButtonLink } from '@/components/ui/Button'
-import { TOOLS } from '@/components/tools/catalog'
+import { T } from '@/components/i18n/LanguageProvider'
+import { ToolCatalog } from '@/components/tools/ToolCatalog'
 import styles from './tools.module.css'
 
 export const metadata: Metadata = {
@@ -13,25 +12,12 @@ export default function ToolsPage() {
   return (
     <>
       <div className={styles.intro}>
-        <h1 className={styles.title}>Tools</h1>
+        <h1 className={styles.title}><T k="tools.title" /></h1>
         <p className={styles.lede}>
-          Each tool works with exact fractions and explains its steps. Your input stays put while you switch between tools
-          and lessons.
+          <T k="tools.intro" />
         </p>
       </div>
-      <ul className={styles.toolList}>
-        {TOOLS.map((tool) => (
-          <li key={tool.href} className={styles.toolItem}>
-            <h2 className={styles.toolName}>
-              <Link href={tool.href}>{tool.name}</Link>
-            </h2>
-            <p className={styles.toolDescription}>{tool.description}</p>
-            <ButtonLink href={tool.href} size="sm" aria-label={`Open ${tool.name}`}>
-              Open
-            </ButtonLink>
-          </li>
-        ))}
-      </ul>
+      <ToolCatalog />
     </>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useI18n, T } from '@/components/i18n/LanguageProvider'
 import { type ReactNode, useMemo, useState } from 'react'
 import { MatrixEditor } from '@/components/matrix/MatrixEditor'
 import { MatrixView } from '@/components/matrix/MatrixView'
@@ -23,7 +24,7 @@ interface CramerSolverProps {
   initialA?: readonly (readonly Entry[])[]
   initialB?: readonly Entry[]
   id?: string
-  title?: string
+  title?: ReactNode
   /** 2 on a tool page, 3 when embedded under a lesson heading. */
   headingLevel?: 2 | 3
 }
@@ -35,6 +36,7 @@ const DEFAULTS = {
 
 /** Cramer's rule for one 2×2 or 3×3 system; each instance keeps its own inputs. */
 export function CramerSolver({ size, initialA, initialB, id = `cramer${size}`, title, headingLevel = 3 }: CramerSolverProps) {
+  const { t, language } = useI18n()
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
   const [cells, setCells] = useState(() =>
     joinAugmented(toCells(initialA ?? DEFAULTS[size].a), (initialB ?? DEFAULTS[size].b).map(String)),
@@ -43,7 +45,7 @@ export function CramerSolver({ size, initialA, initialB, id = `cramer${size}`, t
   const parsed = useMemo(() => parseMatrixCells(cells), [cells])
   const labels = [...Array.from({ length: size }, (_, j) => variableName(j)), 'b']
 
-  let body: ReactNode = <p className={styles.muted}>Fill in every coefficient and constant to solve.</p>
+  let body: ReactNode = <p className={styles.muted}><T k="tools.fillSystem" /></p>
   if (parsed.ok) {
     const { left: a, right } = splitColumns(parsed.matrix, size)
     const b = right.map((r) => r[0]!)
@@ -51,15 +53,15 @@ export function CramerSolver({ size, initialA, initialB, id = `cramer${size}`, t
     if (!result.applicable) {
       const { a: aCells, b: bCells } = splitAugmented(cells)
       body = (
-        <Notice
+        <div lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'}><Notice
           tone="warning"
-          title="Cramer’s rule does not apply"
+          title={<T k="tools.cramerUnavailable" />}
           actions={
-            <Link href={systemHref('/tools/rref/', aCells, bCells)}>Classify this system with the system solver</Link>
+            <Link href={systemHref('/tools/rref/', aCells, bCells)}><T k="tools.classifySystem" /></Link>
           }
         >
-          {result.message}
-        </Notice>
+          <p lang="en" dir="ltr">{result.message}</p>
+        </Notice></div>
       )
     } else {
       const checked = vectorsEqual(multiplyVector(a, result.solution), b)
@@ -73,7 +75,7 @@ export function CramerSolver({ size, initialA, initialB, id = `cramer${size}`, t
               <div key={c.variable}>
                 <MatrixView
                   matrix={c.matrix}
-                  label={`A with column ${c.variable + 1} replaced by b`}
+                  label={t('tools.replacedColumnLabel', { column: c.variable + 1 })}
                   caption={`A${subscript(c.variable + 1)}: column ${c.variable + 1} replaced by b`}
                   size="sm"
                   showRowLabels={false}
@@ -106,25 +108,25 @@ export function CramerSolver({ size, initialA, initialB, id = `cramer${size}`, t
   }
 
   return (
-    <section className={styles.calculator} aria-labelledby={`${id}-title`}>
+    <section lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} className={styles.calculator} aria-labelledby={`${id}-title`}>
       <Heading id={`${id}-title`} className={styles.calcTitle}>
-        {title ?? `${size}×${size} system`}
+        {title ? <span lang="en" dir="ltr">{title}</span> : t('tools.systemSize', { size })}
       </Heading>
       <div className={styles.calcBody}>
         <div className={styles.equationForm} onBlur={() => setTouched(true)}>
           <MatrixEditor
             idPrefix={id}
-            label={`Augmented matrix of the ${size} by ${size} system`}
+            label={t('tools.augmentedSystemSize', { size })}
             cells={cells}
             augmentAt={size}
             columnLabels={labels}
             errors={touched && !parsed.ok ? parsed.errors : []}
             onCellChange={(r, c, v) => setCells(setCell(cells, r, c, v))}
-            describeCell={(r, c) => (c === size ? `Equation ${r + 1}, constant` : `Equation ${r + 1}, coefficient of ${variableName(c)}`)}
+            describeCell={(r, c) => (c === size ? t('tools.equationConstant', { row: r + 1 }) : t('tools.equationCoefficient', { row: r + 1, variable: variableName(c) }))}
           />
           <EquationPreview cells={cells} variables={size} />
         </div>
-        <div className={styles.work} aria-live="polite">
+        <div className={styles.work} lang="en" dir="ltr" aria-live="polite">
           {body}
         </div>
       </div>

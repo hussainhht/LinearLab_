@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useI18n, T } from '@/components/i18n/LanguageProvider'
 import { useMemo, useState } from 'react'
 import { MatrixEditor } from '@/components/matrix/MatrixEditor'
 import { MatrixView } from '@/components/matrix/MatrixView'
@@ -30,11 +31,11 @@ const paren = (r: Rational) => (r.isNegative() || !r.isInteger() ? `(${n(r)})` :
 
 function Verdict({ value }: { value: Rational }) {
   return value.isZero() ? (
-    <Notice tone="warning" title="det = 0, so the matrix is singular">
+    <Notice tone="warning" title={<T k="tools.detZero" />}>
       It has no inverse, and its columns are linearly dependent.
     </Notice>
   ) : (
-    <Notice tone="success" title="det ≠ 0, so the matrix is invertible">
+    <Notice tone="success" title={<T k="tools.detNonzero" />}>
       Its columns are linearly independent and Ax = b has exactly one solution for every b.
     </Notice>
   )
@@ -48,26 +49,27 @@ interface CalculatorProps {
 }
 
 export function Determinant2x2Calculator({ initial = [[2, 3], [4, 5]], id = 'det2', headingLevel = 3 }: CalculatorProps) {
+  const { t, language } = useI18n()
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
   const input = useMatrixInput(initial)
   const result = input.parsed.ok ? determinant2x2(input.parsed.matrix) : null
   return (
-    <section className={styles.calculator} aria-labelledby={`${id}-title`}>
+    <section lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} className={styles.calculator} aria-labelledby={`${id}-title`}>
       <Heading id={`${id}-title`} className={styles.calcTitle}>
-        2×2 determinant
+        {t('tools.detSize', { size: 2 })}
       </Heading>
       <div className={styles.calcBody}>
         <div onBlur={() => input.setTouched(true)}>
           <MatrixEditor
             idPrefix={id}
-            label="2 by 2 matrix"
+            label={t('tools.squareMatrixLabel', { size: 2 })}
             cells={input.cells}
             errors={input.touched && !input.parsed.ok ? input.parsed.errors : []}
             onCellChange={(r, c, v) => input.setCells(setCell(input.cells, r, c, v))}
             describeCell={(r, c) => ['a', 'b', 'c', 'd'][r * 2 + c]!}
           />
         </div>
-        <div className={styles.work} aria-live="polite">
+        <div className={styles.work} lang="en" dir="ltr" aria-live="polite">
           {result ? (
             <>
               <p className={styles.formula}>det A = ad − bc</p>
@@ -83,7 +85,7 @@ export function Determinant2x2Calculator({ initial = [[2, 3], [4, 5]], id = 'det
               <Verdict value={result.value} />
             </>
           ) : (
-            <p className={styles.muted}>Fill in all four entries to see the determinant.</p>
+            <p className={styles.muted}><T k="tools.fillFour" /></p>
           )}
         </div>
       </div>
@@ -92,28 +94,29 @@ export function Determinant2x2Calculator({ initial = [[2, 3], [4, 5]], id = 'det
 }
 
 export function Determinant3x3Calculator({ initial = [[1, 2, 3], [0, 4, 5], [1, 0, 6]], id = 'det3', headingLevel = 3 }: CalculatorProps) {
+  const { t, language } = useI18n()
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
   const input = useMatrixInput(initial)
   const m: Matrix | null = input.parsed.ok ? input.parsed.matrix : null
   const expansion = m ? cofactorExpansion(m, 0) : null
   const diagonal = m ? sarrus(m) : null
   return (
-    <section className={styles.calculator} aria-labelledby={`${id}-title`}>
+    <section lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} className={styles.calculator} aria-labelledby={`${id}-title`}>
       <Heading id={`${id}-title`} className={styles.calcTitle}>
-        3×3 determinant
+        {t('tools.detSize', { size: 3 })}
       </Heading>
       <div className={styles.calcBody}>
         <div onBlur={() => input.setTouched(true)}>
           <MatrixEditor
             idPrefix={id}
-            label="3 by 3 matrix"
+            label={t('tools.squareMatrixLabel', { size: 3 })}
             cells={input.cells}
             errors={input.touched && !input.parsed.ok ? input.parsed.errors : []}
             onCellChange={(r, c, v) => input.setCells(setCell(input.cells, r, c, v))}
             describeCell={(r, c) => `a${subscript(r + 1)}${subscript(c + 1)}`}
           />
         </div>
-        <div className={styles.work} aria-live="polite">
+        <div className={styles.work} lang="en" dir="ltr" aria-live="polite">
           {expansion && diagonal && m ? (
             <>
               <p className={styles.formula}>Cofactor expansion along row 1</p>
@@ -121,19 +124,19 @@ export function Determinant3x3Calculator({ initial = [[1, 2, 3], [0, 4, 5], [1, 
                 det A = a₁₁·M₁₁ − a₁₂·M₁₂ + a₁₃·M₁₃
               </p>
               <ol className={styles.terms}>
-                {expansion.terms.map((t) => (
-                  <li key={t.col}>
+                {expansion.terms.map((term) => (
+                  <li key={term.col}>
                     <span className="num">
-                      {t.sign === 1 ? '+' : '−'} {paren(t.entry)} ×
+                      {term.sign === 1 ? '+' : '−'} {paren(term.entry)} ×
                     </span>
                     <MatrixView
-                      matrix={t.minor}
-                      label={`Minor M1${t.col + 1}`}
+                      matrix={term.minor}
+                      label={t('tools.minorLabel', { column: term.col + 1 })}
                       size="sm"
                       showRowLabels={false}
                     />
                     <span className="num">
-                      = {t.sign === 1 ? '+' : '−'} {paren(t.entry)} × {paren(t.minorDeterminant)} = {n(t.contribution)}
+                      = {term.sign === 1 ? '+' : '−'} {paren(term.entry)} × {paren(term.minorDeterminant)} = {n(term.contribution)}
                     </span>
                   </li>
                 ))}
@@ -145,7 +148,7 @@ export function Determinant3x3Calculator({ initial = [[1, 2, 3], [0, 4, 5], [1, 
                 det A = <RationalText value={expansion.value} />
               </p>
               <details className={styles.details}>
-                <summary>Check with the diagonal rule</summary>
+                <summary><T k="tools.diagonalCheck" /></summary>
                 <p className="num">
                   Down-right diagonals: {diagonal.forward.map((d) => d.factors.map(paren).join('·')).join(' + ')} ={' '}
                   {n(diagonal.forward.reduce((acc, d) => acc.add(d.product), Rational.ZERO))}
@@ -163,12 +166,12 @@ export function Determinant3x3Calculator({ initial = [[1, 2, 3], [0, 4, 5], [1, 
               <Verdict value={expansion.value} />
               <p className={styles.muted}>
                 <Link href={matrixHref('/tools/matrices/', { A: input.cells }, { op: 'determinant' })}>
-                  See the same determinant by row reduction
+                  <T k="tools.sameDeterminant" />
                 </Link>
               </p>
             </>
           ) : (
-            <p className={styles.muted}>Fill in all nine entries to see the determinant.</p>
+            <p className={styles.muted}><T k="tools.fillNine" /></p>
           )}
         </div>
       </div>

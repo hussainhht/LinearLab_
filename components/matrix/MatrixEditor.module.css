@@ -116,7 +116,7 @@
 
 .errors {
   padding: var(--space-3) var(--space-4);
-  border-left: 4px solid var(--danger);
+  border-inline-start: 4px solid var(--danger);
   border-radius: var(--radius-m);
   background: var(--danger-soft);
   font-size: var(--text-sm);
@@ -124,7 +124,7 @@
 
 .errors ul {
   margin: var(--space-1) 0 0;
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
 }
 
 .errorsTitle {

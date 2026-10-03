@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from 'react'
 import { Icon } from '@/components/ui/Icon'
 import { THEME_STORAGE_KEY } from '@/lib/theme'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import styles from './SiteHeader.module.css'
 
 const QUERY = '(prefers-color-scheme: dark)'
@@ -26,6 +27,7 @@ function resolvedTheme(): 'light' | 'dark' {
 
 /** Switches between the paper (light) and chalkboard (dark) themes; the choice is remembered. */
 export function ThemeToggle() {
+  const { t } = useI18n()
   const theme = useSyncExternalStore(subscribe, resolvedTheme, () => null)
   const next = theme === 'dark' ? 'light' : 'dark'
 
@@ -44,8 +46,8 @@ export function ThemeToggle() {
       type="button"
       className={styles.themeToggle}
       onClick={toggle}
-      aria-label={theme ? `Switch to ${next} theme` : 'Switch theme'}
-      title={theme ? `Switch to ${next} theme` : undefined}
+      aria-label={theme ? t(next === 'light' ? 'theme.light' : 'theme.dark') : t('theme.switch')}
+      title={theme ? t(next === 'light' ? 'theme.light' : 'theme.dark') : undefined}
     >
       <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={20} />
     </button>

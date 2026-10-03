@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Page, PageHeader } from '@/components/layout/Page'
@@ -24,10 +25,10 @@ export default async function PracticeProblemPage({ params }: PageProps<'/practi
   if (!problem) notFound()
   return (
     <Page>
-      <PageHeader title={problem.title} lede={problem.description}>
+      <PageHeader title={<span lang="en" dir="ltr" style={{ display: 'block' }}>{problem.title}</span>} lede={<span lang="en" dir="ltr" style={{ display: 'block' }}>{problem.description}</span>}>
         <EquationList a={problem.a} b={problem.b} />
         <p>
-          <Link href="/practice/">All practice problems</Link>
+          <Link href="/practice/"><T k="practice.allProblems" /></Link>
         </p>
       </PageHeader>
       <PracticeProblem a={problem.a} b={problem.b} />

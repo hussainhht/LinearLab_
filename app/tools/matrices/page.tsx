@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Suspense } from 'react'
 import { MatricesUrlLoader } from '@/components/tools/matrices/MatricesUrlLoader'
 import { MatricesWorkspace } from '@/components/tools/matrices/MatricesWorkspace'
@@ -13,10 +14,9 @@ export default function MatricesPage() {
   return (
     <>
       <div className={styles.intro}>
-        <h1 className={styles.title}>Matrix operations</h1>
+        <h1 className={styles.title}><T k="tools.matrices.name" /></h1>
         <p className={styles.lede}>
-          Edit A and B, then pick an operation. Results are exact, explain how they were found, and can be fed back in as A
-          or B.
+          <T k="tools.matrices.intro" />
         </p>
       </div>
       <Suspense fallback={null}>

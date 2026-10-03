@@ -1,6 +1,7 @@
 'use client'
 
 import { type ReactNode, useId } from 'react'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { Icon } from './Icon'
 import styles from './controls.module.css'
 
@@ -16,6 +17,8 @@ interface StepperProps {
 
 /** Compact −/+ control for small integer settings such as matrix dimensions. */
 export function Stepper({ label, value, min, max, onChange, noun }: StepperProps) {
+  const { t } = useI18n()
+  const localizedNoun = noun === 'rows' ? t('ui.rows') : noun === 'columns' ? t('ui.columns') : noun === 'variables' ? t('ui.variables') : noun
   const id = useId()
   return (
     <div className={styles.stepper} role="group" aria-labelledby={id}>
@@ -28,11 +31,11 @@ export function Stepper({ label, value, min, max, onChange, noun }: StepperProps
           className={styles.stepperButton}
           onClick={() => onChange(Math.max(min, value - 1))}
           disabled={value <= min}
-          aria-label={`Fewer ${noun}`}
+          aria-label={t('ui.fewer', { noun: localizedNoun })}
         >
           −
         </button>
-        <output className={`${styles.stepperValue} num`} aria-live="polite">
+        <output dir="ltr" className={`${styles.stepperValue} num`} aria-live="polite">
           {value}
         </output>
         <button
@@ -40,7 +43,7 @@ export function Stepper({ label, value, min, max, onChange, noun }: StepperProps
           className={styles.stepperButton}
           onClick={() => onChange(Math.min(max, value + 1))}
           disabled={value >= max}
-          aria-label={`More ${noun}`}
+          aria-label={t('ui.more', { noun: localizedNoun })}
         >
           +
         </button>
@@ -108,7 +111,7 @@ export function Select({ label, value, onChange, children, hint }: SelectProps) 
         <select id={id} value={value} onChange={(e) => onChange(e.target.value)} className={styles.select}>
           {children}
         </select>
-        <Icon name="next" size={16} className={styles.selectIcon} />
+        <Icon name="next" directional={false} size={16} className={styles.selectIcon} />
       </div>
       {hint ? <p className={styles.hint}>{hint}</p> : null}
     </div>
@@ -139,6 +142,7 @@ export function TextField({ label, value, onChange, error, hint, placeholder, in
       </label>
       <input
         id={id}
+        dir="ltr"
         className={`${styles.input} num`}
         value={value}
         onChange={(e) => onChange(e.target.value)}

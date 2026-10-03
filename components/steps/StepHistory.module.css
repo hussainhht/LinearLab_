@@ -24,7 +24,7 @@
   border: 0;
   border-radius: var(--radius-s);
   background: transparent;
-  text-align: left;
+  text-align: start;
   color: var(--ink-2);
 }
 
@@ -42,12 +42,12 @@
 .number {
   font-size: var(--text-sm);
   color: var(--ink-3);
-  text-align: right;
+  text-align: end;
 }
 
 .item[data-done] .number::after {
   content: '✓';
-  margin-left: 2px;
+  margin-inline-start: 2px;
   font-family: var(--font-sans);
   font-size: 0.7em;
   color: var(--success);
@@ -67,4 +67,8 @@
   font-family: var(--font-serif);
   font-size: var(--text-sm);
   color: var(--ink-3);
+}
+
+:global([dir='rtl']) .item[aria-current='step'] {
+  box-shadow: inset -3px 0 0 var(--accent);
 }

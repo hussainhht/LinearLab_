@@ -3,6 +3,7 @@
 import { type ClipboardEvent, type KeyboardEvent, useRef } from 'react'
 import type { CellError } from '@/lib/math/parse'
 import { splitPastedMatrix } from '@/lib/math/parse'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { Icon } from '@/components/ui/Icon'
 import styles from './MatrixEditor.module.css'
 
@@ -41,11 +42,12 @@ export function MatrixEditor({
   idPrefix,
   size = 'md',
 }: MatrixEditorProps) {
+  const { t, error: localizeError } = useI18n()
   const inputs = useRef(new Map<string, HTMLInputElement>())
   const rows = cells.length
   const cols = cells[0]?.length ?? 0
   const errorAt = (r: number, c: number) => errors.find((e) => e.row === r && e.col === c)
-  const name = (r: number, c: number) => describeCell?.(r, c) ?? `Row ${r + 1}, column ${c + 1}`
+  const name = (r: number, c: number) => describeCell?.(r, c) ?? t('matrix.cell', { row: r + 1, col: c + 1 })
 
   const focusCell = (r: number, c: number) => {
     const el = inputs.current.get(`${r}:${c}`)
@@ -85,7 +87,7 @@ export function MatrixEditor({
   return (
     <div className={`${styles.editor} ${size === 'sm' ? styles.sm : ''}`}>
       <div className={styles.scroller}>
-        <table className={styles.table} aria-label={label}>
+        <table dir="ltr" className={styles.table} aria-label={label}>
           {columnLabels ? (
             <thead>
               <tr>
@@ -113,6 +115,7 @@ export function MatrixEditor({
                     >
                       <input
                         id={id}
+                        dir="ltr"
                         ref={(el) => {
                           if (el) inputs.current.set(`${r}:${c}`, el)
                           else inputs.current.delete(`${r}:${c}`)
@@ -145,7 +148,7 @@ export function MatrixEditor({
         <div className={styles.errors} role="alert">
           <p className={styles.errorsTitle}>
             <Icon name="alert" size={16} />
-            {errors.length === 1 ? 'Fix 1 entry to continue' : `Fix ${errors.length} entries to continue`}
+            {t(errors.length === 1 ? 'matrix.fixOne' : 'matrix.fixMany', { count: errors.length })}
           </p>
           <ul>
             {errors.map((e) => (
@@ -153,7 +156,7 @@ export function MatrixEditor({
                 <button type="button" className={styles.errorLink} onClick={() => focusCell(e.row, e.col)}>
                   {name(e.row, e.col)}
                 </button>
-                : {e.message}
+                : {localizeError(e.message)}
               </li>
             ))}
           </ul>

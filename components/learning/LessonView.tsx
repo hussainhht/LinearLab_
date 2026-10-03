@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { T } from '@/components/i18n/LanguageProvider'
 import { lessonBodies } from '@/content/lessons/bodies'
 import { type Lesson, chapterList, outline } from '@/content/lessons/catalog'
 import { CourseNav } from './CourseNav'
@@ -18,21 +19,20 @@ export async function LessonView({ lesson }: { lesson: Lesson }) {
       <article className={styles.article}>
         <header className={styles.lessonHeader}>
           <p className={styles.chapterLine}>
-            <Link href="/learn/">Course</Link> / Chapter {lesson.chapterNumber}: {lesson.chapterTitle}
+            <Link href="/learn/"><T k="learning.course" /></Link> / <T k="learning.chapter" params={{ number: lesson.chapterNumber }} /><bdi lang="en" dir="ltr">{lesson.chapterTitle}</bdi>
           </p>
-          <h1 className={styles.lessonTitle}>
+          <h1 className={styles.lessonTitle} lang="en" dir="ltr">
             <span className="num">{lesson.number}</span> {lesson.title}
           </h1>
           <div className={styles.objective}>
-            <p>By the end of this lesson you can</p>
-            <p>{lesson.objective.charAt(0).toLowerCase() + lesson.objective.slice(1)}</p>
+            <p><T k="learning.lessonObjective" /></p>
+            <p lang="en" dir="ltr">{lesson.objective.charAt(0).toLowerCase() + lesson.objective.slice(1)}</p>
           </div>
           <p className={styles.muted}>
-            The <PageLink page={chapter.notes}>lecture notes for this chapter</PageLink> cover it in full, with more worked
-            examples and exercises.
+            <T k="learning.notesIntroBefore" /><PageLink page={chapter.notes}><T k="learning.notesIntroLink" /></PageLink><T k="learning.notesIntroAfter" />
           </p>
         </header>
-        <div className={styles.prose}>
+        <div className={styles.prose} lang="en" dir="ltr">
           <Body />
         </div>
         <footer className={styles.lessonFooter}>

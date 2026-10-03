@@ -23,7 +23,7 @@
   gap: var(--space-2);
   color: var(--ink);
   text-decoration: none;
-  margin-right: auto;
+  margin-inline-end: auto;
 }
 .brand:hover {
   color: var(--ink);
@@ -72,8 +72,8 @@
 .link[aria-current='page']::after {
   content: '';
   position: absolute;
-  left: var(--space-3);
-  right: var(--space-3);
+  inset-inline-start: var(--space-3);
+  inset-inline-end: var(--space-3);
   bottom: 0.45rem;
   height: 2px;
   background: var(--ink);
@@ -109,8 +109,8 @@
     padding: 0 var(--space-2);
   }
   .link[aria-current='page']::after {
-    left: var(--space-2);
-    right: var(--space-2);
+    inset-inline-start: var(--space-2);
+    inset-inline-end: var(--space-2);
   }
 }
 
@@ -129,4 +129,20 @@
   max-width: var(--page-max);
   margin: 0 auto;
   padding: var(--space-5) var(--gutter) var(--space-6);
+}
+
+/* Keep navigation and the language control accessible at narrow phone widths. */
+@media (max-width: 40rem) {
+  .inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    height: auto;
+    min-height: var(--header-height);
+    gap: var(--space-1) var(--space-2);
+    padding-block: var(--space-2);
+  }
+  .brand { grid-column: 1; margin-inline-end: 0; }
+  .nav { grid-column: 1 / -1; grid-row: 2; justify-content: center; }
+  .links { justify-content: center; width: 100%; }
+  .link { min-height: 2.25rem; }
 }

@@ -1,7 +1,7 @@
 .region {
   position: fixed;
   z-index: 50;
-  right: var(--gutter);
+  inset-inline-end: var(--gutter);
   bottom: var(--gutter);
   display: grid;
   gap: var(--space-2);

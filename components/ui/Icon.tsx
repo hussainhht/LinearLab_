@@ -37,14 +37,16 @@ export type IconName = keyof typeof paths
 interface IconProps extends Omit<SVGProps<SVGSVGElement>, 'name'> {
   name: IconName
   size?: number
+  directional?: boolean
   /** Provide a label only when the icon is the sole content of a control. */
   label?: string
 }
 
-export function Icon({ name, size = 18, label, ...rest }: IconProps) {
+export function Icon({ name, size = 18, label, directional = ['prev', 'next', 'first', 'last'].includes(name), ...rest }: IconProps) {
   const filled = name === 'play' || name === 'pause'
   return (
     <svg
+      data-directional={directional || undefined}
       width={size}
       height={size}
       viewBox="0 0 24 24"

@@ -1,0 +1,15 @@
+.selector select {
+  min-height: 2.75rem;
+  max-width: 7.5rem;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-s);
+  background: var(--sheet);
+  color: var(--ink);
+  font-family: var(--font-arabic), var(--font-sans);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.selector select:hover {
+  border-color: var(--rule-strong);
+}

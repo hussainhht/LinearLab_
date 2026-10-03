@@ -48,7 +48,7 @@ An interactive linear algebra course and a set of step-by-step matrix tools. The
 - TypeScript in strict mode (including `noUncheckedIndexedAccess`)
 - MDX lessons through `@next/mdx`, with `remark-math` and `rehype-katex` rendering equations at build time
 - Lecture notes as plain Markdown in `chapters/`, typeset at build time by a `unified` pipeline (`remark-parse`, `remark-gfm`, `remark-math`, `rehype-katex`) inside Server Components; nothing reads files or runs a server in production
-- CSS Modules on a small set of design tokens; fonts are STIX Two Text and Atkinson Hyperlegible Next, via `next/font`
+- CSS Modules on a small set of design tokens; fonts are STIX Two Text, Atkinson Hyperlegible Next and Noto Sans Arabic, via `next/font`
 - Vitest for the math engine and content checks, Playwright for browser tests
 
 There is no backend: all calculation, progress and saved work stay in the browser.
@@ -113,6 +113,14 @@ web/, nots/             Legacy files from the original static site; not part of 
 
 **Playback without stale timers.** Stepping is driven by one index. The only timer lives in an effect keyed on that index and the problem, so pausing, resetting, loading another problem, navigating away or unmounting cancels it.
 
+## Interface localization (Phase 1)
+
+The header language selector offers **English** and **العربية** on desktop and mobile. English is the default; the explicit preference is saved in `linearlab:language`. Switching updates the interface and document `lang`/`dir` in place, preserving the current route, query, hash, inputs, progress, saved work and theme. No locale routes or server features are needed, so static export and the GitHub Pages base path work as before.
+
+Maintain interface strings in the paired English/Arabic dictionaries in `lib/i18n/{common,learning,tools,practice,errors}.ts`, merged by `dictionaries.ts`. Add a stable key to both dictionaries; TypeScript checks their keys and regression tests check nonempty values and interpolation placeholders. Use `useI18n().t(key, params)` in client controls and `<T k="key" params={...} />` for server-rendered labels. Known engine validation messages are translated only at the interface boundary via `useI18n().error(message)`; the math engine stays language independent. Toast descriptors store a key and optional parameters so visible notifications also update on language changes.
+
+Chapter and lesson titles, descriptions, Markdown/MDX bodies, questions, answer explanations, examples and generated mathematical explanations remain unchanged in English during Phase 1. Annotate these with `lang="en" dir="ltr"`, and keep matrices, formulas, numeric inputs, code and technical identifiers LTR. Restore the interface language/direction around embedded controls. Do not translate IDs, URLs, storage keys or machine values. The root preference uses an English server snapshot for hydration and safe browser storage with an in-memory document fallback.
+
 ## Mathematical accuracy
 
 - **Exact arithmetic.** Values are `Rational`s backed by BigInt, always kept in lowest terms. `0.1 + 0.2` is exactly `3/10`, and fractions never drift.
@@ -174,7 +182,7 @@ In the repository settings, Pages → Build and deployment → Source must be **
 - **Interactive lessons** exist for the first five chapters and the rank and null space lesson, now in chapter 9. The other chapters have lecture notes, concept checks where the questions cover the topic, and tool links, but no interactive lessons.
 - **Search** needs JavaScript and covers lessons by title, objective and section headings, not their full text.
 - Progress and saved work live in this browser's storage only; there are no accounts or sync.
-- The interface and course are in English.
+- The interface supports English and Arabic; study content remains in English during Phase 1.
 - `web/` and `nots/` are leftovers of the original static site (its vector space analyzer and practice-bank scripts, and development notes). They are not part of the Next.js app, are not built or published, and the `web/` pages are incomplete: `learn.html` and `vector_space.html` were dropped when the branches were merged, so its index links to files that no longer exist. The full original site is in the `linerarlap-learning` branch. Its scripts are linted with relaxed rules (their functions are called from inline HTML handlers). The course material in them was reviewed: the practice bank and the subspace problems were migrated as the concept checks (35 of 37 questions; two have free-text answers and were left out), the vector analyzer and its example lists were not (it is a tool, not course content), and `nots/` is development notes. See [docs/content-integration-report.md](docs/content-integration-report.md).
 - The build prints a harmless warning that Next.js has no fallback metrics for Atkinson Hyperlegible Next; the CSS fallback stack is used instead.
 

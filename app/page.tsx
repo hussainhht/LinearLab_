@@ -1,3 +1,4 @@
+import { T } from '@/components/i18n/LanguageProvider'
 import Link from 'next/link'
 import { HeroDemo } from '@/components/home/HeroDemo'
 import { ButtonLink } from '@/components/ui/Button'
@@ -11,18 +12,17 @@ export default function HomePage() {
       <section className={styles.hero} aria-labelledby="hero-title">
         <div className={styles.heroText}>
           <h1 id="hero-title" className={styles.heroTitle}>
-            Linear algebra you can step through
+            <T k="home.title" />
           </h1>
           <p className={styles.heroLede}>
-            LinearLab solves linear systems with exact fractions and shows every row operation together with the reason for
-            it. Learn the ideas in a short course, test them in the tools, then reduce matrices yourself.
+            <T k="home.lede" />
           </p>
           <div className={styles.heroActions}>
             <ButtonLink href="/tools/rref/" variant="primary" icon="steps">
-              Solve a system
+              <T k="home.solve" />
             </ButtonLink>
             <ButtonLink href={pageHref(chapterList[0]!.notes)} prefetch={false}>
-              Start the course
+              <T k="home.startCourse" />
             </ButtonLink>
           </div>
         </div>
@@ -31,49 +31,46 @@ export default function HomePage() {
 
       <section className={styles.paths} aria-labelledby="paths-title">
         <h2 id="paths-title" className="sr-only">
-          Where to start
+          <T k="home.where" />
         </h2>
         <div className={styles.path}>
-          <h3>Learn</h3>
+          <h3><T k="nav.learn" /></h3>
           <p>
-            {chapterList.length} chapters of lecture notes, from a single linear equation to orthogonal complements, with worked
-            examples and exercises. {lessons.length} interactive lessons open their examples in the tools.
+            <T k="home.learnDescription" params={{ chapters: chapterList.length, lessons: lessons.length }} />
           </p>
-          <Link href="/learn/">Course outline</Link>
+          <Link href="/learn/"><T k="home.outline" /></Link>
         </div>
         <div className={styles.path}>
-          <h3>Solve</h3>
+          <h3><T k="home.solveTitle" /></h3>
           <p>
-            The system solver, matrix operations with a multiplication walkthrough, and calculators for determinants and
-            Cramer’s rule.
+            <T k="home.toolsDescription" />
           </p>
-          <Link href="/tools/">All tools</Link>
+          <Link href="/tools/"><T k="home.allTools" /></Link>
         </div>
         <div className={styles.path}>
-          <h3>Practice</h3>
+          <h3><T k="nav.practice" /></h3>
           <p>
-            Choose each row operation yourself. Every move is checked, any valid route to the answer counts, and hints are
-            there when you are stuck.
+            <T k="home.practiceDescription" />
           </p>
-          <Link href="/practice/">Practice problems</Link>
+          <Link href="/practice/"><T k="home.problems" /></Link>
         </div>
       </section>
 
       <section className={styles.course} aria-labelledby="course-title">
         <div className={styles.courseIntro}>
-          <h2 id="course-title">What the course covers</h2>
-          <p>Each chapter builds on the one before it. Lessons link straight into the tools with the same example loaded.</p>
+          <h2 id="course-title"><T k="home.covers" /></h2>
+          <p><T k="home.courseDescription" /></p>
         </div>
         <ol className={styles.chapters}>
           {chapterList.map((chapter) => (
             <li key={chapter.id}>
               <PageLink page={chapter.notes} className={styles.chapterLink}>
-                <span className={styles.chapterTitle}>{chapter.title}</span>
-                <span className={styles.chapterSummary}>{chapter.summary}</span>
+                <span lang="en" dir="ltr" className={styles.chapterTitle}>{chapter.title}</span>
+                <span lang="en" dir="ltr" className={styles.chapterSummary}>{chapter.summary}</span>
                 <span className={styles.chapterCount}>
                   {chapter.lessons.length > 0
-                    ? `Lecture notes and ${chapter.lessons.length} ${chapter.lessons.length === 1 ? 'lesson' : 'lessons'}`
-                    : 'Lecture notes'}
+                    ? <T k={chapter.lessons.length === 1 ? 'home.notesOne' : 'home.notesMany'} params={{ count: chapter.lessons.length }} />
+                    : <T k="home.notes" />}
                 </span>
               </PageLink>
             </li>
@@ -82,13 +79,12 @@ export default function HomePage() {
       </section>
 
       <section className={styles.exact} aria-labelledby="exact-title">
-        <h2 id="exact-title">Exact, so you can trust the steps</h2>
+        <h2 id="exact-title"><T k="home.exact" /></h2>
         <div className={styles.exactBody}>
           <p>
-            Every entry is stored as an exact fraction, so 1/3 stays 1/3 and nothing is rounded between steps. Decimals are only
-            a display option.
+            <T k="home.exactDescription" />
           </p>
-          <p>
+          <p lang="en" dir="ltr">
             That also means no guessing about “almost zero”: the matrix with 0.000001 on its diagonal has determinant
             10<sup>−12</sup>, so it is invertible, and LinearLab inverts it. Answers are checked by substituting them back,
             not just reported.

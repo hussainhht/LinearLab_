@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Suspense } from 'react'
 import { CramerFromUrl } from '@/components/tools/cramer/CramerFromUrl'
 import { CramerSolver } from '@/components/tools/cramer/CramerSolver'
@@ -13,8 +14,8 @@ export default function CramerPage() {
   return (
     <>
       <div className={styles.intro}>
-        <h1 className={styles.title}>Cramer’s rule</h1>
-        <p className={styles.lede}>
+        <h1 className={styles.title}><T k="tools.cramer.name" /></h1>
+        <p className={styles.lede} lang="en" dir="ltr">
           For a square system with det A ≠ 0, each unknown is xᵢ = det Aᵢ / det A, where Aᵢ is A with column i replaced by
           b. When det A = 0 the rule cannot decide between no solution and infinitely many.
         </p>

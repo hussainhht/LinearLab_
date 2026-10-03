@@ -64,7 +64,7 @@
   display: grid;
   gap: 2px;
   margin: 0;
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
   font-size: var(--text-sm);
 }
 
@@ -78,7 +78,7 @@
 
 .log li > span:first-child {
   font-size: var(--text-md);
-  margin-right: var(--space-3);
+  margin-inline-end: var(--space-3);
 }
 
 .logVerdict {
@@ -136,7 +136,8 @@
   display: grid;
   gap: var(--space-2);
   margin: 0;
-  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-6);
+  padding: var(--space-3);
+  padding-inline-start: var(--space-6);
   border-radius: var(--radius-m);
   background: color-mix(in srgb, var(--pivot-fill) 18%, transparent);
   font-size: var(--text-sm);
@@ -220,7 +221,12 @@
 
 .equations {
   margin: 0;
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
   font-family: var(--font-serif);
   font-size: var(--text-lg);
+}
+
+.studyText {
+  display: block;
+  text-align: start;
 }

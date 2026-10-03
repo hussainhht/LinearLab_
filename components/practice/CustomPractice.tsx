@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { useSearchParams } from 'next/navigation'
 import { Notice } from '@/components/ui/Notice'
 import { parseMatrixCells } from '@/lib/math/parse'
@@ -9,14 +10,15 @@ import { PracticeSession } from './PracticeSession'
 
 /** Practice on a system passed in the URL, for example from the system solver. */
 export function CustomPractice() {
+  const { t } = useI18n()
   const params = useSearchParams()
   const cells = decodeSystem(params)
   const parsed = cells ? parseMatrixCells(cells) : null
   if (!cells || !parsed || !parsed.ok) {
     return (
-      <Notice tone="info" title="No system to practice on">
-        This page practices on a system sent from the solver. <Link href="/tools/rref/">Open the system solver</Link>, solve
-        a system, then choose “Practice this system yourself”, or pick one of the <Link href="/practice/">practice problems</Link>.
+      <Notice tone="info" title={t('practice.noSystem')}>
+        {t('practice.noSystemIntro')} <Link href="/tools/rref/">{t('practice.openSolver')}</Link>{t('practice.noSystemSteps')}{' '}
+        <Link href="/practice/">{t('practice.problems')}</Link>.
       </Notice>
     )
   }

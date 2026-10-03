@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Determinant2x2Calculator, Determinant3x3Calculator } from '@/components/tools/determinant/DeterminantCalculators'
 import styles from '../tools.module.css'
 
@@ -11,10 +12,9 @@ export default function DeterminantPage() {
   return (
     <>
       <div className={styles.intro}>
-        <h1 className={styles.title}>Determinants</h1>
+        <h1 className={styles.title}><T k="tools.determinant.short" /></h1>
         <p className={styles.lede}>
-          Two independent calculators that show the hand method. For larger matrices, the matrix operations tool finds the
-          determinant by row reduction.
+          <T k="tools.determinant.intro" />
         </p>
       </div>
       <div className={styles.stack}>

@@ -171,7 +171,8 @@
   display: grid;
   gap: var(--space-1);
   margin: 0;
-  padding: 0 0 0 var(--space-5);
+  padding: 0;
+  padding-inline-start: var(--space-5);
   font-size: var(--text-lg);
 }
 
@@ -255,7 +256,7 @@
 
 .general {
   margin: 0;
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
   font-size: var(--text-lg);
 }
 
@@ -319,7 +320,7 @@
   margin-top: 12pt;
 }
 .reportSteps {
-  padding-left: 1.2em;
+  padding-inline-start: 1.2em;
 }
 .reportSteps li {
   break-inside: avoid;

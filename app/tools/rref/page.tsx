@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Suspense } from 'react'
 import { RrefUrlLoader } from '@/components/tools/rref/RrefUrlLoader'
 import { RrefWorkspace } from '@/components/tools/rref/RrefWorkspace'
@@ -13,10 +14,9 @@ export default function RrefPage() {
   return (
     <>
       <div className={`${styles.intro} no-print`}>
-        <h1 className={styles.title}>System solver</h1>
+        <h1 className={styles.title}><T k="tools.rref.name" /></h1>
         <p className={styles.lede}>
-          Enter the augmented matrix of a linear system and watch Gauss–Jordan elimination reduce it, with the reason for
-          every row operation.
+          <T k="tools.rref.intro" />
         </p>
       </div>
       <Suspense fallback={null}>

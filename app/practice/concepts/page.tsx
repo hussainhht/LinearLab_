@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Page, PageHeader } from '@/components/layout/Page'
 import { NumericCheck, QuickCheck } from '@/components/learning/Checks'
 import { checksFor, conceptChecks, conceptTopics, droppedLegacyItems } from '@/data/examples/concepts'
@@ -13,25 +14,26 @@ export default function ConceptChecksPage() {
   return (
     <Page>
       <PageHeader
-        title="Concept checks"
-        lede="Short questions on the ideas behind the tools and the lecture notes. Check an answer to see the reasoning, whether or not you were right."
+        title={<T k="practice.conceptChecks" />}
+        lede={<T k="practice.conceptsLede" />}
       />
-      <nav aria-label="Topics">
+      <nav aria-labelledby="practice-topics-label">
+        <h2 id="practice-topics-label" className="sr-only"><T k="practice.topics" /></h2>
         <ul className={styles.topics}>
           {conceptTopics.map((topic) => (
             <li key={topic.id}>
-              <a href={`#${topic.id}`}>{topic.title}</a>
+              <a href={`#${topic.id}`} lang="en" dir="ltr">{topic.title}</a>
             </li>
           ))}
         </ul>
       </nav>
       {conceptTopics.map((topic) => (
         <section key={topic.id} className={styles.topic} aria-labelledby={`${topic.id}-title`}>
-          <h2 id={topic.id}>
-            <span id={`${topic.id}-title`}>{topic.title}</span>
+          <h2 id={topic.id} lang="en" dir="ltr">
+            <span id={`${topic.id}-title`} lang="en" dir="ltr">{topic.title}</span>
           </h2>
-          <p>{topic.description}</p>
-          <ol className={styles.checks}>
+          <p lang="en" dir="ltr">{topic.description}</p>
+          <ol className={styles.checks} lang="en" dir="ltr">
             {checksFor(topic.id).map((check) => (
               <li key={check.id}>
                 {check.kind === 'choice' ? (
@@ -43,15 +45,14 @@ export default function ConceptChecksPage() {
                     explanation={check.explanation}
                   />
                 )}
-                {check.change ? <p className={styles.changed}>Changed from the original question: {check.change.note}</p> : null}
+                {check.change ? <p className={styles.changed}><T k="practice.changed" /> <span lang="en" dir="ltr">{check.change.note}</span></p> : null}
               </li>
             ))}
           </ol>
         </section>
       ))}
       <p className={styles.source}>
-        These {conceptChecks.length} questions come from the original LinearLab site, reviewed one by one.{' '}
-        {droppedLegacyItems.length} were left out because their answers are free text that cannot be checked fairly.
+        <T k="practice.source" params={{ count: conceptChecks.length, dropped: droppedLegacyItems.length }} />
       </p>
     </Page>
   )

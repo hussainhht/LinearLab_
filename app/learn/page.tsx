@@ -4,6 +4,7 @@ import { CompletionMark, ProgressSummary } from '@/components/learning/LessonPro
 import { PageLink } from '@/components/learning/PageLink'
 import { SearchForm } from '@/components/learning/SearchForm'
 import { Icon } from '@/components/ui/Icon'
+import { T } from '@/components/i18n/LanguageProvider'
 import { chapterList, lessons, progressIds } from '@/content/lessons/catalog'
 import styles from '@/components/learning/learning.module.css'
 
@@ -16,10 +17,10 @@ export default function LearnPage() {
   return (
     <Page>
       <PageHeader
-        title="Linear algebra, one idea at a time"
-        lede={`${chapterList.length} chapters that build on each other, from a single linear equation to orthogonal complements. Every chapter has lecture notes with worked examples and exercises; ${lessons.length} short interactive lessons go with the chapters that have them, and their examples open in the tools.`}
+        title={<T k="learning.overview.title" />}
+        lede={<T k="learning.overview.lede" params={{ chapters: chapterList.length, lessons: lessons.length }} />}
       >
-        <ProgressSummary lessonIds={progressIds} noun="chapters and lessons" />
+        <ProgressSummary lessonIds={progressIds} scope="chaptersLessons" />
         <div className={styles.overviewSearch}>
           <SearchForm id="overview-search" />
         </div>
@@ -31,13 +32,13 @@ export default function LearnPage() {
               <span className={styles.overviewChapterNumber} aria-hidden="true">
                 {chapter.number}
               </span>
-              <h2>
-                <span className="sr-only">Chapter {chapter.number}: </span>
-                {chapter.title}
+              <h2 lang="en" dir="ltr">
+                <span className="sr-only"><T k="learning.chapter" params={{ number: chapter.number }} /></span>
+                <span>{chapter.title}</span>
               </h2>
-              <p className={styles.muted}>{chapter.summary}</p>
+              <p className={styles.muted} lang="en" dir="ltr">{chapter.summary}</p>
               {chapter.notes.sectionLabel ? (
-                <p className={styles.muted}>Course notes section {chapter.notes.sectionLabel}</p>
+                <p className={styles.muted}><T k="learning.notesSection" params={{ section: chapter.notes.sectionLabel }} /></p>
               ) : null}
             </div>
             <ol className={styles.overviewLessons}>
@@ -47,19 +48,19 @@ export default function LearnPage() {
                     <Icon name="book" size={18} />
                   </span>
                   <span className={styles.overviewLessonTitle}>
-                    Lecture notes<span className="sr-only"> for {chapter.title}</span>
+                    <T k="learning.lectureNotes" /><span className="sr-only"><T k="learning.forTitle" params={{ title: chapter.title }} /></span>
                   </span>
                   <CompletionMark lessonId={chapter.notes.progressId} />
-                  <span className={styles.overviewLessonObjective}>{chapter.notes.intro}</span>
+                  <span className={styles.overviewLessonObjective} lang="en" dir="ltr">{chapter.notes.intro}</span>
                 </PageLink>
               </li>
               {chapter.lessons.map((lesson) => (
                 <li key={lesson.id} className={styles.overviewLesson}>
                   <PageLink page={lesson}>
                     <span className={`${styles.lessonNumber} num`}>{lesson.number}</span>
-                    <span className={styles.overviewLessonTitle}>{lesson.title}</span>
+                    <span className={styles.overviewLessonTitle} lang="en" dir="ltr">{lesson.title}</span>
                     <CompletionMark lessonId={lesson.id} />
-                    <span className={styles.overviewLessonObjective}>{lesson.objective}</span>
+                    <span className={styles.overviewLessonObjective} lang="en" dir="ltr">{lesson.objective}</span>
                   </PageLink>
                 </li>
               ))}
