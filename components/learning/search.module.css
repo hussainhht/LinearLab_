@@ -60,14 +60,14 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--rule);
+  border-block-start: 1px solid var(--rule);
 }
 
 .result {
   display: grid;
   gap: var(--space-1);
   padding: var(--space-4) var(--space-2);
-  border-bottom: 1px solid var(--rule);
+  border-block-end: 1px solid var(--rule);
 }
 
 .resultLink {

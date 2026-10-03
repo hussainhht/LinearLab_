@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import Link from 'next/link'
 import { Page, PageHeader } from '@/components/layout/Page'
 import { conceptChecks } from '@/data/examples/concepts'
@@ -14,34 +15,32 @@ export default function PracticePage() {
   return (
     <Page>
       <PageHeader
-        title="Practice row reduction"
-        lede="You choose every row operation. LinearLab checks that each one is legal, tells you whether it moved the matrix toward reduced row echelon form, and gives hints when you ask."
+        title={<T k="practice.title" />}
+        lede={<T k="practice.lede" />}
       />
       <div className={styles.howTo}>
         <p>
-          There is no single correct order. Any sequence of valid operations that reaches the reduced form is right, and
-          feedback is based on that form, not on matching the solver step for step.
+          <T k="practice.howTo" />
         </p>
       </div>
       <ol className={styles.problemList}>
         {practiceProblems.map((p) => (
           <li key={p.id} className={styles.problem}>
             <Link href={`/practice/${p.id}/`}>
-              <span className={styles.level}>{p.level}</span>
-              <span className={styles.problemTitle}>{p.title}</span>
-              <span className={styles.problemDescription}>{p.description}</span>
+              <span className={styles.level}><T k={p.level === 'Warm-up' ? 'practice.warmUp' : p.level === 'Core' ? 'practice.core' : 'practice.challenge'} /></span>
+              <span className={styles.problemTitle} lang="en" dir="ltr">{p.title}</span>
+              <span className={styles.problemDescription} lang="en" dir="ltr">{p.description}</span>
             </Link>
           </li>
         ))}
       </ol>
       <div className={styles.howTo}>
-        <h2>Concept checks</h2>
+        <h2><T k="practice.conceptChecks" /></h2>
         <p>
-          Not sure the ideas have landed? {conceptChecks.length} short questions on ranks, row reduction, determinants, inverses and
-          subspaces, each with its reasoning.
+          <T k="practice.conceptIntro" params={{ count: conceptChecks.length }} />
         </p>
         <p>
-          <Link href="/practice/concepts/">Open the concept checks</Link>
+          <Link href="/practice/concepts/"><T k="practice.openConcepts" /></Link>
         </p>
       </div>
     </Page>

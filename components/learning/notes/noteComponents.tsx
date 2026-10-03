@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { Children, type ComponentProps, type CSSProperties, type ReactNode, isValidElement } from 'react'
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
 import { SCAN_PATTERN, type SectionKind, isSvgSource, preText } from '@/lib/course/markdown'
+import { T } from '@/components/i18n/LanguageProvider'
+import { LearningImage, LearningUi, LedgerNotice } from '../LearningUi'
+import type { learningEn } from '@/lib/i18n/learning'
 import styles from './notes.module.css'
 
 /** What the lecture-notes renderer needs to know about the rest of the site. */
@@ -16,13 +19,15 @@ export interface NoteRenderContext {
   readonly scanHref: (reference: string) => string | null
   /** One sentence on whether the scans cited by the source ledger are available. */
   readonly ledgerNote: string
+  /** Counts are provided by the page so site-generated source notices can be localized. */
+  readonly scanStats?: { available: number; total: number }
 }
 
 type WithNode<P> = P & { node?: Element }
 
-const KIND_LABELS: Partial<Record<SectionKind, string>> = {
-  'source-version': 'Source version, transcribed as supplied',
-  supplementary: 'Supplementary: reconciled with the LinearLab lessons',
+const KIND_LABELS: Partial<Record<SectionKind, keyof typeof learningEn>> = {
+  'source-version': 'learning.source.version',
+  supplementary: 'learning.source.supplementary',
 }
 
 const ENTITIES: Record<string, string> = { '&lt;': '<', '&gt;': '>', '&amp;': '&', '&quot;': '"', '&apos;': "'" }
@@ -49,17 +54,16 @@ function SvgFigure({ svg }: { svg: string }) {
     : svg
   return (
     <figure className={styles.diagram}>
-      <div className={styles.diagramScroll} role="group" tabIndex={0} aria-label="Diagram. Scrolls sideways if it does not fit.">
+      <LearningUi className={styles.diagramScroll} role="group" tabIndex={0} labelKey="learning.diagram.label" dir="ltr">
         {/* An SVG data URI cannot be optimized by next/image, and the export has no image server anyway. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <LearningImage
           src={`data:image/svg+xml,${encodeURIComponent(padded)}`}
-          alt={svgLabels(svg) || 'Diagram'}
+          alt={svgLabels(svg)}
           width={width}
           height={height}
           style={{ '--w': `${width}px` } as CSSProperties}
         />
-      </div>
+      </LearningUi>
     </figure>
   )
 }
@@ -93,7 +97,7 @@ export function createNoteComponents(context: NoteRenderContext) {
         <details className={styles.ledger}>
           <summary>{head}</summary>
           <div className={styles.ledgerBody}>
-            {context.ledgerNote ? <p className={styles.ledgerNote}>{context.ledgerNote}</p> : null}
+            {context.scanStats ? <LearningUi as="p" className={styles.ledgerNote}><LedgerNotice {...context.scanStats} /></LearningUi> : context.ledgerNote ? <p className={styles.ledgerNote}>{context.ledgerNote}</p> : null}
             {rest}
           </div>
         </details>
@@ -101,7 +105,7 @@ export function createNoteComponents(context: NoteRenderContext) {
     }
     return (
       <section className={styles.section} data-kind={kind} aria-labelledby={sectionId || undefined}>
-        {KIND_LABELS[kind] ? <p className={styles.kindLabel}>{KIND_LABELS[kind]}</p> : null}
+        {KIND_LABELS[kind] ? <LearningUi as="p" className={styles.kindLabel}><T k={KIND_LABELS[kind]} /></LearningUi> : null}
         {children}
       </section>
     )
@@ -172,9 +176,9 @@ export function createNoteComponents(context: NoteRenderContext) {
 
   function Table({ node: _node, children, ...props }: WithNode<ComponentProps<'table'>>) {
     return (
-      <div className={styles.tableWrap} role="group" tabIndex={0} aria-label="Table. Scrolls sideways if it does not fit.">
-        <table {...props}>{children}</table>
-      </div>
+      <LearningUi className={styles.tableWrap} role="group" tabIndex={0} labelKey="learning.table.label">
+        <table {...props} lang="en" dir="ltr">{children}</table>
+      </LearningUi>
     )
   }
 

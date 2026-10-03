@@ -1,5 +1,6 @@
 'use client'
 
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import type { ReactNode } from 'react'
 import { MatrixView } from '@/components/matrix/MatrixView'
 import type { EliminationResult } from '@/lib/math/elimination'
@@ -37,16 +38,17 @@ export function EliminationPlayer({
   intro,
   conclusion,
 }: EliminationPlayerProps) {
+  const { t, language } = useI18n()
   const resetKey = gridKey(elimination.input.map((r) => r.map(String)))
   const playback = usePlayback({ last: elimination.steps.length, resetKey })
   const { matrix, highlight } = stepView(elimination, playback.index, final)
 
   return (
-    <div className={styles.player}>
+    <div className={styles.player} lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <div className={styles.stage}>
         <MatrixView
           matrix={matrix}
-          label={`${label}, ${playback.index === 0 ? 'starting matrix' : `after step ${playback.index}`}`}
+          label={t('steps.matrixAt', { label, stage: playback.index === 0 ? t('steps.startingMatrix') : t('steps.after', { step: playback.index }) })}
           augmentAt={augmentAt}
           columnLabels={columnLabels}
           highlight={highlight}
@@ -54,15 +56,15 @@ export function EliminationPlayer({
         />
       </div>
       <StepControls playback={playback} />
-      <StepExplanation elimination={elimination} index={playback.index} context={context} intro={intro} conclusion={conclusion} />
+      <StepExplanation elimination={elimination} index={playback.index} context={context} intro={<div lang="en" dir="ltr">{intro}</div>} conclusion={conclusion} />
       {elimination.steps.length > 0 ? (
         <details className={styles.history}>
-          <summary>All {elimination.steps.length} steps</summary>
+          <summary>{t('steps.all', { count: elimination.steps.length })}</summary>
           <StepHistory
             current={playback.index}
             onSelect={playback.goTo}
             items={[
-              { title: 'Starting matrix' },
+              { title: t('tools.startMatrix') },
               ...elimination.steps.map((s) => {
                 const e = explainStep(s, context)
                 return { title: e.title, detail: e.operation }

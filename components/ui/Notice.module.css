@@ -4,7 +4,7 @@
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-m);
   border: 1px solid var(--notice-line);
-  border-left-width: 4px;
+  border-inline-start-width: 4px;
   background: var(--notice-bg);
   color: var(--ink);
   font-size: var(--text-sm);

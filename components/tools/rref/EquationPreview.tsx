@@ -1,14 +1,18 @@
+'use client'
+
+import { T, useI18n } from '@/components/i18n/LanguageProvider'
 import { parseRational } from '@/lib/math/rational'
 import { MINUS, variableName } from '@/lib/math/notation'
 import styles from './rref.module.css'
 
 /** Shows the augmented matrix as equations so learners see both forms side by side. */
 export function EquationPreview({ cells, variables }: { cells: readonly (readonly string[])[]; variables: number }) {
+  const { t } = useI18n()
   return (
-    <ol className={styles.equations} aria-label="The system as equations">
+    <ol className={styles.equations} aria-label={t('tools.systemEquations')} lang="en" dir="ltr">
       {cells.map((row, i) => (
         <li key={i} className="num">
-          {equationText(row, variables) ?? <span className={styles.equationPending}>Row {i + 1} has an entry that is not a number yet</span>}
+          {equationText(row, variables) ?? <span className={styles.equationPending}><T k="tools.pendingRow" params={{ row: i + 1 }} /></span>}
         </li>
       ))}
     </ol>

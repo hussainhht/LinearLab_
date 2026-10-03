@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Page, PageHeader } from '@/components/layout/Page'
 import { CourseSearch } from '@/components/learning/CourseSearch'
 import { buildSearchDocs } from '@/lib/course/searchIndex'
@@ -14,12 +15,12 @@ export default async function SearchPage() {
   const docs = await buildSearchDocs()
   return (
     <Page>
-      <PageHeader title="Search the course" lede="Find a definition, a theorem, a worked example or an exercise anywhere in the lecture notes or the lessons." />
-      <Suspense fallback={<p>Loading search…</p>}>
+      <PageHeader title={<T k="learning.search.title" />} lede={<T k="learning.search.lede" />} />
+      <Suspense fallback={<p><T k="learning.search.loading" /></p>}>
         <CourseSearch docs={docs} />
       </Suspense>
       <noscript>
-        <p>Search runs in your browser and needs JavaScript. Without it, use the course outline to find a chapter.</p>
+        <p><T k="learning.search.noScript" /></p>
       </noscript>
     </Page>
   )

@@ -1,10 +1,15 @@
+'use client'
+
 import Link from 'next/link'
+import { useI18n } from '@/components/i18n/LanguageProvider'
+import { LanguageSelector } from '@/components/i18n/LanguageSelector'
 import { LogoMark } from './Logo'
 import { NavLinks } from './NavLinks'
 import { ThemeToggle } from './ThemeToggle'
 import styles from './SiteHeader.module.css'
 
 export function SiteHeader() {
+  const { t } = useI18n()
   return (
     <header className={`${styles.header} no-print`}>
       <div className={styles.inner}>
@@ -14,9 +19,10 @@ export function SiteHeader() {
             LinearLab
           </span>
         </Link>
-        <nav aria-label="Main" className={styles.nav}>
+        <nav aria-label={t('nav.main')} className={styles.nav}>
           <NavLinks />
         </nav>
+        <LanguageSelector />
         <ThemeToggle />
       </div>
     </header>
@@ -24,15 +30,15 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const { t } = useI18n()
   return (
     <footer className={`${styles.footer} no-print`}>
       <div className={styles.footerInner}>
         <p>
-          LinearLab, by Hussain Ali, University of Bahrain. Every calculation runs in your browser with exact
-          fractions.
+          {t('footer.about')}
         </p>
         <p>
-          <a href="https://github.com/hussainhht/LinearLab_">Source on GitHub</a>
+          <a href="https://github.com/hussainhht">{t('footer.source')}</a>
         </p>
       </div>
     </footer>

@@ -6,6 +6,7 @@ import { useLayoutEffect, useRef, useSyncExternalStore } from 'react'
 import type { OutlineChapter } from '@/content/lessons/catalog'
 import { useCompletedLessons } from '@/lib/storage/progress'
 import { Icon } from '@/components/ui/Icon'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { SearchForm } from './SearchForm'
 import styles from './learning.module.css'
 
@@ -33,6 +34,7 @@ const useRenderedByServer = () => useSyncExternalStore(subscribeNothing, () => f
  * the page on wide screens (see learning.module.css).
  */
 export function CourseNav({ outline }: { outline: readonly OutlineChapter[] }) {
+  const { t } = useI18n()
   const pathname = usePathname() ?? ''
   const completed = useCompletedLessons()
   const navRef = useRef<HTMLElement>(null)
@@ -50,26 +52,26 @@ export function CourseNav({ outline }: { outline: readonly OutlineChapter[] }) {
     if (nav && !nav.hasAttribute('data-centered')) centerCurrentPage(nav)
   }, [])
 
-  const count = `${done} of ${items.length} complete`
+  const count = t('learning.completedCount', { done, total: items.length })
 
   return (
-    <nav aria-label="Course" className={styles.courseNav} ref={navRef} suppressHydrationWarning>
+    <nav aria-label={t('learning.course')} className={styles.courseNav} ref={navRef} suppressHydrationWarning>
       <div className={styles.navSearch}>
         <SearchForm id="course-nav-search" />
       </div>
       <details className={styles.courseDetails}>
         <summary className={styles.courseSummary}>
-          <span>Course contents</span>
+          <span>{t('learning.contents')}</span>
           <span className={styles.courseCount}>{count}</span>
         </summary>
         <p className={styles.courseHeading}>
-          <span>Course contents</span>
+          <span>{t('learning.contents')}</span>
           <span className={styles.courseCount}>{count}</span>
         </p>
         <ol className={styles.chapterList}>
           {outline.map((chapter) => (
             <li key={chapter.id}>
-              <p className={styles.chapterName}>
+              <p className={styles.chapterName} lang="en" dir="ltr">
                 <span className="num">{chapter.number}</span> {chapter.title}
               </p>
               <ol className={styles.lessonList}>
@@ -94,16 +96,16 @@ export function CourseNav({ outline }: { outline: readonly OutlineChapter[] }) {
                         )}
                         {item.kind === 'notes' ? (
                           <span>
-                            {item.title}
-                            <span className="sr-only"> for {chapter.title}</span>
+                            {t('learning.lectureNotes')}
+                            <span className="sr-only">{t('learning.forTitle', { title: chapter.title })}</span>
                           </span>
                         ) : (
-                          <span>{item.title}</span>
+                          <span lang="en" dir="ltr">{item.title}</span>
                         )}
                         {isDone ? (
                           <span className={styles.doneMark}>
                             <Icon name="check" size={14} />
-                            <span className="sr-only"> (completed)</span>
+                            <span className="sr-only">{t('learning.completedSuffix')}</span>
                           </span>
                         ) : null}
                       </Link>

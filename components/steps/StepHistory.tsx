@@ -1,5 +1,6 @@
 'use client'
 
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import styles from './StepHistory.module.css'
 
 export interface HistoryItem {
@@ -15,9 +16,10 @@ interface StepHistoryProps {
 }
 
 /** Ordered list of every step; selecting one jumps to it. */
-export function StepHistory({ items, current, onSelect, label = 'Step history' }: StepHistoryProps) {
+export function StepHistory({ items, current, onSelect, label }: StepHistoryProps) {
+  const { t, language } = useI18n()
   return (
-    <nav aria-label={label} className={styles.history}>
+    <nav lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} aria-label={label ?? t('steps.history')} className={styles.history}>
       <ol className={styles.list}>
         {items.map((item, i) => (
           <li key={i}>
@@ -30,8 +32,8 @@ export function StepHistory({ items, current, onSelect, label = 'Step history' }
             >
               <span className={`${styles.number} num`}>{i}</span>
               <span className={styles.text}>
-                <span className={styles.title}>{item.title}</span>
-                {item.detail ? <span className={styles.detail}>{item.detail}</span> : null}
+                <span className={styles.title} lang={i > 0 ? "en" : undefined} dir={i > 0 ? "ltr" : undefined}>{item.title}</span>
+                {item.detail ? <span className={styles.detail} lang="en" dir="ltr">{item.detail}</span> : null}
               </span>
             </button>
           </li>

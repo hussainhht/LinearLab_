@@ -1,3 +1,4 @@
+import { T } from '@/components/i18n/LanguageProvider'
 import type { ReactNode } from 'react'
 import type { EliminationResult } from '@/lib/math/elimination'
 import { type StepContext, explainStep } from '@/lib/math/explain'
@@ -22,14 +23,14 @@ export function StepExplanation({ elimination, index, context, intro, conclusion
       {step ? (
         <>
           <p className={styles.kicker}>
-            Step {index} of {elimination.steps.length}
+            <T k="steps.counter" params={{ index, count: elimination.steps.length }} />
           </p>
           <ExplanationBody {...explainStep(step, context)} />
         </>
       ) : (
         <div className={styles.intro}>{intro}</div>
       )}
-      {isFinal && conclusion ? <div className={styles.conclusion}>{conclusion}</div> : null}
+      {isFinal && conclusion ? <div lang="en" dir="ltr" className={styles.conclusion}>{conclusion}</div> : null}
     </div>
   )
 }
@@ -37,12 +38,12 @@ export function StepExplanation({ elimination, index, context, intro, conclusion
 function ExplanationBody({ title, operation, reason }: { title: string; operation: string; reason: string }) {
   return (
     <>
-      <h3 className={styles.title}>{title}</h3>
-      <p className={styles.operation}>
-        <span className="sr-only">Operation: </span>
+      <h3 className={styles.title} lang="en" dir="ltr">{title}</h3>
+      <p className={styles.operation} dir="ltr">
+        <span className="sr-only"><T k="steps.operation" /></span>
         {operation}
       </p>
-      <p className={styles.reason}>{reason}</p>
+      <p className={styles.reason} lang="en" dir="ltr">{reason}</p>
     </>
   )
 }

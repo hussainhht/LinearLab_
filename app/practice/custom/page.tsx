@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { T } from '@/components/i18n/LanguageProvider'
 import { Suspense } from 'react'
 import { Page, PageHeader } from '@/components/layout/Page'
 import { CustomPractice } from '@/components/practice/CustomPractice'
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
 export default function CustomPracticePage() {
   return (
     <Page>
-      <PageHeader title="Practice your system" lede="Reduce the system you sent from the solver, one row operation at a time." />
-      <Suspense fallback={<p>Loading your system…</p>}>
+      <PageHeader title={<T k="practice.customTitle" />} lede={<T k="practice.customLede" />} />
+      <Suspense fallback={<p><T k="practice.loading" /></p>}>
         <CustomPractice />
       </Suspense>
     </Page>

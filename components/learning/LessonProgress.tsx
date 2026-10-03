@@ -3,10 +3,12 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/ui/Icon'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { resetProgress, setLessonComplete, useCompletedLessons } from '@/lib/storage/progress'
 import styles from './learning.module.css'
 
-export function MarkComplete({ lessonId, title, label = 'Mark lesson complete' }: { lessonId: string; title: string; label?: string }) {
+export function MarkComplete({ lessonId, title, kind = 'lesson' }: { lessonId: string; title: string; kind?: 'lesson' | 'chapter' }) {
+  const { t } = useI18n()
   const completed = useCompletedLessons()
   const done = completed.has(lessonId)
   return (
@@ -17,16 +19,17 @@ export function MarkComplete({ lessonId, title, label = 'Mark lesson complete' }
         aria-pressed={done}
         onClick={() => setLessonComplete(lessonId, !done)}
       >
-        {done ? 'Completed' : label}
+        {t(done ? 'learning.completed' : kind === 'chapter' ? 'learning.markChapter' : 'learning.markLesson')}
       </Button>
       <p className={styles.muted} aria-live="polite">
-        {done ? `“${title}” is marked complete in this browser. Select the button again to undo.` : 'Progress is saved in this browser only.'}
+        {done ? t('learning.savedComplete', { title }) : t('learning.savedLocally')}
       </p>
     </div>
   )
 }
 
-export function ProgressSummary({ lessonIds, noun = 'lessons' }: { lessonIds: readonly string[]; noun?: string }) {
+export function ProgressSummary({ lessonIds, scope = 'lessons' }: { lessonIds: readonly string[]; scope?: 'lessons' | 'chaptersLessons' }) {
+  const { t } = useI18n()
   const completed = useCompletedLessons()
   const [confirming, setConfirming] = useState(false)
   const done = lessonIds.filter((id) => completed.has(id)).length
@@ -34,16 +37,16 @@ export function ProgressSummary({ lessonIds, noun = 'lessons' }: { lessonIds: re
 
   return (
     <div className={styles.progressSummary}>
-      <div className={styles.progressBar} role="progressbar" aria-valuemin={0} aria-valuemax={lessonIds.length} aria-valuenow={done} aria-label={`${noun[0]!.toUpperCase()}${noun.slice(1)} completed`}>
+      <div className={styles.progressBar} role="progressbar" aria-valuemin={0} aria-valuemax={lessonIds.length} aria-valuenow={done} aria-label={t(scope === 'lessons' ? 'learning.progress.lessonsLabel' : 'learning.progress.chaptersLessonsLabel')}>
         <span style={{ width: `${percent}%` }} />
       </div>
       <p>
-        <strong className="num">{done}</strong> of {lessonIds.length} {noun} complete
+        {t(scope === 'lessons' ? 'learning.progress.lessons' : 'learning.progress.chaptersLessons', { done, total: lessonIds.length })}
       </p>
       {done > 0 ? (
         confirming ? (
-          <div className={styles.confirm} role="group" aria-label="Confirm reset">
-            <span>Clear all saved progress?</span>
+          <div className={styles.confirm} role="group" aria-label={t('learning.progress.confirm')}>
+            <span>{t('learning.progress.clear')}</span>
             <Button
               size="sm"
               variant="primary"
@@ -52,15 +55,15 @@ export function ProgressSummary({ lessonIds, noun = 'lessons' }: { lessonIds: re
                 setConfirming(false)
               }}
             >
-              Reset progress
+              {t('learning.progress.reset')}
             </Button>
             <Button size="sm" variant="quiet" onClick={() => setConfirming(false)}>
-              Keep it
+              {t('learning.progress.keep')}
             </Button>
           </div>
         ) : (
           <Button size="sm" variant="quiet" icon="reset" onClick={() => setConfirming(true)}>
-            Reset progress
+            {t('learning.progress.reset')}
           </Button>
         )
       ) : null}
@@ -69,12 +72,13 @@ export function ProgressSummary({ lessonIds, noun = 'lessons' }: { lessonIds: re
 }
 
 export function CompletionMark({ lessonId }: { lessonId: string }) {
+  const { t } = useI18n()
   const completed = useCompletedLessons()
   if (!completed.has(lessonId)) return null
   return (
     <span className={styles.doneMark}>
       <Icon name="check" size={14} />
-      <span className="sr-only">Completed</span>
+      <span className="sr-only">{t('learning.completed')}</span>
     </span>
   )
 }

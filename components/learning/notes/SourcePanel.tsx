@@ -1,28 +1,28 @@
 import type { Notes } from '@/content/lessons/catalog'
 import type { ParsedNotes } from '@/lib/course/markdown'
+import { T } from '@/components/i18n/LanguageProvider'
+import { LedgerNotice } from '../LearningUi'
 import styles from './notes.module.css'
 
 /**
  * What the chapter says about its own sources, and what this site has and has not verified. The
  * metadata is shown as supplied; nothing here is inferred or filled in.
  */
-export function SourcePanel({ notes, parsed, ledgerNote }: { notes: Notes; parsed: ParsedNotes; ledgerNote: string }) {
+export function SourcePanel({ notes, parsed, scanStats }: { notes: Notes; parsed: ParsedNotes; scanStats: { available: number; total: number } }) {
   const { frontmatter } = parsed
   const reviewNotes = notes.reviewNotes ?? []
   return (
     <details className={styles.sources}>
-      <summary>About these notes: sources and verification status</summary>
+      <summary><T k="learning.source.title" /></summary>
       <div className={styles.sourcesBody}>
         <p className={styles.status}>
-          <strong>Status.</strong> Integrated exactly as supplied.{' '}
-          {notes.verification === 'numbers-recomputed'
-            ? 'The numerical results of its worked examples and exercises, and their key intermediate matrices, were recomputed independently with exact arithmetic and agree with the text, except where the review notes below say otherwise. Every printed intermediate step, the proofs and the explanations were not checked, and the transcription could not be checked against the original scans.'
-            : 'This site has not independently checked the mathematics of this chapter (it states definitions and conversions rather than computed results), and could not check the transcription against the original scans.'}
+          <strong><T k="learning.source.status" /></strong> <T k="learning.source.integrated" />{' '}
+          <T k={notes.verification === 'numbers-recomputed' ? 'learning.source.recomputed' : 'learning.source.unchecked'} />
         </p>
         {reviewNotes.length > 0 ? (
           <>
-            <h3 className={styles.reviewHeading}>Review notes</h3>
-            <ul className={styles.reviewNotes}>
+            <h3 className={styles.reviewHeading}><T k="learning.source.review" /></h3>
+            <ul className={styles.reviewNotes} lang="en" dir="ltr">
               {reviewNotes.map((note) => (
                 <li key={note}>{note}</li>
               ))}
@@ -32,27 +32,27 @@ export function SourcePanel({ notes, parsed, ledgerNote }: { notes: Notes; parse
         <dl className={styles.facts}>
           {frontmatter.course ? (
             <>
-              <dt>Course</dt>
-              <dd>{frontmatter.course}</dd>
+              <dt><T k="learning.course" /></dt>
+              <dd lang="en" dir="ltr">{frontmatter.course}</dd>
             </>
           ) : null}
-          <dt>Section label</dt>
+          <dt><T k="learning.source.section" /></dt>
           <dd>
-            {notes.sectionLabel ?? 'None in the supplied document'}
-            {notes.labelNote ? <> — {notes.labelNote}</> : null}
+            {notes.sectionLabel ? <bdi lang="en" dir="ltr">{notes.sectionLabel}</bdi> : <T k="learning.source.noSection" />}
+            {notes.labelNote ? <> — <bdi lang="en" dir="ltr">{notes.labelNote}</bdi></> : null}
           </dd>
-          <dt>Source documents</dt>
+          <dt><T k="learning.source.documents" /></dt>
           <dd>
             {frontmatter.sourceIds.length === 0 ? (
-              'None listed'
+              <T k="learning.source.noneListed" />
             ) : (
               <>
-                {frontmatter.sourceIds.length} listed
-                {frontmatter.sourcePageCount !== null ? ` (source_page_count: ${frontmatter.sourcePageCount})` : ''}:{' '}
+                <T k="learning.source.listed" params={{ count: frontmatter.sourceIds.length }} />
+                {frontmatter.sourcePageCount !== null ? <bdi dir="ltr">{` (source_page_count: ${frontmatter.sourcePageCount})`}</bdi> : null}:{' '}
                 {frontmatter.sourceIds.map((id, i) => (
                   <span key={id}>
                     {i > 0 ? ', ' : ''}
-                    <code>{id}</code>
+                    <code dir="ltr">{id}</code>
                   </span>
                 ))}
               </>
@@ -60,22 +60,22 @@ export function SourcePanel({ notes, parsed, ledgerNote }: { notes: Notes; parse
           </dd>
           {frontmatter.contentFormat ? (
             <>
-              <dt>Content format</dt>
-              <dd>
+              <dt><T k="learning.source.format" /></dt>
+              <dd dir="ltr">
                 <code>{frontmatter.contentFormat}</code>
               </dd>
             </>
           ) : null}
           {frontmatter.sourceCoverage ? (
             <>
-              <dt>Coverage, as stated</dt>
-              <dd>{frontmatter.sourceCoverage}</dd>
+              <dt><T k="learning.source.coverage" /></dt>
+              <dd lang="en" dir="ltr">{frontmatter.sourceCoverage}</dd>
             </>
           ) : null}
-          <dt>Source scans</dt>
-          <dd>{ledgerNote || 'This chapter cites no scan files by path.'}</dd>
-          <dt>File</dt>
-          <dd>
+          <dt><T k="learning.source.scans" /></dt>
+          <dd><LedgerNotice {...scanStats} /></dd>
+          <dt><T k="learning.source.file" /></dt>
+          <dd dir="ltr">
             <code>{notes.source}</code>
           </dd>
         </dl>

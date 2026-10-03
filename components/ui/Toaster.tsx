@@ -1,19 +1,22 @@
 'use client'
 
 import { type ReactNode, createContext, use, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { TranslationKey, TranslationParams } from '@/lib/i18n/dictionaries'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { Icon } from './Icon'
 import styles from './Toaster.module.css'
 
 type ToastTone = 'success' | 'info' | 'danger'
+export type ToastMessage = string | { key: TranslationKey; params?: TranslationParams }
 
 interface Toast {
   id: number
-  message: string
+  message: ToastMessage
   tone: ToastTone
 }
 
 interface ToastApi {
-  notify: (message: string, tone?: ToastTone) => void
+  notify: (message: ToastMessage, tone?: ToastTone) => void
 }
 
 const ToastContext = createContext<ToastApi | null>(null)
@@ -26,7 +29,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])
   const nextId = useRef(1)
 
-  const notify = useCallback((message: string, tone: ToastTone = 'success') => {
+  const notify = useCallback((message: ToastMessage, tone: ToastTone = 'success') => {
     const id = nextId.current++
     setToasts((current) => [...current.slice(-2), { id, message, tone }])
   }, [])
@@ -47,6 +50,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 }
 
 function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number) => void }) {
+  const { t, error } = useI18n()
   useEffect(() => {
     const timer = window.setTimeout(() => onDismiss(toast.id), 3500)
     return () => window.clearTimeout(timer)
@@ -55,8 +59,8 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
   return (
     <div className={`${styles.toast} ${styles[toast.tone]}`}>
       <Icon name={toast.tone === 'danger' ? 'alert' : toast.tone === 'info' ? 'info' : 'check'} size={18} />
-      <span>{toast.message}</span>
-      <button type="button" className={styles.close} onClick={() => onDismiss(toast.id)} aria-label="Dismiss">
+      <span>{typeof toast.message === 'string' ? error(toast.message) : t(toast.message.key, toast.message.params)}</span>
+      <button type="button" className={styles.close} onClick={() => onDismiss(toast.id)} aria-label={t('ui.dismiss')}>
         <Icon name="x" size={14} />
       </button>
     </div>

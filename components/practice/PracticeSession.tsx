@@ -1,6 +1,8 @@
 'use client'
 
 import { type FormEvent, useMemo, useState } from 'react'
+import { useI18n } from '@/components/i18n/LanguageProvider'
+import type { practiceEn } from '@/lib/i18n/practice'
 import { MatrixView } from '@/components/matrix/MatrixView'
 import { EliminationPlayer } from '@/components/steps/EliminationPlayer'
 import { SolutionSummary } from '@/components/tools/rref/SolutionSummary'
@@ -26,15 +28,16 @@ interface Move {
 
 interface Feedback {
   readonly tone: Tone
-  readonly title: string
+  readonly title: keyof typeof practiceEn
   readonly message: string
+  readonly messageKind?: 'validation' | 'undo'
 }
 
-const VERDICT_FEEDBACK: Record<Verdict, { tone: Tone; title: string }> = {
-  complete: { tone: 'success', title: 'Reduced row echelon form reached' },
-  progress: { tone: 'success', title: 'Good move' },
-  neutral: { tone: 'info', title: 'Valid, but no progress' },
-  setback: { tone: 'warning', title: 'Valid, but it undoes work' },
+const VERDICT_FEEDBACK: Record<Verdict, { tone: Tone; title: keyof typeof practiceEn }> = {
+  complete: { tone: 'success', title: 'practice.verdictComplete' },
+  progress: { tone: 'success', title: 'practice.verdictProgress' },
+  neutral: { tone: 'info', title: 'practice.verdictNeutral' },
+  setback: { tone: 'warning', title: 'practice.verdictSetback' },
 }
 
 type Kind = 'swap' | 'scale' | 'replace'
@@ -45,6 +48,7 @@ type Kind = 'swap' | 'scale' | 'replace'
  * single required sequence.
  */
 export function PracticeSession({ start, variables }: { start: Matrix; variables: number }) {
+  const { t, error } = useI18n()
   const rows = start.length
   const [moves, setMoves] = useState<Move[]>([])
   const [feedback, setFeedback] = useState<Feedback | null>(null)
@@ -62,6 +66,7 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
   const hint = useMemo(() => (progress.complete ? null : nextHint(current, variables)), [current, variables, progress.complete])
   const lastMove = moves.at(-1)
   const labels = [...Array.from({ length: variables }, (_, j) => variableName(j)), 'b']
+  const renderedFormError = formError ? (formError.startsWith('Factor: ') ? t('practice.factorError', { message: error(formError.slice(8)) }) : error(formError)) : null
 
   const buildOperation = (): { op: RowOperation } | { error: string } => {
     if (inputMode === 'type') {
@@ -84,7 +89,7 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
     setFormError(null)
     const result = assessOperation(current, built.op, variables)
     if (!result.valid) {
-      setFeedback({ tone: 'danger', title: 'Not an elementary row operation', message: result.message })
+      setFeedback({ tone: 'danger', title: 'practice.invalidOperation', message: result.message, messageKind: 'validation' })
       return
     }
     setMoves([...moves, { op: built.op, before: current, after: result.after, verdict: result.verdict }])
@@ -95,7 +100,7 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
 
   const undo = () => {
     setMoves(moves.slice(0, -1))
-    setFeedback({ tone: 'info', title: 'Undone', message: lastMove ? `Removed ${formatRowOperation(lastMove.op)}.` : '' })
+    setFeedback({ tone: 'info', title: 'practice.undone', message: lastMove ? formatRowOperation(lastMove.op) : '', messageKind: 'undo' })
     setHintLevel(0)
   }
 
@@ -110,7 +115,7 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
         targetRows: affectedRows(lastMove.op),
         sourceRow: sourceRow(lastMove.op),
         changed: changedCells(lastMove.before, lastMove.after),
-        rowNotes: moveNotes(lastMove.op),
+        rowNotes: moveNotes(lastMove.op, t('practice.sourceRow')),
         pivots: progress.complete ? gaussJordan(current, { pivotColumnLimit: variables }).pivots : [],
       }
     : {}
@@ -125,25 +130,25 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
     <div className={styles.session}>
       <section className={styles.board} aria-labelledby="practice-matrix">
         <h2 id="practice-matrix" className={styles.heading}>
-          Your matrix {moves.length > 0 ? <span className={styles.muted}>after {moves.length} {moves.length === 1 ? 'operation' : 'operations'}</span> : null}
+          {t('practice.matrix')} {moves.length > 0 ? <span className={styles.muted}>{t(moves.length === 1 ? 'practice.afterOne' : 'practice.afterMany', { count: moves.length })}</span> : null}
         </h2>
         <div className={styles.sheet}>
-          <MatrixView matrix={current} label="Current matrix" augmentAt={variables} columnLabels={labels} highlight={highlight} size="lg" />
+          <MatrixView matrix={current} label={t('practice.currentMatrix')} augmentAt={variables} columnLabels={labels} highlight={highlight} size="lg" />
         </div>
         <div className={styles.buttonRow}>
           <Button icon="undo" size="sm" onClick={undo} disabled={moves.length === 0}>
-            Undo
+            {t('practice.undo')}
           </Button>
           <Button icon="reset" size="sm" variant="quiet" onClick={restart} disabled={moves.length === 0}>
-            Start over
+            {t('practice.restart')}
           </Button>
         </div>
         {moves.length > 0 ? (
-          <ol className={styles.log} aria-label="Operations so far">
+          <ol className={styles.log} aria-label={t('practice.operationsSoFar')}>
             {moves.map((m, i) => (
               <li key={i} data-verdict={m.verdict}>
-                <span className="num">{formatRowOperation(m.op)}</span>
-                <span className={styles.logVerdict}>{VERDICT_FEEDBACK[m.verdict].title}</span>
+                <span className="num" dir="ltr">{formatRowOperation(m.op)}</span>
+                <span className={styles.logVerdict}>{t(VERDICT_FEEDBACK[m.verdict].title)}</span>
               </li>
             ))}
           </ol>
@@ -152,86 +157,86 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
 
       <section className={styles.controls} aria-labelledby="practice-controls">
         <h2 id="practice-controls" className={styles.heading}>
-          {progress.complete ? 'Done' : 'Next operation'}
+          {t(progress.complete ? 'practice.done' : 'practice.nextOperation')}
         </h2>
 
         {progress.complete ? (
           <>
-            <Notice tone="success" title="The matrix is in reduced row echelon form">
-              Every pivot is a leading 1 with zeros above and below it. Here is what it says about the system.
+            <Notice tone="success" title={t('practice.matrixComplete')}>
+              <span lang="en" dir="ltr" className={styles.studyText}>Every pivot is a leading 1 with zeros above and below it. Here is what it says about the system.</span>
             </Notice>
             <SolutionSummary analysis={solveAugmented(start, variables)} format="fraction" />
           </>
         ) : (
           <form className={styles.form} onSubmit={apply}>
             <Segmented
-              label="Enter the operation by"
+              label={t('practice.enterBy')}
               value={inputMode}
               onChange={(m) => {
                 setInputMode(m)
                 setFormError(null)
               }}
               options={[
-                { value: 'choose', label: 'Choosing' },
-                { value: 'type', label: 'Typing' },
+                { value: 'choose', label: t('practice.choosing') },
+                { value: 'type', label: t('practice.typing') },
               ]}
             />
             {inputMode === 'type' ? (
               <TextField
-                label="Row operation"
+                label={t('practice.rowOperation')}
                 value={notation}
                 onChange={setNotation}
                 placeholder="R2 <- R2 - 3R1"
-                hint="Examples: R1 <-> R2, R2 <- R2 - 3R1, R1 <- (1/2)R1, R3 + 2R1 -> R3"
-                error={formError}
+                hint={<>{t('practice.notationExamples')} <bdi dir="ltr">R1 &lt;-&gt; R2, R2 &lt;- R2 - 3R1, R1 &lt;- (1/2)R1, R3 + 2R1 -&gt; R3</bdi></>}
+                error={renderedFormError}
               />
             ) : (
               <>
                 <Segmented
-                  label="Operation"
+                  label={t('practice.operation')}
                   value={kind}
                   onChange={(k) => {
                     setKind(k)
                     setFormError(null)
                   }}
                   options={[
-                    { value: 'swap', label: 'Swap' },
-                    { value: 'scale', label: 'Scale' },
-                    { value: 'replace', label: 'Add a multiple' },
+                    { value: 'swap', label: t('practice.swap') },
+                    { value: 'scale', label: t('practice.scale') },
+                    { value: 'replace', label: t('practice.addMultiple') },
                   ]}
                 />
                 <div className={styles.opFields}>
-                  <Select label={kind === 'swap' ? 'Swap row' : kind === 'scale' ? 'Scale row' : 'Change row'} value={String(rowA)} onChange={(v) => setRowA(Number(v))}>
+                  <Select label={t(kind === 'swap' ? 'practice.swapRow' : kind === 'scale' ? 'practice.scaleRow' : 'practice.changeRow')} value={String(rowA)} onChange={(v) => setRowA(Number(v))}>
                     {rowOptions}
                   </Select>
                   {kind === 'swap' ? (
-                    <Select label="with row" value={String(rowB)} onChange={(v) => setRowB(Number(v))}>
+                    <Select label={t('practice.withRow')} value={String(rowB)} onChange={(v) => setRowB(Number(v))}>
                       {rowOptions}
                     </Select>
                   ) : (
-                    <TextField label={kind === 'scale' ? 'by the factor' : 'by adding'} value={factor} onChange={setFactor} placeholder="-3 or 1/2" error={formError} className={styles.factor} />
+                    <TextField label={t(kind === 'scale' ? 'practice.byFactor' : 'practice.byAdding')} value={factor} onChange={setFactor} placeholder={t('practice.factorPlaceholder')} error={renderedFormError} className={styles.factor} />
                   )}
                   {kind === 'replace' ? (
-                    <Select label="times row" value={String(rowB)} onChange={(v) => setRowB(Number(v))}>
+                    <Select label={t('practice.timesRow')} value={String(rowB)} onChange={(v) => setRowB(Number(v))}>
                       {rowOptions}
                     </Select>
                   ) : null}
                 </div>
-                <p className={`${styles.preview} num`} aria-live="polite">
-                  {previewText(kind, rowA, rowB, factor)}
+                <p className={`${styles.preview} num`} dir="ltr" aria-live="polite">
+                  {previewText(kind, rowA, rowB, factor, t('practice.nonzeroFactor'))}
                 </p>
               </>
             )}
             <Button type="submit" variant="primary">
-              Apply operation
+              {t('practice.apply')}
             </Button>
           </form>
         )}
 
         <div aria-live="polite">
           {feedback ? (
-            <Notice tone={feedback.tone} title={feedback.title} role={feedback.tone === 'danger' ? 'alert' : undefined}>
-              {feedback.message}
+            <Notice tone={feedback.tone} title={t(feedback.title)} role={feedback.tone === 'danger' ? 'alert' : undefined}>
+              {feedback.messageKind === 'validation' ? error(feedback.message) : feedback.messageKind === 'undo' ? t('practice.removed', { operation: feedback.message }) : <span lang="en" dir="ltr" className={styles.studyText}>{feedback.message}</span>}
             </Notice>
           ) : null}
         </div>
@@ -240,11 +245,11 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
           <div className={styles.hints}>
             <div className={styles.buttonRow}>
               <Button size="sm" icon="lightbulb" onClick={() => setHintLevel((h) => Math.min(3, h + 1))} disabled={hintLevel >= 3}>
-                {hintLevel === 0 ? 'Get a hint' : hintLevel < 3 ? 'More specific hint' : 'All hints shown'}
+                {t(hintLevel === 0 ? 'practice.getHint' : hintLevel < 3 ? 'practice.moreHint' : 'practice.allHints')}
               </Button>
             </div>
             {hintLevel > 0 ? (
-              <ol className={styles.hintList}>
+              <ol className={styles.hintList} lang="en" dir="ltr">
                 {hint.levels.slice(0, hintLevel).map((text) => (
                   <li key={text}>{text}</li>
                 ))}
@@ -255,14 +260,14 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
 
         {!progress.complete ? (
           <details className={styles.solution}>
-            <summary>Show the solution from here</summary>
+            <summary>{t('practice.showSolution')}</summary>
             <EliminationPlayer
               elimination={gaussJordan(current, { pivotColumnLimit: variables })}
               context={{ kind: 'system' }}
-              label="Solution from the current matrix"
+              label={t('practice.solutionMatrix')}
               augmentAt={variables}
               columnLabels={labels}
-              intro={<p>This is one way to finish from your current matrix. Other valid orders reach the same reduced matrix.</p>}
+              intro={<p lang="en" dir="ltr">This is one way to finish from your current matrix. Other valid orders reach the same reduced matrix.</p>}
             />
           </details>
         ) : null}
@@ -271,18 +276,18 @@ export function PracticeSession({ start, variables }: { start: Matrix; variables
   )
 }
 
-function previewText(kind: Kind, a: number, b: number, factor: string): string {
+function previewText(kind: Kind, a: number, b: number, factor: string, nonzeroFactor: string): string {
   const parsed = parseRational(factor)
   if (kind === 'swap') return formatRowOperation(swapRows(a, b))
   if (!parsed.ok) return kind === 'scale' ? `${rowLabel(a)} ← k·${rowLabel(a)}` : `${rowLabel(a)} ← ${rowLabel(a)} + k·${rowLabel(b)}`
-  if (parsed.value.isZero()) return 'The factor must not be 0.'
+  if (parsed.value.isZero()) return nonzeroFactor
   return formatRowOperation(kind === 'scale' ? scaleRow(a, parsed.value) : replaceRow(a, b, parsed.value))
 }
 
-function moveNotes(op: RowOperation): Record<number, string> {
+function moveNotes(op: RowOperation, sourceLabel: string): Record<number, string> {
   if (op.kind === 'swap') return { [op.rowA]: `↔ ${rowLabel(op.rowB)}`, [op.rowB]: `↔ ${rowLabel(op.rowA)}` }
   const notes: Record<number, string> = { [affectedRows(op)[0]!]: formatRowOperation(op).split(' ← ')[1] ?? '' }
   const source = sourceRow(op)
-  if (source !== null) notes[source] = 'source'
+  if (source !== null) notes[source] = sourceLabel
   return notes
 }

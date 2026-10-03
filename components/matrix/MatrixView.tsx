@@ -1,3 +1,4 @@
+import { T, LocalizedSpan } from '@/components/i18n/LanguageProvider'
 import type { ReactNode } from 'react'
 import type { Matrix, Position } from '@/lib/math/matrix'
 import { type NumberFormat, rowLabel } from '@/lib/math/notation'
@@ -61,7 +62,7 @@ export function MatrixView({
     <figure className={`${styles.figure} ${styles[size]}`}>
       {caption ? <figcaption className={styles.caption}>{caption}</figcaption> : null}
       <div className={styles.scroller}>
-        <table className={styles.table}>
+        <table dir="ltr" className={styles.table}>
           <caption className="sr-only">{label}</caption>
           {columnLabels ? (
             <thead>
@@ -76,7 +77,7 @@ export function MatrixView({
                     data-free={freeColumns.includes(j) || undefined}
                   >
                     {name}
-                    {freeColumns.includes(j) ? <span className={styles.freeTag}>free</span> : null}
+                    {freeColumns.includes(j) ? <span dir="auto" className={styles.freeTag}><T k="matrix.free" /></span> : null}
                   </th>
                 ))}
                 {hasNotes ? <td className={styles.corner} /> : null}
@@ -102,8 +103,8 @@ export function MatrixView({
                   {showRowLabels ? (
                     <th scope="row" className={styles.rowLabel}>
                       {rowLabel(i)}
-                      {isTarget ? <span className="sr-only"> (row being changed)</span> : null}
-                      {isSource ? <span className="sr-only"> (source row)</span> : null}
+                      {isTarget ? <span className="sr-only" dir="auto"><T k="matrix.target" /></span> : null}
+                      {isSource ? <span className="sr-only" dir="auto"><T k="matrix.source" /></span> : null}
                     </th>
                   ) : null}
                   {row.map((value, j) => {
@@ -131,10 +132,10 @@ export function MatrixView({
                         data-zero={(!hidden && value.isZero()) || undefined}
                       >
                         <span className={styles.value}>
-                          {hidden ? <span aria-label="not computed yet">?</span> : <RationalText value={value} format={format} />}
+                          {hidden ? <LocalizedSpan labelKey="matrix.notComputed">?</LocalizedSpan> : <RationalText value={value} format={format} />}
                         </span>
-                        {active ? <span className="sr-only"> (current pivot)</span> : pivot ? <span className="sr-only"> (pivot)</span> : null}
-                        {changed ? <span className="sr-only"> (changed)</span> : null}
+                        {active ? <span className="sr-only" dir="auto"><T k="matrix.currentPivot" /></span> : pivot ? <span className="sr-only" dir="auto"><T k="matrix.pivot" /></span> : null}
+                        {changed ? <span className="sr-only" dir="auto"><T k="matrix.changed" /></span> : null}
                       </td>
                     )
                   })}
@@ -144,7 +145,7 @@ export function MatrixView({
                         <span
                           className={isInconsistent ? styles.noteDanger : isSource ? styles.noteSource : styles.noteTarget}
                         >
-                          {note ?? 'No solution'}
+                          {note ?? <T k="matrix.noSolution" />}
                         </span>
                       ) : null}
                     </td>

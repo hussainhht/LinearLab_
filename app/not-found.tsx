@@ -1,3 +1,4 @@
+import { T } from '@/components/i18n/LanguageProvider'
 import Link from 'next/link'
 import { Page, PageHeader } from '@/components/layout/Page'
 
@@ -5,12 +6,12 @@ export default function NotFound() {
   return (
     <Page width="narrow">
       <PageHeader
-        title="This page is not in the course"
-        lede="The address may be mistyped, or the page may have moved when LinearLab was rebuilt."
+        title={<T k="notFound.title" />}
+        lede={<T k="notFound.description" />}
       />
       <p>
-        Try the <Link href="/learn/">course outline</Link>, the <Link href="/tools/">tools</Link> or the{' '}
-        <Link href="/">home page</Link>.
+        <T k="notFound.try" /> <Link href="/learn/"><T k="home.outline" /></Link>, <Link href="/tools/"><T k="notFound.tools" /></Link> <T k="notFound.or" />{' '}
+        <Link href="/"><T k="notFound.home" /></Link>.
       </p>
     </Page>
   )

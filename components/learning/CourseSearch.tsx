@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { type ReactNode, useId, useMemo, useState } from 'react'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { type SearchDoc, type Segment, searchDocs } from '@/lib/course/search'
 import styles from './search.module.css'
 
@@ -15,6 +16,7 @@ function marked(segments: readonly Segment[]): ReactNode {
  * can be shared or reloaded, and Back and Forward restore it.
  */
 export function CourseSearch({ docs }: { docs: readonly SearchDoc[] }) {
+  const { t } = useI18n()
   const id = useId()
   const params = useSearchParams()
   const urlQuery = params.get('q') ?? ''
@@ -43,7 +45,7 @@ export function CourseSearch({ docs }: { docs: readonly SearchDoc[] }) {
     <div className={`${styles.page} ${styles.big}`}>
       <form role="search" onSubmit={(event) => event.preventDefault()}>
         <label htmlFor={id} className="sr-only">
-          Search the course
+          {t('learning.search.title')}
         </label>
         <input
           id={id}
@@ -52,22 +54,22 @@ export function CourseSearch({ docs }: { docs: readonly SearchDoc[] }) {
           style={{ width: '100%' }}
           value={query}
           onChange={(event) => update(event.target.value)}
-          placeholder="Try: rank nullity, Cramer, eigenspace, Wronskian"
+          placeholder={t('learning.search.placeholder')}
           autoComplete="off"
           spellCheck={false}
         />
       </form>
       <p className={styles.count} aria-live="polite">
         {trimmed === ''
-          ? 'Searches every heading of the lecture notes and the title, objective and sections of each interactive lesson.'
+          ? t('learning.search.hint')
           : hits.length === 0
-            ? `No results for “${trimmed}”. Try fewer or different words.`
-            : `${hits.length === 40 ? 'The first 40 results' : hits.length === 1 ? '1 result' : `${hits.length} results`} for “${trimmed}”`}
+            ? t('learning.search.empty', { query: trimmed })
+            : t(hits.length === 40 ? 'learning.search.firstResults' : hits.length === 1 ? 'learning.search.oneResult' : 'learning.search.results', { count: hits.length, query: trimmed })}
       </p>
       {hits.length > 0 ? (
         <ol className={styles.results}>
           {hits.map((hit) => (
-            <li key={hit.doc.href} className={styles.result}>
+            <li key={hit.doc.href} className={styles.result} lang="en" dir="ltr">
               <Link href={hit.doc.href} prefetch={false} className={styles.resultLink}>
                 {marked(hit.heading)}
               </Link>

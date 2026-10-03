@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { T, useI18n } from '@/components/i18n/LanguageProvider'
 import { RationalText } from '@/components/matrix/RationalText'
 import { Icon } from '@/components/ui/Icon'
 import { verifySolution, coefficientPart } from '@/lib/export'
@@ -13,25 +14,26 @@ import styles from './rref.module.css'
 
 // The plot is only needed for two-variable systems, so it loads on demand.
 const LinePlot = dynamic(() => import('@/components/visual/LinePlot').then((m) => m.LinePlot), {
-  loading: () => <p className={styles.muted}>Loading the graph…</p>,
+  loading: () => <p className={styles.muted}><T k="tools.loadingGraph" /></p>,
 })
 
 const LABELS = {
-  unique: { text: 'Unique solution', icon: 'check' },
-  infinite: { text: 'Infinitely many solutions', icon: 'info' },
-  inconsistent: { text: 'No solution', icon: 'alert' },
+  unique: { icon: 'check' },
+  infinite: { icon: 'info' },
+  inconsistent: { icon: 'alert' },
 } as const
 
 export function SolutionSummary({ analysis, format }: { analysis: SystemAnalysis; format: NumberFormat }) {
+  const { t, language } = useI18n()
   const s = analysis.solution
   const verified = verifySolution(analysis)
   const label = LABELS[s.kind]
 
   return (
-    <section className={styles.solution} data-kind={s.kind} aria-labelledby="solution-heading">
-      <h3 id="solution-heading" className={styles.solutionBadge}>
+    <section className={styles.solution} lang="en" dir="ltr" data-kind={s.kind} aria-labelledby="solution-heading">
+      <h3 id="solution-heading" className={styles.solutionBadge} lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <Icon name={label.icon} size={18} />
-        {label.text}
+        {t(`tools.solution.${s.kind}`)}
       </h3>
 
       {s.kind === 'unique' ? (

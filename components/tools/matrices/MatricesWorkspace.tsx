@@ -1,5 +1,7 @@
 'use client'
 
+import { useI18n } from '@/components/i18n/LanguageProvider'
+import type { ToolMessage } from '@/lib/i18n/tools'
 import { useMemo, useState } from 'react'
 import { MatrixEditor } from '@/components/matrix/MatrixEditor'
 import { Button } from '@/components/ui/Button'
@@ -24,6 +26,7 @@ import styles from './matrices.module.css'
 const { maxRows, maxCols } = LIMITS.matrix
 
 export function MatricesWorkspace() {
+  const { t, error } = useI18n()
   const { matrices, updateMatrices } = useWorkspace()
   const { notify } = useToast()
   const [attempted, setAttempted] = useState(false)
@@ -37,10 +40,10 @@ export function MatricesWorkspace() {
   const current = run && run.key === inputKey && parsedA.ok && parsedB.ok ? run : null
   const stale = run !== null && run.key !== inputKey
 
-  const [undo, setUndo] = useState<{ name: MatrixName; cells: string[][]; label: string } | null>(null)
+  const [undo, setUndo] = useState<{ name: MatrixName; cells: string[][]; label: ToolMessage } | null>(null)
   const setGrid = (name: MatrixName, cells: string[][]) => updateMatrices(name === 'A' ? { a: cells } : { b: cells })
   /** Replaces a whole matrix and remembers the old one for a single undo. */
-  const replaceGrid = (name: MatrixName, cells: string[][], label: string) => {
+  const replaceGrid = (name: MatrixName, cells: string[][], label: ToolMessage) => {
     setUndo({ name, cells: name === 'A' ? matrices.a : matrices.b, label })
     setGrid(name, cells)
   }
@@ -52,7 +55,7 @@ export function MatricesWorkspace() {
     const bad = (needsA && !parsedA.ok) || (needsB && !parsedB.ok) || (op === 'scalar' && !parsedK.ok)
     if (bad) {
       setAttempted(true)
-      notify('Fix the highlighted entries first', 'danger')
+      notify({ key: 'tools.fixEntries' }, 'danger')
       return
     }
     setAttempted(false)
@@ -61,11 +64,11 @@ export function MatricesWorkspace() {
 
   const onCopy = async (m: Matrix) => {
     const ok = await copyText(`${matrixToText(m)}\n\n${matrixToLatex(m)}`)
-    notify(ok ? 'Copied as text and LaTeX' : 'Copying failed', ok ? 'success' : 'danger')
+    notify({ key: ok ? 'tools.copiedTextLatex' : 'tools.copyFailed' }, ok ? 'success' : 'danger')
   }
 
   const onUseResult = (m: Matrix, into: MatrixName) => {
-    replaceGrid(into, m.map((r) => r.map(String)), `Copied the result into ${into}`)
+    replaceGrid(into, m.map((r) => r.map(String)), { key: 'tools.resultInto', params: { name: into } })
   }
 
   const shareLink = async () => {
@@ -74,7 +77,7 @@ export function MatricesWorkspace() {
     if (run) params.set('op', run.op)
     url.search = params.toString()
     const ok = await copyText(url.toString())
-    notify(ok ? 'Link copied' : 'Copying failed', ok ? 'success' : 'danger')
+    notify({ key: ok ? 'tools.linkCopied' : 'tools.copyFailed' }, ok ? 'success' : 'danger')
   }
 
   return (
@@ -104,39 +107,39 @@ export function MatricesWorkspace() {
 
       <section className={styles.operations} aria-labelledby="ops-heading">
         <h2 id="ops-heading" className={styles.panelHeading}>
-          Operation
+          {t('tools.operation')}
         </h2>
         <div className={styles.opsSettings}>
           <Segmented
-            label="Single-matrix operations use"
+            label={t('tools.singleMatrix')}
             value={matrices.target}
             onChange={(t) => updateMatrices({ target: t })}
             options={[
-              { value: 'A', label: 'Matrix A' },
-              { value: 'B', label: 'Matrix B' },
+              { value: 'A', label: t('tools.matrixNamed', { name: 'A' }) },
+              { value: 'B', label: t('tools.matrixNamed', { name: 'B' }) },
             ]}
           />
           <TextField
-            label="Scalar k"
+            label={t('tools.scalar')}
             value={matrices.scalar}
             onChange={(v) => updateMatrices({ scalar: v })}
-            error={!parsedK.ok && attempted ? parsedK.error : null}
+            error={!parsedK.ok && attempted ? error(parsedK.error) : null}
             className={styles.scalar}
           />
           <Segmented
-            label="Numbers"
+            label={t('tools.numbers')}
             value={matrices.format}
             onChange={(f) => updateMatrices({ format: f })}
             options={[
-              { value: 'fraction', label: 'Fractions' },
-              { value: 'decimal', label: 'Decimals' },
+              { value: 'fraction', label: t('tools.fractions') },
+              { value: 'decimal', label: t('tools.decimals') },
             ]}
           />
         </div>
         <div className={styles.opGroups}>
           {(Object.keys(GROUP_LABELS) as (keyof typeof GROUP_LABELS)[]).map((group) => (
-            <div key={group} className={styles.opGroup} role="group" aria-label={GROUP_LABELS[group]}>
-              <p className={styles.opGroupLabel}>{GROUP_LABELS[group]}</p>
+            <div key={group} className={styles.opGroup} role="group" aria-label={t(`tools.group.${group}`)}>
+              <p className={styles.opGroupLabel}>{t(`tools.group.${group}`)}</p>
               <div className={styles.opButtons}>
                 {OPERATIONS.filter((o) => o.group === group).map((o) => (
                   <button
@@ -146,8 +149,8 @@ export function MatricesWorkspace() {
                     aria-pressed={current?.op === o.id}
                     onClick={() => runOperation(o.id)}
                   >
-                    <span className={styles.opNotation}>{o.notation.replace('X', matrices.target)}</span>
-                    <span className={styles.opLabel}>{o.label}</span>
+                    <span className={styles.opNotation} lang="en" dir="ltr">{o.notation.replace('X', matrices.target)}</span>
+                    <span className={styles.opLabel}>{t(`tools.op.${o.id}`)}</span>
                   </button>
                 ))}
               </div>
@@ -160,10 +163,10 @@ export function MatricesWorkspace() {
             icon="save"
             onClick={() => {
               const ok = saveMatrices(matrices.a, matrices.b, matrices.scalar)
-              notify(ok ? 'Saved in this browser' : 'Saving failed: browser storage is unavailable', ok ? 'success' : 'danger')
+              notify({ key: ok ? 'tools.savedBrowser' : 'tools.storageUnavailable' }, ok ? 'success' : 'danger')
             }}
           >
-            Save
+            {t('tools.save')}
           </Button>
           <Button
             size="sm"
@@ -171,35 +174,35 @@ export function MatricesWorkspace() {
             disabled={!savedAt}
             onClick={() => {
               const saved = loadMatrices()
-              if (!saved) return notify('Nothing saved yet', 'info')
+              if (!saved) return notify({ key: 'tools.nothingSaved' }, 'info')
               setUndo(null)
               updateMatrices({ a: saved.a, b: saved.b, scalar: saved.scalar, lastRun: null })
-              notify('Restored your saved matrices')
+              notify({ key: 'tools.restoredMatrices' })
             }}
           >
-            Restore
+            {t('tools.restore')}
           </Button>
           <Button size="sm" icon="link" onClick={shareLink}>
-            Copy link
+            {t('tools.copyLink')}
           </Button>
         </div>
       </section>
 
       <section className={styles.output} aria-labelledby="result-heading" aria-live="polite">
         <h2 id="result-heading" className={styles.panelHeading}>
-          Result
+          {t('tools.result')}
         </h2>
         {stale ? (
           <Notice
             tone="warning"
-            title="The inputs changed"
+            title={t('tools.inputsChanged')}
             actions={
               <Button size="sm" variant="primary" onClick={() => runOperation(run.op)}>
-                Run {operationInfo(run.op).label.toLowerCase()} again
+                {t('tools.runAgain', { operation: t(`tools.op.${run.op}`).toLocaleLowerCase() })}
               </Button>
             }
           >
-            The last result no longer matches A, B or k, so it was cleared.
+            {t('tools.resultClearedHelp')}
           </Notice>
         ) : current && parsedA.ok && parsedB.ok && parsedK.ok ? (
           <OperationResult
@@ -214,7 +217,7 @@ export function MatricesWorkspace() {
             onCopy={onCopy}
           />
         ) : (
-          <p className={styles.empty}>Choose an operation. The result and an explanation of how it was found appear here.</p>
+          <p className={styles.empty}>{t('tools.chooseOperation')}</p>
         )}
       </section>
     </div>
@@ -232,70 +235,71 @@ interface MatrixPanelProps {
   /** Small edits: typing in a cell or resizing. */
   onEdit: (cells: string[][]) => void
   /** Whole-matrix replacements, which can be undone. */
-  onReplace: (cells: string[][], label: string) => void
-  undoLabel: string | null
+  onReplace: (cells: string[][], label: ToolMessage) => void
+  undoLabel: ToolMessage | null
   onUndo: () => void
-  notify: (message: string, tone?: 'success' | 'info' | 'danger') => void
+  notify: ReturnType<typeof useToast>['notify']
 }
 
 function MatrixPanel({ name, cells, errors, onEdit, onReplace, undoLabel, onUndo, notify }: MatrixPanelProps) {
+  const { t } = useI18n()
   const [example, setExample] = useState<string>(name === 'A' ? 'three-a' : 'three-b')
   const rows = cells.length
   const cols = cells[0]?.length ?? 1
   const fill = (kind: 'identity' | 'zero' | 'random') => {
     if (kind === 'identity') {
       const n = rows
-      onReplace(Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? '1' : '0'))), `Filled ${name} with I${n}`)
-    } else if (kind === 'zero') onReplace(makeGrid(rows, cols), `Filled ${name} with zeros`)
-    else onReplace(randomMatrix(rows, cols).map((r) => r.map(String)), `Filled ${name} with random integers`)
+      onReplace(Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? '1' : '0'))), { key: 'tools.filledIdentity', params: { name, size: n } })
+    } else if (kind === 'zero') onReplace(makeGrid(rows, cols), { key: 'tools.filledZero', params: { name } })
+    else onReplace(randomMatrix(rows, cols).map((r) => r.map(String)), { key: 'tools.filledRandom', params: { name } })
   }
   return (
     <section className={styles.matrixPanel} aria-labelledby={`matrix-${name}`}>
       <div className={styles.matrixHead}>
         <h2 id={`matrix-${name}`} className={styles.matrixName}>
-          {name}
+          <bdi lang="en" dir="ltr">{name}</bdi>
         </h2>
-        <Stepper label="Rows" noun={`rows in ${name}`} value={rows} min={1} max={maxRows} onChange={(r) => onEdit(resizeGrid(cells, r, cols))} />
-        <Stepper label="Columns" noun={`columns in ${name}`} value={cols} min={1} max={maxCols} onChange={(c) => onEdit(resizeGrid(cells, rows, c))} />
+        <Stepper label={t('tools.rows')} noun={t('tools.rowsIn', { name })} value={rows} min={1} max={maxRows} onChange={(r) => onEdit(resizeGrid(cells, r, cols))} />
+        <Stepper label={t('tools.columns')} noun={t('tools.columnsIn', { name })} value={cols} min={1} max={maxCols} onChange={(c) => onEdit(resizeGrid(cells, rows, c))} />
       </div>
       <MatrixEditor
         idPrefix={`m${name}`}
-        label={`Matrix ${name}`}
+        label={t('tools.matrixNamed', { name })}
         cells={cells}
         errors={errors}
         size="sm"
-        describeCell={(r, c) => `${name} row ${r + 1}, column ${c + 1}`}
+        describeCell={(r, c) => t('tools.matrixCell', { name, row: r + 1, col: c + 1 })}
         onCellChange={(r, c, v) => onEdit(setCell(cells, r, c, v))}
         onPasteError={(m) => notify(m, 'danger')}
         onPasteGrid={(block, at) => {
           const result = pasteGrid(cells, block, at, { maxRows, maxCols })
-          onReplace(result.cells, `Pasted into ${name}`)
-          notify(result.clipped ? 'Pasted; entries beyond the matrix were left out' : `Pasted into ${name}`, result.clipped ? 'info' : 'success')
+          onReplace(result.cells, { key: 'tools.pastedNamed', params: { name } })
+          notify({ key: result.clipped ? 'tools.pasteBeyond' : 'tools.pastedNamed', params: { name } }, result.clipped ? 'info' : 'success')
         }}
       />
       <div className={styles.fillRow}>
         <Button size="sm" variant="quiet" onClick={() => fill('identity')}>
-          Identity
+          {t('tools.identity')}
         </Button>
         <Button size="sm" variant="quiet" onClick={() => fill('zero')}>
-          Zero
+          {t('tools.zero')}
         </Button>
         <Button size="sm" variant="quiet" icon="shuffle" onClick={() => fill('random')}>
-          Random
+          {t('tools.random')}
         </Button>
       </div>
       {undoLabel ? (
         <p className={styles.undoRow} role="status">
-          {undoLabel}.{' '}
+          {t(undoLabel.key, undoLabel.params)}.{' '}
           <button type="button" className={styles.undoButton} onClick={onUndo}>
-            Undo
+            {t('tools.undo')}
           </button>
         </p>
       ) : null}
       <div className={styles.exampleRow}>
-        <Select label={`Example for ${name}`} value={example} onChange={setExample}>
+        <Select label={t('tools.exampleFor', { name })} value={example} onChange={setExample}>
           {matrixExamples.map((e) => (
-            <option key={e.id} value={e.id}>
+            <option key={e.id} value={e.id} lang="en" dir="ltr">
               {e.name}: {e.description}
             </option>
           ))}
@@ -304,10 +308,10 @@ function MatrixPanel({ name, cells, errors, onEdit, onReplace, undoLabel, onUndo
           size="sm"
           onClick={() => {
             const e = findMatrixExample(example)
-            if (e) onReplace(toCells(e.values), `Loaded “${e.name}” into ${name}`)
+            if (e) onReplace(toCells(e.values), { key: 'tools.loadedInto', params: { example: e.name, name } })
           }}
         >
-          Load
+          {t('tools.load')}
         </Button>
       </div>
     </section>

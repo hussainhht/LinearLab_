@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
+import { useI18n } from '@/components/i18n/LanguageProvider'
 import { MatrixView } from '@/components/matrix/MatrixView'
 import { stepView } from '@/components/steps/highlight'
 import { Icon } from '@/components/ui/Icon'
@@ -22,6 +23,7 @@ const subscribe = (cb: () => void) => {
  * paused at any time.
  */
 export function HeroDemo() {
+  const { t } = useI18n()
   const analysis = useMemo(() => solveSystem(matrix([[2, 1, -1], [-3, -1, 2], [-2, 1, 2]]), vector([8, -11, -3])), [])
   const steps = analysis.elimination.steps
   const reducedMotion = useSyncExternalStore(subscribe, () => window.matchMedia(QUERY).matches, () => true)
@@ -45,7 +47,7 @@ export function HeroDemo() {
       <div className={styles.demoSheet}>
         <MatrixView
           matrix={m}
-          label={index === 0 ? 'Example system, starting matrix' : `Example system after step ${index}`}
+          label={index === 0 ? t('demo.initial') : t('demo.after', { index })}
           augmentAt={3}
           columnLabels={['x₁', 'x₂', 'x₃', 'b']}
           highlight={highlight}
@@ -53,14 +55,14 @@ export function HeroDemo() {
         />
       </div>
       <figcaption className={styles.demoCaption}>
-        <span className={`${styles.demoStep} num`}>{index === 0 ? 'Start' : `Step ${index} of ${steps.length}`}</span>
-        <span className={styles.demoOp}>{caption ? caption.operation : '[A | b] for three equations'}</span>
-        <span className={styles.demoTitle}>{caption ? caption.title : 'Gauss–Jordan elimination, step by step'}</span>
+        <span className={`${styles.demoStep} num`}>{index === 0 ? t('demo.start') : t('demo.step', { index, count: steps.length })}</span>
+        <span lang="en" dir="ltr" className={styles.demoOp}>{caption ? caption.operation : '[A | b] for three equations'}</span>
+        <span lang="en" dir="ltr" className={styles.demoTitle}>{caption ? caption.title : 'Gauss–Jordan elimination, step by step'}</span>
         <button
           type="button"
           className={styles.demoToggle}
           onClick={() => setUserChoice(playing ? 'pause' : 'play')}
-          aria-label={playing ? 'Pause the demonstration' : 'Play the demonstration'}
+          aria-label={playing ? t('demo.pause') : t('demo.play')}
         >
           <Icon name={playing ? 'pause' : 'play'} size={14} />
         </button>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useI18n, T } from '@/components/i18n/LanguageProvider'
 import type { ReactNode } from 'react'
 import { MatrixView } from '@/components/matrix/MatrixView'
 import { RationalText } from '@/components/matrix/RationalText'
@@ -41,6 +42,7 @@ interface OperationResultProps {
 }
 
 export function OperationResult(props: OperationResultProps) {
+  const { t } = useI18n()
   const { op, a, b, k, target, format } = props
   const x = target === 'A' ? a : b
 
@@ -51,9 +53,10 @@ export function OperationResult(props: OperationResultProps) {
       const sb = shapeOf(b)
       if (sa.rows !== sb.rows || sa.cols !== sb.cols) {
         return (
-          <Notice tone="danger" title="These sizes cannot be added or subtracted" role="alert">
-            A is {formatShape(sa)} and B is {formatShape(sb)}. Addition and subtraction work entry by entry, so both matrices
-            need the same number of rows and the same number of columns.
+          <Notice tone="danger" title={t('tools.addSizeError')} role="alert">
+            {t('tools.addSizeDetails', { a: formatShape(sa), b: formatShape(sb) })}{' '}
+            <span lang="en" dir="ltr">Addition and subtraction work entry by entry, so both matrices
+            need the same number of rows and the same number of columns.</span>
           </Notice>
         )
       }
@@ -75,15 +78,16 @@ export function OperationResult(props: OperationResultProps) {
       const issue = multiplicationIssue(a, b)
       if (issue) {
         return (
-          <Notice tone="danger" title="A × B is not defined for these sizes" role="alert">
-            {issue} Each entry of AB pairs a row of A with a column of B, so they must have the same length.
+          <Notice tone="danger" title={t('tools.multiplySizeError')} role="alert">
+            {t('tools.multiplySizeDetails', { a: shapeOf(a).cols, b: shapeOf(b).rows, aShape: formatShape(shapeOf(a)), bShape: formatShape(shapeOf(b)), columnUnit: t(shapeOf(a).cols === 1 ? 'tools.columnOne' : 'tools.columnMany'), rowUnit: t(shapeOf(b).rows === 1 ? 'tools.rowOne' : 'tools.rowMany') })}{' '}
+            <span lang="en" dir="ltr">Each entry of AB pairs a row of A with a column of B, so they must have the same length.</span>
           </Notice>
         )
       }
       const sa = shapeOf(a)
       const sb = shapeOf(b)
       return (
-        <div className={styles.result}>
+        <div className={styles.result} lang="en" dir="ltr">
           <h3 className={styles.resultTitle}>A × B</h3>
           <p className={styles.muted}>
             ({formatShape(sa)}) × ({formatShape(sb)}) gives a {sa.rows}×{sb.cols} matrix. The inner sizes ({sa.cols}) match.
@@ -129,52 +133,57 @@ function ResultFrame({
   onUseResult,
   onCopy,
 }: OperationResultProps & { title: string; result: Matrix; children: ReactNode }) {
+  const { t } = useI18n()
   return (
-    <div className={styles.result}>
-      <h3 className={styles.resultTitle}>{title}</h3>
+    <div className={styles.result} lang="en" dir="ltr">
+      <h3 className={styles.resultTitle} lang="en" dir="ltr">{title}</h3>
       <div className={styles.resultSheet}>
-        <MatrixView matrix={result} label={`Result ${title}`} format={format} showRowLabels={false} size="lg" />
+        <MatrixView matrix={result} label={t('tools.resultNamed', { name: title })} format={format} showRowLabels={false} size="lg" />
       </div>
-      <div className={styles.explanation}>{children}</div>
+      <div className={styles.explanation} lang="en" dir="ltr">{children}</div>
       <ResultActions result={result} onUseResult={onUseResult} onCopy={onCopy} />
     </div>
   )
 }
 
 function ResultActions({ result, onUseResult, onCopy }: { result: Matrix; onUseResult: OperationResultProps['onUseResult']; onCopy: OperationResultProps['onCopy'] }) {
+  const { t, language } = useI18n()
   return (
-    <div className={styles.buttonRow}>
+    <div className={styles.buttonRow} lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <Button size="sm" icon="copy" onClick={() => onCopy(result)}>
-        Copy
+        {t('tools.copy')}
       </Button>
       <Button size="sm" onClick={() => onUseResult(result, 'A')}>
-        Use as A
+        {t('tools.useAs', { name: 'A' })}
       </Button>
       <Button size="sm" onClick={() => onUseResult(result, 'B')}>
-        Use as B
+        {t('tools.useAs', { name: 'B' })}
       </Button>
     </div>
   )
 }
 
-function notSquare(name: string, m: Matrix, what: string) {
+function NotSquare({ name, m, what }: { name: string; m: Matrix; what: 'determinant' | 'inverse' }) {
+  const { t } = useI18n()
   return (
-    <Notice tone="danger" title={`${what} needs a square matrix`} role="alert">
-      {name} is {formatShape(shapeOf(m))}. Only n×n matrices have a {what.toLowerCase()}.
+    <Notice tone="danger" title={t('tools.squareRequired', { operation: t(what === 'determinant' ? 'tools.op.determinant' : 'tools.op.inverse') })} role="alert">
+      {t('tools.matrixShape', { name, shape: formatShape(shapeOf(m)) })}{' '}
+      <span lang="en" dir="ltr">Only n×n matrices have a {what}.</span>
     </Notice>
   )
 }
 
 function DeterminantResult({ m, name, format }: { m: Matrix; name: MatrixName; format: NumberFormat }) {
-  if (!isSquare(m)) return notSquare(name, m, 'Determinant')
+  const { t } = useI18n()
+  if (!isSquare(m)) return <NotSquare name={name} m={m} what="determinant" />
   const info = determinantByElimination(m)
   const singular = info.value.isZero()
   return (
-    <div className={styles.result}>
+    <div className={styles.result} lang="en" dir="ltr">
       <h3 className={styles.resultTitle}>
         det {name} = <RationalText value={info.value} format={format} />
       </h3>
-      <Notice tone={singular ? 'warning' : 'success'} title={singular ? `${name} is singular` : `${name} is invertible`}>
+      <Notice tone={singular ? 'warning' : 'success'} title={<T k={singular ? 'tools.singular' : 'tools.invertible'} params={{ name }} />}>
         {singular
           ? `det ${name} = 0: the columns are linearly dependent, so ${name} squashes space into a lower dimension and has no inverse.`
           : `det ${name} ≠ 0, so ${name} has an inverse and Ax = b has exactly one solution for every b. This is decided exactly, with no rounding threshold.`}
@@ -195,7 +204,7 @@ function DeterminantResult({ m, name, format }: { m: Matrix; name: MatrixName; f
       <EliminationPlayer
         elimination={info.elimination}
         context={{ kind: 'matrix', mode: 'forward' }}
-        label={`Elimination of ${name}`}
+        label={t('tools.eliminationLabel', { name })}
         format={format}
         intro={<p>Start from {name}. Each step clears one entry below a pivot.</p>}
       />
@@ -204,14 +213,15 @@ function DeterminantResult({ m, name, format }: { m: Matrix; name: MatrixName; f
 }
 
 function InverseResult({ m, name, format, onUseResult, onCopy }: OperationResultProps & { m: Matrix; name: MatrixName }) {
-  if (!isSquare(m)) return notSquare(name, m, 'Inverse')
+  const { t } = useI18n()
+  if (!isSquare(m)) return <NotSquare name={name} m={m} what="inverse" />
   const n = m.length
   const result = invert(m)
   const player = (
     <EliminationPlayer
       elimination={result.elimination}
       context={{ kind: 'inverse' }}
-      label={`Row reduction of [${name} | I]`}
+      label={t('tools.inverseReductionLabel', { name })}
       augmentAt={n}
       format={format}
       intro={
@@ -224,9 +234,9 @@ function InverseResult({ m, name, format, onUseResult, onCopy }: OperationResult
   )
   if (!result.invertible) {
     return (
-      <div className={styles.result}>
-        <h3 className={styles.resultTitle}>{name} has no inverse</h3>
-        <Notice tone="warning" title="The left half cannot become I">
+      <div className={styles.result} lang="en" dir="ltr">
+        <h3 className={styles.resultTitle}><T k="tools.noInverse" params={{ name }} /></h3>
+        <Notice tone="warning" title={<T k="tools.leftIdentityUnavailable" />}>
           Column {result.missingPivotColumn + 1} has no pivot, so rank {name} = {result.rank} &lt; {n}. A matrix is invertible
           only when it reduces to the identity.
         </Notice>
@@ -235,10 +245,10 @@ function InverseResult({ m, name, format, onUseResult, onCopy }: OperationResult
     )
   }
   return (
-    <div className={styles.result}>
+    <div className={styles.result} lang="en" dir="ltr">
       <h3 className={styles.resultTitle}>{name}⁻¹</h3>
       <div className={styles.resultSheet}>
-        <MatrixView matrix={result.inverse} label={`Inverse of ${name}`} format={format} showRowLabels={false} size="lg" />
+        <MatrixView matrix={result.inverse} label={t('tools.inverseLabel', { name })} format={format} showRowLabels={false} size="lg" />
       </div>
       <p className={styles.check} data-ok={result.check.passed}>
         <Icon name={result.check.passed ? 'check' : 'alert'} size={16} />
@@ -247,8 +257,8 @@ function InverseResult({ m, name, format, onUseResult, onCopy }: OperationResult
           : `The product check failed: ${name}·${name}⁻¹ is not I.`}
       </p>
       <details className={styles.details}>
-        <summary>See the product {name}·{name}⁻¹</summary>
-        <MatrixView matrix={result.check.right} label={`${name} times its inverse`} format={format} showRowLabels={false} size="sm" />
+        <summary><T k="tools.seeProduct" params={{ name }} /></summary>
+        <MatrixView matrix={result.check.right} label={t('tools.inverseProductLabel', { name })} format={format} showRowLabels={false} size="sm" />
       </details>
       <ResultActions result={result.inverse} onUseResult={onUseResult} onCopy={onCopy} />
       <h4 className={styles.subheading}>[{name} | I] → [I | {name}⁻¹]</h4>
@@ -258,9 +268,10 @@ function InverseResult({ m, name, format, onUseResult, onCopy }: OperationResult
 }
 
 function SpacesResult({ m, name, format }: { m: Matrix; name: MatrixName; format: NumberFormat }) {
+  const { t } = useI18n()
   const s = analyzeSpaces(m)
   return (
-    <div className={styles.result}>
+    <div className={styles.result} lang="en" dir="ltr">
       <h3 className={styles.resultTitle}>
         rank {name} = {s.rank}, nullity = {s.nullity}
       </h3>
@@ -270,10 +281,10 @@ function SpacesResult({ m, name, format }: { m: Matrix; name: MatrixName; format
 
       <div className={styles.spaceGrid}>
         <section>
-          <h4 className={styles.subheading}>Reduced row echelon form</h4>
+          <h4 className={styles.subheading}><T k="tools.rrefHeading" /></h4>
           <MatrixView
             matrix={s.elimination.result}
-            label={`RREF of ${name}`}
+            label={t('tools.rrefLabel', { name })}
             format={format}
             size="sm"
             highlight={{ pivots: s.elimination.pivots, freeColumns: s.freeColumns }}
@@ -286,14 +297,14 @@ function SpacesResult({ m, name, format }: { m: Matrix; name: MatrixName; format
         </section>
 
         <section>
-          <h4 className={styles.subheading}>Column space basis</h4>
+          <h4 className={styles.subheading}><T k="tools.columnBasisHeading" /></h4>
           {s.columnSpaceBasis.length ? (
             <div className={styles.vectors}>
               {s.columnSpaceBasis.map((c) => (
                 <MatrixView
                   key={c.column}
                   matrix={c.vector.map((v) => [v])}
-                  label={`Column ${c.column + 1} of ${name}`}
+                  label={t('tools.columnLabel', { column: c.column + 1, name })}
                   caption={`column ${c.column + 1}`}
                   format={format}
                   size="sm"
@@ -311,14 +322,14 @@ function SpacesResult({ m, name, format }: { m: Matrix; name: MatrixName; format
         </section>
 
         <section>
-          <h4 className={styles.subheading}>Null space basis</h4>
+          <h4 className={styles.subheading}><T k="tools.nullBasisHeading" /></h4>
           {s.nullSpaceBasis.length ? (
             <div className={styles.vectors}>
               {s.nullSpaceBasis.map((v) => (
                 <MatrixView
                   key={v.freeVariable}
                   matrix={v.vector.map((x) => [x])}
-                  label={`Null space vector for free variable ${variableName(v.freeVariable)}`}
+                  label={t('tools.nullVectorLabel', { variable: variableName(v.freeVariable) })}
                   caption={`${variableName(v.freeVariable)} = 1`}
                   format={format}
                   size="sm"

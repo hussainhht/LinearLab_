@@ -1,5 +1,6 @@
 'use client'
 
+import { useI18n, T } from '@/components/i18n/LanguageProvider'
 import { MatrixView } from '@/components/matrix/MatrixView'
 import { RationalText } from '@/components/matrix/RationalText'
 import { StepControls } from '@/components/steps/StepControls'
@@ -24,6 +25,7 @@ interface MultiplicationVisualizerProps {
  * act on an outdated calculation.
  */
 export function MultiplicationVisualizer({ a, b, format, inputKey }: MultiplicationVisualizerProps) {
+  const { t, language } = useI18n()
   const trace = traceMultiplication(a, b)
   const k = a[0]!.length
   const total = trace.entries.length * k
@@ -41,11 +43,11 @@ export function MultiplicationVisualizer({ a, b, format, inputKey }: Multiplicat
   const term = current && termsShown > 0 ? current.terms[termsShown - 1]! : null
 
   return (
-    <div className={styles.multiply}>
-      <div className={styles.multiplyStage}>
+    <div className={styles.multiply} lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <div className={styles.multiplyStage} dir="ltr">
         <MatrixView
           matrix={a}
-          label="Matrix A"
+          label={t('tools.matrixNamed', { name: 'A' })}
           caption="A"
           format={format}
           showRowLabels={false}
@@ -59,7 +61,7 @@ export function MultiplicationVisualizer({ a, b, format, inputKey }: Multiplicat
         </span>
         <MatrixView
           matrix={b}
-          label="Matrix B"
+          label={t('tools.matrixNamed', { name: 'B' })}
           caption="B"
           format={format}
           showRowLabels={false}
@@ -73,7 +75,7 @@ export function MultiplicationVisualizer({ a, b, format, inputKey }: Multiplicat
         </span>
         <MatrixView
           matrix={trace.result}
-          label="Product C = AB"
+          label={t('tools.productMatrix')}
           caption="C = AB"
           format={format}
           showRowLabels={false}
@@ -84,17 +86,17 @@ export function MultiplicationVisualizer({ a, b, format, inputKey }: Multiplicat
         />
       </div>
 
-      <StepControls playback={playback} unit="product" label="Multiplication controls" />
+      <StepControls playback={playback} unit="product" label={t('tools.productControls')} />
       <div className={styles.buttonRow}>
         <Button size="sm" icon="last" onClick={playback.end} disabled={index >= total}>
-          Show final result
+          {t('tools.showFinal')}
         </Button>
         <Button size="sm" icon="reset" onClick={playback.first} disabled={index === 0}>
-          Reset
+          {t('tools.reset')}
         </Button>
       </div>
 
-      <div className={styles.calculation} aria-live="polite">
+      <div className={styles.calculation} lang="en" dir="ltr" aria-live="polite">
         {current ? (
           <>
             <p className={styles.calcHeading}>
@@ -115,7 +117,7 @@ export function MultiplicationVisualizer({ a, b, format, inputKey }: Multiplicat
               {termsShown < k ? <span className={styles.pending}> + …</span> : null}
             </p>
             <p className={`${styles.calcLine} num`}>
-              <span className={styles.calcLabel}>Running sum</span>
+              <span className={styles.calcLabel}><T k="tools.runningSum" /></span>
               {current.partialSums.slice(0, termsShown).map((s, i) => (
                 <span key={i} className={styles.calcTerm}>
                   {i > 0 ? <span className={styles.plus}>→</span> : null}
@@ -133,8 +135,8 @@ export function MultiplicationVisualizer({ a, b, format, inputKey }: Multiplicat
           </>
         ) : (
           <p className={styles.muted}>
-            Entry c<sub>ij</sub> of the product is row i of A times column j of B: multiply matching entries and add them up.
-            Press Play or step forward to compute C one product at a time.
+            Entry c<sub>ij</sub> of the product is row i of A times column j of B: multiply matching entries and add them up.{' '}
+            <span lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'}>{t('tools.multiplyInstruction')}</span>
           </p>
         )}
       </div>

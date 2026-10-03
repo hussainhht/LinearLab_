@@ -44,7 +44,7 @@ export function LinePlot({ a, b, solution }: LinePlotProps) {
         : 'Every equation describes the same line (or the whole plane), so every point on it is a solution.'
 
   return (
-    <figure className={styles.figure}>
+    <figure lang="en" dir="ltr" className={styles.figure}>
       <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className={styles.svg} role="img" aria-label={`Graph of the equations. ${description}`}>
         {ticks.map((t) => (
           <g key={t}>

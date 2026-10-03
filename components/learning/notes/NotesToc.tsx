@@ -1,12 +1,14 @@
 import type { TocEntry } from '@/lib/course/markdown'
+import { T } from '@/components/i18n/LanguageProvider'
+import { LearningUi } from '../LearningUi'
 import { renderInline } from './noteComponents'
 import styles from './notes.module.css'
 
 const KIND_LABELS = {
   core: null,
-  'source-version': 'source version',
-  supplementary: 'supplementary',
-  ledger: 'source ledger',
+  'source-version': 'learning.toc.source',
+  supplementary: 'learning.toc.supplementary',
+  ledger: 'learning.toc.ledger',
 } as const
 
 /**
@@ -16,20 +18,20 @@ const KIND_LABELS = {
  */
 export function NotesToc({ entries }: { entries: readonly TocEntry[] }) {
   return (
-    <nav aria-label="On this page" className={styles.toc}>
+    <LearningUi as="nav" labelKey="learning.toc.title" className={styles.toc}>
       <details className={styles.tocDetails}>
-        <summary className={styles.tocSummary}>On this page</summary>
+        <summary className={styles.tocSummary}><T k="learning.toc.title" /></summary>
         <ol className={styles.tocList}>
           {entries.map((entry) => (
             <li key={entry.id} data-depth={entry.depth}>
               <a href={`#${entry.id}`}>
-                {entry.depth === 2 && KIND_LABELS[entry.kind] ? <span className={styles.tocKind}>{KIND_LABELS[entry.kind]}</span> : null}
-                {renderInline(entry.content)}
+                {entry.depth === 2 && KIND_LABELS[entry.kind] ? <span className={styles.tocKind}><T k={KIND_LABELS[entry.kind]!} /></span> : null}
+                <span lang="en" dir="ltr" className={styles.tocText}>{renderInline(entry.content)}</span>
               </a>
             </li>
           ))}
         </ol>
       </details>
-    </nav>
+    </LearningUi>
   )
 }

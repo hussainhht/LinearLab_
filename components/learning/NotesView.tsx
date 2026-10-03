@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { T } from '@/components/i18n/LanguageProvider'
 import { type Notes, chapterList, lessons, outline } from '@/content/lessons/catalog'
 import { ledgerNote, loadNotes, scanHref } from '@/lib/course/notes'
 import { CourseNav } from './CourseNav'
@@ -7,6 +8,7 @@ import { Pager } from './Pager'
 import { NotesToc } from './notes/NotesToc'
 import { RelatedPanel } from './notes/RelatedPanel'
 import { SourcePanel } from './notes/SourcePanel'
+import { LearningUi } from './LearningUi'
 import { type NoteRenderContext, renderNotes } from './notes/noteComponents'
 import learning from './learning.module.css'
 import styles from './notes/notes.module.css'
@@ -21,11 +23,13 @@ export async function NotesView({ notes }: { notes: Notes }) {
   const parsed = await loadNotes(notes)
   const chapter = chapterList[notes.chapterNumber - 1]!
   const note = ledgerNote(parsed.scans)
+  const scanStats = { available: parsed.scans.filter((scan) => scanHref(scan) !== null).length, total: parsed.scans.length }
   const context: NoteRenderContext = {
     lessonSlugs,
     anchorAliases: notes.anchorAliases ?? {},
     scanHref,
     ledgerNote: note,
+    scanStats,
   }
   const hasRelated = chapter.lessons.length + chapter.tools.length + chapter.practice.length > 0
   const course = parsed.frontmatter.course
@@ -41,33 +45,33 @@ export async function NotesView({ notes }: { notes: Notes }) {
       <article className={styles.article}>
         <header className={styles.header}>
           <p className={styles.crumbs}>
-            <Link href="/learn/">Course</Link> / Chapter {chapter.number} of {chapterList.length}: {chapter.title}
+            <Link href="/learn/"><T k="learning.course" /></Link> / <T k="learning.chapterOf" params={{ number: chapter.number, total: chapterList.length }} /><bdi lang="en" dir="ltr">{chapter.title}</bdi>
           </p>
-          <h1 className={styles.title}>{parsed.title}</h1>
-          <ul className={styles.chips} aria-label="About this page">
-            <li className={styles.chip}>Lecture notes</li>
+          <h1 className={styles.title} lang="en" dir="ltr">{parsed.title}</h1>
+          <LearningUi as="ul" className={styles.chips} labelKey="learning.aboutPage">
+            <li className={styles.chip}><T k="learning.lectureNotes" /></li>
             {notes.sectionLabel ? (
               <li className={styles.chip}>
-                {course ? `${course} · ` : ''}section {notes.sectionLabel}
+                {course ? <><bdi lang="en" dir="ltr">{course}</bdi> · </> : null}<T k="learning.section" params={{ section: notes.sectionLabel }} />
               </li>
             ) : null}
-          </ul>
+          </LearningUi>
           <div className={styles.intro}>
-            <p>About this chapter</p>
-            <p>{notes.intro}</p>
+            <p><T k="learning.aboutChapter" /></p>
+            <p lang="en" dir="ltr">{notes.intro}</p>
           </div>
           {hasRelated ? (
             <p className={styles.jump}>
-              <a href="#study-this-chapter">Related lessons, tools and practice</a>
+              <a href="#study-this-chapter"><T k="learning.related.jump" /></a>
             </p>
           ) : null}
-          <SourcePanel notes={notes} parsed={parsed} ledgerNote={note} />
+          <SourcePanel notes={notes} parsed={parsed} scanStats={scanStats} />
         </header>
-        <div className={styles.prose}>{renderNotes(parsed.hast, context)}</div>
+        <div className={styles.prose} lang="en" dir="ltr">{renderNotes(parsed.hast, context)}</div>
         <RelatedPanel chapter={chapter} />
         <footer className={learning.lessonFooter}>
-          <MarkComplete lessonId={notes.progressId} title={chapter.title} label="Mark chapter complete" />
-          <Pager page={notes} label="Chapter navigation" />
+          <MarkComplete lessonId={notes.progressId} title={chapter.title} kind="chapter" />
+          <Pager page={notes} />
         </footer>
       </article>
     </div>
