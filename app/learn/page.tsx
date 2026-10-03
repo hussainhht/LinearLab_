@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { Page, PageHeader } from '@/components/layout/Page'
 import { CompletionMark, ProgressSummary } from '@/components/learning/LessonProgress'
-import { chapters, lessons } from '@/content/lessons/catalog'
+import { PageLink } from '@/components/learning/PageLink'
+import { SearchForm } from '@/components/learning/SearchForm'
+import { Icon } from '@/components/ui/Icon'
+import { chapterList, lessons, progressIds } from '@/content/lessons/catalog'
 import styles from '@/components/learning/learning.module.css'
 
 export const metadata: Metadata = {
   title: 'Course',
-  description: 'A linear algebra course from linear systems to determinants, with worked examples and interactive checks.',
+  description: `A linear algebra course in ${chapterList.length} chapters, from linear systems to orthogonality: lecture notes with worked examples, interactive lessons and exact tools.`,
 }
 
 export default function LearnPage() {
@@ -15,36 +17,52 @@ export default function LearnPage() {
     <Page>
       <PageHeader
         title="Linear algebra, one idea at a time"
-        lede="Five chapters that build on each other: from a single linear equation to row reduction, matrix algebra, inverses and determinants. Every worked example opens in the tools."
+        lede={`${chapterList.length} chapters that build on each other, from a single linear equation to orthogonal complements. Every chapter has lecture notes with worked examples and exercises; ${lessons.length} short interactive lessons go with the chapters that have them, and their examples open in the tools.`}
       >
-        <ProgressSummary lessonIds={lessons.map((l) => l.id)} />
+        <ProgressSummary lessonIds={progressIds} noun="chapters and lessons" />
+        <div className={styles.overviewSearch}>
+          <SearchForm id="overview-search" />
+        </div>
       </PageHeader>
       <ol className={styles.overviewChapters}>
-        {chapters.map((chapter, c) => (
+        {chapterList.map((chapter) => (
           <li key={chapter.id} className={styles.overviewChapter}>
             <div className={styles.overviewChapterHead}>
               <span className={styles.overviewChapterNumber} aria-hidden="true">
-                {c + 1}
+                {chapter.number}
               </span>
               <h2>
-                <span className="sr-only">Chapter {c + 1}: </span>
+                <span className="sr-only">Chapter {chapter.number}: </span>
                 {chapter.title}
               </h2>
               <p className={styles.muted}>{chapter.summary}</p>
+              {chapter.notes.sectionLabel ? (
+                <p className={styles.muted}>Course notes section {chapter.notes.sectionLabel}</p>
+              ) : null}
             </div>
             <ol className={styles.overviewLessons}>
-              {lessons
-                .filter((l) => l.chapterId === chapter.id)
-                .map((lesson) => (
-                  <li key={lesson.id} className={styles.overviewLesson}>
-                    <Link href={`/learn/${lesson.slug}/`}>
-                      <span className={`${styles.lessonNumber} num`}>{lesson.number}</span>
-                      <span className={styles.overviewLessonTitle}>{lesson.title}</span>
-                      <CompletionMark lessonId={lesson.id} />
-                      <span className={styles.overviewLessonObjective}>{lesson.objective}</span>
-                    </Link>
-                  </li>
-                ))}
+              <li className={styles.overviewLesson}>
+                <PageLink page={chapter.notes}>
+                  <span className={styles.lessonNumber}>
+                    <Icon name="book" size={18} />
+                  </span>
+                  <span className={styles.overviewLessonTitle}>
+                    Lecture notes<span className="sr-only"> for {chapter.title}</span>
+                  </span>
+                  <CompletionMark lessonId={chapter.notes.progressId} />
+                  <span className={styles.overviewLessonObjective}>{chapter.notes.intro}</span>
+                </PageLink>
+              </li>
+              {chapter.lessons.map((lesson) => (
+                <li key={lesson.id} className={styles.overviewLesson}>
+                  <PageLink page={lesson}>
+                    <span className={`${styles.lessonNumber} num`}>{lesson.number}</span>
+                    <span className={styles.overviewLessonTitle}>{lesson.title}</span>
+                    <CompletionMark lessonId={lesson.id} />
+                    <span className={styles.overviewLessonObjective}>{lesson.objective}</span>
+                  </PageLink>
+                </li>
+              ))}
             </ol>
           </li>
         ))}

@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { HeroDemo } from '@/components/home/HeroDemo'
 import { ButtonLink } from '@/components/ui/Button'
-import { chapters, lessons } from '@/content/lessons/catalog'
+import { PageLink } from '@/components/learning/PageLink'
+import { chapterList, lessons, pageHref } from '@/content/lessons/catalog'
 import styles from '@/components/home/home.module.css'
 
 export default function HomePage() {
@@ -20,7 +21,9 @@ export default function HomePage() {
             <ButtonLink href="/tools/rref/" variant="primary" icon="steps">
               Solve a system
             </ButtonLink>
-            <ButtonLink href={`/learn/${lessons[0]!.slug}/`}>Start the course</ButtonLink>
+            <ButtonLink href={pageHref(chapterList[0]!.notes)} prefetch={false}>
+              Start the course
+            </ButtonLink>
           </div>
         </div>
         <HeroDemo />
@@ -33,8 +36,8 @@ export default function HomePage() {
         <div className={styles.path}>
           <h3>Learn</h3>
           <p>
-            {lessons.length} lessons in {chapters.length} chapters, from a single linear equation to Cramer’s rule. Each has a
-            worked example and a quick check.
+            {chapterList.length} chapters of lecture notes, from a single linear equation to orthogonal complements, with worked
+            examples and exercises. {lessons.length} interactive lessons open their examples in the tools.
           </p>
           <Link href="/learn/">Course outline</Link>
         </div>
@@ -62,15 +65,17 @@ export default function HomePage() {
           <p>Each chapter builds on the one before it. Lessons link straight into the tools with the same example loaded.</p>
         </div>
         <ol className={styles.chapters}>
-          {chapters.map((chapter) => (
+          {chapterList.map((chapter) => (
             <li key={chapter.id}>
-              <Link href={`/learn/${chapter.lessons[0].slug}/`} className={styles.chapterLink}>
+              <PageLink page={chapter.notes} className={styles.chapterLink}>
                 <span className={styles.chapterTitle}>{chapter.title}</span>
                 <span className={styles.chapterSummary}>{chapter.summary}</span>
                 <span className={styles.chapterCount}>
-                  {chapter.lessons.length} lessons
+                  {chapter.lessons.length > 0
+                    ? `Lecture notes and ${chapter.lessons.length} ${chapter.lessons.length === 1 ? 'lesson' : 'lessons'}`
+                    : 'Lecture notes'}
                 </span>
-              </Link>
+              </PageLink>
             </li>
           ))}
         </ol>

@@ -54,6 +54,35 @@
   font-weight: 700;
 }
 
+.navSearch {
+  margin-bottom: var(--space-3);
+}
+
+/* On wide screens the course list is simply shown: where the browser lets us style the closed part of a
+   disclosure, its content stays visible and the toggle is replaced by a plain heading. Elsewhere (and on
+   phones) it is an ordinary collapsed disclosure. */
+.courseHeading {
+  display: none;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-weight: 700;
+}
+
+@supports selector(::details-content) {
+  @media (min-width: 64rem) {
+    .courseDetails::details-content {
+      content-visibility: visible;
+    }
+    .courseSummary {
+      display: none;
+    }
+    .courseHeading {
+      display: flex;
+    }
+  }
+}
+
 .courseCount {
   font-weight: 400;
   font-size: var(--text-xs);
@@ -622,6 +651,8 @@
 
 .overviewLessons {
   display: grid;
+  /* A chapter with only its lecture notes has one row; it must not stretch to the height of the chapter's title block. */
+  align-content: start;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -656,4 +687,8 @@
   grid-column: 2;
   font-size: var(--text-sm);
   color: var(--ink-2);
+}
+
+.overviewSearch {
+  max-width: 24rem;
 }

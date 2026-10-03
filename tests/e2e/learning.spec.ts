@@ -1,3 +1,4 @@
+import { progressIds } from '../../content/lessons/catalog'
 import { appAlert, editorValues, expect, test } from './fixtures'
 
 test.describe('course and calculators', () => {
@@ -17,14 +18,15 @@ test.describe('course and calculators', () => {
     await expect(page.getByText('Cramer’s rule does not apply').first()).toBeVisible()
     await page.getByRole('link', { name: 'Classify this system with the system solver' }).first().click()
     await expect(page).toHaveURL(/\/tools\/rref\//)
-    expect(await editorValues(page, 'rref', 2, 3)).toEqual([['6', '-4', '2'], ['3', '-2', '1']])
+    // The tool applies the problem from the address in an effect, a moment after the URL changes.
+    await expect.poll(() => editorValues(page, 'rref', 2, 3)).toEqual([['6', '-4', '2'], ['3', '-2', '1']])
   })
 
   test('a lesson’s example opens the exact problem in the solver', async ({ page }) => {
     await page.goto('learn/gauss-jordan-elimination/')
     await page.getByRole('link', { name: 'Open this system in the solver' }).click()
     await expect(page).toHaveURL(/\/tools\/rref\/\?A=/)
-    expect(await editorValues(page, 'rref', 2, 3)).toEqual([['1', '2', '5'], ['3', '-1', '4']])
+    await expect.poll(() => editorValues(page, 'rref', 2, 3)).toEqual([['1', '2', '5'], ['3', '-1', '4']])
   })
 
   test('quick checks and numeric checks give feedback', async ({ page }) => {
@@ -47,13 +49,15 @@ test.describe('course and calculators', () => {
     await page.goto('learn/linear-systems/')
     await page.getByRole('button', { name: 'Mark lesson complete' }).click()
     await expect(page.getByRole('button', { name: 'Completed' })).toBeVisible()
-    await expect(page.getByText('1 of 22 complete')).toBeVisible()
+    // Lessons and chapters' lecture notes are all counted, so the total is the registry's, not a literal.
+    // (shown once: in the disclosure on phones, in the heading on wide screens)
+    await expect(page.getByText(`1 of ${progressIds.length} complete`).filter({ visible: true })).toBeVisible()
 
     await page.goto('learn/')
-    await expect(page.getByText('of 22 lessons complete')).toContainText('1')
+    await expect(page.getByText(`of ${progressIds.length} chapters and lessons complete`)).toContainText('1')
     await page.getByRole('button', { name: 'Reset progress' }).click()
     await page.getByRole('group', { name: 'Confirm reset' }).getByRole('button', { name: 'Reset progress' }).click()
-    await expect(page.getByText('of 22 lessons complete')).toContainText('0')
+    await expect(page.getByText(`of ${progressIds.length} chapters and lessons complete`)).toContainText('0')
   })
 
   test('the lines explorer reacts to parallel lines', async ({ page }) => {

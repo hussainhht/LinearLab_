@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Page, PageHeader } from '@/components/layout/Page'
+import { conceptChecks } from '@/data/examples/concepts'
 import { practiceProblems } from '@/data/examples/practice'
 import styles from '@/components/practice/practice.module.css'
 
@@ -33,6 +34,16 @@ export default function PracticePage() {
           </li>
         ))}
       </ol>
+      <div className={styles.howTo}>
+        <h2>Concept checks</h2>
+        <p>
+          Not sure the ideas have landed? {conceptChecks.length} short questions on ranks, row reduction, determinants, inverses and
+          subspaces, each with its reasoning.
+        </p>
+        <p>
+          <Link href="/practice/concepts/">Open the concept checks</Link>
+        </p>
+      </div>
     </Page>
   )
 }

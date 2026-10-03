@@ -1,6 +1,6 @@
 import { TOOLS } from '../../components/tools/catalog'
 import { basePath } from '../../config/deployment.mjs'
-import { lessons } from '../../content/lessons/catalog'
+import { pages } from '../../content/lessons/catalog'
 import { practiceProblems } from '../../data/examples/practice'
 import { expect, test } from './fixtures'
 
@@ -12,10 +12,13 @@ import { expect, test } from './fixtures'
 const routes = [
   './',
   'learn/',
+  'learn/search/',
   'tools/',
   'practice/',
+  'practice/concepts/',
   ...TOOLS.map((tool) => tool.href.slice(1)),
-  ...lessons.map((lesson) => `learn/${lesson.slug}/`),
+  // Interactive lessons and every chapter's lecture notes share one route.
+  ...pages.map((page) => `learn/${page.slug}/`),
   ...practiceProblems.map((problem) => `practice/${problem.id}/`),
 ]
 
