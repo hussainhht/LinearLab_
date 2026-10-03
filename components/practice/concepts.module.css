@@ -1,0 +1,60 @@
+/* Concept checks page: topics, each a list of short questions. */
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.topics a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--sheet);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.topics a:hover {
+  background: var(--sheet-sunken);
+}
+
+.topic {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 44rem;
+  margin-bottom: var(--space-7);
+}
+
+.topic > p {
+  color: var(--ink-2);
+}
+
+.checks {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.changed {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.source {
+  max-width: 44rem;
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}

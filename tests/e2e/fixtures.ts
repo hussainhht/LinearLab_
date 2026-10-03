@@ -37,6 +37,15 @@ export async function editorValues(page: Page, prefix: string, rows: number, col
   return values
 }
 
+/**
+ * Waits until React has taken over the page. Before then a click on a link is the browser's own (a full
+ * page load) and a list or a field can still change under the pointer. Next.js stores its router state
+ * on the history entry when it hydrates, which is the one signal in a production build.
+ */
+export async function hydrated(page: Page) {
+  await page.waitForFunction(() => (window.history.state as { __NA?: boolean } | null)?.__NA === true)
+}
+
 /** Marks the window so a full page reload (which would drop the marker) can be detected. */
 export async function markWindow(page: Page) {
   await page.evaluate(() => ((window as unknown as { __spa: boolean }).__spa = true))

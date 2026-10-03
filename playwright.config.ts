@@ -9,6 +9,10 @@ const siteUrl = `http://localhost:${port}${basePath}/`
 export default defineConfig({
   testDir: 'tests/e2e',
   fullyParallel: true,
+  // A lecture-notes chapter is one to three megabytes of typeset mathematics. Opening one from a link takes a
+  // moment even locally (about a second on a quiet machine, several when parallel workers share the CPU), so
+  // waiting for that is given more than the 5 s default. A real failure is reported 10 s later, not missed.
+  expect: { timeout: 15_000 },
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['list']] : 'list',

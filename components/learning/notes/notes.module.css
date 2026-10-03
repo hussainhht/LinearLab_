@@ -1,0 +1,549 @@
+/* Lecture notes: course navigation, the article, and an "on this page" contents list.
+   Narrow screens stack nav, contents and article; wide screens put the contents beside the article. */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'nav'
+    'toc'
+    'article';
+  gap: var(--space-4);
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--gutter) 0;
+}
+
+.navArea {
+  grid-area: nav;
+  min-width: 0;
+}
+.tocArea {
+  grid-area: toc;
+  min-width: 0;
+}
+.article {
+  grid-area: article;
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .layout {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    grid-template-areas:
+      'nav toc'
+      'nav article';
+    grid-template-rows: auto 1fr;
+    column-gap: var(--space-7);
+    row-gap: var(--space-4);
+  }
+}
+
+@media (min-width: 84rem) {
+  .layout {
+    grid-template-columns: 17rem minmax(0, 46rem) minmax(13rem, 1fr);
+    grid-template-areas: 'nav article toc';
+    grid-template-rows: auto;
+    column-gap: var(--space-6);
+  }
+}
+
+/* ---------- Header ---------- */
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.crumbs {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.crumbs a {
+  color: inherit;
+}
+
+.title {
+  font-size: var(--text-3xl);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--sheet);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--pivot-ring);
+  background: color-mix(in srgb, var(--pivot-fill) 16%, transparent);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+}
+.intro p:first-child {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.jump {
+  font-size: var(--text-sm);
+}
+
+/* ---------- Sources and status ---------- */
+
+.sources {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+  font-size: var(--text-sm);
+}
+.sources > summary {
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.sourcesBody {
+  display: grid;
+  gap: var(--space-3);
+  padding: 0 var(--space-4) var(--space-4);
+}
+.facts {
+  display: grid;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+.facts dt {
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (min-width: 40rem) {
+  .facts {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+}
+.status {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--warning-soft);
+}
+.reviewHeading {
+  margin: 0 0 calc(-1 * var(--space-2));
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.reviewNotes {
+  margin: 0;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-6);
+  border-radius: var(--radius-m);
+  background: var(--accent-soft);
+}
+.reviewNotes li + li {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Contents ---------- */
+
+.toc {
+  font-size: var(--text-sm);
+}
+.tocDetails {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+  padding: var(--space-2) var(--space-4);
+}
+.tocSummary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.tocList {
+  display: grid;
+  gap: 1px;
+  margin: var(--space-3) 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+.tocList a {
+  display: block;
+  padding: 0.25rem var(--space-2);
+  border-radius: var(--radius-s);
+  color: var(--ink-2);
+  text-decoration: none;
+  line-height: 1.35;
+}
+.tocList a:hover {
+  background: var(--sheet-sunken);
+  color: var(--ink);
+}
+.tocList li[data-depth='3'] a {
+  padding-left: var(--space-5);
+  font-size: var(--text-xs);
+}
+.tocList li[data-depth='2'] a {
+  font-weight: 600;
+  color: var(--ink);
+}
+.tocKind {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+@media (min-width: 84rem) {
+  .toc {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+    max-height: calc(100dvh - var(--header-height) - var(--space-6));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* Where the browser can style the closed part of a disclosure, the contents list is always open on
+   wide screens and its toggle disappears. Elsewhere it stays a plain, working disclosure. */
+@supports selector(::details-content) {
+  @media (min-width: 84rem) {
+    .tocDetails {
+      border: 0;
+      background: none;
+      padding: 0;
+    }
+    .tocDetails::details-content {
+      content-visibility: visible;
+    }
+    .tocSummary {
+      pointer-events: none;
+      list-style: none;
+      font-size: var(--text-xs);
+      color: var(--ink-3);
+    }
+    .tocSummary::-webkit-details-marker {
+      display: none;
+    }
+  }
+}
+
+/* ---------- Prose ---------- */
+
+.prose {
+  font-size: var(--text-md);
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+.prose > * + *,
+.section > * + * {
+  margin-top: var(--space-4);
+}
+
+/* The few paragraphs before the first section (some chapters open with a summary) read as a lead. */
+.prose > p {
+  font-size: var(--text-lg);
+  color: var(--ink-2);
+}
+
+.section {
+  margin-top: var(--space-7);
+}
+.section:first-child {
+  margin-top: 0;
+}
+
+.section h2 {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--rule);
+  font-size: var(--text-2xl);
+}
+.section h3 {
+  margin-top: var(--space-6);
+  font-size: var(--text-xl);
+}
+.section h4 {
+  margin-top: var(--space-5);
+  font-size: var(--text-lg);
+}
+.section h5,
+.section h6 {
+  margin-top: var(--space-4);
+  font-size: var(--text-md);
+}
+.section h2 + *,
+.section h3 + *,
+.section h4 + *,
+.section h5 + *,
+.section h6 + * {
+  margin-top: var(--space-3);
+}
+
+.anchor {
+  margin-left: var(--space-2);
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+  font-size: 0.8em;
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+}
+.section :is(h2, h3, h4, h5, h6):hover .anchor {
+  opacity: 1;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--space-5);
+}
+.prose li + li {
+  margin-top: var(--space-1);
+}
+.prose li > :is(ul, ol),
+.itemBody > :is(ul, ol, p) {
+  margin-top: var(--space-1);
+}
+.itemBody > :global(.katex-display) {
+  margin: var(--space-2) 0;
+}
+
+/* Inline mathematics cannot wrap. A paragraph or list item that holds a formula wider than the screen
+   scrolls sideways by itself; without this the whole page would. Vertical overflow is hidden, not
+   scrollable: KaTeX's line boxes already contain every glyph (checked pixel by pixel over all 13
+   chapters), and the few pixels of invisible spacer overshoot must not turn text into a scroll trap. */
+.prose p,
+.itemBody {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+.prose code {
+  padding: 0.05em 0.3em;
+  border-radius: var(--radius-s);
+  background: var(--sheet-sunken);
+  overflow-wrap: anywhere;
+}
+.prose a code {
+  color: inherit;
+}
+
+.prose blockquote {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  background: var(--accent-soft);
+}
+.prose blockquote > * + * {
+  margin-top: var(--space-2);
+}
+
+.prose hr {
+  margin: var(--space-5) 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* Notes about the source (where a version differs, which file a version is) are set apart from the working. */
+.prose p[data-note='source'] {
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--source);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+
+/* Wide formulas scroll inside their own box instead of widening the page. */
+.prose :global(.katex-display) {
+  margin: var(--space-4) 0;
+  max-width: 100%;
+}
+
+/* Tables, including the source ledgers, scroll sideways inside their wrapper. */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+}
+.tableWrap > table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.tableWrap th,
+.tableWrap td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.tableWrap thead th {
+  font-weight: 700;
+  color: var(--ink-2);
+  background: var(--sheet-sunken);
+  border-bottom-color: var(--rule-strong);
+  white-space: nowrap;
+}
+.tableWrap tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Drawings that are text, kept exactly as written. */
+.textBlock {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--sheet-sunken);
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  white-space: pre;
+}
+.textBlock code {
+  padding: 0;
+  background: none;
+}
+
+/* SVG figures. They carry their own white background and dark ink, so they read the same in both themes. */
+.diagram {
+  margin: var(--space-5) 0;
+}
+.diagramScroll {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-m);
+  background: #ffffff;
+}
+.diagramScroll img {
+  display: block;
+  width: min(100%, var(--w));
+  min-width: min(var(--w), 36rem);
+  height: auto;
+  margin: 0 auto;
+}
+
+/* ---------- Section kinds ---------- */
+
+.section[data-kind='source-version'],
+.section[data-kind='supplementary'] {
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--source);
+}
+.section[data-kind='supplementary'] {
+  border-left-color: var(--target);
+}
+.section[data-kind='source-version'] h2,
+.section[data-kind='supplementary'] h2 {
+  border-top: 0;
+  padding-top: 0;
+}
+.kindLabel {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--source);
+}
+.section[data-kind='supplementary'] .kindLabel {
+  color: var(--target);
+}
+
+/* The archival ledger: reference material, collapsed so it does not interrupt the teaching text. */
+.ledger {
+  margin-top: var(--space-7);
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius-m);
+  background: var(--sheet);
+}
+.ledger > summary {
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+}
+.ledger > summary h2 {
+  display: inline;
+  padding: 0;
+  border: 0;
+  font-size: var(--text-xl);
+}
+.ledgerBody {
+  display: grid;
+  gap: var(--space-4);
+  padding: 0 var(--space-4) var(--space-4);
+  font-size: var(--text-sm);
+}
+.ledgerNote {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--warning-soft);
+}
+
+/* ---------- Related material ---------- */
+
+.related {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-l);
+  background: var(--sheet);
+}
+.related h2 {
+  font-size: var(--text-xl);
+}
+.relatedGroup {
+  display: grid;
+  gap: var(--space-2);
+}
+.relatedGroup h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--ink-3);
+}
+.relatedList {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.relatedList a {
+  font-weight: 700;
+}
+.relatedList span {
+  color: var(--ink-2);
+}
+.relatedList .num {
+  color: var(--ink-3);
+  margin-right: var(--space-1);
+}

@@ -1,5 +1,6 @@
 import createMDX from '@next/mdx'
 import { basePath } from './config/deployment.mjs'
+import { katexOptions } from './config/math.mjs'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,7 +20,7 @@ const withMDX = createMDX({
   options: {
     // Plugins are referenced by name so the config stays serializable for Turbopack.
     remarkPlugins: ['remark-gfm', 'remark-math'],
-    rehypePlugins: [['rehype-katex', { strict: true, throwOnError: true, output: 'htmlAndMathml' }]],
+    rehypePlugins: [['rehype-katex', katexOptions]],
   },
 })
 
